@@ -1,0 +1,44 @@
+# Dependencies
+node_modules/
+.pnpm-store/
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# Next.js
+.next/
+out/
+
+# Build
+dist/
+build/
+
+# Logs
+*.log
+logs/
+
+# Local storage
+storage/documents/*
+storage/proposals/*
+storage/certificates/*
+
+# Keep storage folders
+!storage/documents/.gitkeep
+!storage/proposals/.gitkeep
+!storage/certificates/.gitkeep
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+
+# Prisma
+prisma/*.db
+prisma/*.db-journal
+
+.env

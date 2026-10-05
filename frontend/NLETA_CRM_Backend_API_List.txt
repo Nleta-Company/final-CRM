@@ -1,0 +1,140 @@
+NLETA CRM BACKEND API LIST
+==============================
+
+Base URL
+--------
+Local:
+http://localhost:5000/api
+
+Authentication
+--------------
+Protected APIs use:
+Authorization: Bearer <JWT_TOKEN>
+
+Content-Type:
+application/json
+
+
+1. AUTHENTICATION
+-----------------
+POST /auth/login
+POST /auth/register
+
+
+2. USERS
+--------
+GET    /users
+POST   /users
+PUT    /users/:id
+PATCH  /users/:id/status
+PATCH  /users/:id/password
+
+
+3. LEADS
+--------
+GET    /leads
+GET    /leads/:id
+POST   /leads
+PUT    /leads/:id
+DELETE /leads/:id
+POST   /leads/:id/convert-to-client
+
+
+4. CLIENTS
+----------
+GET    /clients
+GET    /clients/:id
+POST   /clients
+PUT    /clients/:id
+DELETE /clients/:id
+
+
+5. ACTIVITIES
+-------------
+GET    /activities
+GET    /activities/:id
+POST   /activities
+PUT    /activities/:id
+DELETE /activities/:id
+
+
+6. DASHBOARD
+------------
+GET /dashboard/summary
+
+
+7. NOTIFICATIONS
+----------------
+GET    /notifications
+GET    /notifications/unread
+PUT    /notifications/read-all
+PUT    /notifications/:id/read
+DELETE /notifications/:id
+
+
+8. PSGA TRACKING
+----------------
+GET  /psga
+GET  /psga/:id
+POST /psga
+PUT  /psga/:id
+
+Note:
+PSGA is tracked in CRM. The existing PHP Technical Dashboard remains responsible
+for the technical PSGA generation/workflow.
+
+
+9. INCENTIVE ALLOCATION
+----------------------
+GET /incentives/psga/:psgId
+POST /incentives
+PUT /incentives/:id
+
+Rules:
+- Primary BDE starts with 100%.
+- Supporting BDE percentages are allocated from the primary BDE's 100%.
+- Supporting percentages cannot exceed the available 100% pool.
+- Incentive becomes eligible after PSGA acceptance.
+
+
+10. MONTHLY INCENTIVE PAYOUT
+----------------------------
+GET  /incentive-payouts
+GET  /incentive-payouts/:id
+POST /incentive-payouts
+GET  /incentive-payouts/dashboard/:bdeId
+GET  /incentive-payouts/admin-dashboard
+PUT  /incentive-payouts/:id/approve
+PUT  /incentive-payouts/:id/paid
+
+Rules:
+- One monthly payout record per BDE + salary month.
+- Incentive is tracked as a percentage, not a rupee amount.
+- Payout lifecycle: PENDING -> APPROVED -> PAID.
+- A PAID payout cannot be approved or paid again.
+
+
+11. HEALTH CHECK
+----------------
+GET /health
+GET /health/db
+
+
+FRONTEND INTEGRATION NOTES
+--------------------------
+1. Use the Base URL + endpoint path.
+2. Send JWT in the Authorization header for protected APIs.
+3. BDE/Sales users are restricted to their permitted data.
+4. Admin has broader access according to permissions.
+5. Permission errors return HTTP 403 with a requiredPermission field where applicable.
+6. Inaccessible resources commonly return HTTP 404.
+7. Validation errors return HTTP 400.
+8. Duplicate business records are rejected, e.g. duplicate PSGA number and duplicate
+   monthly incentive payout for the same BDE/month.
+
+
+NOT INCLUDED
+------------
+Proposal/Offer Generator APIs are NOT part of this CRM backend list.
+Proposal/Offer/FSO/technical service workflow belongs to the existing PHP
+Technical Dashboard and will be integrated later through APIs.

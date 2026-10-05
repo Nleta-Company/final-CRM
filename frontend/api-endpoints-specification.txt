@@ -1,0 +1,701 @@
+================================================================================
+   NATIONAL LIFT ESCALATOR TESTING AGENCY (NLETA) - CRM & SAFETY PLATFORM
+              COMPREHENSIVE REST API SPECIFICATION BASED ON PAGES
+================================================================================
+
+BASE API URL: /api/v1
+AUTHENTICATION: Bearer Token (Authorization: Bearer <nleta_auth_token>)
+CONTENT-TYPE: application/json
+
+================================================================================
+TABLE OF CONTENTS:
+================================================================================
+1. Authentication & Session APIs (/signin, /signup, /login)
+2. Main Agency Dashboard APIs (/dashboard)
+3. Leads & Inquiry Pipeline APIs (/leads, /leads/create, /leads/[id]/edit)
+4. Clients & Corporate Accounts APIs (/clients, /clients/create, /clients/[id]/edit)
+5. Client Assets & Equipment Units APIs (/client-assets, /client-assets/create)
+6. Sales Team (BDE) & Sales Dashboard APIs (/bde, /bde/[id], /bde/dashboard)
+7. Inspection Inspectors & Safety Operations APIs (/technicians, /technicians/dashboard)
+8. Employees & Workforce Management APIs (/employees, /employees/dashboard)
+9. Business Intelligence & Macro Analytics APIs (/analytics)
+10. Page-to-API Quick Mapping Matrix
+
+================================================================================
+1. AUTHENTICATION & SESSION APIS
+   Associated Pages: /signin, /signup, /login
+================================================================================
+
+1.1 POST /api/v1/auth/login
+    • Description: Authenticate user with credentials and return JWT session token.
+    • Request Body:
+      {
+        "email": "user@nletacrm.com",
+        "password": "SecurePassword123"
+      }
+    • Response (200 OK):
+      {
+        "success": true,
+        "token": "eyJhbGciOiJIUzI1NiIsIn...",
+        "user": {
+          "id": "USR-101",
+          "fullName": "Admin User",
+          "email": "user@nletacrm.com",
+          "role": "Super Admin"
+        }
+      }
+
+1.2 POST /api/v1/auth/register
+    • Description: Register a new system account.
+    • Request Body:
+      {
+        "fullName": "Jane Doe",
+        "email": "jane@nletacrm.com",
+        "password": "SecurePassword123",
+        "role": "Sales Representative"
+      }
+    • Response (201 Created):
+      {
+        "success": true,
+        "message": "Account created successfully",
+        "token": "eyJhbGciOiJIUzI1NiIsIn...",
+        "user": { "id": "USR-102", "fullName": "Jane Doe", "email": "jane@nletacrm.com" }
+      }
+
+1.3 POST /api/v1/auth/logout
+    • Description: Invalidate token and terminate current session.
+    • Headers: Authorization: Bearer <token>
+    • Response (200 OK): { "success": true, "message": "Logged out successfully" }
+
+1.4 GET /api/v1/auth/me
+    • Description: Get currently logged-in user profile from token.
+    • Response (200 OK):
+      { "id": "USR-101", "fullName": "Admin User", "email": "admin@nletacrm.com", "role": "Super Admin" }
+
+================================================================================
+2. MAIN AGENCY DASHBOARD APIS
+   Associated Pages: /dashboard
+================================================================================
+
+2.1 GET /api/v1/dashboard/stats
+    • Description: Aggregated overview of all 4 operational domains for main dashboard cards.
+    • Response (200 OK):
+      {
+        "leads": {
+          "totalLeads": 48,
+          "newInquiries": 12,
+          "formattedPipelineValue": "₹1.48 Cr"
+        },
+        "assets": {
+          "totalAssets": 156,
+          "certifiedOperational": 138,
+          "averageSafetyScore": 98.4
+        },
+        "bde": {
+          "totalRevenue": 12800000,
+          "formattedTotalRevenue": "₹1.28 Cr",
+          "totalTarget": 15000000,
+          "formattedTotalTarget": "₹1.50 Cr"
+        },
+        "technicians": {
+          "totalTechnicians": 18,
+          "availableOnField": 12,
+          "onSiteInspection": 4
+        }
+      }
+
+2.2 GET /api/v1/dashboard/charts/equipment-audits
+    • Description: Monthly equipment audit volume data for 50% desktop bar chart.
+    • Query Params: year=2026
+    • Response (200 OK):
+      [
+        { "month": "Jan", "sales": 145 },
+        { "month": "Feb", "sales": 210 },
+        { "month": "Mar", "sales": 185 },
+        ...
+        { "month": "Dec", "sales": 360 }
+      ]
+
+2.3 GET /api/v1/dashboard/recent-leads
+    • Description: Fetch recent 5 leads for the live table at the bottom of the dashboard.
+    • Query Params: limit=5&sort=createdAt:desc
+    • Response (200 OK): Array of LeadItem objects.
+
+================================================================================
+3. LEADS & INQUIRY PIPELINE APIS
+   Associated Pages: /leads, /leads/create, /leads/[id]/edit
+================================================================================
+
+3.1 GET /api/v1/leads
+    • Description: Get paginated leads list with filtering and search.
+    • Query Params:
+      - search (string): Facility name / contact
+      - status (string): "Won" | "Under Discussion" | "Lost"
+      - bdeId (string): Filter by assigned BDE
+      - page (number, default: 1)
+      - limit (number, default: 10)
+      - sortBy (string, default: "createdAt")
+      - sortOrder ("asc" | "desc")
+    • Response (200 OK):
+      {
+        "data": [
+          {
+            "id": "LD-501",
+            "facilityName": "Grand Venice Mall",
+            "facilityType": "Commercial Complex",
+            "contactPerson": "Vikram Malhotra",
+            "contactPhone": "+91 98112 45890",
+            "contactEmail": "v.malhotra@grandvenice.in",
+            "equipmentType": "Heavy Duty Escalators & Passenger Lifts",
+            "unitsCount": 14,
+            "auditType": "Annual Safety Audit",
+            "estimatedValue": "₹4,20,000",
+            "numericValue": 420000,
+            "status": "Under Discussion",
+            "assignedBdeId": "BDE-201",
+            "assignedBdeName": "Vikram Malhotra",
+            "createdAt": "2026-09-18"
+          }
+        ],
+        "pagination": { "total": 48, "page": 1, "limit": 10, "totalPages": 5 }
+      }
+
+3.2 GET /api/v1/leads/stats
+    • Description: Get aggregate counts across all 3 lead states (Won, Under Discussion, Lost).
+    • Response (200 OK):
+      {
+        "totalLeads": 8,
+        "wonCount": 2,
+        "underDiscussionCount": 4,
+        "lostCount": 2,
+        "conversionRate": "25%",
+        "totalPipelineValue": 3170000,
+        "formattedPipelineValue": "₹31.70 L",
+        "statusBreakdown": {
+          "Won": 2,
+          "Under Discussion": 4,
+          "Lost": 2
+        }
+      }
+
+3.3 GET /api/v1/leads/:id
+    • Description: Fetch a single lead by ID for view/edit.
+    • Response (200 OK): Single LeadItem object.
+
+3.4 POST /api/v1/leads
+    • Description: Register a new lead.
+    • Request Body: CreateLeadInput object
+    • Response (201 Created): { "success": true, "data": LeadItem }
+
+3.5 PUT /api/v1/leads/:id
+    • Description: Update lead details.
+    • Request Body: UpdateLeadInput object
+    • Response (200 OK): { "success": true, "data": LeadItem }
+
+3.6 PATCH /api/v1/leads/:id/stage
+    • Description: Update only the lead state status of a lead.
+    • Request Body: { "status": "Won" }
+    • Response (200 OK): { "success": true, "data": LeadItem }
+
+3.7 PATCH /api/v1/leads/:id/assign-bde
+    • Description: Assign or reassign a Sales Rep to the lead.
+    • Request Body: { "bdeId": "BDE-002" }
+    • Response (200 OK): { "success": true, "data": LeadItem }
+
+3.8 DELETE /api/v1/leads/:id
+    • Description: Delete a lead record.
+    • Response (200 OK): { "success": true, "message": "Lead deleted" }
+
+================================================================================
+4. CLIENTS & CORPORATE ACCOUNTS APIS
+   Associated Pages: /clients, /clients/create, /clients/[id]/edit
+================================================================================
+
+4.1 GET /api/v1/clients
+    • Description: Fetch paginated corporate client accounts.
+    • Query Params: search, clientType, contractStatus, bdeId, technicianId, page, limit
+    • Response (200 OK):
+      {
+        "data": [
+          {
+            "id": "CLI-001",
+            "companyName": "DLF Cyber City Developers",
+            "clientType": "Commercial Real Estate",
+            "contactPerson": "Ramesh Chandra",
+            "contactEmail": "r.chandra@dlf.in",
+            "contactPhone": "+91 98100 12345",
+            "address": "DLF Phase 2, Sector 24",
+            "city": "Gurugram",
+            "state": "Haryana",
+            "totalAssetsCount": 24,
+            "contractStatus": "Active Agreement",
+            "contractValue": "₹45,00,000",
+            "numericContractValue": 4500000,
+            "accountManager": "Vikram Malhotra",
+            "assignedBdeId": "BDE-001",
+            "assignedBdeName": "Vikram Malhotra",
+            "assignedTechnicianId": "TECH-001",
+            "assignedTechnicianName": "Rajesh Sharma",
+            "joinedDate": "2024-01-15",
+            "nextAuditDate": "2026-10-15"
+          }
+        ],
+        "pagination": { "total": 28, "page": 1, "limit": 10 }
+      }
+
+4.2 GET /api/v1/clients/stats
+    • Description: Summary metrics for clients page cards.
+    • Response (200 OK):
+      {
+        "totalClients": 28,
+        "activeContracts": 24,
+        "totalContractValue": 89000000,
+        "formattedTotalValue": "₹8.90 Cr",
+        "totalAssetsManaged": 156,
+        "pendingRenewals": 4,
+        "statusBreakdown": { "Active Agreement": 24, "Pending Renewal": 4 }
+      }
+
+4.3 GET /api/v1/clients/:id
+    • Description: Fetch full client profile with asset portfolio.
+    • Response (200 OK): ClientItem object.
+
+4.4 POST /api/v1/clients
+    • Description: Register new client account.
+    • Request Body: CreateClientInput
+    • Response (201 Created): { "success": true, "data": ClientItem }
+
+4.5 PUT /api/v1/clients/:id
+    • Description: Update client account details.
+    • Request Body: UpdateClientInput
+    • Response (200 OK): { "success": true, "data": ClientItem }
+
+4.6 PATCH /api/v1/clients/:id/assign-bde
+    • Description: Assign/Change Sales Rep on client account.
+    • Request Body: { "bdeId": "BDE-001" }
+    • Response (200 OK): { "success": true, "data": ClientItem }
+
+4.7 PATCH /api/v1/clients/:id/assign-inspector
+    • Description: Assign/Change Field Safety Inspector on client account.
+    • Request Body: { "technicianId": "TECH-002" }
+    • Response (200 OK): { "success": true, "data": ClientItem }
+
+4.8 DELETE /api/v1/clients/:id
+    • Description: Delete client account.
+    • Response (200 OK): { "success": true, "message": "Client deleted" }
+
+================================================================================
+5. CLIENT ASSETS & EQUIPMENT UNITS APIS
+   Associated Pages: /client-assets, /client-assets/create, /client-assets/[id]/edit
+================================================================================
+
+5.1 GET /api/v1/assets
+    • Description: List all inspected vertical transport assets.
+    • Query Params: search, equipmentType, status, clientId, page, limit
+    • Response (200 OK):
+      {
+        "data": [
+          {
+            "id": "AST-101",
+            "clientId": "CLI-001",
+            "clientName": "DLF Cyber City Developers",
+            "assetName": "Passenger Lift Tower A - High Speed",
+            "equipmentType": "Traction Passenger Lift",
+            "facilityName": "Building 10A, Cyber Hub",
+            "locationInFacility": "Core Shaft 1, Ground to 24th Floor",
+            "manufacturer": "Otis Gen2",
+            "installationYear": 2021,
+            "capacity": "16 Persons / 1088 kg",
+            "speed": "2.5 m/s",
+            "status": "Certified & Operational",
+            "lastAuditDate": "2025-10-12",
+            "nextAuditDueDate": "2026-10-12",
+            "assignedInspector": "Rajesh Sharma",
+            "safetyComplianceScore": 99.2
+          }
+        ],
+        "pagination": { "total": 156, "page": 1, "limit": 10 }
+      }
+
+5.2 GET /api/v1/assets/stats
+    • Description: Asset stats for KPI cards.
+    • Response (200 OK):
+      {
+        "totalAssets": 156,
+        "certifiedOperational": 138,
+        "dueForAudit": 12,
+        "auditInProgress": 6,
+        "averageSafetyScore": 98.4,
+        "statusBreakdown": { "Certified & Operational": 138, "Due for Audit": 12, "Audit In-Progress": 6 }
+      }
+
+5.3 GET /api/v1/assets/:id
+    • Description: Fetch single asset by ID.
+    • Response (200 OK): AssetRecord object.
+
+5.4 POST /api/v1/assets
+    • Description: Register a new elevator or escalator.
+    • Request Body: CreateAssetInput
+    • Response (201 Created): { "success": true, "data": AssetRecord }
+
+5.5 PUT /api/v1/assets/:id
+    • Description: Update asset details.
+    • Request Body: UpdateAssetInput
+    • Response (200 OK): { "success": true, "data": AssetRecord }
+
+5.6 PATCH /api/v1/assets/:id/audit-verdict
+    • Description: Log inspection audit result and safety compliance score.
+    • Request Body:
+      {
+        "status": "Certified & Operational",
+        "safetyComplianceScore": 98.8,
+        "lastAuditDate": "2026-09-25",
+        "nextAuditDueDate": "2027-09-25"
+      }
+    • Response (200 OK): { "success": true, "data": AssetRecord }
+
+5.7 DELETE /api/v1/assets/:id
+    • Description: Delete an asset record.
+    • Response (200 OK): { "success": true, "message": "Asset deleted" }
+
+================================================================================
+6. SALES TEAM (BDE) & SALES DASHBOARD APIS
+   Associated Pages: /bde, /bde/create, /bde/[id], /bde/[id]/sales, /bde/dashboard
+================================================================================
+
+6.1 GET /api/v1/bde
+    • Description: List all Sales Representatives & Account Executives.
+    • Query Params: search, region, status, designation, page, limit
+    • Response (200 OK):
+      {
+        "data": [
+          {
+            "id": "BDE-001",
+            "employeeCode": "NLETA-SLS-01",
+            "fullName": "Vikram Malhotra",
+            "email": "v.malhotra@nletacrm.com",
+            "phone": "+91 98111 88990",
+            "designation": "Regional Sales Lead",
+            "region": "Delhi NCR",
+            "status": "Active",
+            "quarterlyTarget": "₹40,00,000",
+            "numericTarget": 4000000,
+            "achievedRevenue": "₹34,50,000",
+            "numericAchieved": 3450000,
+            "conversionRate": 82,
+            "activeLeadsCount": 9,
+            "closedDealsCount": 14,
+            "joinedDate": "2023-04-10"
+          }
+        ]
+      }
+
+6.2 GET /api/v1/bde/stats
+    • Description: Overall sales team stats for directory header.
+    • Response (200 OK):
+      {
+        "totalExecutives": 6,
+        "activeExecutives": 5,
+        "totalTarget": 15000000,
+        "totalAchieved": 12800000,
+        "formattedTotalRevenue": "₹1.28 Cr",
+        "formattedTotalTarget": "₹1.50 Cr",
+        "averageConversionRate": 78.4,
+        "statusBreakdown": { "Active": 5, "On Leave": 1 }
+      }
+
+6.3 GET /api/v1/bde/:id
+    • Description: Fetch single sales rep profile.
+    • Response (200 OK): BdeItem object.
+
+6.4 GET /api/v1/bde/:id/leads
+    • Description: Fetch all leads assigned to this specific sales rep.
+    • Response (200 OK): Array of LeadItem objects.
+
+6.5 GET /api/v1/bde/:id/clients
+    • Description: Fetch all client accounts managed by this sales rep.
+    • Response (200 OK): Array of ClientItem objects.
+
+6.6 GET /api/v1/bde/:id/sales-analytics
+    • Description: Funnel stage counts & monthly sales data for /bde/[id]/sales page.
+    • Response (200 OK):
+      {
+        "funnelCounts": {
+          "newInquiry": 3,
+          "auditScheduled": 2,
+          "underReview": 1,
+          "quotationSent": 2,
+          "approved": 4
+        },
+        "totalPipelineValue": 4500000,
+        "monthlyDeals": [
+          { "month": "Jan", "sales": 18 },
+          { "month": "Feb", "sales": 24 },
+          ...
+          { "month": "Sep", "sales": 54 }
+        ]
+      }
+
+6.7 GET /api/v1/bde/dashboard/overview
+    • Description: Aggregated team metrics, quota progress, and leaderboard for /bde/dashboard.
+    • Response (200 OK):
+      {
+        "quotaProgress": 85.3,
+        "funnelStages": { "newInquiry": 12, "auditScheduled": 10, "underReview": 8, "quotationSent": 11, "won": 7 },
+        "monthlyPerformance": [{ "month": "Jan", "sales": 24 }, ...],
+        "leaderboard": [{ "id": "BDE-001", "name": "Vikram Malhotra", "achieved": "₹34.5L", "winRate": 82 }, ...]
+      }
+
+6.8 POST /api/v1/bde
+    • Description: Register a new Sales Rep.
+    • Request Body: CreateBdeInput
+    • Response (201 Created): { "success": true, "data": BdeItem }
+
+6.9 PUT /api/v1/bde/:id
+    • Description: Update Sales Rep profile.
+    • Request Body: UpdateBdeInput
+    • Response (200 OK): { "success": true, "data": BdeItem }
+
+6.10 DELETE /api/v1/bde/:id
+     • Description: Remove Sales Rep.
+     • Response (200 OK): { "success": true, "message": "Sales rep removed" }
+
+================================================================================
+7. INSPECTION INSPECTORS & SAFETY OPERATIONS APIS
+   Associated Pages: /technicians, /technicians/create, /technicians/[id], /technicians/dashboard
+================================================================================
+
+7.1 GET /api/v1/technicians
+    • Description: List all certified Inspection Inspectors.
+    • Query Params: search, operatingZone, status, skillSpecialization, page, limit
+    • Response (200 OK):
+      {
+        "data": [
+          {
+            "id": "TECH-001",
+            "badgeNumber": "NLETA-INSP-A1",
+            "fullName": "Rajesh Kumar Sharma",
+            "email": "r.sharma@nletacrm.com",
+            "phone": "+91 98112 34567",
+            "skillSpecialization": "Traction & High-Rise Lifts",
+            "certificationLevel": "Senior Certified Inspector (Level 3)",
+            "operatingZone": "North Zone (Delhi/NCR)",
+            "status": "Available on Field",
+            "assignedAuditsCount": 8,
+            "completedAuditsCount": 42,
+            "safetyRating": 4.95,
+            "licenseExpiryDate": "2027-05-15"
+          }
+        ]
+      }
+
+7.2 GET /api/v1/technicians/stats
+    • Description: Field inspection statistics.
+    • Response (200 OK):
+      {
+        "totalTechnicians": 18,
+        "availableOnField": 12,
+        "onSiteInspection": 4,
+        "averageRating": 4.92,
+        "totalCompletedAudits": 340,
+        "statusBreakdown": { "Available on Field": 12, "On-Site Inspection": 4, "In Transit": 1, "On Leave": 1 }
+      }
+
+7.3 GET /api/v1/technicians/:id
+    • Description: Fetch single inspector profile with assigned client installations.
+    • Response (200 OK): TechnicianItem object.
+
+7.4 GET /api/v1/technicians/:id/assigned-clients
+    • Description: Fetch client facilities inspected by this inspector.
+    • Response (200 OK): Array of ClientItem objects.
+
+7.5 GET /api/v1/technicians/dashboard/overview
+    • Description: Safety operations overview, monthly audit chart, and zone readiness for /technicians/dashboard.
+    • Response (200 OK):
+      {
+        "stats": { "totalTechnicians": 18, "availableOnField": 12, "onSiteInspection": 4, "averageRating": 4.92 },
+        "monthlyAudits": [{ "month": "Jan", "sales": 45 }, ...],
+        "zoneReadiness": [
+          { "zone": "North Zone (Delhi/NCR)", "lead": "Rajesh Sharma", "activeSites": 4, "status": "Normal" },
+          { "zone": "West Zone (Mumbai/Pune)", "lead": "Amit Patel", "activeSites": 6, "status": "High Activity" }
+        ]
+      }
+
+7.6 POST /api/v1/technicians
+    • Description: Register new Inspection Inspector.
+    • Request Body: CreateTechnicianInput
+    • Response (201 Created): { "success": true, "data": TechnicianItem }
+
+7.7 PUT /api/v1/technicians/:id
+    • Description: Update inspector profile.
+    • Request Body: UpdateTechnicianInput
+    • Response (200 OK): { "success": true, "data": TechnicianItem }
+
+7.8 DELETE /api/v1/technicians/:id
+    • Description: Delete inspector record.
+    • Response (200 OK): { "success": true, "message": "Inspector removed" }
+
+================================================================================
+8. EMPLOYEES & WORKFORCE MANAGEMENT APIS
+   Associated Pages: /employees, /employees/create, /employees/[id], /employees/dashboard
+================================================================================
+
+8.1 GET /api/v1/employees
+    • Description: Fetch paginated employee directory.
+    • Query Params: search, department, status, workLocation, employmentType, page, limit
+    • Response (200 OK):
+      {
+        "data": [
+          {
+            "id": "EMP-001",
+            "employeeCode": "NLETA-EMP-101",
+            "fullName": "Rajesh Kumar Sharma",
+            "email": "r.sharma@nletacrm.com",
+            "phone": "+91 98112 34567",
+            "department": "Safety & Compliance",
+            "designation": "Chief Technical Safety Auditor",
+            "employmentType": "Full-Time Permanent",
+            "workLocation": "Headquarters (New Delhi)",
+            "status": "Active",
+            "joiningDate": "2021-03-15",
+            "salaryBand": "Grade A (Executive)",
+            "safetyCertifications": ["ISO 9001 Lead Auditor", "BIS Escalator Inspector"]
+          }
+        ],
+        "pagination": { "total": 32, "page": 1, "limit": 10 }
+      }
+
+8.2 GET /api/v1/employees/stats
+    • Description: Workforce headcount stats by department & status.
+    • Response (200 OK):
+      {
+        "totalEmployees": 32,
+        "activeStaff": 24,
+        "onFieldDuty": 6,
+        "onLeave": 2,
+        "departmentsCount": 5,
+        "departmentBreakdown": {
+          "Safety & Compliance": 10,
+          "Field Engineering": 8,
+          "Business Development": 6,
+          "Quality Assurance": 5,
+          "Operations & Logistics": 3
+        },
+        "statusBreakdown": { "Active": 24, "On Field Duty": 6, "On Leave": 2 }
+      }
+
+8.3 GET /api/v1/employees/:id
+    • Description: Fetch employee profile with certificates and emergency contacts.
+    • Response (200 OK): EmployeeItem object.
+
+8.4 GET /api/v1/employees/dashboard/overview
+    • Description: Department headcount chart and compliance milestones for /employees/dashboard.
+    • Response (200 OK):
+      {
+        "headcountData": [{ "month": "Safety", "sales": 10 }, { "month": "Field Eng", "sales": 8 }, ...],
+        "complianceMilestones": {
+          "bisLicenses": "All field inspection engineers certified (100%)",
+          "safetyInduction": "Completed for Q3 2026 onboarding batch",
+          "insurancePolicy": "Active group policy"
+        }
+      }
+
+8.5 POST /api/v1/employees
+    • Description: Onboard new employee.
+    • Request Body: CreateEmployeeInput
+    • Response (201 Created): { "success": true, "data": EmployeeItem }
+
+8.6 PUT /api/v1/employees/:id
+    • Description: Update employee record.
+    • Request Body: UpdateEmployeeInput
+    • Response (200 OK): { "success": true, "data": EmployeeItem }
+
+8.7 DELETE /api/v1/employees/:id
+    • Description: Offboard / Remove employee record.
+    • Response (200 OK): { "success": true, "message": "Employee removed" }
+
+================================================================================
+9. BUSINESS INTELLIGENCE & MACRO ANALYTICS APIS
+   Associated Pages: /analytics
+================================================================================
+
+9.1 GET /api/v1/analytics/overview
+    • Description: Macro business metrics for executive analytics dashboard.
+    • Response (200 OK):
+      {
+        "totalRevenueFormatted": "₹1.48 Cr",
+        "revenueGrowthRate": "+14.2%",
+        "totalAuditsConducted": 384,
+        "fleetSafetyScore": 98.4,
+        "resourceUtilization": "92.5%"
+      }
+
+9.2 GET /api/v1/analytics/charts/monthly-revenue-deals
+    • Description: Multi-month closed deals and contract revenue for half-width desktop chart.
+    • Response (200 OK):
+      [
+        { "month": "Jan", "sales": 18, "revenue": 1800000 },
+        { "month": "Feb", "sales": 24, "revenue": 2400000 },
+        ...
+        { "month": "Dec", "sales": 58, "revenue": 5800000 }
+      ]
+
+9.3 GET /api/v1/analytics/charts/equipment-distribution
+    • Description: Breakdown of audits by vertical transport category.
+    • Response (200 OK):
+      [
+        { "category": "Traction Passenger Lifts", "count": 82, "percentage": 52.5 },
+        { "category": "Heavy Transit Escalators", "count": 44, "percentage": 28.2 },
+        { "category": "Hydraulic Elevators", "count": 20, "percentage": 12.8 },
+        { "category": "Moving Walkways", "count": 10, "percentage": 6.5 }
+      ]
+
+9.4 GET /api/v1/analytics/charts/zone-safety-performance
+    • Description: Regional safety scores and inspection density.
+    • Response (200 OK):
+      [
+        { "zone": "North Zone (Delhi/NCR)", "audits": 142, "avgScore": 99.1 },
+        { "zone": "West Zone (Mumbai/Pune)", "audits": 118, "avgScore": 98.4 },
+        { "zone": "South Zone (Bengaluru)", "audits": 84, "avgScore": 98.7 }
+      ]
+
+================================================================================
+10. PAGE-TO-API QUICK MAPPING MATRIX
+================================================================================
+
++----------------------------+--------------------------------------------------------------+
+| Page Route                 | Required REST API Endpoints                                 |
++----------------------------+--------------------------------------------------------------+
+| /signin, /signup           | POST /api/v1/auth/login, POST /api/v1/auth/register          |
+| /dashboard                 | GET /api/v1/dashboard/stats, GET /api/v1/dashboard/charts/* |
+| /leads                     | GET /api/v1/leads, GET /api/v1/leads/stats                   |
+| /leads/create              | POST /api/v1/leads, GET /api/v1/bde                          |
+| /leads/[id]/edit           | GET /api/v1/leads/:id, PUT /api/v1/leads/:id, GET /api/v1/bde|
+| /clients                   | GET /api/v1/clients, GET /api/v1/clients/stats, GET bde,tech |
+| /clients/create            | POST /api/v1/clients, GET /api/v1/bde, GET /api/v1/technicians|
+| /clients/[id]/edit         | GET /api/v1/clients/:id, PUT /api/v1/clients/:id             |
+| /client-assets             | GET /api/v1/assets, GET /api/v1/assets/stats                 |
+| /client-assets/create      | POST /api/v1/assets, GET /api/v1/clients                     |
+| /client-assets/[id]/edit   | GET /api/v1/assets/:id, PUT /api/v1/assets/:id               |
+| /bde                       | GET /api/v1/bde, GET /api/v1/bde/stats                       |
+| /bde/create                | POST /api/v1/bde                                             |
+| /bde/[id]                  | GET /api/v1/bde/:id, GET /leads, GET /clients                |
+| /bde/[id]/edit             | GET /api/v1/bde/:id, PUT /api/v1/bde/:id                     |
+| /bde/[id]/sales            | GET /api/v1/bde/:id/sales-analytics, GET /bde/:id/leads      |
+| /bde/dashboard             | GET /api/v1/bde/dashboard/overview, GET /bde, GET /leads     |
+| /technicians               | GET /api/v1/technicians, GET /api/v1/technicians/stats       |
+| /technicians/create        | POST /api/v1/technicians                                     |
+| /technicians/[id]          | GET /api/v1/technicians/:id, GET /technicians/:id/clients    |
+| /technicians/[id]/edit     | GET /api/v1/technicians/:id, PUT /api/v1/technicians/:id     |
+| /technicians/dashboard     | GET /api/v1/technicians/dashboard/overview, GET techs, assets|
+| /employees                 | GET /api/v1/employees, GET /api/v1/employees/stats           |
+| /employees/create          | POST /api/v1/employees                                       |
+| /employees/[id]            | GET /api/v1/employees/:id                                    |
+| /employees/[id]/edit       | GET /api/v1/employees/:id, PUT /api/v1/employees/:id         |
+| /employees/dashboard       | GET /api/v1/employees/dashboard/overview, GET employees      |
+| /analytics                 | GET /api/v1/analytics/overview, GET /analytics/charts/*      |
++----------------------------+--------------------------------------------------------------+
+
+================================================================================
+                         END OF REST API SPECIFICATION
+================================================================================
