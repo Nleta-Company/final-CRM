@@ -101,8 +101,8 @@ app.use(
   leadServiceSelectionRoutes
 );
 app.use(
-    "/api/client-services",
-    clientServiceSelectionRoutes
+  "/api/client-services",
+  clientServiceSelectionRoutes
 );
 // ==========================================
 // BASIC API HEALTH CHECK
@@ -188,8 +188,6 @@ startFollowUpNotificationJob();
 // START SERVER
 // ==========================================
 
-app.listen(PORT, () => {
-  console.log(
-    `NLETA CRM API running on http://localhost:${PORT}`
-  );
+app.listen(PORT, "0.0.0.0", () => {
+  console.log(`NLETA CRM API running on port ${PORT}`);
 });
