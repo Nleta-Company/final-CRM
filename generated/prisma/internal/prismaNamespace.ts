@@ -403,6 +403,7 @@ export const ModelName = {
   User: 'User',
   AuthSession: 'AuthSession',
   Lead: 'Lead',
+  LeadAsset: 'LeadAsset',
   Client: 'Client',
   Activity: 'Activity',
   Notification: 'Notification',
@@ -428,7 +429,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "role" | "permission" | "rolePermission" | "user" | "authSession" | "lead" | "client" | "activity" | "notification" | "serviceCatalog" | "servicePricingRule" | "leadServiceSelection" | "clientServiceSelection" | "pSGA" | "pSGAIncentiveAllocation" | "incentivePayout"
+    modelProps: "role" | "permission" | "rolePermission" | "user" | "authSession" | "lead" | "leadAsset" | "client" | "activity" | "notification" | "serviceCatalog" | "servicePricingRule" | "leadServiceSelection" | "clientServiceSelection" | "pSGA" | "pSGAIncentiveAllocation" | "incentivePayout"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -873,6 +874,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.LeadCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.LeadCountAggregateOutputType> | number
+        }
+      }
+    }
+    LeadAsset: {
+      payload: Prisma.$LeadAssetPayload<ExtArgs>
+      fields: Prisma.LeadAssetFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.LeadAssetFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LeadAssetPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.LeadAssetFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LeadAssetPayload>
+        }
+        findFirst: {
+          args: Prisma.LeadAssetFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LeadAssetPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.LeadAssetFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LeadAssetPayload>
+        }
+        findMany: {
+          args: Prisma.LeadAssetFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LeadAssetPayload>[]
+        }
+        create: {
+          args: Prisma.LeadAssetCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LeadAssetPayload>
+        }
+        createMany: {
+          args: Prisma.LeadAssetCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.LeadAssetCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LeadAssetPayload>[]
+        }
+        delete: {
+          args: Prisma.LeadAssetDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LeadAssetPayload>
+        }
+        update: {
+          args: Prisma.LeadAssetUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LeadAssetPayload>
+        }
+        deleteMany: {
+          args: Prisma.LeadAssetDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.LeadAssetUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.LeadAssetUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LeadAssetPayload>[]
+        }
+        upsert: {
+          args: Prisma.LeadAssetUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LeadAssetPayload>
+        }
+        aggregate: {
+          args: Prisma.LeadAssetAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateLeadAsset>
+        }
+        groupBy: {
+          args: Prisma.LeadAssetGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.LeadAssetGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.LeadAssetCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.LeadAssetCountAggregateOutputType> | number
         }
       }
     }
@@ -1719,7 +1794,6 @@ export type AuthSessionScalarFieldEnum = (typeof AuthSessionScalarFieldEnum)[key
 
 export const LeadScalarFieldEnum = {
   id: 'id',
-  associationName: 'associationName',
   contactName: 'contactName',
   email: 'email',
   mobile: 'mobile',
@@ -1728,12 +1802,43 @@ export const LeadScalarFieldEnum = {
   status: 'status',
   assignedToId: 'assignedToId',
   createdById: 'createdById',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  associationName: 'associationName',
   clientId: 'clientId',
+  address: 'address',
+  city: 'city',
+  customerType: 'customerType',
+  followUpRemarks: 'followUpRemarks',
+  nextAction: 'nextAction',
+  nextFollowUpAt: 'nextFollowUpAt',
+  pincode: 'pincode',
+  siteAddress: 'siteAddress',
+  siteCity: 'siteCity',
+  siteName: 'siteName',
+  siteState: 'siteState',
+  state: 'state'
+} as const
+
+export type LeadScalarFieldEnum = (typeof LeadScalarFieldEnum)[keyof typeof LeadScalarFieldEnum]
+
+
+export const LeadAssetScalarFieldEnum = {
+  id: 'id',
+  leadId: 'leadId',
+  assetName: 'assetName',
+  assetReference: 'assetReference',
+  installationLocation: 'installationLocation',
+  manufacturer: 'manufacturer',
+  model: 'model',
+  installationYear: 'installationYear',
+  existingAmc: 'existingAmc',
+  currentServiceProvider: 'currentServiceProvider',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
 
-export type LeadScalarFieldEnum = (typeof LeadScalarFieldEnum)[keyof typeof LeadScalarFieldEnum]
+export type LeadAssetScalarFieldEnum = (typeof LeadAssetScalarFieldEnum)[keyof typeof LeadAssetScalarFieldEnum]
 
 
 export const ClientScalarFieldEnum = {
@@ -1749,9 +1854,15 @@ export const ClientScalarFieldEnum = {
   gstNumber: 'gstNumber',
   status: 'status',
   createdById: 'createdById',
-  assignedBdeId: 'assignedBdeId',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  assignedBdeId: 'assignedBdeId',
+  externalClientId: 'externalClientId',
+  fsoGeneratedAt: 'fsoGeneratedAt',
+  fsoNumber: 'fsoNumber',
+  processStage: 'processStage',
+  processUpdatedAt: 'processUpdatedAt',
+  psgaGeneratedAt: 'psgaGeneratedAt'
 } as const
 
 export type ClientScalarFieldEnum = (typeof ClientScalarFieldEnum)[keyof typeof ClientScalarFieldEnum]
@@ -1780,12 +1891,12 @@ export const NotificationScalarFieldEnum = {
   title: 'title',
   message: 'message',
   isRead: 'isRead',
-  referenceId: 'referenceId',
-  referenceType: 'referenceType',
-  notificationKey: 'notificationKey',
   recipientId: 'recipientId',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  notificationKey: 'notificationKey',
+  referenceId: 'referenceId',
+  referenceType: 'referenceType'
 } as const
 
 export type NotificationScalarFieldEnum = (typeof NotificationScalarFieldEnum)[keyof typeof NotificationScalarFieldEnum]
@@ -1903,7 +2014,9 @@ export const PSGAIncentiveAllocationScalarFieldEnum = {
   approvedAt: 'approvedAt',
   paidAt: 'paidAt',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  adminId: 'adminId',
+  recipientType: 'recipientType'
 } as const
 
 export type PSGAIncentiveAllocationScalarFieldEnum = (typeof PSGAIncentiveAllocationScalarFieldEnum)[keyof typeof PSGAIncentiveAllocationScalarFieldEnum]
@@ -1913,14 +2026,14 @@ export const IncentivePayoutScalarFieldEnum = {
   id: 'id',
   bdeId: 'bdeId',
   salaryMonth: 'salaryMonth',
-  totalIncentivePercent: 'totalIncentivePercent',
   status: 'status',
   approvedById: 'approvedById',
   approvedAt: 'approvedAt',
   paidAt: 'paidAt',
   paymentReference: 'paymentReference',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  totalIncentivePercent: 'totalIncentivePercent'
 } as const
 
 export type IncentivePayoutScalarFieldEnum = (typeof IncentivePayoutScalarFieldEnum)[keyof typeof IncentivePayoutScalarFieldEnum]
@@ -2013,6 +2126,20 @@ export type ListEnumLeadStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$P
 
 
 /**
+ * Reference to a field of type 'Int'
+ */
+export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
+    
+
+
+/**
+ * Reference to a field of type 'Int[]'
+ */
+export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
+    
+
+
+/**
  * Reference to a field of type 'ClientStatus'
  */
 export type EnumClientStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ClientStatus'>
@@ -2023,6 +2150,20 @@ export type EnumClientStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$Pri
  * Reference to a field of type 'ClientStatus[]'
  */
 export type ListEnumClientStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ClientStatus[]'>
+    
+
+
+/**
+ * Reference to a field of type 'ClientProcessStage'
+ */
+export type EnumClientProcessStageFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ClientProcessStage'>
+    
+
+
+/**
+ * Reference to a field of type 'ClientProcessStage[]'
+ */
+export type ListEnumClientProcessStageFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ClientProcessStage[]'>
     
 
 
@@ -2090,20 +2231,6 @@ export type ListEnumPricingBasisFieldRefInput<$PrismaModel> = FieldRefInputType<
 
 
 /**
- * Reference to a field of type 'Int'
- */
-export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
-    
-
-
-/**
- * Reference to a field of type 'Int[]'
- */
-export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
-    
-
-
-/**
  * Reference to a field of type 'Decimal'
  */
 export type DecimalFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Decimal'>
@@ -2156,6 +2283,20 @@ export type EnumIncentiveRoleFieldRefInput<$PrismaModel> = FieldRefInputType<$Pr
  * Reference to a field of type 'IncentiveRole[]'
  */
 export type ListEnumIncentiveRoleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'IncentiveRole[]'>
+    
+
+
+/**
+ * Reference to a field of type 'IncentiveRecipientType'
+ */
+export type EnumIncentiveRecipientTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'IncentiveRecipientType'>
+    
+
+
+/**
+ * Reference to a field of type 'IncentiveRecipientType[]'
+ */
+export type ListEnumIncentiveRecipientTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'IncentiveRecipientType[]'>
     
 
 
@@ -2343,6 +2484,7 @@ export type GlobalOmitConfig = {
   user?: Prisma.UserOmit
   authSession?: Prisma.AuthSessionOmit
   lead?: Prisma.LeadOmit
+  leadAsset?: Prisma.LeadAssetOmit
   client?: Prisma.ClientOmit
   activity?: Prisma.ActivityOmit
   notification?: Prisma.NotificationOmit

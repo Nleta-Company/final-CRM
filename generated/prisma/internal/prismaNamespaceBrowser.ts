@@ -57,6 +57,7 @@ export const ModelName = {
   User: 'User',
   AuthSession: 'AuthSession',
   Lead: 'Lead',
+  LeadAsset: 'LeadAsset',
   Client: 'Client',
   Activity: 'Activity',
   Notification: 'Notification',
@@ -149,7 +150,6 @@ export type AuthSessionScalarFieldEnum = (typeof AuthSessionScalarFieldEnum)[key
 
 export const LeadScalarFieldEnum = {
   id: 'id',
-  associationName: 'associationName',
   contactName: 'contactName',
   email: 'email',
   mobile: 'mobile',
@@ -158,12 +158,43 @@ export const LeadScalarFieldEnum = {
   status: 'status',
   assignedToId: 'assignedToId',
   createdById: 'createdById',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  associationName: 'associationName',
   clientId: 'clientId',
+  address: 'address',
+  city: 'city',
+  customerType: 'customerType',
+  followUpRemarks: 'followUpRemarks',
+  nextAction: 'nextAction',
+  nextFollowUpAt: 'nextFollowUpAt',
+  pincode: 'pincode',
+  siteAddress: 'siteAddress',
+  siteCity: 'siteCity',
+  siteName: 'siteName',
+  siteState: 'siteState',
+  state: 'state'
+} as const
+
+export type LeadScalarFieldEnum = (typeof LeadScalarFieldEnum)[keyof typeof LeadScalarFieldEnum]
+
+
+export const LeadAssetScalarFieldEnum = {
+  id: 'id',
+  leadId: 'leadId',
+  assetName: 'assetName',
+  assetReference: 'assetReference',
+  installationLocation: 'installationLocation',
+  manufacturer: 'manufacturer',
+  model: 'model',
+  installationYear: 'installationYear',
+  existingAmc: 'existingAmc',
+  currentServiceProvider: 'currentServiceProvider',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
 
-export type LeadScalarFieldEnum = (typeof LeadScalarFieldEnum)[keyof typeof LeadScalarFieldEnum]
+export type LeadAssetScalarFieldEnum = (typeof LeadAssetScalarFieldEnum)[keyof typeof LeadAssetScalarFieldEnum]
 
 
 export const ClientScalarFieldEnum = {
@@ -179,9 +210,15 @@ export const ClientScalarFieldEnum = {
   gstNumber: 'gstNumber',
   status: 'status',
   createdById: 'createdById',
-  assignedBdeId: 'assignedBdeId',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  assignedBdeId: 'assignedBdeId',
+  externalClientId: 'externalClientId',
+  fsoGeneratedAt: 'fsoGeneratedAt',
+  fsoNumber: 'fsoNumber',
+  processStage: 'processStage',
+  processUpdatedAt: 'processUpdatedAt',
+  psgaGeneratedAt: 'psgaGeneratedAt'
 } as const
 
 export type ClientScalarFieldEnum = (typeof ClientScalarFieldEnum)[keyof typeof ClientScalarFieldEnum]
@@ -210,12 +247,12 @@ export const NotificationScalarFieldEnum = {
   title: 'title',
   message: 'message',
   isRead: 'isRead',
-  referenceId: 'referenceId',
-  referenceType: 'referenceType',
-  notificationKey: 'notificationKey',
   recipientId: 'recipientId',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  notificationKey: 'notificationKey',
+  referenceId: 'referenceId',
+  referenceType: 'referenceType'
 } as const
 
 export type NotificationScalarFieldEnum = (typeof NotificationScalarFieldEnum)[keyof typeof NotificationScalarFieldEnum]
@@ -333,7 +370,9 @@ export const PSGAIncentiveAllocationScalarFieldEnum = {
   approvedAt: 'approvedAt',
   paidAt: 'paidAt',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  adminId: 'adminId',
+  recipientType: 'recipientType'
 } as const
 
 export type PSGAIncentiveAllocationScalarFieldEnum = (typeof PSGAIncentiveAllocationScalarFieldEnum)[keyof typeof PSGAIncentiveAllocationScalarFieldEnum]
@@ -343,14 +382,14 @@ export const IncentivePayoutScalarFieldEnum = {
   id: 'id',
   bdeId: 'bdeId',
   salaryMonth: 'salaryMonth',
-  totalIncentivePercent: 'totalIncentivePercent',
   status: 'status',
   approvedById: 'approvedById',
   approvedAt: 'approvedAt',
   paidAt: 'paidAt',
   paymentReference: 'paymentReference',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  totalIncentivePercent: 'totalIncentivePercent'
 } as const
 
 export type IncentivePayoutScalarFieldEnum = (typeof IncentivePayoutScalarFieldEnum)[keyof typeof IncentivePayoutScalarFieldEnum]

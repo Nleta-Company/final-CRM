@@ -230,21 +230,22 @@ export type UserWhereInput = {
   lastLoginAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
-  role?: Prisma.XOR<Prisma.RoleScalarRelationFilter, Prisma.RoleWhereInput>
-  clientsCreated?: Prisma.ClientListRelationFilter
+  activities?: Prisma.ActivityListRelationFilter
+  sessions?: Prisma.AuthSessionListRelationFilter
   assignedClients?: Prisma.ClientListRelationFilter
+  clientsCreated?: Prisma.ClientListRelationFilter
+  clientServiceSelections?: Prisma.ClientServiceSelectionListRelationFilter
+  approvedIncentivePayouts?: Prisma.IncentivePayoutListRelationFilter
+  incentivePayouts?: Prisma.IncentivePayoutListRelationFilter
   assignedLeads?: Prisma.LeadListRelationFilter
   createdLeads?: Prisma.LeadListRelationFilter
-  activities?: Prisma.ActivityListRelationFilter
-  notifications?: Prisma.NotificationListRelationFilter
   leadServiceSelections?: Prisma.LeadServiceSelectionListRelationFilter
-  clientServiceSelections?: Prisma.ClientServiceSelectionListRelationFilter
+  notifications?: Prisma.NotificationListRelationFilter
   psgasAsBde?: Prisma.PSGAListRelationFilter
-  incentiveAllocations?: Prisma.PSGAIncentiveAllocationListRelationFilter
+  adminIncentiveAllocations?: Prisma.PSGAIncentiveAllocationListRelationFilter
   approvedIncentives?: Prisma.PSGAIncentiveAllocationListRelationFilter
-  incentivePayouts?: Prisma.IncentivePayoutListRelationFilter
-  approvedIncentivePayouts?: Prisma.IncentivePayoutListRelationFilter
-  sessions?: Prisma.AuthSessionListRelationFilter
+  incentiveAllocations?: Prisma.PSGAIncentiveAllocationListRelationFilter
+  role?: Prisma.XOR<Prisma.RoleScalarRelationFilter, Prisma.RoleWhereInput>
 }
 
 export type UserOrderByWithRelationInput = {
@@ -259,21 +260,22 @@ export type UserOrderByWithRelationInput = {
   lastLoginAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
-  role?: Prisma.RoleOrderByWithRelationInput
-  clientsCreated?: Prisma.ClientOrderByRelationAggregateInput
+  activities?: Prisma.ActivityOrderByRelationAggregateInput
+  sessions?: Prisma.AuthSessionOrderByRelationAggregateInput
   assignedClients?: Prisma.ClientOrderByRelationAggregateInput
+  clientsCreated?: Prisma.ClientOrderByRelationAggregateInput
+  clientServiceSelections?: Prisma.ClientServiceSelectionOrderByRelationAggregateInput
+  approvedIncentivePayouts?: Prisma.IncentivePayoutOrderByRelationAggregateInput
+  incentivePayouts?: Prisma.IncentivePayoutOrderByRelationAggregateInput
   assignedLeads?: Prisma.LeadOrderByRelationAggregateInput
   createdLeads?: Prisma.LeadOrderByRelationAggregateInput
-  activities?: Prisma.ActivityOrderByRelationAggregateInput
-  notifications?: Prisma.NotificationOrderByRelationAggregateInput
   leadServiceSelections?: Prisma.LeadServiceSelectionOrderByRelationAggregateInput
-  clientServiceSelections?: Prisma.ClientServiceSelectionOrderByRelationAggregateInput
+  notifications?: Prisma.NotificationOrderByRelationAggregateInput
   psgasAsBde?: Prisma.PSGAOrderByRelationAggregateInput
-  incentiveAllocations?: Prisma.PSGAIncentiveAllocationOrderByRelationAggregateInput
+  adminIncentiveAllocations?: Prisma.PSGAIncentiveAllocationOrderByRelationAggregateInput
   approvedIncentives?: Prisma.PSGAIncentiveAllocationOrderByRelationAggregateInput
-  incentivePayouts?: Prisma.IncentivePayoutOrderByRelationAggregateInput
-  approvedIncentivePayouts?: Prisma.IncentivePayoutOrderByRelationAggregateInput
-  sessions?: Prisma.AuthSessionOrderByRelationAggregateInput
+  incentiveAllocations?: Prisma.PSGAIncentiveAllocationOrderByRelationAggregateInput
+  role?: Prisma.RoleOrderByWithRelationInput
 }
 
 export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -291,21 +293,22 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   lastLoginAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
-  role?: Prisma.XOR<Prisma.RoleScalarRelationFilter, Prisma.RoleWhereInput>
-  clientsCreated?: Prisma.ClientListRelationFilter
+  activities?: Prisma.ActivityListRelationFilter
+  sessions?: Prisma.AuthSessionListRelationFilter
   assignedClients?: Prisma.ClientListRelationFilter
+  clientsCreated?: Prisma.ClientListRelationFilter
+  clientServiceSelections?: Prisma.ClientServiceSelectionListRelationFilter
+  approvedIncentivePayouts?: Prisma.IncentivePayoutListRelationFilter
+  incentivePayouts?: Prisma.IncentivePayoutListRelationFilter
   assignedLeads?: Prisma.LeadListRelationFilter
   createdLeads?: Prisma.LeadListRelationFilter
-  activities?: Prisma.ActivityListRelationFilter
-  notifications?: Prisma.NotificationListRelationFilter
   leadServiceSelections?: Prisma.LeadServiceSelectionListRelationFilter
-  clientServiceSelections?: Prisma.ClientServiceSelectionListRelationFilter
+  notifications?: Prisma.NotificationListRelationFilter
   psgasAsBde?: Prisma.PSGAListRelationFilter
-  incentiveAllocations?: Prisma.PSGAIncentiveAllocationListRelationFilter
+  adminIncentiveAllocations?: Prisma.PSGAIncentiveAllocationListRelationFilter
   approvedIncentives?: Prisma.PSGAIncentiveAllocationListRelationFilter
-  incentivePayouts?: Prisma.IncentivePayoutListRelationFilter
-  approvedIncentivePayouts?: Prisma.IncentivePayoutListRelationFilter
-  sessions?: Prisma.AuthSessionListRelationFilter
+  incentiveAllocations?: Prisma.PSGAIncentiveAllocationListRelationFilter
+  role?: Prisma.XOR<Prisma.RoleScalarRelationFilter, Prisma.RoleWhereInput>
 }, "id" | "email">
 
 export type UserOrderByWithAggregationInput = {
@@ -353,21 +356,22 @@ export type UserCreateInput = {
   lastLoginAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  role: Prisma.RoleCreateNestedOneWithoutUsersInput
-  clientsCreated?: Prisma.ClientCreateNestedManyWithoutCreatedByInput
+  activities?: Prisma.ActivityCreateNestedManyWithoutCreatedByInput
+  sessions?: Prisma.AuthSessionCreateNestedManyWithoutUserInput
   assignedClients?: Prisma.ClientCreateNestedManyWithoutAssignedBdeInput
+  clientsCreated?: Prisma.ClientCreateNestedManyWithoutCreatedByInput
+  clientServiceSelections?: Prisma.ClientServiceSelectionCreateNestedManyWithoutCreatedByInput
+  approvedIncentivePayouts?: Prisma.IncentivePayoutCreateNestedManyWithoutApprovedByInput
+  incentivePayouts?: Prisma.IncentivePayoutCreateNestedManyWithoutBdeInput
   assignedLeads?: Prisma.LeadCreateNestedManyWithoutAssignedToInput
   createdLeads?: Prisma.LeadCreateNestedManyWithoutCreatedByInput
-  activities?: Prisma.ActivityCreateNestedManyWithoutCreatedByInput
-  notifications?: Prisma.NotificationCreateNestedManyWithoutRecipientInput
   leadServiceSelections?: Prisma.LeadServiceSelectionCreateNestedManyWithoutCreatedByInput
-  clientServiceSelections?: Prisma.ClientServiceSelectionCreateNestedManyWithoutCreatedByInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutRecipientInput
   psgasAsBde?: Prisma.PSGACreateNestedManyWithoutBdeInput
-  incentiveAllocations?: Prisma.PSGAIncentiveAllocationCreateNestedManyWithoutBdeInput
+  adminIncentiveAllocations?: Prisma.PSGAIncentiveAllocationCreateNestedManyWithoutAdminInput
   approvedIncentives?: Prisma.PSGAIncentiveAllocationCreateNestedManyWithoutApprovedByInput
-  incentivePayouts?: Prisma.IncentivePayoutCreateNestedManyWithoutBdeInput
-  approvedIncentivePayouts?: Prisma.IncentivePayoutCreateNestedManyWithoutApprovedByInput
-  sessions?: Prisma.AuthSessionCreateNestedManyWithoutUserInput
+  incentiveAllocations?: Prisma.PSGAIncentiveAllocationCreateNestedManyWithoutBdeInput
+  role: Prisma.RoleCreateNestedOneWithoutUsersInput
 }
 
 export type UserUncheckedCreateInput = {
@@ -382,20 +386,21 @@ export type UserUncheckedCreateInput = {
   lastLoginAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  clientsCreated?: Prisma.ClientUncheckedCreateNestedManyWithoutCreatedByInput
+  activities?: Prisma.ActivityUncheckedCreateNestedManyWithoutCreatedByInput
+  sessions?: Prisma.AuthSessionUncheckedCreateNestedManyWithoutUserInput
   assignedClients?: Prisma.ClientUncheckedCreateNestedManyWithoutAssignedBdeInput
+  clientsCreated?: Prisma.ClientUncheckedCreateNestedManyWithoutCreatedByInput
+  clientServiceSelections?: Prisma.ClientServiceSelectionUncheckedCreateNestedManyWithoutCreatedByInput
+  approvedIncentivePayouts?: Prisma.IncentivePayoutUncheckedCreateNestedManyWithoutApprovedByInput
+  incentivePayouts?: Prisma.IncentivePayoutUncheckedCreateNestedManyWithoutBdeInput
   assignedLeads?: Prisma.LeadUncheckedCreateNestedManyWithoutAssignedToInput
   createdLeads?: Prisma.LeadUncheckedCreateNestedManyWithoutCreatedByInput
-  activities?: Prisma.ActivityUncheckedCreateNestedManyWithoutCreatedByInput
-  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput
   leadServiceSelections?: Prisma.LeadServiceSelectionUncheckedCreateNestedManyWithoutCreatedByInput
-  clientServiceSelections?: Prisma.ClientServiceSelectionUncheckedCreateNestedManyWithoutCreatedByInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput
   psgasAsBde?: Prisma.PSGAUncheckedCreateNestedManyWithoutBdeInput
-  incentiveAllocations?: Prisma.PSGAIncentiveAllocationUncheckedCreateNestedManyWithoutBdeInput
+  adminIncentiveAllocations?: Prisma.PSGAIncentiveAllocationUncheckedCreateNestedManyWithoutAdminInput
   approvedIncentives?: Prisma.PSGAIncentiveAllocationUncheckedCreateNestedManyWithoutApprovedByInput
-  incentivePayouts?: Prisma.IncentivePayoutUncheckedCreateNestedManyWithoutBdeInput
-  approvedIncentivePayouts?: Prisma.IncentivePayoutUncheckedCreateNestedManyWithoutApprovedByInput
-  sessions?: Prisma.AuthSessionUncheckedCreateNestedManyWithoutUserInput
+  incentiveAllocations?: Prisma.PSGAIncentiveAllocationUncheckedCreateNestedManyWithoutBdeInput
 }
 
 export type UserUpdateInput = {
@@ -409,21 +414,22 @@ export type UserUpdateInput = {
   lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  role?: Prisma.RoleUpdateOneRequiredWithoutUsersNestedInput
-  clientsCreated?: Prisma.ClientUpdateManyWithoutCreatedByNestedInput
+  activities?: Prisma.ActivityUpdateManyWithoutCreatedByNestedInput
+  sessions?: Prisma.AuthSessionUpdateManyWithoutUserNestedInput
   assignedClients?: Prisma.ClientUpdateManyWithoutAssignedBdeNestedInput
+  clientsCreated?: Prisma.ClientUpdateManyWithoutCreatedByNestedInput
+  clientServiceSelections?: Prisma.ClientServiceSelectionUpdateManyWithoutCreatedByNestedInput
+  approvedIncentivePayouts?: Prisma.IncentivePayoutUpdateManyWithoutApprovedByNestedInput
+  incentivePayouts?: Prisma.IncentivePayoutUpdateManyWithoutBdeNestedInput
   assignedLeads?: Prisma.LeadUpdateManyWithoutAssignedToNestedInput
   createdLeads?: Prisma.LeadUpdateManyWithoutCreatedByNestedInput
-  activities?: Prisma.ActivityUpdateManyWithoutCreatedByNestedInput
-  notifications?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput
   leadServiceSelections?: Prisma.LeadServiceSelectionUpdateManyWithoutCreatedByNestedInput
-  clientServiceSelections?: Prisma.ClientServiceSelectionUpdateManyWithoutCreatedByNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput
   psgasAsBde?: Prisma.PSGAUpdateManyWithoutBdeNestedInput
-  incentiveAllocations?: Prisma.PSGAIncentiveAllocationUpdateManyWithoutBdeNestedInput
+  adminIncentiveAllocations?: Prisma.PSGAIncentiveAllocationUpdateManyWithoutAdminNestedInput
   approvedIncentives?: Prisma.PSGAIncentiveAllocationUpdateManyWithoutApprovedByNestedInput
-  incentivePayouts?: Prisma.IncentivePayoutUpdateManyWithoutBdeNestedInput
-  approvedIncentivePayouts?: Prisma.IncentivePayoutUpdateManyWithoutApprovedByNestedInput
-  sessions?: Prisma.AuthSessionUpdateManyWithoutUserNestedInput
+  incentiveAllocations?: Prisma.PSGAIncentiveAllocationUpdateManyWithoutBdeNestedInput
+  role?: Prisma.RoleUpdateOneRequiredWithoutUsersNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
@@ -438,20 +444,21 @@ export type UserUncheckedUpdateInput = {
   lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  clientsCreated?: Prisma.ClientUncheckedUpdateManyWithoutCreatedByNestedInput
+  activities?: Prisma.ActivityUncheckedUpdateManyWithoutCreatedByNestedInput
+  sessions?: Prisma.AuthSessionUncheckedUpdateManyWithoutUserNestedInput
   assignedClients?: Prisma.ClientUncheckedUpdateManyWithoutAssignedBdeNestedInput
+  clientsCreated?: Prisma.ClientUncheckedUpdateManyWithoutCreatedByNestedInput
+  clientServiceSelections?: Prisma.ClientServiceSelectionUncheckedUpdateManyWithoutCreatedByNestedInput
+  approvedIncentivePayouts?: Prisma.IncentivePayoutUncheckedUpdateManyWithoutApprovedByNestedInput
+  incentivePayouts?: Prisma.IncentivePayoutUncheckedUpdateManyWithoutBdeNestedInput
   assignedLeads?: Prisma.LeadUncheckedUpdateManyWithoutAssignedToNestedInput
   createdLeads?: Prisma.LeadUncheckedUpdateManyWithoutCreatedByNestedInput
-  activities?: Prisma.ActivityUncheckedUpdateManyWithoutCreatedByNestedInput
-  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput
   leadServiceSelections?: Prisma.LeadServiceSelectionUncheckedUpdateManyWithoutCreatedByNestedInput
-  clientServiceSelections?: Prisma.ClientServiceSelectionUncheckedUpdateManyWithoutCreatedByNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput
   psgasAsBde?: Prisma.PSGAUncheckedUpdateManyWithoutBdeNestedInput
-  incentiveAllocations?: Prisma.PSGAIncentiveAllocationUncheckedUpdateManyWithoutBdeNestedInput
+  adminIncentiveAllocations?: Prisma.PSGAIncentiveAllocationUncheckedUpdateManyWithoutAdminNestedInput
   approvedIncentives?: Prisma.PSGAIncentiveAllocationUncheckedUpdateManyWithoutApprovedByNestedInput
-  incentivePayouts?: Prisma.IncentivePayoutUncheckedUpdateManyWithoutBdeNestedInput
-  approvedIncentivePayouts?: Prisma.IncentivePayoutUncheckedUpdateManyWithoutApprovedByNestedInput
-  sessions?: Prisma.AuthSessionUncheckedUpdateManyWithoutUserNestedInput
+  incentiveAllocations?: Prisma.PSGAIncentiveAllocationUncheckedUpdateManyWithoutBdeNestedInput
 }
 
 export type UserCreateManyInput = {
@@ -651,24 +658,16 @@ export type UserUpdateOneRequiredWithoutCreatedLeadsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutCreatedLeadsInput, Prisma.UserUpdateWithoutCreatedLeadsInput>, Prisma.UserUncheckedUpdateWithoutCreatedLeadsInput>
 }
 
-export type UserCreateNestedOneWithoutClientsCreatedInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutClientsCreatedInput, Prisma.UserUncheckedCreateWithoutClientsCreatedInput>
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutClientsCreatedInput
-  connect?: Prisma.UserWhereUniqueInput
-}
-
 export type UserCreateNestedOneWithoutAssignedClientsInput = {
   create?: Prisma.XOR<Prisma.UserCreateWithoutAssignedClientsInput, Prisma.UserUncheckedCreateWithoutAssignedClientsInput>
   connectOrCreate?: Prisma.UserCreateOrConnectWithoutAssignedClientsInput
   connect?: Prisma.UserWhereUniqueInput
 }
 
-export type UserUpdateOneRequiredWithoutClientsCreatedNestedInput = {
+export type UserCreateNestedOneWithoutClientsCreatedInput = {
   create?: Prisma.XOR<Prisma.UserCreateWithoutClientsCreatedInput, Prisma.UserUncheckedCreateWithoutClientsCreatedInput>
   connectOrCreate?: Prisma.UserCreateOrConnectWithoutClientsCreatedInput
-  upsert?: Prisma.UserUpsertWithoutClientsCreatedInput
   connect?: Prisma.UserWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutClientsCreatedInput, Prisma.UserUpdateWithoutClientsCreatedInput>, Prisma.UserUncheckedUpdateWithoutClientsCreatedInput>
 }
 
 export type UserUpdateOneWithoutAssignedClientsNestedInput = {
@@ -679,6 +678,14 @@ export type UserUpdateOneWithoutAssignedClientsNestedInput = {
   delete?: Prisma.UserWhereInput | boolean
   connect?: Prisma.UserWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutAssignedClientsInput, Prisma.UserUpdateWithoutAssignedClientsInput>, Prisma.UserUncheckedUpdateWithoutAssignedClientsInput>
+}
+
+export type UserUpdateOneRequiredWithoutClientsCreatedNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutClientsCreatedInput, Prisma.UserUncheckedCreateWithoutClientsCreatedInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutClientsCreatedInput
+  upsert?: Prisma.UserUpsertWithoutClientsCreatedInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutClientsCreatedInput, Prisma.UserUpdateWithoutClientsCreatedInput>, Prisma.UserUncheckedUpdateWithoutClientsCreatedInput>
 }
 
 export type UserCreateNestedOneWithoutActivitiesInput = {
@@ -753,9 +760,9 @@ export type UserUpdateOneWithoutPsgasAsBdeNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutPsgasAsBdeInput, Prisma.UserUpdateWithoutPsgasAsBdeInput>, Prisma.UserUncheckedUpdateWithoutPsgasAsBdeInput>
 }
 
-export type UserCreateNestedOneWithoutIncentiveAllocationsInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutIncentiveAllocationsInput, Prisma.UserUncheckedCreateWithoutIncentiveAllocationsInput>
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutIncentiveAllocationsInput
+export type UserCreateNestedOneWithoutAdminIncentiveAllocationsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutAdminIncentiveAllocationsInput, Prisma.UserUncheckedCreateWithoutAdminIncentiveAllocationsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutAdminIncentiveAllocationsInput
   connect?: Prisma.UserWhereUniqueInput
 }
 
@@ -765,12 +772,20 @@ export type UserCreateNestedOneWithoutApprovedIncentivesInput = {
   connect?: Prisma.UserWhereUniqueInput
 }
 
-export type UserUpdateOneRequiredWithoutIncentiveAllocationsNestedInput = {
+export type UserCreateNestedOneWithoutIncentiveAllocationsInput = {
   create?: Prisma.XOR<Prisma.UserCreateWithoutIncentiveAllocationsInput, Prisma.UserUncheckedCreateWithoutIncentiveAllocationsInput>
   connectOrCreate?: Prisma.UserCreateOrConnectWithoutIncentiveAllocationsInput
-  upsert?: Prisma.UserUpsertWithoutIncentiveAllocationsInput
   connect?: Prisma.UserWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutIncentiveAllocationsInput, Prisma.UserUpdateWithoutIncentiveAllocationsInput>, Prisma.UserUncheckedUpdateWithoutIncentiveAllocationsInput>
+}
+
+export type UserUpdateOneWithoutAdminIncentiveAllocationsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutAdminIncentiveAllocationsInput, Prisma.UserUncheckedCreateWithoutAdminIncentiveAllocationsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutAdminIncentiveAllocationsInput
+  upsert?: Prisma.UserUpsertWithoutAdminIncentiveAllocationsInput
+  disconnect?: Prisma.UserWhereInput | boolean
+  delete?: Prisma.UserWhereInput | boolean
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutAdminIncentiveAllocationsInput, Prisma.UserUpdateWithoutAdminIncentiveAllocationsInput>, Prisma.UserUncheckedUpdateWithoutAdminIncentiveAllocationsInput>
 }
 
 export type UserUpdateOneWithoutApprovedIncentivesNestedInput = {
@@ -783,10 +798,14 @@ export type UserUpdateOneWithoutApprovedIncentivesNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutApprovedIncentivesInput, Prisma.UserUpdateWithoutApprovedIncentivesInput>, Prisma.UserUncheckedUpdateWithoutApprovedIncentivesInput>
 }
 
-export type UserCreateNestedOneWithoutIncentivePayoutsInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutIncentivePayoutsInput, Prisma.UserUncheckedCreateWithoutIncentivePayoutsInput>
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutIncentivePayoutsInput
+export type UserUpdateOneWithoutIncentiveAllocationsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutIncentiveAllocationsInput, Prisma.UserUncheckedCreateWithoutIncentiveAllocationsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutIncentiveAllocationsInput
+  upsert?: Prisma.UserUpsertWithoutIncentiveAllocationsInput
+  disconnect?: Prisma.UserWhereInput | boolean
+  delete?: Prisma.UserWhereInput | boolean
   connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutIncentiveAllocationsInput, Prisma.UserUpdateWithoutIncentiveAllocationsInput>, Prisma.UserUncheckedUpdateWithoutIncentiveAllocationsInput>
 }
 
 export type UserCreateNestedOneWithoutApprovedIncentivePayoutsInput = {
@@ -795,12 +814,10 @@ export type UserCreateNestedOneWithoutApprovedIncentivePayoutsInput = {
   connect?: Prisma.UserWhereUniqueInput
 }
 
-export type UserUpdateOneRequiredWithoutIncentivePayoutsNestedInput = {
+export type UserCreateNestedOneWithoutIncentivePayoutsInput = {
   create?: Prisma.XOR<Prisma.UserCreateWithoutIncentivePayoutsInput, Prisma.UserUncheckedCreateWithoutIncentivePayoutsInput>
   connectOrCreate?: Prisma.UserCreateOrConnectWithoutIncentivePayoutsInput
-  upsert?: Prisma.UserUpsertWithoutIncentivePayoutsInput
   connect?: Prisma.UserWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutIncentivePayoutsInput, Prisma.UserUpdateWithoutIncentivePayoutsInput>, Prisma.UserUncheckedUpdateWithoutIncentivePayoutsInput>
 }
 
 export type UserUpdateOneWithoutApprovedIncentivePayoutsNestedInput = {
@@ -811,6 +828,14 @@ export type UserUpdateOneWithoutApprovedIncentivePayoutsNestedInput = {
   delete?: Prisma.UserWhereInput | boolean
   connect?: Prisma.UserWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutApprovedIncentivePayoutsInput, Prisma.UserUpdateWithoutApprovedIncentivePayoutsInput>, Prisma.UserUncheckedUpdateWithoutApprovedIncentivePayoutsInput>
+}
+
+export type UserUpdateOneRequiredWithoutIncentivePayoutsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutIncentivePayoutsInput, Prisma.UserUncheckedCreateWithoutIncentivePayoutsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutIncentivePayoutsInput
+  upsert?: Prisma.UserUpsertWithoutIncentivePayoutsInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutIncentivePayoutsInput, Prisma.UserUpdateWithoutIncentivePayoutsInput>, Prisma.UserUncheckedUpdateWithoutIncentivePayoutsInput>
 }
 
 export type UserCreateWithoutRoleInput = {
@@ -824,20 +849,21 @@ export type UserCreateWithoutRoleInput = {
   lastLoginAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  clientsCreated?: Prisma.ClientCreateNestedManyWithoutCreatedByInput
+  activities?: Prisma.ActivityCreateNestedManyWithoutCreatedByInput
+  sessions?: Prisma.AuthSessionCreateNestedManyWithoutUserInput
   assignedClients?: Prisma.ClientCreateNestedManyWithoutAssignedBdeInput
+  clientsCreated?: Prisma.ClientCreateNestedManyWithoutCreatedByInput
+  clientServiceSelections?: Prisma.ClientServiceSelectionCreateNestedManyWithoutCreatedByInput
+  approvedIncentivePayouts?: Prisma.IncentivePayoutCreateNestedManyWithoutApprovedByInput
+  incentivePayouts?: Prisma.IncentivePayoutCreateNestedManyWithoutBdeInput
   assignedLeads?: Prisma.LeadCreateNestedManyWithoutAssignedToInput
   createdLeads?: Prisma.LeadCreateNestedManyWithoutCreatedByInput
-  activities?: Prisma.ActivityCreateNestedManyWithoutCreatedByInput
-  notifications?: Prisma.NotificationCreateNestedManyWithoutRecipientInput
   leadServiceSelections?: Prisma.LeadServiceSelectionCreateNestedManyWithoutCreatedByInput
-  clientServiceSelections?: Prisma.ClientServiceSelectionCreateNestedManyWithoutCreatedByInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutRecipientInput
   psgasAsBde?: Prisma.PSGACreateNestedManyWithoutBdeInput
-  incentiveAllocations?: Prisma.PSGAIncentiveAllocationCreateNestedManyWithoutBdeInput
+  adminIncentiveAllocations?: Prisma.PSGAIncentiveAllocationCreateNestedManyWithoutAdminInput
   approvedIncentives?: Prisma.PSGAIncentiveAllocationCreateNestedManyWithoutApprovedByInput
-  incentivePayouts?: Prisma.IncentivePayoutCreateNestedManyWithoutBdeInput
-  approvedIncentivePayouts?: Prisma.IncentivePayoutCreateNestedManyWithoutApprovedByInput
-  sessions?: Prisma.AuthSessionCreateNestedManyWithoutUserInput
+  incentiveAllocations?: Prisma.PSGAIncentiveAllocationCreateNestedManyWithoutBdeInput
 }
 
 export type UserUncheckedCreateWithoutRoleInput = {
@@ -851,20 +877,21 @@ export type UserUncheckedCreateWithoutRoleInput = {
   lastLoginAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  clientsCreated?: Prisma.ClientUncheckedCreateNestedManyWithoutCreatedByInput
+  activities?: Prisma.ActivityUncheckedCreateNestedManyWithoutCreatedByInput
+  sessions?: Prisma.AuthSessionUncheckedCreateNestedManyWithoutUserInput
   assignedClients?: Prisma.ClientUncheckedCreateNestedManyWithoutAssignedBdeInput
+  clientsCreated?: Prisma.ClientUncheckedCreateNestedManyWithoutCreatedByInput
+  clientServiceSelections?: Prisma.ClientServiceSelectionUncheckedCreateNestedManyWithoutCreatedByInput
+  approvedIncentivePayouts?: Prisma.IncentivePayoutUncheckedCreateNestedManyWithoutApprovedByInput
+  incentivePayouts?: Prisma.IncentivePayoutUncheckedCreateNestedManyWithoutBdeInput
   assignedLeads?: Prisma.LeadUncheckedCreateNestedManyWithoutAssignedToInput
   createdLeads?: Prisma.LeadUncheckedCreateNestedManyWithoutCreatedByInput
-  activities?: Prisma.ActivityUncheckedCreateNestedManyWithoutCreatedByInput
-  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput
   leadServiceSelections?: Prisma.LeadServiceSelectionUncheckedCreateNestedManyWithoutCreatedByInput
-  clientServiceSelections?: Prisma.ClientServiceSelectionUncheckedCreateNestedManyWithoutCreatedByInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput
   psgasAsBde?: Prisma.PSGAUncheckedCreateNestedManyWithoutBdeInput
-  incentiveAllocations?: Prisma.PSGAIncentiveAllocationUncheckedCreateNestedManyWithoutBdeInput
+  adminIncentiveAllocations?: Prisma.PSGAIncentiveAllocationUncheckedCreateNestedManyWithoutAdminInput
   approvedIncentives?: Prisma.PSGAIncentiveAllocationUncheckedCreateNestedManyWithoutApprovedByInput
-  incentivePayouts?: Prisma.IncentivePayoutUncheckedCreateNestedManyWithoutBdeInput
-  approvedIncentivePayouts?: Prisma.IncentivePayoutUncheckedCreateNestedManyWithoutApprovedByInput
-  sessions?: Prisma.AuthSessionUncheckedCreateNestedManyWithoutUserInput
+  incentiveAllocations?: Prisma.PSGAIncentiveAllocationUncheckedCreateNestedManyWithoutBdeInput
 }
 
 export type UserCreateOrConnectWithoutRoleInput = {
@@ -921,20 +948,21 @@ export type UserCreateWithoutSessionsInput = {
   lastLoginAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  role: Prisma.RoleCreateNestedOneWithoutUsersInput
-  clientsCreated?: Prisma.ClientCreateNestedManyWithoutCreatedByInput
+  activities?: Prisma.ActivityCreateNestedManyWithoutCreatedByInput
   assignedClients?: Prisma.ClientCreateNestedManyWithoutAssignedBdeInput
+  clientsCreated?: Prisma.ClientCreateNestedManyWithoutCreatedByInput
+  clientServiceSelections?: Prisma.ClientServiceSelectionCreateNestedManyWithoutCreatedByInput
+  approvedIncentivePayouts?: Prisma.IncentivePayoutCreateNestedManyWithoutApprovedByInput
+  incentivePayouts?: Prisma.IncentivePayoutCreateNestedManyWithoutBdeInput
   assignedLeads?: Prisma.LeadCreateNestedManyWithoutAssignedToInput
   createdLeads?: Prisma.LeadCreateNestedManyWithoutCreatedByInput
-  activities?: Prisma.ActivityCreateNestedManyWithoutCreatedByInput
-  notifications?: Prisma.NotificationCreateNestedManyWithoutRecipientInput
   leadServiceSelections?: Prisma.LeadServiceSelectionCreateNestedManyWithoutCreatedByInput
-  clientServiceSelections?: Prisma.ClientServiceSelectionCreateNestedManyWithoutCreatedByInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutRecipientInput
   psgasAsBde?: Prisma.PSGACreateNestedManyWithoutBdeInput
-  incentiveAllocations?: Prisma.PSGAIncentiveAllocationCreateNestedManyWithoutBdeInput
+  adminIncentiveAllocations?: Prisma.PSGAIncentiveAllocationCreateNestedManyWithoutAdminInput
   approvedIncentives?: Prisma.PSGAIncentiveAllocationCreateNestedManyWithoutApprovedByInput
-  incentivePayouts?: Prisma.IncentivePayoutCreateNestedManyWithoutBdeInput
-  approvedIncentivePayouts?: Prisma.IncentivePayoutCreateNestedManyWithoutApprovedByInput
+  incentiveAllocations?: Prisma.PSGAIncentiveAllocationCreateNestedManyWithoutBdeInput
+  role: Prisma.RoleCreateNestedOneWithoutUsersInput
 }
 
 export type UserUncheckedCreateWithoutSessionsInput = {
@@ -949,19 +977,20 @@ export type UserUncheckedCreateWithoutSessionsInput = {
   lastLoginAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  clientsCreated?: Prisma.ClientUncheckedCreateNestedManyWithoutCreatedByInput
+  activities?: Prisma.ActivityUncheckedCreateNestedManyWithoutCreatedByInput
   assignedClients?: Prisma.ClientUncheckedCreateNestedManyWithoutAssignedBdeInput
+  clientsCreated?: Prisma.ClientUncheckedCreateNestedManyWithoutCreatedByInput
+  clientServiceSelections?: Prisma.ClientServiceSelectionUncheckedCreateNestedManyWithoutCreatedByInput
+  approvedIncentivePayouts?: Prisma.IncentivePayoutUncheckedCreateNestedManyWithoutApprovedByInput
+  incentivePayouts?: Prisma.IncentivePayoutUncheckedCreateNestedManyWithoutBdeInput
   assignedLeads?: Prisma.LeadUncheckedCreateNestedManyWithoutAssignedToInput
   createdLeads?: Prisma.LeadUncheckedCreateNestedManyWithoutCreatedByInput
-  activities?: Prisma.ActivityUncheckedCreateNestedManyWithoutCreatedByInput
-  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput
   leadServiceSelections?: Prisma.LeadServiceSelectionUncheckedCreateNestedManyWithoutCreatedByInput
-  clientServiceSelections?: Prisma.ClientServiceSelectionUncheckedCreateNestedManyWithoutCreatedByInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput
   psgasAsBde?: Prisma.PSGAUncheckedCreateNestedManyWithoutBdeInput
-  incentiveAllocations?: Prisma.PSGAIncentiveAllocationUncheckedCreateNestedManyWithoutBdeInput
+  adminIncentiveAllocations?: Prisma.PSGAIncentiveAllocationUncheckedCreateNestedManyWithoutAdminInput
   approvedIncentives?: Prisma.PSGAIncentiveAllocationUncheckedCreateNestedManyWithoutApprovedByInput
-  incentivePayouts?: Prisma.IncentivePayoutUncheckedCreateNestedManyWithoutBdeInput
-  approvedIncentivePayouts?: Prisma.IncentivePayoutUncheckedCreateNestedManyWithoutApprovedByInput
+  incentiveAllocations?: Prisma.PSGAIncentiveAllocationUncheckedCreateNestedManyWithoutBdeInput
 }
 
 export type UserCreateOrConnectWithoutSessionsInput = {
@@ -991,20 +1020,21 @@ export type UserUpdateWithoutSessionsInput = {
   lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  role?: Prisma.RoleUpdateOneRequiredWithoutUsersNestedInput
-  clientsCreated?: Prisma.ClientUpdateManyWithoutCreatedByNestedInput
+  activities?: Prisma.ActivityUpdateManyWithoutCreatedByNestedInput
   assignedClients?: Prisma.ClientUpdateManyWithoutAssignedBdeNestedInput
+  clientsCreated?: Prisma.ClientUpdateManyWithoutCreatedByNestedInput
+  clientServiceSelections?: Prisma.ClientServiceSelectionUpdateManyWithoutCreatedByNestedInput
+  approvedIncentivePayouts?: Prisma.IncentivePayoutUpdateManyWithoutApprovedByNestedInput
+  incentivePayouts?: Prisma.IncentivePayoutUpdateManyWithoutBdeNestedInput
   assignedLeads?: Prisma.LeadUpdateManyWithoutAssignedToNestedInput
   createdLeads?: Prisma.LeadUpdateManyWithoutCreatedByNestedInput
-  activities?: Prisma.ActivityUpdateManyWithoutCreatedByNestedInput
-  notifications?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput
   leadServiceSelections?: Prisma.LeadServiceSelectionUpdateManyWithoutCreatedByNestedInput
-  clientServiceSelections?: Prisma.ClientServiceSelectionUpdateManyWithoutCreatedByNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput
   psgasAsBde?: Prisma.PSGAUpdateManyWithoutBdeNestedInput
-  incentiveAllocations?: Prisma.PSGAIncentiveAllocationUpdateManyWithoutBdeNestedInput
+  adminIncentiveAllocations?: Prisma.PSGAIncentiveAllocationUpdateManyWithoutAdminNestedInput
   approvedIncentives?: Prisma.PSGAIncentiveAllocationUpdateManyWithoutApprovedByNestedInput
-  incentivePayouts?: Prisma.IncentivePayoutUpdateManyWithoutBdeNestedInput
-  approvedIncentivePayouts?: Prisma.IncentivePayoutUpdateManyWithoutApprovedByNestedInput
+  incentiveAllocations?: Prisma.PSGAIncentiveAllocationUpdateManyWithoutBdeNestedInput
+  role?: Prisma.RoleUpdateOneRequiredWithoutUsersNestedInput
 }
 
 export type UserUncheckedUpdateWithoutSessionsInput = {
@@ -1019,19 +1049,20 @@ export type UserUncheckedUpdateWithoutSessionsInput = {
   lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  clientsCreated?: Prisma.ClientUncheckedUpdateManyWithoutCreatedByNestedInput
+  activities?: Prisma.ActivityUncheckedUpdateManyWithoutCreatedByNestedInput
   assignedClients?: Prisma.ClientUncheckedUpdateManyWithoutAssignedBdeNestedInput
+  clientsCreated?: Prisma.ClientUncheckedUpdateManyWithoutCreatedByNestedInput
+  clientServiceSelections?: Prisma.ClientServiceSelectionUncheckedUpdateManyWithoutCreatedByNestedInput
+  approvedIncentivePayouts?: Prisma.IncentivePayoutUncheckedUpdateManyWithoutApprovedByNestedInput
+  incentivePayouts?: Prisma.IncentivePayoutUncheckedUpdateManyWithoutBdeNestedInput
   assignedLeads?: Prisma.LeadUncheckedUpdateManyWithoutAssignedToNestedInput
   createdLeads?: Prisma.LeadUncheckedUpdateManyWithoutCreatedByNestedInput
-  activities?: Prisma.ActivityUncheckedUpdateManyWithoutCreatedByNestedInput
-  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput
   leadServiceSelections?: Prisma.LeadServiceSelectionUncheckedUpdateManyWithoutCreatedByNestedInput
-  clientServiceSelections?: Prisma.ClientServiceSelectionUncheckedUpdateManyWithoutCreatedByNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput
   psgasAsBde?: Prisma.PSGAUncheckedUpdateManyWithoutBdeNestedInput
-  incentiveAllocations?: Prisma.PSGAIncentiveAllocationUncheckedUpdateManyWithoutBdeNestedInput
+  adminIncentiveAllocations?: Prisma.PSGAIncentiveAllocationUncheckedUpdateManyWithoutAdminNestedInput
   approvedIncentives?: Prisma.PSGAIncentiveAllocationUncheckedUpdateManyWithoutApprovedByNestedInput
-  incentivePayouts?: Prisma.IncentivePayoutUncheckedUpdateManyWithoutBdeNestedInput
-  approvedIncentivePayouts?: Prisma.IncentivePayoutUncheckedUpdateManyWithoutApprovedByNestedInput
+  incentiveAllocations?: Prisma.PSGAIncentiveAllocationUncheckedUpdateManyWithoutBdeNestedInput
 }
 
 export type UserCreateWithoutAssignedLeadsInput = {
@@ -1045,20 +1076,21 @@ export type UserCreateWithoutAssignedLeadsInput = {
   lastLoginAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  role: Prisma.RoleCreateNestedOneWithoutUsersInput
-  clientsCreated?: Prisma.ClientCreateNestedManyWithoutCreatedByInput
-  assignedClients?: Prisma.ClientCreateNestedManyWithoutAssignedBdeInput
-  createdLeads?: Prisma.LeadCreateNestedManyWithoutCreatedByInput
   activities?: Prisma.ActivityCreateNestedManyWithoutCreatedByInput
-  notifications?: Prisma.NotificationCreateNestedManyWithoutRecipientInput
-  leadServiceSelections?: Prisma.LeadServiceSelectionCreateNestedManyWithoutCreatedByInput
-  clientServiceSelections?: Prisma.ClientServiceSelectionCreateNestedManyWithoutCreatedByInput
-  psgasAsBde?: Prisma.PSGACreateNestedManyWithoutBdeInput
-  incentiveAllocations?: Prisma.PSGAIncentiveAllocationCreateNestedManyWithoutBdeInput
-  approvedIncentives?: Prisma.PSGAIncentiveAllocationCreateNestedManyWithoutApprovedByInput
-  incentivePayouts?: Prisma.IncentivePayoutCreateNestedManyWithoutBdeInput
-  approvedIncentivePayouts?: Prisma.IncentivePayoutCreateNestedManyWithoutApprovedByInput
   sessions?: Prisma.AuthSessionCreateNestedManyWithoutUserInput
+  assignedClients?: Prisma.ClientCreateNestedManyWithoutAssignedBdeInput
+  clientsCreated?: Prisma.ClientCreateNestedManyWithoutCreatedByInput
+  clientServiceSelections?: Prisma.ClientServiceSelectionCreateNestedManyWithoutCreatedByInput
+  approvedIncentivePayouts?: Prisma.IncentivePayoutCreateNestedManyWithoutApprovedByInput
+  incentivePayouts?: Prisma.IncentivePayoutCreateNestedManyWithoutBdeInput
+  createdLeads?: Prisma.LeadCreateNestedManyWithoutCreatedByInput
+  leadServiceSelections?: Prisma.LeadServiceSelectionCreateNestedManyWithoutCreatedByInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutRecipientInput
+  psgasAsBde?: Prisma.PSGACreateNestedManyWithoutBdeInput
+  adminIncentiveAllocations?: Prisma.PSGAIncentiveAllocationCreateNestedManyWithoutAdminInput
+  approvedIncentives?: Prisma.PSGAIncentiveAllocationCreateNestedManyWithoutApprovedByInput
+  incentiveAllocations?: Prisma.PSGAIncentiveAllocationCreateNestedManyWithoutBdeInput
+  role: Prisma.RoleCreateNestedOneWithoutUsersInput
 }
 
 export type UserUncheckedCreateWithoutAssignedLeadsInput = {
@@ -1073,19 +1105,20 @@ export type UserUncheckedCreateWithoutAssignedLeadsInput = {
   lastLoginAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  clientsCreated?: Prisma.ClientUncheckedCreateNestedManyWithoutCreatedByInput
-  assignedClients?: Prisma.ClientUncheckedCreateNestedManyWithoutAssignedBdeInput
-  createdLeads?: Prisma.LeadUncheckedCreateNestedManyWithoutCreatedByInput
   activities?: Prisma.ActivityUncheckedCreateNestedManyWithoutCreatedByInput
-  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput
-  leadServiceSelections?: Prisma.LeadServiceSelectionUncheckedCreateNestedManyWithoutCreatedByInput
-  clientServiceSelections?: Prisma.ClientServiceSelectionUncheckedCreateNestedManyWithoutCreatedByInput
-  psgasAsBde?: Prisma.PSGAUncheckedCreateNestedManyWithoutBdeInput
-  incentiveAllocations?: Prisma.PSGAIncentiveAllocationUncheckedCreateNestedManyWithoutBdeInput
-  approvedIncentives?: Prisma.PSGAIncentiveAllocationUncheckedCreateNestedManyWithoutApprovedByInput
-  incentivePayouts?: Prisma.IncentivePayoutUncheckedCreateNestedManyWithoutBdeInput
-  approvedIncentivePayouts?: Prisma.IncentivePayoutUncheckedCreateNestedManyWithoutApprovedByInput
   sessions?: Prisma.AuthSessionUncheckedCreateNestedManyWithoutUserInput
+  assignedClients?: Prisma.ClientUncheckedCreateNestedManyWithoutAssignedBdeInput
+  clientsCreated?: Prisma.ClientUncheckedCreateNestedManyWithoutCreatedByInput
+  clientServiceSelections?: Prisma.ClientServiceSelectionUncheckedCreateNestedManyWithoutCreatedByInput
+  approvedIncentivePayouts?: Prisma.IncentivePayoutUncheckedCreateNestedManyWithoutApprovedByInput
+  incentivePayouts?: Prisma.IncentivePayoutUncheckedCreateNestedManyWithoutBdeInput
+  createdLeads?: Prisma.LeadUncheckedCreateNestedManyWithoutCreatedByInput
+  leadServiceSelections?: Prisma.LeadServiceSelectionUncheckedCreateNestedManyWithoutCreatedByInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput
+  psgasAsBde?: Prisma.PSGAUncheckedCreateNestedManyWithoutBdeInput
+  adminIncentiveAllocations?: Prisma.PSGAIncentiveAllocationUncheckedCreateNestedManyWithoutAdminInput
+  approvedIncentives?: Prisma.PSGAIncentiveAllocationUncheckedCreateNestedManyWithoutApprovedByInput
+  incentiveAllocations?: Prisma.PSGAIncentiveAllocationUncheckedCreateNestedManyWithoutBdeInput
 }
 
 export type UserCreateOrConnectWithoutAssignedLeadsInput = {
@@ -1104,20 +1137,21 @@ export type UserCreateWithoutCreatedLeadsInput = {
   lastLoginAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  role: Prisma.RoleCreateNestedOneWithoutUsersInput
-  clientsCreated?: Prisma.ClientCreateNestedManyWithoutCreatedByInput
-  assignedClients?: Prisma.ClientCreateNestedManyWithoutAssignedBdeInput
-  assignedLeads?: Prisma.LeadCreateNestedManyWithoutAssignedToInput
   activities?: Prisma.ActivityCreateNestedManyWithoutCreatedByInput
-  notifications?: Prisma.NotificationCreateNestedManyWithoutRecipientInput
-  leadServiceSelections?: Prisma.LeadServiceSelectionCreateNestedManyWithoutCreatedByInput
-  clientServiceSelections?: Prisma.ClientServiceSelectionCreateNestedManyWithoutCreatedByInput
-  psgasAsBde?: Prisma.PSGACreateNestedManyWithoutBdeInput
-  incentiveAllocations?: Prisma.PSGAIncentiveAllocationCreateNestedManyWithoutBdeInput
-  approvedIncentives?: Prisma.PSGAIncentiveAllocationCreateNestedManyWithoutApprovedByInput
-  incentivePayouts?: Prisma.IncentivePayoutCreateNestedManyWithoutBdeInput
-  approvedIncentivePayouts?: Prisma.IncentivePayoutCreateNestedManyWithoutApprovedByInput
   sessions?: Prisma.AuthSessionCreateNestedManyWithoutUserInput
+  assignedClients?: Prisma.ClientCreateNestedManyWithoutAssignedBdeInput
+  clientsCreated?: Prisma.ClientCreateNestedManyWithoutCreatedByInput
+  clientServiceSelections?: Prisma.ClientServiceSelectionCreateNestedManyWithoutCreatedByInput
+  approvedIncentivePayouts?: Prisma.IncentivePayoutCreateNestedManyWithoutApprovedByInput
+  incentivePayouts?: Prisma.IncentivePayoutCreateNestedManyWithoutBdeInput
+  assignedLeads?: Prisma.LeadCreateNestedManyWithoutAssignedToInput
+  leadServiceSelections?: Prisma.LeadServiceSelectionCreateNestedManyWithoutCreatedByInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutRecipientInput
+  psgasAsBde?: Prisma.PSGACreateNestedManyWithoutBdeInput
+  adminIncentiveAllocations?: Prisma.PSGAIncentiveAllocationCreateNestedManyWithoutAdminInput
+  approvedIncentives?: Prisma.PSGAIncentiveAllocationCreateNestedManyWithoutApprovedByInput
+  incentiveAllocations?: Prisma.PSGAIncentiveAllocationCreateNestedManyWithoutBdeInput
+  role: Prisma.RoleCreateNestedOneWithoutUsersInput
 }
 
 export type UserUncheckedCreateWithoutCreatedLeadsInput = {
@@ -1132,19 +1166,20 @@ export type UserUncheckedCreateWithoutCreatedLeadsInput = {
   lastLoginAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  clientsCreated?: Prisma.ClientUncheckedCreateNestedManyWithoutCreatedByInput
-  assignedClients?: Prisma.ClientUncheckedCreateNestedManyWithoutAssignedBdeInput
-  assignedLeads?: Prisma.LeadUncheckedCreateNestedManyWithoutAssignedToInput
   activities?: Prisma.ActivityUncheckedCreateNestedManyWithoutCreatedByInput
-  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput
-  leadServiceSelections?: Prisma.LeadServiceSelectionUncheckedCreateNestedManyWithoutCreatedByInput
-  clientServiceSelections?: Prisma.ClientServiceSelectionUncheckedCreateNestedManyWithoutCreatedByInput
-  psgasAsBde?: Prisma.PSGAUncheckedCreateNestedManyWithoutBdeInput
-  incentiveAllocations?: Prisma.PSGAIncentiveAllocationUncheckedCreateNestedManyWithoutBdeInput
-  approvedIncentives?: Prisma.PSGAIncentiveAllocationUncheckedCreateNestedManyWithoutApprovedByInput
-  incentivePayouts?: Prisma.IncentivePayoutUncheckedCreateNestedManyWithoutBdeInput
-  approvedIncentivePayouts?: Prisma.IncentivePayoutUncheckedCreateNestedManyWithoutApprovedByInput
   sessions?: Prisma.AuthSessionUncheckedCreateNestedManyWithoutUserInput
+  assignedClients?: Prisma.ClientUncheckedCreateNestedManyWithoutAssignedBdeInput
+  clientsCreated?: Prisma.ClientUncheckedCreateNestedManyWithoutCreatedByInput
+  clientServiceSelections?: Prisma.ClientServiceSelectionUncheckedCreateNestedManyWithoutCreatedByInput
+  approvedIncentivePayouts?: Prisma.IncentivePayoutUncheckedCreateNestedManyWithoutApprovedByInput
+  incentivePayouts?: Prisma.IncentivePayoutUncheckedCreateNestedManyWithoutBdeInput
+  assignedLeads?: Prisma.LeadUncheckedCreateNestedManyWithoutAssignedToInput
+  leadServiceSelections?: Prisma.LeadServiceSelectionUncheckedCreateNestedManyWithoutCreatedByInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput
+  psgasAsBde?: Prisma.PSGAUncheckedCreateNestedManyWithoutBdeInput
+  adminIncentiveAllocations?: Prisma.PSGAIncentiveAllocationUncheckedCreateNestedManyWithoutAdminInput
+  approvedIncentives?: Prisma.PSGAIncentiveAllocationUncheckedCreateNestedManyWithoutApprovedByInput
+  incentiveAllocations?: Prisma.PSGAIncentiveAllocationUncheckedCreateNestedManyWithoutBdeInput
 }
 
 export type UserCreateOrConnectWithoutCreatedLeadsInput = {
@@ -1174,20 +1209,21 @@ export type UserUpdateWithoutAssignedLeadsInput = {
   lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  role?: Prisma.RoleUpdateOneRequiredWithoutUsersNestedInput
-  clientsCreated?: Prisma.ClientUpdateManyWithoutCreatedByNestedInput
-  assignedClients?: Prisma.ClientUpdateManyWithoutAssignedBdeNestedInput
-  createdLeads?: Prisma.LeadUpdateManyWithoutCreatedByNestedInput
   activities?: Prisma.ActivityUpdateManyWithoutCreatedByNestedInput
-  notifications?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput
-  leadServiceSelections?: Prisma.LeadServiceSelectionUpdateManyWithoutCreatedByNestedInput
-  clientServiceSelections?: Prisma.ClientServiceSelectionUpdateManyWithoutCreatedByNestedInput
-  psgasAsBde?: Prisma.PSGAUpdateManyWithoutBdeNestedInput
-  incentiveAllocations?: Prisma.PSGAIncentiveAllocationUpdateManyWithoutBdeNestedInput
-  approvedIncentives?: Prisma.PSGAIncentiveAllocationUpdateManyWithoutApprovedByNestedInput
-  incentivePayouts?: Prisma.IncentivePayoutUpdateManyWithoutBdeNestedInput
-  approvedIncentivePayouts?: Prisma.IncentivePayoutUpdateManyWithoutApprovedByNestedInput
   sessions?: Prisma.AuthSessionUpdateManyWithoutUserNestedInput
+  assignedClients?: Prisma.ClientUpdateManyWithoutAssignedBdeNestedInput
+  clientsCreated?: Prisma.ClientUpdateManyWithoutCreatedByNestedInput
+  clientServiceSelections?: Prisma.ClientServiceSelectionUpdateManyWithoutCreatedByNestedInput
+  approvedIncentivePayouts?: Prisma.IncentivePayoutUpdateManyWithoutApprovedByNestedInput
+  incentivePayouts?: Prisma.IncentivePayoutUpdateManyWithoutBdeNestedInput
+  createdLeads?: Prisma.LeadUpdateManyWithoutCreatedByNestedInput
+  leadServiceSelections?: Prisma.LeadServiceSelectionUpdateManyWithoutCreatedByNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput
+  psgasAsBde?: Prisma.PSGAUpdateManyWithoutBdeNestedInput
+  adminIncentiveAllocations?: Prisma.PSGAIncentiveAllocationUpdateManyWithoutAdminNestedInput
+  approvedIncentives?: Prisma.PSGAIncentiveAllocationUpdateManyWithoutApprovedByNestedInput
+  incentiveAllocations?: Prisma.PSGAIncentiveAllocationUpdateManyWithoutBdeNestedInput
+  role?: Prisma.RoleUpdateOneRequiredWithoutUsersNestedInput
 }
 
 export type UserUncheckedUpdateWithoutAssignedLeadsInput = {
@@ -1202,19 +1238,20 @@ export type UserUncheckedUpdateWithoutAssignedLeadsInput = {
   lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  clientsCreated?: Prisma.ClientUncheckedUpdateManyWithoutCreatedByNestedInput
-  assignedClients?: Prisma.ClientUncheckedUpdateManyWithoutAssignedBdeNestedInput
-  createdLeads?: Prisma.LeadUncheckedUpdateManyWithoutCreatedByNestedInput
   activities?: Prisma.ActivityUncheckedUpdateManyWithoutCreatedByNestedInput
-  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput
-  leadServiceSelections?: Prisma.LeadServiceSelectionUncheckedUpdateManyWithoutCreatedByNestedInput
-  clientServiceSelections?: Prisma.ClientServiceSelectionUncheckedUpdateManyWithoutCreatedByNestedInput
-  psgasAsBde?: Prisma.PSGAUncheckedUpdateManyWithoutBdeNestedInput
-  incentiveAllocations?: Prisma.PSGAIncentiveAllocationUncheckedUpdateManyWithoutBdeNestedInput
-  approvedIncentives?: Prisma.PSGAIncentiveAllocationUncheckedUpdateManyWithoutApprovedByNestedInput
-  incentivePayouts?: Prisma.IncentivePayoutUncheckedUpdateManyWithoutBdeNestedInput
-  approvedIncentivePayouts?: Prisma.IncentivePayoutUncheckedUpdateManyWithoutApprovedByNestedInput
   sessions?: Prisma.AuthSessionUncheckedUpdateManyWithoutUserNestedInput
+  assignedClients?: Prisma.ClientUncheckedUpdateManyWithoutAssignedBdeNestedInput
+  clientsCreated?: Prisma.ClientUncheckedUpdateManyWithoutCreatedByNestedInput
+  clientServiceSelections?: Prisma.ClientServiceSelectionUncheckedUpdateManyWithoutCreatedByNestedInput
+  approvedIncentivePayouts?: Prisma.IncentivePayoutUncheckedUpdateManyWithoutApprovedByNestedInput
+  incentivePayouts?: Prisma.IncentivePayoutUncheckedUpdateManyWithoutBdeNestedInput
+  createdLeads?: Prisma.LeadUncheckedUpdateManyWithoutCreatedByNestedInput
+  leadServiceSelections?: Prisma.LeadServiceSelectionUncheckedUpdateManyWithoutCreatedByNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput
+  psgasAsBde?: Prisma.PSGAUncheckedUpdateManyWithoutBdeNestedInput
+  adminIncentiveAllocations?: Prisma.PSGAIncentiveAllocationUncheckedUpdateManyWithoutAdminNestedInput
+  approvedIncentives?: Prisma.PSGAIncentiveAllocationUncheckedUpdateManyWithoutApprovedByNestedInput
+  incentiveAllocations?: Prisma.PSGAIncentiveAllocationUncheckedUpdateManyWithoutBdeNestedInput
 }
 
 export type UserUpsertWithoutCreatedLeadsInput = {
@@ -1239,20 +1276,21 @@ export type UserUpdateWithoutCreatedLeadsInput = {
   lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  role?: Prisma.RoleUpdateOneRequiredWithoutUsersNestedInput
-  clientsCreated?: Prisma.ClientUpdateManyWithoutCreatedByNestedInput
-  assignedClients?: Prisma.ClientUpdateManyWithoutAssignedBdeNestedInput
-  assignedLeads?: Prisma.LeadUpdateManyWithoutAssignedToNestedInput
   activities?: Prisma.ActivityUpdateManyWithoutCreatedByNestedInput
-  notifications?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput
-  leadServiceSelections?: Prisma.LeadServiceSelectionUpdateManyWithoutCreatedByNestedInput
-  clientServiceSelections?: Prisma.ClientServiceSelectionUpdateManyWithoutCreatedByNestedInput
-  psgasAsBde?: Prisma.PSGAUpdateManyWithoutBdeNestedInput
-  incentiveAllocations?: Prisma.PSGAIncentiveAllocationUpdateManyWithoutBdeNestedInput
-  approvedIncentives?: Prisma.PSGAIncentiveAllocationUpdateManyWithoutApprovedByNestedInput
-  incentivePayouts?: Prisma.IncentivePayoutUpdateManyWithoutBdeNestedInput
-  approvedIncentivePayouts?: Prisma.IncentivePayoutUpdateManyWithoutApprovedByNestedInput
   sessions?: Prisma.AuthSessionUpdateManyWithoutUserNestedInput
+  assignedClients?: Prisma.ClientUpdateManyWithoutAssignedBdeNestedInput
+  clientsCreated?: Prisma.ClientUpdateManyWithoutCreatedByNestedInput
+  clientServiceSelections?: Prisma.ClientServiceSelectionUpdateManyWithoutCreatedByNestedInput
+  approvedIncentivePayouts?: Prisma.IncentivePayoutUpdateManyWithoutApprovedByNestedInput
+  incentivePayouts?: Prisma.IncentivePayoutUpdateManyWithoutBdeNestedInput
+  assignedLeads?: Prisma.LeadUpdateManyWithoutAssignedToNestedInput
+  leadServiceSelections?: Prisma.LeadServiceSelectionUpdateManyWithoutCreatedByNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput
+  psgasAsBde?: Prisma.PSGAUpdateManyWithoutBdeNestedInput
+  adminIncentiveAllocations?: Prisma.PSGAIncentiveAllocationUpdateManyWithoutAdminNestedInput
+  approvedIncentives?: Prisma.PSGAIncentiveAllocationUpdateManyWithoutApprovedByNestedInput
+  incentiveAllocations?: Prisma.PSGAIncentiveAllocationUpdateManyWithoutBdeNestedInput
+  role?: Prisma.RoleUpdateOneRequiredWithoutUsersNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedLeadsInput = {
@@ -1267,78 +1305,20 @@ export type UserUncheckedUpdateWithoutCreatedLeadsInput = {
   lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  clientsCreated?: Prisma.ClientUncheckedUpdateManyWithoutCreatedByNestedInput
-  assignedClients?: Prisma.ClientUncheckedUpdateManyWithoutAssignedBdeNestedInput
-  assignedLeads?: Prisma.LeadUncheckedUpdateManyWithoutAssignedToNestedInput
   activities?: Prisma.ActivityUncheckedUpdateManyWithoutCreatedByNestedInput
-  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput
-  leadServiceSelections?: Prisma.LeadServiceSelectionUncheckedUpdateManyWithoutCreatedByNestedInput
-  clientServiceSelections?: Prisma.ClientServiceSelectionUncheckedUpdateManyWithoutCreatedByNestedInput
-  psgasAsBde?: Prisma.PSGAUncheckedUpdateManyWithoutBdeNestedInput
-  incentiveAllocations?: Prisma.PSGAIncentiveAllocationUncheckedUpdateManyWithoutBdeNestedInput
-  approvedIncentives?: Prisma.PSGAIncentiveAllocationUncheckedUpdateManyWithoutApprovedByNestedInput
-  incentivePayouts?: Prisma.IncentivePayoutUncheckedUpdateManyWithoutBdeNestedInput
-  approvedIncentivePayouts?: Prisma.IncentivePayoutUncheckedUpdateManyWithoutApprovedByNestedInput
   sessions?: Prisma.AuthSessionUncheckedUpdateManyWithoutUserNestedInput
-}
-
-export type UserCreateWithoutClientsCreatedInput = {
-  id?: string
-  firstName: string
-  lastName?: string | null
-  email: string
-  passwordHash: string
-  mobile?: string | null
-  status?: $Enums.UserStatus
-  lastLoginAt?: Date | string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  role: Prisma.RoleCreateNestedOneWithoutUsersInput
-  assignedClients?: Prisma.ClientCreateNestedManyWithoutAssignedBdeInput
-  assignedLeads?: Prisma.LeadCreateNestedManyWithoutAssignedToInput
-  createdLeads?: Prisma.LeadCreateNestedManyWithoutCreatedByInput
-  activities?: Prisma.ActivityCreateNestedManyWithoutCreatedByInput
-  notifications?: Prisma.NotificationCreateNestedManyWithoutRecipientInput
-  leadServiceSelections?: Prisma.LeadServiceSelectionCreateNestedManyWithoutCreatedByInput
-  clientServiceSelections?: Prisma.ClientServiceSelectionCreateNestedManyWithoutCreatedByInput
-  psgasAsBde?: Prisma.PSGACreateNestedManyWithoutBdeInput
-  incentiveAllocations?: Prisma.PSGAIncentiveAllocationCreateNestedManyWithoutBdeInput
-  approvedIncentives?: Prisma.PSGAIncentiveAllocationCreateNestedManyWithoutApprovedByInput
-  incentivePayouts?: Prisma.IncentivePayoutCreateNestedManyWithoutBdeInput
-  approvedIncentivePayouts?: Prisma.IncentivePayoutCreateNestedManyWithoutApprovedByInput
-  sessions?: Prisma.AuthSessionCreateNestedManyWithoutUserInput
-}
-
-export type UserUncheckedCreateWithoutClientsCreatedInput = {
-  id?: string
-  firstName: string
-  lastName?: string | null
-  email: string
-  passwordHash: string
-  mobile?: string | null
-  status?: $Enums.UserStatus
-  roleId: string
-  lastLoginAt?: Date | string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  assignedClients?: Prisma.ClientUncheckedCreateNestedManyWithoutAssignedBdeInput
-  assignedLeads?: Prisma.LeadUncheckedCreateNestedManyWithoutAssignedToInput
-  createdLeads?: Prisma.LeadUncheckedCreateNestedManyWithoutCreatedByInput
-  activities?: Prisma.ActivityUncheckedCreateNestedManyWithoutCreatedByInput
-  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput
-  leadServiceSelections?: Prisma.LeadServiceSelectionUncheckedCreateNestedManyWithoutCreatedByInput
-  clientServiceSelections?: Prisma.ClientServiceSelectionUncheckedCreateNestedManyWithoutCreatedByInput
-  psgasAsBde?: Prisma.PSGAUncheckedCreateNestedManyWithoutBdeInput
-  incentiveAllocations?: Prisma.PSGAIncentiveAllocationUncheckedCreateNestedManyWithoutBdeInput
-  approvedIncentives?: Prisma.PSGAIncentiveAllocationUncheckedCreateNestedManyWithoutApprovedByInput
-  incentivePayouts?: Prisma.IncentivePayoutUncheckedCreateNestedManyWithoutBdeInput
-  approvedIncentivePayouts?: Prisma.IncentivePayoutUncheckedCreateNestedManyWithoutApprovedByInput
-  sessions?: Prisma.AuthSessionUncheckedCreateNestedManyWithoutUserInput
-}
-
-export type UserCreateOrConnectWithoutClientsCreatedInput = {
-  where: Prisma.UserWhereUniqueInput
-  create: Prisma.XOR<Prisma.UserCreateWithoutClientsCreatedInput, Prisma.UserUncheckedCreateWithoutClientsCreatedInput>
+  assignedClients?: Prisma.ClientUncheckedUpdateManyWithoutAssignedBdeNestedInput
+  clientsCreated?: Prisma.ClientUncheckedUpdateManyWithoutCreatedByNestedInput
+  clientServiceSelections?: Prisma.ClientServiceSelectionUncheckedUpdateManyWithoutCreatedByNestedInput
+  approvedIncentivePayouts?: Prisma.IncentivePayoutUncheckedUpdateManyWithoutApprovedByNestedInput
+  incentivePayouts?: Prisma.IncentivePayoutUncheckedUpdateManyWithoutBdeNestedInput
+  assignedLeads?: Prisma.LeadUncheckedUpdateManyWithoutAssignedToNestedInput
+  leadServiceSelections?: Prisma.LeadServiceSelectionUncheckedUpdateManyWithoutCreatedByNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput
+  psgasAsBde?: Prisma.PSGAUncheckedUpdateManyWithoutBdeNestedInput
+  adminIncentiveAllocations?: Prisma.PSGAIncentiveAllocationUncheckedUpdateManyWithoutAdminNestedInput
+  approvedIncentives?: Prisma.PSGAIncentiveAllocationUncheckedUpdateManyWithoutApprovedByNestedInput
+  incentiveAllocations?: Prisma.PSGAIncentiveAllocationUncheckedUpdateManyWithoutBdeNestedInput
 }
 
 export type UserCreateWithoutAssignedClientsInput = {
@@ -1352,20 +1332,21 @@ export type UserCreateWithoutAssignedClientsInput = {
   lastLoginAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  role: Prisma.RoleCreateNestedOneWithoutUsersInput
+  activities?: Prisma.ActivityCreateNestedManyWithoutCreatedByInput
+  sessions?: Prisma.AuthSessionCreateNestedManyWithoutUserInput
   clientsCreated?: Prisma.ClientCreateNestedManyWithoutCreatedByInput
+  clientServiceSelections?: Prisma.ClientServiceSelectionCreateNestedManyWithoutCreatedByInput
+  approvedIncentivePayouts?: Prisma.IncentivePayoutCreateNestedManyWithoutApprovedByInput
+  incentivePayouts?: Prisma.IncentivePayoutCreateNestedManyWithoutBdeInput
   assignedLeads?: Prisma.LeadCreateNestedManyWithoutAssignedToInput
   createdLeads?: Prisma.LeadCreateNestedManyWithoutCreatedByInput
-  activities?: Prisma.ActivityCreateNestedManyWithoutCreatedByInput
-  notifications?: Prisma.NotificationCreateNestedManyWithoutRecipientInput
   leadServiceSelections?: Prisma.LeadServiceSelectionCreateNestedManyWithoutCreatedByInput
-  clientServiceSelections?: Prisma.ClientServiceSelectionCreateNestedManyWithoutCreatedByInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutRecipientInput
   psgasAsBde?: Prisma.PSGACreateNestedManyWithoutBdeInput
-  incentiveAllocations?: Prisma.PSGAIncentiveAllocationCreateNestedManyWithoutBdeInput
+  adminIncentiveAllocations?: Prisma.PSGAIncentiveAllocationCreateNestedManyWithoutAdminInput
   approvedIncentives?: Prisma.PSGAIncentiveAllocationCreateNestedManyWithoutApprovedByInput
-  incentivePayouts?: Prisma.IncentivePayoutCreateNestedManyWithoutBdeInput
-  approvedIncentivePayouts?: Prisma.IncentivePayoutCreateNestedManyWithoutApprovedByInput
-  sessions?: Prisma.AuthSessionCreateNestedManyWithoutUserInput
+  incentiveAllocations?: Prisma.PSGAIncentiveAllocationCreateNestedManyWithoutBdeInput
+  role: Prisma.RoleCreateNestedOneWithoutUsersInput
 }
 
 export type UserUncheckedCreateWithoutAssignedClientsInput = {
@@ -1380,19 +1361,20 @@ export type UserUncheckedCreateWithoutAssignedClientsInput = {
   lastLoginAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  activities?: Prisma.ActivityUncheckedCreateNestedManyWithoutCreatedByInput
+  sessions?: Prisma.AuthSessionUncheckedCreateNestedManyWithoutUserInput
   clientsCreated?: Prisma.ClientUncheckedCreateNestedManyWithoutCreatedByInput
+  clientServiceSelections?: Prisma.ClientServiceSelectionUncheckedCreateNestedManyWithoutCreatedByInput
+  approvedIncentivePayouts?: Prisma.IncentivePayoutUncheckedCreateNestedManyWithoutApprovedByInput
+  incentivePayouts?: Prisma.IncentivePayoutUncheckedCreateNestedManyWithoutBdeInput
   assignedLeads?: Prisma.LeadUncheckedCreateNestedManyWithoutAssignedToInput
   createdLeads?: Prisma.LeadUncheckedCreateNestedManyWithoutCreatedByInput
-  activities?: Prisma.ActivityUncheckedCreateNestedManyWithoutCreatedByInput
-  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput
   leadServiceSelections?: Prisma.LeadServiceSelectionUncheckedCreateNestedManyWithoutCreatedByInput
-  clientServiceSelections?: Prisma.ClientServiceSelectionUncheckedCreateNestedManyWithoutCreatedByInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput
   psgasAsBde?: Prisma.PSGAUncheckedCreateNestedManyWithoutBdeInput
-  incentiveAllocations?: Prisma.PSGAIncentiveAllocationUncheckedCreateNestedManyWithoutBdeInput
+  adminIncentiveAllocations?: Prisma.PSGAIncentiveAllocationUncheckedCreateNestedManyWithoutAdminInput
   approvedIncentives?: Prisma.PSGAIncentiveAllocationUncheckedCreateNestedManyWithoutApprovedByInput
-  incentivePayouts?: Prisma.IncentivePayoutUncheckedCreateNestedManyWithoutBdeInput
-  approvedIncentivePayouts?: Prisma.IncentivePayoutUncheckedCreateNestedManyWithoutApprovedByInput
-  sessions?: Prisma.AuthSessionUncheckedCreateNestedManyWithoutUserInput
+  incentiveAllocations?: Prisma.PSGAIncentiveAllocationUncheckedCreateNestedManyWithoutBdeInput
 }
 
 export type UserCreateOrConnectWithoutAssignedClientsInput = {
@@ -1400,69 +1382,65 @@ export type UserCreateOrConnectWithoutAssignedClientsInput = {
   create: Prisma.XOR<Prisma.UserCreateWithoutAssignedClientsInput, Prisma.UserUncheckedCreateWithoutAssignedClientsInput>
 }
 
-export type UserUpsertWithoutClientsCreatedInput = {
-  update: Prisma.XOR<Prisma.UserUpdateWithoutClientsCreatedInput, Prisma.UserUncheckedUpdateWithoutClientsCreatedInput>
+export type UserCreateWithoutClientsCreatedInput = {
+  id?: string
+  firstName: string
+  lastName?: string | null
+  email: string
+  passwordHash: string
+  mobile?: string | null
+  status?: $Enums.UserStatus
+  lastLoginAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  activities?: Prisma.ActivityCreateNestedManyWithoutCreatedByInput
+  sessions?: Prisma.AuthSessionCreateNestedManyWithoutUserInput
+  assignedClients?: Prisma.ClientCreateNestedManyWithoutAssignedBdeInput
+  clientServiceSelections?: Prisma.ClientServiceSelectionCreateNestedManyWithoutCreatedByInput
+  approvedIncentivePayouts?: Prisma.IncentivePayoutCreateNestedManyWithoutApprovedByInput
+  incentivePayouts?: Prisma.IncentivePayoutCreateNestedManyWithoutBdeInput
+  assignedLeads?: Prisma.LeadCreateNestedManyWithoutAssignedToInput
+  createdLeads?: Prisma.LeadCreateNestedManyWithoutCreatedByInput
+  leadServiceSelections?: Prisma.LeadServiceSelectionCreateNestedManyWithoutCreatedByInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutRecipientInput
+  psgasAsBde?: Prisma.PSGACreateNestedManyWithoutBdeInput
+  adminIncentiveAllocations?: Prisma.PSGAIncentiveAllocationCreateNestedManyWithoutAdminInput
+  approvedIncentives?: Prisma.PSGAIncentiveAllocationCreateNestedManyWithoutApprovedByInput
+  incentiveAllocations?: Prisma.PSGAIncentiveAllocationCreateNestedManyWithoutBdeInput
+  role: Prisma.RoleCreateNestedOneWithoutUsersInput
+}
+
+export type UserUncheckedCreateWithoutClientsCreatedInput = {
+  id?: string
+  firstName: string
+  lastName?: string | null
+  email: string
+  passwordHash: string
+  mobile?: string | null
+  status?: $Enums.UserStatus
+  roleId: string
+  lastLoginAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  activities?: Prisma.ActivityUncheckedCreateNestedManyWithoutCreatedByInput
+  sessions?: Prisma.AuthSessionUncheckedCreateNestedManyWithoutUserInput
+  assignedClients?: Prisma.ClientUncheckedCreateNestedManyWithoutAssignedBdeInput
+  clientServiceSelections?: Prisma.ClientServiceSelectionUncheckedCreateNestedManyWithoutCreatedByInput
+  approvedIncentivePayouts?: Prisma.IncentivePayoutUncheckedCreateNestedManyWithoutApprovedByInput
+  incentivePayouts?: Prisma.IncentivePayoutUncheckedCreateNestedManyWithoutBdeInput
+  assignedLeads?: Prisma.LeadUncheckedCreateNestedManyWithoutAssignedToInput
+  createdLeads?: Prisma.LeadUncheckedCreateNestedManyWithoutCreatedByInput
+  leadServiceSelections?: Prisma.LeadServiceSelectionUncheckedCreateNestedManyWithoutCreatedByInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput
+  psgasAsBde?: Prisma.PSGAUncheckedCreateNestedManyWithoutBdeInput
+  adminIncentiveAllocations?: Prisma.PSGAIncentiveAllocationUncheckedCreateNestedManyWithoutAdminInput
+  approvedIncentives?: Prisma.PSGAIncentiveAllocationUncheckedCreateNestedManyWithoutApprovedByInput
+  incentiveAllocations?: Prisma.PSGAIncentiveAllocationUncheckedCreateNestedManyWithoutBdeInput
+}
+
+export type UserCreateOrConnectWithoutClientsCreatedInput = {
+  where: Prisma.UserWhereUniqueInput
   create: Prisma.XOR<Prisma.UserCreateWithoutClientsCreatedInput, Prisma.UserUncheckedCreateWithoutClientsCreatedInput>
-  where?: Prisma.UserWhereInput
-}
-
-export type UserUpdateToOneWithWhereWithoutClientsCreatedInput = {
-  where?: Prisma.UserWhereInput
-  data: Prisma.XOR<Prisma.UserUpdateWithoutClientsCreatedInput, Prisma.UserUncheckedUpdateWithoutClientsCreatedInput>
-}
-
-export type UserUpdateWithoutClientsCreatedInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  firstName?: Prisma.StringFieldUpdateOperationsInput | string
-  lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  email?: Prisma.StringFieldUpdateOperationsInput | string
-  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
-  mobile?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
-  lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  role?: Prisma.RoleUpdateOneRequiredWithoutUsersNestedInput
-  assignedClients?: Prisma.ClientUpdateManyWithoutAssignedBdeNestedInput
-  assignedLeads?: Prisma.LeadUpdateManyWithoutAssignedToNestedInput
-  createdLeads?: Prisma.LeadUpdateManyWithoutCreatedByNestedInput
-  activities?: Prisma.ActivityUpdateManyWithoutCreatedByNestedInput
-  notifications?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput
-  leadServiceSelections?: Prisma.LeadServiceSelectionUpdateManyWithoutCreatedByNestedInput
-  clientServiceSelections?: Prisma.ClientServiceSelectionUpdateManyWithoutCreatedByNestedInput
-  psgasAsBde?: Prisma.PSGAUpdateManyWithoutBdeNestedInput
-  incentiveAllocations?: Prisma.PSGAIncentiveAllocationUpdateManyWithoutBdeNestedInput
-  approvedIncentives?: Prisma.PSGAIncentiveAllocationUpdateManyWithoutApprovedByNestedInput
-  incentivePayouts?: Prisma.IncentivePayoutUpdateManyWithoutBdeNestedInput
-  approvedIncentivePayouts?: Prisma.IncentivePayoutUpdateManyWithoutApprovedByNestedInput
-  sessions?: Prisma.AuthSessionUpdateManyWithoutUserNestedInput
-}
-
-export type UserUncheckedUpdateWithoutClientsCreatedInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  firstName?: Prisma.StringFieldUpdateOperationsInput | string
-  lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  email?: Prisma.StringFieldUpdateOperationsInput | string
-  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
-  mobile?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
-  roleId?: Prisma.StringFieldUpdateOperationsInput | string
-  lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  assignedClients?: Prisma.ClientUncheckedUpdateManyWithoutAssignedBdeNestedInput
-  assignedLeads?: Prisma.LeadUncheckedUpdateManyWithoutAssignedToNestedInput
-  createdLeads?: Prisma.LeadUncheckedUpdateManyWithoutCreatedByNestedInput
-  activities?: Prisma.ActivityUncheckedUpdateManyWithoutCreatedByNestedInput
-  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput
-  leadServiceSelections?: Prisma.LeadServiceSelectionUncheckedUpdateManyWithoutCreatedByNestedInput
-  clientServiceSelections?: Prisma.ClientServiceSelectionUncheckedUpdateManyWithoutCreatedByNestedInput
-  psgasAsBde?: Prisma.PSGAUncheckedUpdateManyWithoutBdeNestedInput
-  incentiveAllocations?: Prisma.PSGAIncentiveAllocationUncheckedUpdateManyWithoutBdeNestedInput
-  approvedIncentives?: Prisma.PSGAIncentiveAllocationUncheckedUpdateManyWithoutApprovedByNestedInput
-  incentivePayouts?: Prisma.IncentivePayoutUncheckedUpdateManyWithoutBdeNestedInput
-  approvedIncentivePayouts?: Prisma.IncentivePayoutUncheckedUpdateManyWithoutApprovedByNestedInput
-  sessions?: Prisma.AuthSessionUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserUpsertWithoutAssignedClientsInput = {
@@ -1487,20 +1465,21 @@ export type UserUpdateWithoutAssignedClientsInput = {
   lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  role?: Prisma.RoleUpdateOneRequiredWithoutUsersNestedInput
+  activities?: Prisma.ActivityUpdateManyWithoutCreatedByNestedInput
+  sessions?: Prisma.AuthSessionUpdateManyWithoutUserNestedInput
   clientsCreated?: Prisma.ClientUpdateManyWithoutCreatedByNestedInput
+  clientServiceSelections?: Prisma.ClientServiceSelectionUpdateManyWithoutCreatedByNestedInput
+  approvedIncentivePayouts?: Prisma.IncentivePayoutUpdateManyWithoutApprovedByNestedInput
+  incentivePayouts?: Prisma.IncentivePayoutUpdateManyWithoutBdeNestedInput
   assignedLeads?: Prisma.LeadUpdateManyWithoutAssignedToNestedInput
   createdLeads?: Prisma.LeadUpdateManyWithoutCreatedByNestedInput
-  activities?: Prisma.ActivityUpdateManyWithoutCreatedByNestedInput
-  notifications?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput
   leadServiceSelections?: Prisma.LeadServiceSelectionUpdateManyWithoutCreatedByNestedInput
-  clientServiceSelections?: Prisma.ClientServiceSelectionUpdateManyWithoutCreatedByNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput
   psgasAsBde?: Prisma.PSGAUpdateManyWithoutBdeNestedInput
-  incentiveAllocations?: Prisma.PSGAIncentiveAllocationUpdateManyWithoutBdeNestedInput
+  adminIncentiveAllocations?: Prisma.PSGAIncentiveAllocationUpdateManyWithoutAdminNestedInput
   approvedIncentives?: Prisma.PSGAIncentiveAllocationUpdateManyWithoutApprovedByNestedInput
-  incentivePayouts?: Prisma.IncentivePayoutUpdateManyWithoutBdeNestedInput
-  approvedIncentivePayouts?: Prisma.IncentivePayoutUpdateManyWithoutApprovedByNestedInput
-  sessions?: Prisma.AuthSessionUpdateManyWithoutUserNestedInput
+  incentiveAllocations?: Prisma.PSGAIncentiveAllocationUpdateManyWithoutBdeNestedInput
+  role?: Prisma.RoleUpdateOneRequiredWithoutUsersNestedInput
 }
 
 export type UserUncheckedUpdateWithoutAssignedClientsInput = {
@@ -1515,19 +1494,87 @@ export type UserUncheckedUpdateWithoutAssignedClientsInput = {
   lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  activities?: Prisma.ActivityUncheckedUpdateManyWithoutCreatedByNestedInput
+  sessions?: Prisma.AuthSessionUncheckedUpdateManyWithoutUserNestedInput
   clientsCreated?: Prisma.ClientUncheckedUpdateManyWithoutCreatedByNestedInput
+  clientServiceSelections?: Prisma.ClientServiceSelectionUncheckedUpdateManyWithoutCreatedByNestedInput
+  approvedIncentivePayouts?: Prisma.IncentivePayoutUncheckedUpdateManyWithoutApprovedByNestedInput
+  incentivePayouts?: Prisma.IncentivePayoutUncheckedUpdateManyWithoutBdeNestedInput
   assignedLeads?: Prisma.LeadUncheckedUpdateManyWithoutAssignedToNestedInput
   createdLeads?: Prisma.LeadUncheckedUpdateManyWithoutCreatedByNestedInput
-  activities?: Prisma.ActivityUncheckedUpdateManyWithoutCreatedByNestedInput
-  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput
   leadServiceSelections?: Prisma.LeadServiceSelectionUncheckedUpdateManyWithoutCreatedByNestedInput
-  clientServiceSelections?: Prisma.ClientServiceSelectionUncheckedUpdateManyWithoutCreatedByNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput
   psgasAsBde?: Prisma.PSGAUncheckedUpdateManyWithoutBdeNestedInput
-  incentiveAllocations?: Prisma.PSGAIncentiveAllocationUncheckedUpdateManyWithoutBdeNestedInput
+  adminIncentiveAllocations?: Prisma.PSGAIncentiveAllocationUncheckedUpdateManyWithoutAdminNestedInput
   approvedIncentives?: Prisma.PSGAIncentiveAllocationUncheckedUpdateManyWithoutApprovedByNestedInput
-  incentivePayouts?: Prisma.IncentivePayoutUncheckedUpdateManyWithoutBdeNestedInput
-  approvedIncentivePayouts?: Prisma.IncentivePayoutUncheckedUpdateManyWithoutApprovedByNestedInput
+  incentiveAllocations?: Prisma.PSGAIncentiveAllocationUncheckedUpdateManyWithoutBdeNestedInput
+}
+
+export type UserUpsertWithoutClientsCreatedInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutClientsCreatedInput, Prisma.UserUncheckedUpdateWithoutClientsCreatedInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutClientsCreatedInput, Prisma.UserUncheckedCreateWithoutClientsCreatedInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutClientsCreatedInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutClientsCreatedInput, Prisma.UserUncheckedUpdateWithoutClientsCreatedInput>
+}
+
+export type UserUpdateWithoutClientsCreatedInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  firstName?: Prisma.StringFieldUpdateOperationsInput | string
+  lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  mobile?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+  lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  activities?: Prisma.ActivityUpdateManyWithoutCreatedByNestedInput
+  sessions?: Prisma.AuthSessionUpdateManyWithoutUserNestedInput
+  assignedClients?: Prisma.ClientUpdateManyWithoutAssignedBdeNestedInput
+  clientServiceSelections?: Prisma.ClientServiceSelectionUpdateManyWithoutCreatedByNestedInput
+  approvedIncentivePayouts?: Prisma.IncentivePayoutUpdateManyWithoutApprovedByNestedInput
+  incentivePayouts?: Prisma.IncentivePayoutUpdateManyWithoutBdeNestedInput
+  assignedLeads?: Prisma.LeadUpdateManyWithoutAssignedToNestedInput
+  createdLeads?: Prisma.LeadUpdateManyWithoutCreatedByNestedInput
+  leadServiceSelections?: Prisma.LeadServiceSelectionUpdateManyWithoutCreatedByNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput
+  psgasAsBde?: Prisma.PSGAUpdateManyWithoutBdeNestedInput
+  adminIncentiveAllocations?: Prisma.PSGAIncentiveAllocationUpdateManyWithoutAdminNestedInput
+  approvedIncentives?: Prisma.PSGAIncentiveAllocationUpdateManyWithoutApprovedByNestedInput
+  incentiveAllocations?: Prisma.PSGAIncentiveAllocationUpdateManyWithoutBdeNestedInput
+  role?: Prisma.RoleUpdateOneRequiredWithoutUsersNestedInput
+}
+
+export type UserUncheckedUpdateWithoutClientsCreatedInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  firstName?: Prisma.StringFieldUpdateOperationsInput | string
+  lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  mobile?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+  roleId?: Prisma.StringFieldUpdateOperationsInput | string
+  lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  activities?: Prisma.ActivityUncheckedUpdateManyWithoutCreatedByNestedInput
   sessions?: Prisma.AuthSessionUncheckedUpdateManyWithoutUserNestedInput
+  assignedClients?: Prisma.ClientUncheckedUpdateManyWithoutAssignedBdeNestedInput
+  clientServiceSelections?: Prisma.ClientServiceSelectionUncheckedUpdateManyWithoutCreatedByNestedInput
+  approvedIncentivePayouts?: Prisma.IncentivePayoutUncheckedUpdateManyWithoutApprovedByNestedInput
+  incentivePayouts?: Prisma.IncentivePayoutUncheckedUpdateManyWithoutBdeNestedInput
+  assignedLeads?: Prisma.LeadUncheckedUpdateManyWithoutAssignedToNestedInput
+  createdLeads?: Prisma.LeadUncheckedUpdateManyWithoutCreatedByNestedInput
+  leadServiceSelections?: Prisma.LeadServiceSelectionUncheckedUpdateManyWithoutCreatedByNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput
+  psgasAsBde?: Prisma.PSGAUncheckedUpdateManyWithoutBdeNestedInput
+  adminIncentiveAllocations?: Prisma.PSGAIncentiveAllocationUncheckedUpdateManyWithoutAdminNestedInput
+  approvedIncentives?: Prisma.PSGAIncentiveAllocationUncheckedUpdateManyWithoutApprovedByNestedInput
+  incentiveAllocations?: Prisma.PSGAIncentiveAllocationUncheckedUpdateManyWithoutBdeNestedInput
 }
 
 export type UserCreateWithoutActivitiesInput = {
@@ -1541,20 +1588,21 @@ export type UserCreateWithoutActivitiesInput = {
   lastLoginAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  role: Prisma.RoleCreateNestedOneWithoutUsersInput
-  clientsCreated?: Prisma.ClientCreateNestedManyWithoutCreatedByInput
+  sessions?: Prisma.AuthSessionCreateNestedManyWithoutUserInput
   assignedClients?: Prisma.ClientCreateNestedManyWithoutAssignedBdeInput
+  clientsCreated?: Prisma.ClientCreateNestedManyWithoutCreatedByInput
+  clientServiceSelections?: Prisma.ClientServiceSelectionCreateNestedManyWithoutCreatedByInput
+  approvedIncentivePayouts?: Prisma.IncentivePayoutCreateNestedManyWithoutApprovedByInput
+  incentivePayouts?: Prisma.IncentivePayoutCreateNestedManyWithoutBdeInput
   assignedLeads?: Prisma.LeadCreateNestedManyWithoutAssignedToInput
   createdLeads?: Prisma.LeadCreateNestedManyWithoutCreatedByInput
-  notifications?: Prisma.NotificationCreateNestedManyWithoutRecipientInput
   leadServiceSelections?: Prisma.LeadServiceSelectionCreateNestedManyWithoutCreatedByInput
-  clientServiceSelections?: Prisma.ClientServiceSelectionCreateNestedManyWithoutCreatedByInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutRecipientInput
   psgasAsBde?: Prisma.PSGACreateNestedManyWithoutBdeInput
-  incentiveAllocations?: Prisma.PSGAIncentiveAllocationCreateNestedManyWithoutBdeInput
+  adminIncentiveAllocations?: Prisma.PSGAIncentiveAllocationCreateNestedManyWithoutAdminInput
   approvedIncentives?: Prisma.PSGAIncentiveAllocationCreateNestedManyWithoutApprovedByInput
-  incentivePayouts?: Prisma.IncentivePayoutCreateNestedManyWithoutBdeInput
-  approvedIncentivePayouts?: Prisma.IncentivePayoutCreateNestedManyWithoutApprovedByInput
-  sessions?: Prisma.AuthSessionCreateNestedManyWithoutUserInput
+  incentiveAllocations?: Prisma.PSGAIncentiveAllocationCreateNestedManyWithoutBdeInput
+  role: Prisma.RoleCreateNestedOneWithoutUsersInput
 }
 
 export type UserUncheckedCreateWithoutActivitiesInput = {
@@ -1569,19 +1617,20 @@ export type UserUncheckedCreateWithoutActivitiesInput = {
   lastLoginAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  clientsCreated?: Prisma.ClientUncheckedCreateNestedManyWithoutCreatedByInput
+  sessions?: Prisma.AuthSessionUncheckedCreateNestedManyWithoutUserInput
   assignedClients?: Prisma.ClientUncheckedCreateNestedManyWithoutAssignedBdeInput
+  clientsCreated?: Prisma.ClientUncheckedCreateNestedManyWithoutCreatedByInput
+  clientServiceSelections?: Prisma.ClientServiceSelectionUncheckedCreateNestedManyWithoutCreatedByInput
+  approvedIncentivePayouts?: Prisma.IncentivePayoutUncheckedCreateNestedManyWithoutApprovedByInput
+  incentivePayouts?: Prisma.IncentivePayoutUncheckedCreateNestedManyWithoutBdeInput
   assignedLeads?: Prisma.LeadUncheckedCreateNestedManyWithoutAssignedToInput
   createdLeads?: Prisma.LeadUncheckedCreateNestedManyWithoutCreatedByInput
-  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput
   leadServiceSelections?: Prisma.LeadServiceSelectionUncheckedCreateNestedManyWithoutCreatedByInput
-  clientServiceSelections?: Prisma.ClientServiceSelectionUncheckedCreateNestedManyWithoutCreatedByInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput
   psgasAsBde?: Prisma.PSGAUncheckedCreateNestedManyWithoutBdeInput
-  incentiveAllocations?: Prisma.PSGAIncentiveAllocationUncheckedCreateNestedManyWithoutBdeInput
+  adminIncentiveAllocations?: Prisma.PSGAIncentiveAllocationUncheckedCreateNestedManyWithoutAdminInput
   approvedIncentives?: Prisma.PSGAIncentiveAllocationUncheckedCreateNestedManyWithoutApprovedByInput
-  incentivePayouts?: Prisma.IncentivePayoutUncheckedCreateNestedManyWithoutBdeInput
-  approvedIncentivePayouts?: Prisma.IncentivePayoutUncheckedCreateNestedManyWithoutApprovedByInput
-  sessions?: Prisma.AuthSessionUncheckedCreateNestedManyWithoutUserInput
+  incentiveAllocations?: Prisma.PSGAIncentiveAllocationUncheckedCreateNestedManyWithoutBdeInput
 }
 
 export type UserCreateOrConnectWithoutActivitiesInput = {
@@ -1611,20 +1660,21 @@ export type UserUpdateWithoutActivitiesInput = {
   lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  role?: Prisma.RoleUpdateOneRequiredWithoutUsersNestedInput
-  clientsCreated?: Prisma.ClientUpdateManyWithoutCreatedByNestedInput
+  sessions?: Prisma.AuthSessionUpdateManyWithoutUserNestedInput
   assignedClients?: Prisma.ClientUpdateManyWithoutAssignedBdeNestedInput
+  clientsCreated?: Prisma.ClientUpdateManyWithoutCreatedByNestedInput
+  clientServiceSelections?: Prisma.ClientServiceSelectionUpdateManyWithoutCreatedByNestedInput
+  approvedIncentivePayouts?: Prisma.IncentivePayoutUpdateManyWithoutApprovedByNestedInput
+  incentivePayouts?: Prisma.IncentivePayoutUpdateManyWithoutBdeNestedInput
   assignedLeads?: Prisma.LeadUpdateManyWithoutAssignedToNestedInput
   createdLeads?: Prisma.LeadUpdateManyWithoutCreatedByNestedInput
-  notifications?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput
   leadServiceSelections?: Prisma.LeadServiceSelectionUpdateManyWithoutCreatedByNestedInput
-  clientServiceSelections?: Prisma.ClientServiceSelectionUpdateManyWithoutCreatedByNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput
   psgasAsBde?: Prisma.PSGAUpdateManyWithoutBdeNestedInput
-  incentiveAllocations?: Prisma.PSGAIncentiveAllocationUpdateManyWithoutBdeNestedInput
+  adminIncentiveAllocations?: Prisma.PSGAIncentiveAllocationUpdateManyWithoutAdminNestedInput
   approvedIncentives?: Prisma.PSGAIncentiveAllocationUpdateManyWithoutApprovedByNestedInput
-  incentivePayouts?: Prisma.IncentivePayoutUpdateManyWithoutBdeNestedInput
-  approvedIncentivePayouts?: Prisma.IncentivePayoutUpdateManyWithoutApprovedByNestedInput
-  sessions?: Prisma.AuthSessionUpdateManyWithoutUserNestedInput
+  incentiveAllocations?: Prisma.PSGAIncentiveAllocationUpdateManyWithoutBdeNestedInput
+  role?: Prisma.RoleUpdateOneRequiredWithoutUsersNestedInput
 }
 
 export type UserUncheckedUpdateWithoutActivitiesInput = {
@@ -1639,19 +1689,20 @@ export type UserUncheckedUpdateWithoutActivitiesInput = {
   lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  clientsCreated?: Prisma.ClientUncheckedUpdateManyWithoutCreatedByNestedInput
+  sessions?: Prisma.AuthSessionUncheckedUpdateManyWithoutUserNestedInput
   assignedClients?: Prisma.ClientUncheckedUpdateManyWithoutAssignedBdeNestedInput
+  clientsCreated?: Prisma.ClientUncheckedUpdateManyWithoutCreatedByNestedInput
+  clientServiceSelections?: Prisma.ClientServiceSelectionUncheckedUpdateManyWithoutCreatedByNestedInput
+  approvedIncentivePayouts?: Prisma.IncentivePayoutUncheckedUpdateManyWithoutApprovedByNestedInput
+  incentivePayouts?: Prisma.IncentivePayoutUncheckedUpdateManyWithoutBdeNestedInput
   assignedLeads?: Prisma.LeadUncheckedUpdateManyWithoutAssignedToNestedInput
   createdLeads?: Prisma.LeadUncheckedUpdateManyWithoutCreatedByNestedInput
-  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput
   leadServiceSelections?: Prisma.LeadServiceSelectionUncheckedUpdateManyWithoutCreatedByNestedInput
-  clientServiceSelections?: Prisma.ClientServiceSelectionUncheckedUpdateManyWithoutCreatedByNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput
   psgasAsBde?: Prisma.PSGAUncheckedUpdateManyWithoutBdeNestedInput
-  incentiveAllocations?: Prisma.PSGAIncentiveAllocationUncheckedUpdateManyWithoutBdeNestedInput
+  adminIncentiveAllocations?: Prisma.PSGAIncentiveAllocationUncheckedUpdateManyWithoutAdminNestedInput
   approvedIncentives?: Prisma.PSGAIncentiveAllocationUncheckedUpdateManyWithoutApprovedByNestedInput
-  incentivePayouts?: Prisma.IncentivePayoutUncheckedUpdateManyWithoutBdeNestedInput
-  approvedIncentivePayouts?: Prisma.IncentivePayoutUncheckedUpdateManyWithoutApprovedByNestedInput
-  sessions?: Prisma.AuthSessionUncheckedUpdateManyWithoutUserNestedInput
+  incentiveAllocations?: Prisma.PSGAIncentiveAllocationUncheckedUpdateManyWithoutBdeNestedInput
 }
 
 export type UserCreateWithoutNotificationsInput = {
@@ -1665,20 +1716,21 @@ export type UserCreateWithoutNotificationsInput = {
   lastLoginAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  role: Prisma.RoleCreateNestedOneWithoutUsersInput
-  clientsCreated?: Prisma.ClientCreateNestedManyWithoutCreatedByInput
+  activities?: Prisma.ActivityCreateNestedManyWithoutCreatedByInput
+  sessions?: Prisma.AuthSessionCreateNestedManyWithoutUserInput
   assignedClients?: Prisma.ClientCreateNestedManyWithoutAssignedBdeInput
+  clientsCreated?: Prisma.ClientCreateNestedManyWithoutCreatedByInput
+  clientServiceSelections?: Prisma.ClientServiceSelectionCreateNestedManyWithoutCreatedByInput
+  approvedIncentivePayouts?: Prisma.IncentivePayoutCreateNestedManyWithoutApprovedByInput
+  incentivePayouts?: Prisma.IncentivePayoutCreateNestedManyWithoutBdeInput
   assignedLeads?: Prisma.LeadCreateNestedManyWithoutAssignedToInput
   createdLeads?: Prisma.LeadCreateNestedManyWithoutCreatedByInput
-  activities?: Prisma.ActivityCreateNestedManyWithoutCreatedByInput
   leadServiceSelections?: Prisma.LeadServiceSelectionCreateNestedManyWithoutCreatedByInput
-  clientServiceSelections?: Prisma.ClientServiceSelectionCreateNestedManyWithoutCreatedByInput
   psgasAsBde?: Prisma.PSGACreateNestedManyWithoutBdeInput
-  incentiveAllocations?: Prisma.PSGAIncentiveAllocationCreateNestedManyWithoutBdeInput
+  adminIncentiveAllocations?: Prisma.PSGAIncentiveAllocationCreateNestedManyWithoutAdminInput
   approvedIncentives?: Prisma.PSGAIncentiveAllocationCreateNestedManyWithoutApprovedByInput
-  incentivePayouts?: Prisma.IncentivePayoutCreateNestedManyWithoutBdeInput
-  approvedIncentivePayouts?: Prisma.IncentivePayoutCreateNestedManyWithoutApprovedByInput
-  sessions?: Prisma.AuthSessionCreateNestedManyWithoutUserInput
+  incentiveAllocations?: Prisma.PSGAIncentiveAllocationCreateNestedManyWithoutBdeInput
+  role: Prisma.RoleCreateNestedOneWithoutUsersInput
 }
 
 export type UserUncheckedCreateWithoutNotificationsInput = {
@@ -1693,19 +1745,20 @@ export type UserUncheckedCreateWithoutNotificationsInput = {
   lastLoginAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  clientsCreated?: Prisma.ClientUncheckedCreateNestedManyWithoutCreatedByInput
+  activities?: Prisma.ActivityUncheckedCreateNestedManyWithoutCreatedByInput
+  sessions?: Prisma.AuthSessionUncheckedCreateNestedManyWithoutUserInput
   assignedClients?: Prisma.ClientUncheckedCreateNestedManyWithoutAssignedBdeInput
+  clientsCreated?: Prisma.ClientUncheckedCreateNestedManyWithoutCreatedByInput
+  clientServiceSelections?: Prisma.ClientServiceSelectionUncheckedCreateNestedManyWithoutCreatedByInput
+  approvedIncentivePayouts?: Prisma.IncentivePayoutUncheckedCreateNestedManyWithoutApprovedByInput
+  incentivePayouts?: Prisma.IncentivePayoutUncheckedCreateNestedManyWithoutBdeInput
   assignedLeads?: Prisma.LeadUncheckedCreateNestedManyWithoutAssignedToInput
   createdLeads?: Prisma.LeadUncheckedCreateNestedManyWithoutCreatedByInput
-  activities?: Prisma.ActivityUncheckedCreateNestedManyWithoutCreatedByInput
   leadServiceSelections?: Prisma.LeadServiceSelectionUncheckedCreateNestedManyWithoutCreatedByInput
-  clientServiceSelections?: Prisma.ClientServiceSelectionUncheckedCreateNestedManyWithoutCreatedByInput
   psgasAsBde?: Prisma.PSGAUncheckedCreateNestedManyWithoutBdeInput
-  incentiveAllocations?: Prisma.PSGAIncentiveAllocationUncheckedCreateNestedManyWithoutBdeInput
+  adminIncentiveAllocations?: Prisma.PSGAIncentiveAllocationUncheckedCreateNestedManyWithoutAdminInput
   approvedIncentives?: Prisma.PSGAIncentiveAllocationUncheckedCreateNestedManyWithoutApprovedByInput
-  incentivePayouts?: Prisma.IncentivePayoutUncheckedCreateNestedManyWithoutBdeInput
-  approvedIncentivePayouts?: Prisma.IncentivePayoutUncheckedCreateNestedManyWithoutApprovedByInput
-  sessions?: Prisma.AuthSessionUncheckedCreateNestedManyWithoutUserInput
+  incentiveAllocations?: Prisma.PSGAIncentiveAllocationUncheckedCreateNestedManyWithoutBdeInput
 }
 
 export type UserCreateOrConnectWithoutNotificationsInput = {
@@ -1735,20 +1788,21 @@ export type UserUpdateWithoutNotificationsInput = {
   lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  role?: Prisma.RoleUpdateOneRequiredWithoutUsersNestedInput
-  clientsCreated?: Prisma.ClientUpdateManyWithoutCreatedByNestedInput
+  activities?: Prisma.ActivityUpdateManyWithoutCreatedByNestedInput
+  sessions?: Prisma.AuthSessionUpdateManyWithoutUserNestedInput
   assignedClients?: Prisma.ClientUpdateManyWithoutAssignedBdeNestedInput
+  clientsCreated?: Prisma.ClientUpdateManyWithoutCreatedByNestedInput
+  clientServiceSelections?: Prisma.ClientServiceSelectionUpdateManyWithoutCreatedByNestedInput
+  approvedIncentivePayouts?: Prisma.IncentivePayoutUpdateManyWithoutApprovedByNestedInput
+  incentivePayouts?: Prisma.IncentivePayoutUpdateManyWithoutBdeNestedInput
   assignedLeads?: Prisma.LeadUpdateManyWithoutAssignedToNestedInput
   createdLeads?: Prisma.LeadUpdateManyWithoutCreatedByNestedInput
-  activities?: Prisma.ActivityUpdateManyWithoutCreatedByNestedInput
   leadServiceSelections?: Prisma.LeadServiceSelectionUpdateManyWithoutCreatedByNestedInput
-  clientServiceSelections?: Prisma.ClientServiceSelectionUpdateManyWithoutCreatedByNestedInput
   psgasAsBde?: Prisma.PSGAUpdateManyWithoutBdeNestedInput
-  incentiveAllocations?: Prisma.PSGAIncentiveAllocationUpdateManyWithoutBdeNestedInput
+  adminIncentiveAllocations?: Prisma.PSGAIncentiveAllocationUpdateManyWithoutAdminNestedInput
   approvedIncentives?: Prisma.PSGAIncentiveAllocationUpdateManyWithoutApprovedByNestedInput
-  incentivePayouts?: Prisma.IncentivePayoutUpdateManyWithoutBdeNestedInput
-  approvedIncentivePayouts?: Prisma.IncentivePayoutUpdateManyWithoutApprovedByNestedInput
-  sessions?: Prisma.AuthSessionUpdateManyWithoutUserNestedInput
+  incentiveAllocations?: Prisma.PSGAIncentiveAllocationUpdateManyWithoutBdeNestedInput
+  role?: Prisma.RoleUpdateOneRequiredWithoutUsersNestedInput
 }
 
 export type UserUncheckedUpdateWithoutNotificationsInput = {
@@ -1763,19 +1817,20 @@ export type UserUncheckedUpdateWithoutNotificationsInput = {
   lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  clientsCreated?: Prisma.ClientUncheckedUpdateManyWithoutCreatedByNestedInput
+  activities?: Prisma.ActivityUncheckedUpdateManyWithoutCreatedByNestedInput
+  sessions?: Prisma.AuthSessionUncheckedUpdateManyWithoutUserNestedInput
   assignedClients?: Prisma.ClientUncheckedUpdateManyWithoutAssignedBdeNestedInput
+  clientsCreated?: Prisma.ClientUncheckedUpdateManyWithoutCreatedByNestedInput
+  clientServiceSelections?: Prisma.ClientServiceSelectionUncheckedUpdateManyWithoutCreatedByNestedInput
+  approvedIncentivePayouts?: Prisma.IncentivePayoutUncheckedUpdateManyWithoutApprovedByNestedInput
+  incentivePayouts?: Prisma.IncentivePayoutUncheckedUpdateManyWithoutBdeNestedInput
   assignedLeads?: Prisma.LeadUncheckedUpdateManyWithoutAssignedToNestedInput
   createdLeads?: Prisma.LeadUncheckedUpdateManyWithoutCreatedByNestedInput
-  activities?: Prisma.ActivityUncheckedUpdateManyWithoutCreatedByNestedInput
   leadServiceSelections?: Prisma.LeadServiceSelectionUncheckedUpdateManyWithoutCreatedByNestedInput
-  clientServiceSelections?: Prisma.ClientServiceSelectionUncheckedUpdateManyWithoutCreatedByNestedInput
   psgasAsBde?: Prisma.PSGAUncheckedUpdateManyWithoutBdeNestedInput
-  incentiveAllocations?: Prisma.PSGAIncentiveAllocationUncheckedUpdateManyWithoutBdeNestedInput
+  adminIncentiveAllocations?: Prisma.PSGAIncentiveAllocationUncheckedUpdateManyWithoutAdminNestedInput
   approvedIncentives?: Prisma.PSGAIncentiveAllocationUncheckedUpdateManyWithoutApprovedByNestedInput
-  incentivePayouts?: Prisma.IncentivePayoutUncheckedUpdateManyWithoutBdeNestedInput
-  approvedIncentivePayouts?: Prisma.IncentivePayoutUncheckedUpdateManyWithoutApprovedByNestedInput
-  sessions?: Prisma.AuthSessionUncheckedUpdateManyWithoutUserNestedInput
+  incentiveAllocations?: Prisma.PSGAIncentiveAllocationUncheckedUpdateManyWithoutBdeNestedInput
 }
 
 export type UserCreateWithoutLeadServiceSelectionsInput = {
@@ -1789,20 +1844,21 @@ export type UserCreateWithoutLeadServiceSelectionsInput = {
   lastLoginAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  role: Prisma.RoleCreateNestedOneWithoutUsersInput
-  clientsCreated?: Prisma.ClientCreateNestedManyWithoutCreatedByInput
+  activities?: Prisma.ActivityCreateNestedManyWithoutCreatedByInput
+  sessions?: Prisma.AuthSessionCreateNestedManyWithoutUserInput
   assignedClients?: Prisma.ClientCreateNestedManyWithoutAssignedBdeInput
+  clientsCreated?: Prisma.ClientCreateNestedManyWithoutCreatedByInput
+  clientServiceSelections?: Prisma.ClientServiceSelectionCreateNestedManyWithoutCreatedByInput
+  approvedIncentivePayouts?: Prisma.IncentivePayoutCreateNestedManyWithoutApprovedByInput
+  incentivePayouts?: Prisma.IncentivePayoutCreateNestedManyWithoutBdeInput
   assignedLeads?: Prisma.LeadCreateNestedManyWithoutAssignedToInput
   createdLeads?: Prisma.LeadCreateNestedManyWithoutCreatedByInput
-  activities?: Prisma.ActivityCreateNestedManyWithoutCreatedByInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutRecipientInput
-  clientServiceSelections?: Prisma.ClientServiceSelectionCreateNestedManyWithoutCreatedByInput
   psgasAsBde?: Prisma.PSGACreateNestedManyWithoutBdeInput
-  incentiveAllocations?: Prisma.PSGAIncentiveAllocationCreateNestedManyWithoutBdeInput
+  adminIncentiveAllocations?: Prisma.PSGAIncentiveAllocationCreateNestedManyWithoutAdminInput
   approvedIncentives?: Prisma.PSGAIncentiveAllocationCreateNestedManyWithoutApprovedByInput
-  incentivePayouts?: Prisma.IncentivePayoutCreateNestedManyWithoutBdeInput
-  approvedIncentivePayouts?: Prisma.IncentivePayoutCreateNestedManyWithoutApprovedByInput
-  sessions?: Prisma.AuthSessionCreateNestedManyWithoutUserInput
+  incentiveAllocations?: Prisma.PSGAIncentiveAllocationCreateNestedManyWithoutBdeInput
+  role: Prisma.RoleCreateNestedOneWithoutUsersInput
 }
 
 export type UserUncheckedCreateWithoutLeadServiceSelectionsInput = {
@@ -1817,19 +1873,20 @@ export type UserUncheckedCreateWithoutLeadServiceSelectionsInput = {
   lastLoginAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  clientsCreated?: Prisma.ClientUncheckedCreateNestedManyWithoutCreatedByInput
+  activities?: Prisma.ActivityUncheckedCreateNestedManyWithoutCreatedByInput
+  sessions?: Prisma.AuthSessionUncheckedCreateNestedManyWithoutUserInput
   assignedClients?: Prisma.ClientUncheckedCreateNestedManyWithoutAssignedBdeInput
+  clientsCreated?: Prisma.ClientUncheckedCreateNestedManyWithoutCreatedByInput
+  clientServiceSelections?: Prisma.ClientServiceSelectionUncheckedCreateNestedManyWithoutCreatedByInput
+  approvedIncentivePayouts?: Prisma.IncentivePayoutUncheckedCreateNestedManyWithoutApprovedByInput
+  incentivePayouts?: Prisma.IncentivePayoutUncheckedCreateNestedManyWithoutBdeInput
   assignedLeads?: Prisma.LeadUncheckedCreateNestedManyWithoutAssignedToInput
   createdLeads?: Prisma.LeadUncheckedCreateNestedManyWithoutCreatedByInput
-  activities?: Prisma.ActivityUncheckedCreateNestedManyWithoutCreatedByInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput
-  clientServiceSelections?: Prisma.ClientServiceSelectionUncheckedCreateNestedManyWithoutCreatedByInput
   psgasAsBde?: Prisma.PSGAUncheckedCreateNestedManyWithoutBdeInput
-  incentiveAllocations?: Prisma.PSGAIncentiveAllocationUncheckedCreateNestedManyWithoutBdeInput
+  adminIncentiveAllocations?: Prisma.PSGAIncentiveAllocationUncheckedCreateNestedManyWithoutAdminInput
   approvedIncentives?: Prisma.PSGAIncentiveAllocationUncheckedCreateNestedManyWithoutApprovedByInput
-  incentivePayouts?: Prisma.IncentivePayoutUncheckedCreateNestedManyWithoutBdeInput
-  approvedIncentivePayouts?: Prisma.IncentivePayoutUncheckedCreateNestedManyWithoutApprovedByInput
-  sessions?: Prisma.AuthSessionUncheckedCreateNestedManyWithoutUserInput
+  incentiveAllocations?: Prisma.PSGAIncentiveAllocationUncheckedCreateNestedManyWithoutBdeInput
 }
 
 export type UserCreateOrConnectWithoutLeadServiceSelectionsInput = {
@@ -1859,20 +1916,21 @@ export type UserUpdateWithoutLeadServiceSelectionsInput = {
   lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  role?: Prisma.RoleUpdateOneRequiredWithoutUsersNestedInput
-  clientsCreated?: Prisma.ClientUpdateManyWithoutCreatedByNestedInput
+  activities?: Prisma.ActivityUpdateManyWithoutCreatedByNestedInput
+  sessions?: Prisma.AuthSessionUpdateManyWithoutUserNestedInput
   assignedClients?: Prisma.ClientUpdateManyWithoutAssignedBdeNestedInput
+  clientsCreated?: Prisma.ClientUpdateManyWithoutCreatedByNestedInput
+  clientServiceSelections?: Prisma.ClientServiceSelectionUpdateManyWithoutCreatedByNestedInput
+  approvedIncentivePayouts?: Prisma.IncentivePayoutUpdateManyWithoutApprovedByNestedInput
+  incentivePayouts?: Prisma.IncentivePayoutUpdateManyWithoutBdeNestedInput
   assignedLeads?: Prisma.LeadUpdateManyWithoutAssignedToNestedInput
   createdLeads?: Prisma.LeadUpdateManyWithoutCreatedByNestedInput
-  activities?: Prisma.ActivityUpdateManyWithoutCreatedByNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput
-  clientServiceSelections?: Prisma.ClientServiceSelectionUpdateManyWithoutCreatedByNestedInput
   psgasAsBde?: Prisma.PSGAUpdateManyWithoutBdeNestedInput
-  incentiveAllocations?: Prisma.PSGAIncentiveAllocationUpdateManyWithoutBdeNestedInput
+  adminIncentiveAllocations?: Prisma.PSGAIncentiveAllocationUpdateManyWithoutAdminNestedInput
   approvedIncentives?: Prisma.PSGAIncentiveAllocationUpdateManyWithoutApprovedByNestedInput
-  incentivePayouts?: Prisma.IncentivePayoutUpdateManyWithoutBdeNestedInput
-  approvedIncentivePayouts?: Prisma.IncentivePayoutUpdateManyWithoutApprovedByNestedInput
-  sessions?: Prisma.AuthSessionUpdateManyWithoutUserNestedInput
+  incentiveAllocations?: Prisma.PSGAIncentiveAllocationUpdateManyWithoutBdeNestedInput
+  role?: Prisma.RoleUpdateOneRequiredWithoutUsersNestedInput
 }
 
 export type UserUncheckedUpdateWithoutLeadServiceSelectionsInput = {
@@ -1887,19 +1945,20 @@ export type UserUncheckedUpdateWithoutLeadServiceSelectionsInput = {
   lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  clientsCreated?: Prisma.ClientUncheckedUpdateManyWithoutCreatedByNestedInput
+  activities?: Prisma.ActivityUncheckedUpdateManyWithoutCreatedByNestedInput
+  sessions?: Prisma.AuthSessionUncheckedUpdateManyWithoutUserNestedInput
   assignedClients?: Prisma.ClientUncheckedUpdateManyWithoutAssignedBdeNestedInput
+  clientsCreated?: Prisma.ClientUncheckedUpdateManyWithoutCreatedByNestedInput
+  clientServiceSelections?: Prisma.ClientServiceSelectionUncheckedUpdateManyWithoutCreatedByNestedInput
+  approvedIncentivePayouts?: Prisma.IncentivePayoutUncheckedUpdateManyWithoutApprovedByNestedInput
+  incentivePayouts?: Prisma.IncentivePayoutUncheckedUpdateManyWithoutBdeNestedInput
   assignedLeads?: Prisma.LeadUncheckedUpdateManyWithoutAssignedToNestedInput
   createdLeads?: Prisma.LeadUncheckedUpdateManyWithoutCreatedByNestedInput
-  activities?: Prisma.ActivityUncheckedUpdateManyWithoutCreatedByNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput
-  clientServiceSelections?: Prisma.ClientServiceSelectionUncheckedUpdateManyWithoutCreatedByNestedInput
   psgasAsBde?: Prisma.PSGAUncheckedUpdateManyWithoutBdeNestedInput
-  incentiveAllocations?: Prisma.PSGAIncentiveAllocationUncheckedUpdateManyWithoutBdeNestedInput
+  adminIncentiveAllocations?: Prisma.PSGAIncentiveAllocationUncheckedUpdateManyWithoutAdminNestedInput
   approvedIncentives?: Prisma.PSGAIncentiveAllocationUncheckedUpdateManyWithoutApprovedByNestedInput
-  incentivePayouts?: Prisma.IncentivePayoutUncheckedUpdateManyWithoutBdeNestedInput
-  approvedIncentivePayouts?: Prisma.IncentivePayoutUncheckedUpdateManyWithoutApprovedByNestedInput
-  sessions?: Prisma.AuthSessionUncheckedUpdateManyWithoutUserNestedInput
+  incentiveAllocations?: Prisma.PSGAIncentiveAllocationUncheckedUpdateManyWithoutBdeNestedInput
 }
 
 export type UserCreateWithoutClientServiceSelectionsInput = {
@@ -1913,20 +1972,21 @@ export type UserCreateWithoutClientServiceSelectionsInput = {
   lastLoginAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  role: Prisma.RoleCreateNestedOneWithoutUsersInput
-  clientsCreated?: Prisma.ClientCreateNestedManyWithoutCreatedByInput
+  activities?: Prisma.ActivityCreateNestedManyWithoutCreatedByInput
+  sessions?: Prisma.AuthSessionCreateNestedManyWithoutUserInput
   assignedClients?: Prisma.ClientCreateNestedManyWithoutAssignedBdeInput
+  clientsCreated?: Prisma.ClientCreateNestedManyWithoutCreatedByInput
+  approvedIncentivePayouts?: Prisma.IncentivePayoutCreateNestedManyWithoutApprovedByInput
+  incentivePayouts?: Prisma.IncentivePayoutCreateNestedManyWithoutBdeInput
   assignedLeads?: Prisma.LeadCreateNestedManyWithoutAssignedToInput
   createdLeads?: Prisma.LeadCreateNestedManyWithoutCreatedByInput
-  activities?: Prisma.ActivityCreateNestedManyWithoutCreatedByInput
-  notifications?: Prisma.NotificationCreateNestedManyWithoutRecipientInput
   leadServiceSelections?: Prisma.LeadServiceSelectionCreateNestedManyWithoutCreatedByInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutRecipientInput
   psgasAsBde?: Prisma.PSGACreateNestedManyWithoutBdeInput
-  incentiveAllocations?: Prisma.PSGAIncentiveAllocationCreateNestedManyWithoutBdeInput
+  adminIncentiveAllocations?: Prisma.PSGAIncentiveAllocationCreateNestedManyWithoutAdminInput
   approvedIncentives?: Prisma.PSGAIncentiveAllocationCreateNestedManyWithoutApprovedByInput
-  incentivePayouts?: Prisma.IncentivePayoutCreateNestedManyWithoutBdeInput
-  approvedIncentivePayouts?: Prisma.IncentivePayoutCreateNestedManyWithoutApprovedByInput
-  sessions?: Prisma.AuthSessionCreateNestedManyWithoutUserInput
+  incentiveAllocations?: Prisma.PSGAIncentiveAllocationCreateNestedManyWithoutBdeInput
+  role: Prisma.RoleCreateNestedOneWithoutUsersInput
 }
 
 export type UserUncheckedCreateWithoutClientServiceSelectionsInput = {
@@ -1941,19 +2001,20 @@ export type UserUncheckedCreateWithoutClientServiceSelectionsInput = {
   lastLoginAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  clientsCreated?: Prisma.ClientUncheckedCreateNestedManyWithoutCreatedByInput
+  activities?: Prisma.ActivityUncheckedCreateNestedManyWithoutCreatedByInput
+  sessions?: Prisma.AuthSessionUncheckedCreateNestedManyWithoutUserInput
   assignedClients?: Prisma.ClientUncheckedCreateNestedManyWithoutAssignedBdeInput
+  clientsCreated?: Prisma.ClientUncheckedCreateNestedManyWithoutCreatedByInput
+  approvedIncentivePayouts?: Prisma.IncentivePayoutUncheckedCreateNestedManyWithoutApprovedByInput
+  incentivePayouts?: Prisma.IncentivePayoutUncheckedCreateNestedManyWithoutBdeInput
   assignedLeads?: Prisma.LeadUncheckedCreateNestedManyWithoutAssignedToInput
   createdLeads?: Prisma.LeadUncheckedCreateNestedManyWithoutCreatedByInput
-  activities?: Prisma.ActivityUncheckedCreateNestedManyWithoutCreatedByInput
-  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput
   leadServiceSelections?: Prisma.LeadServiceSelectionUncheckedCreateNestedManyWithoutCreatedByInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput
   psgasAsBde?: Prisma.PSGAUncheckedCreateNestedManyWithoutBdeInput
-  incentiveAllocations?: Prisma.PSGAIncentiveAllocationUncheckedCreateNestedManyWithoutBdeInput
+  adminIncentiveAllocations?: Prisma.PSGAIncentiveAllocationUncheckedCreateNestedManyWithoutAdminInput
   approvedIncentives?: Prisma.PSGAIncentiveAllocationUncheckedCreateNestedManyWithoutApprovedByInput
-  incentivePayouts?: Prisma.IncentivePayoutUncheckedCreateNestedManyWithoutBdeInput
-  approvedIncentivePayouts?: Prisma.IncentivePayoutUncheckedCreateNestedManyWithoutApprovedByInput
-  sessions?: Prisma.AuthSessionUncheckedCreateNestedManyWithoutUserInput
+  incentiveAllocations?: Prisma.PSGAIncentiveAllocationUncheckedCreateNestedManyWithoutBdeInput
 }
 
 export type UserCreateOrConnectWithoutClientServiceSelectionsInput = {
@@ -1983,20 +2044,21 @@ export type UserUpdateWithoutClientServiceSelectionsInput = {
   lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  role?: Prisma.RoleUpdateOneRequiredWithoutUsersNestedInput
-  clientsCreated?: Prisma.ClientUpdateManyWithoutCreatedByNestedInput
+  activities?: Prisma.ActivityUpdateManyWithoutCreatedByNestedInput
+  sessions?: Prisma.AuthSessionUpdateManyWithoutUserNestedInput
   assignedClients?: Prisma.ClientUpdateManyWithoutAssignedBdeNestedInput
+  clientsCreated?: Prisma.ClientUpdateManyWithoutCreatedByNestedInput
+  approvedIncentivePayouts?: Prisma.IncentivePayoutUpdateManyWithoutApprovedByNestedInput
+  incentivePayouts?: Prisma.IncentivePayoutUpdateManyWithoutBdeNestedInput
   assignedLeads?: Prisma.LeadUpdateManyWithoutAssignedToNestedInput
   createdLeads?: Prisma.LeadUpdateManyWithoutCreatedByNestedInput
-  activities?: Prisma.ActivityUpdateManyWithoutCreatedByNestedInput
-  notifications?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput
   leadServiceSelections?: Prisma.LeadServiceSelectionUpdateManyWithoutCreatedByNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput
   psgasAsBde?: Prisma.PSGAUpdateManyWithoutBdeNestedInput
-  incentiveAllocations?: Prisma.PSGAIncentiveAllocationUpdateManyWithoutBdeNestedInput
+  adminIncentiveAllocations?: Prisma.PSGAIncentiveAllocationUpdateManyWithoutAdminNestedInput
   approvedIncentives?: Prisma.PSGAIncentiveAllocationUpdateManyWithoutApprovedByNestedInput
-  incentivePayouts?: Prisma.IncentivePayoutUpdateManyWithoutBdeNestedInput
-  approvedIncentivePayouts?: Prisma.IncentivePayoutUpdateManyWithoutApprovedByNestedInput
-  sessions?: Prisma.AuthSessionUpdateManyWithoutUserNestedInput
+  incentiveAllocations?: Prisma.PSGAIncentiveAllocationUpdateManyWithoutBdeNestedInput
+  role?: Prisma.RoleUpdateOneRequiredWithoutUsersNestedInput
 }
 
 export type UserUncheckedUpdateWithoutClientServiceSelectionsInput = {
@@ -2011,19 +2073,20 @@ export type UserUncheckedUpdateWithoutClientServiceSelectionsInput = {
   lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  clientsCreated?: Prisma.ClientUncheckedUpdateManyWithoutCreatedByNestedInput
+  activities?: Prisma.ActivityUncheckedUpdateManyWithoutCreatedByNestedInput
+  sessions?: Prisma.AuthSessionUncheckedUpdateManyWithoutUserNestedInput
   assignedClients?: Prisma.ClientUncheckedUpdateManyWithoutAssignedBdeNestedInput
+  clientsCreated?: Prisma.ClientUncheckedUpdateManyWithoutCreatedByNestedInput
+  approvedIncentivePayouts?: Prisma.IncentivePayoutUncheckedUpdateManyWithoutApprovedByNestedInput
+  incentivePayouts?: Prisma.IncentivePayoutUncheckedUpdateManyWithoutBdeNestedInput
   assignedLeads?: Prisma.LeadUncheckedUpdateManyWithoutAssignedToNestedInput
   createdLeads?: Prisma.LeadUncheckedUpdateManyWithoutCreatedByNestedInput
-  activities?: Prisma.ActivityUncheckedUpdateManyWithoutCreatedByNestedInput
-  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput
   leadServiceSelections?: Prisma.LeadServiceSelectionUncheckedUpdateManyWithoutCreatedByNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput
   psgasAsBde?: Prisma.PSGAUncheckedUpdateManyWithoutBdeNestedInput
-  incentiveAllocations?: Prisma.PSGAIncentiveAllocationUncheckedUpdateManyWithoutBdeNestedInput
+  adminIncentiveAllocations?: Prisma.PSGAIncentiveAllocationUncheckedUpdateManyWithoutAdminNestedInput
   approvedIncentives?: Prisma.PSGAIncentiveAllocationUncheckedUpdateManyWithoutApprovedByNestedInput
-  incentivePayouts?: Prisma.IncentivePayoutUncheckedUpdateManyWithoutBdeNestedInput
-  approvedIncentivePayouts?: Prisma.IncentivePayoutUncheckedUpdateManyWithoutApprovedByNestedInput
-  sessions?: Prisma.AuthSessionUncheckedUpdateManyWithoutUserNestedInput
+  incentiveAllocations?: Prisma.PSGAIncentiveAllocationUncheckedUpdateManyWithoutBdeNestedInput
 }
 
 export type UserCreateWithoutPsgasAsBdeInput = {
@@ -2037,20 +2100,21 @@ export type UserCreateWithoutPsgasAsBdeInput = {
   lastLoginAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  role: Prisma.RoleCreateNestedOneWithoutUsersInput
-  clientsCreated?: Prisma.ClientCreateNestedManyWithoutCreatedByInput
+  activities?: Prisma.ActivityCreateNestedManyWithoutCreatedByInput
+  sessions?: Prisma.AuthSessionCreateNestedManyWithoutUserInput
   assignedClients?: Prisma.ClientCreateNestedManyWithoutAssignedBdeInput
+  clientsCreated?: Prisma.ClientCreateNestedManyWithoutCreatedByInput
+  clientServiceSelections?: Prisma.ClientServiceSelectionCreateNestedManyWithoutCreatedByInput
+  approvedIncentivePayouts?: Prisma.IncentivePayoutCreateNestedManyWithoutApprovedByInput
+  incentivePayouts?: Prisma.IncentivePayoutCreateNestedManyWithoutBdeInput
   assignedLeads?: Prisma.LeadCreateNestedManyWithoutAssignedToInput
   createdLeads?: Prisma.LeadCreateNestedManyWithoutCreatedByInput
-  activities?: Prisma.ActivityCreateNestedManyWithoutCreatedByInput
-  notifications?: Prisma.NotificationCreateNestedManyWithoutRecipientInput
   leadServiceSelections?: Prisma.LeadServiceSelectionCreateNestedManyWithoutCreatedByInput
-  clientServiceSelections?: Prisma.ClientServiceSelectionCreateNestedManyWithoutCreatedByInput
-  incentiveAllocations?: Prisma.PSGAIncentiveAllocationCreateNestedManyWithoutBdeInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutRecipientInput
+  adminIncentiveAllocations?: Prisma.PSGAIncentiveAllocationCreateNestedManyWithoutAdminInput
   approvedIncentives?: Prisma.PSGAIncentiveAllocationCreateNestedManyWithoutApprovedByInput
-  incentivePayouts?: Prisma.IncentivePayoutCreateNestedManyWithoutBdeInput
-  approvedIncentivePayouts?: Prisma.IncentivePayoutCreateNestedManyWithoutApprovedByInput
-  sessions?: Prisma.AuthSessionCreateNestedManyWithoutUserInput
+  incentiveAllocations?: Prisma.PSGAIncentiveAllocationCreateNestedManyWithoutBdeInput
+  role: Prisma.RoleCreateNestedOneWithoutUsersInput
 }
 
 export type UserUncheckedCreateWithoutPsgasAsBdeInput = {
@@ -2065,19 +2129,20 @@ export type UserUncheckedCreateWithoutPsgasAsBdeInput = {
   lastLoginAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  clientsCreated?: Prisma.ClientUncheckedCreateNestedManyWithoutCreatedByInput
+  activities?: Prisma.ActivityUncheckedCreateNestedManyWithoutCreatedByInput
+  sessions?: Prisma.AuthSessionUncheckedCreateNestedManyWithoutUserInput
   assignedClients?: Prisma.ClientUncheckedCreateNestedManyWithoutAssignedBdeInput
+  clientsCreated?: Prisma.ClientUncheckedCreateNestedManyWithoutCreatedByInput
+  clientServiceSelections?: Prisma.ClientServiceSelectionUncheckedCreateNestedManyWithoutCreatedByInput
+  approvedIncentivePayouts?: Prisma.IncentivePayoutUncheckedCreateNestedManyWithoutApprovedByInput
+  incentivePayouts?: Prisma.IncentivePayoutUncheckedCreateNestedManyWithoutBdeInput
   assignedLeads?: Prisma.LeadUncheckedCreateNestedManyWithoutAssignedToInput
   createdLeads?: Prisma.LeadUncheckedCreateNestedManyWithoutCreatedByInput
-  activities?: Prisma.ActivityUncheckedCreateNestedManyWithoutCreatedByInput
-  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput
   leadServiceSelections?: Prisma.LeadServiceSelectionUncheckedCreateNestedManyWithoutCreatedByInput
-  clientServiceSelections?: Prisma.ClientServiceSelectionUncheckedCreateNestedManyWithoutCreatedByInput
-  incentiveAllocations?: Prisma.PSGAIncentiveAllocationUncheckedCreateNestedManyWithoutBdeInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput
+  adminIncentiveAllocations?: Prisma.PSGAIncentiveAllocationUncheckedCreateNestedManyWithoutAdminInput
   approvedIncentives?: Prisma.PSGAIncentiveAllocationUncheckedCreateNestedManyWithoutApprovedByInput
-  incentivePayouts?: Prisma.IncentivePayoutUncheckedCreateNestedManyWithoutBdeInput
-  approvedIncentivePayouts?: Prisma.IncentivePayoutUncheckedCreateNestedManyWithoutApprovedByInput
-  sessions?: Prisma.AuthSessionUncheckedCreateNestedManyWithoutUserInput
+  incentiveAllocations?: Prisma.PSGAIncentiveAllocationUncheckedCreateNestedManyWithoutBdeInput
 }
 
 export type UserCreateOrConnectWithoutPsgasAsBdeInput = {
@@ -2107,20 +2172,21 @@ export type UserUpdateWithoutPsgasAsBdeInput = {
   lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  role?: Prisma.RoleUpdateOneRequiredWithoutUsersNestedInput
-  clientsCreated?: Prisma.ClientUpdateManyWithoutCreatedByNestedInput
+  activities?: Prisma.ActivityUpdateManyWithoutCreatedByNestedInput
+  sessions?: Prisma.AuthSessionUpdateManyWithoutUserNestedInput
   assignedClients?: Prisma.ClientUpdateManyWithoutAssignedBdeNestedInput
+  clientsCreated?: Prisma.ClientUpdateManyWithoutCreatedByNestedInput
+  clientServiceSelections?: Prisma.ClientServiceSelectionUpdateManyWithoutCreatedByNestedInput
+  approvedIncentivePayouts?: Prisma.IncentivePayoutUpdateManyWithoutApprovedByNestedInput
+  incentivePayouts?: Prisma.IncentivePayoutUpdateManyWithoutBdeNestedInput
   assignedLeads?: Prisma.LeadUpdateManyWithoutAssignedToNestedInput
   createdLeads?: Prisma.LeadUpdateManyWithoutCreatedByNestedInput
-  activities?: Prisma.ActivityUpdateManyWithoutCreatedByNestedInput
-  notifications?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput
   leadServiceSelections?: Prisma.LeadServiceSelectionUpdateManyWithoutCreatedByNestedInput
-  clientServiceSelections?: Prisma.ClientServiceSelectionUpdateManyWithoutCreatedByNestedInput
-  incentiveAllocations?: Prisma.PSGAIncentiveAllocationUpdateManyWithoutBdeNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput
+  adminIncentiveAllocations?: Prisma.PSGAIncentiveAllocationUpdateManyWithoutAdminNestedInput
   approvedIncentives?: Prisma.PSGAIncentiveAllocationUpdateManyWithoutApprovedByNestedInput
-  incentivePayouts?: Prisma.IncentivePayoutUpdateManyWithoutBdeNestedInput
-  approvedIncentivePayouts?: Prisma.IncentivePayoutUpdateManyWithoutApprovedByNestedInput
-  sessions?: Prisma.AuthSessionUpdateManyWithoutUserNestedInput
+  incentiveAllocations?: Prisma.PSGAIncentiveAllocationUpdateManyWithoutBdeNestedInput
+  role?: Prisma.RoleUpdateOneRequiredWithoutUsersNestedInput
 }
 
 export type UserUncheckedUpdateWithoutPsgasAsBdeInput = {
@@ -2135,22 +2201,23 @@ export type UserUncheckedUpdateWithoutPsgasAsBdeInput = {
   lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  clientsCreated?: Prisma.ClientUncheckedUpdateManyWithoutCreatedByNestedInput
+  activities?: Prisma.ActivityUncheckedUpdateManyWithoutCreatedByNestedInput
+  sessions?: Prisma.AuthSessionUncheckedUpdateManyWithoutUserNestedInput
   assignedClients?: Prisma.ClientUncheckedUpdateManyWithoutAssignedBdeNestedInput
+  clientsCreated?: Prisma.ClientUncheckedUpdateManyWithoutCreatedByNestedInput
+  clientServiceSelections?: Prisma.ClientServiceSelectionUncheckedUpdateManyWithoutCreatedByNestedInput
+  approvedIncentivePayouts?: Prisma.IncentivePayoutUncheckedUpdateManyWithoutApprovedByNestedInput
+  incentivePayouts?: Prisma.IncentivePayoutUncheckedUpdateManyWithoutBdeNestedInput
   assignedLeads?: Prisma.LeadUncheckedUpdateManyWithoutAssignedToNestedInput
   createdLeads?: Prisma.LeadUncheckedUpdateManyWithoutCreatedByNestedInput
-  activities?: Prisma.ActivityUncheckedUpdateManyWithoutCreatedByNestedInput
-  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput
   leadServiceSelections?: Prisma.LeadServiceSelectionUncheckedUpdateManyWithoutCreatedByNestedInput
-  clientServiceSelections?: Prisma.ClientServiceSelectionUncheckedUpdateManyWithoutCreatedByNestedInput
-  incentiveAllocations?: Prisma.PSGAIncentiveAllocationUncheckedUpdateManyWithoutBdeNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput
+  adminIncentiveAllocations?: Prisma.PSGAIncentiveAllocationUncheckedUpdateManyWithoutAdminNestedInput
   approvedIncentives?: Prisma.PSGAIncentiveAllocationUncheckedUpdateManyWithoutApprovedByNestedInput
-  incentivePayouts?: Prisma.IncentivePayoutUncheckedUpdateManyWithoutBdeNestedInput
-  approvedIncentivePayouts?: Prisma.IncentivePayoutUncheckedUpdateManyWithoutApprovedByNestedInput
-  sessions?: Prisma.AuthSessionUncheckedUpdateManyWithoutUserNestedInput
+  incentiveAllocations?: Prisma.PSGAIncentiveAllocationUncheckedUpdateManyWithoutBdeNestedInput
 }
 
-export type UserCreateWithoutIncentiveAllocationsInput = {
+export type UserCreateWithoutAdminIncentiveAllocationsInput = {
   id?: string
   firstName: string
   lastName?: string | null
@@ -2161,23 +2228,24 @@ export type UserCreateWithoutIncentiveAllocationsInput = {
   lastLoginAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  role: Prisma.RoleCreateNestedOneWithoutUsersInput
-  clientsCreated?: Prisma.ClientCreateNestedManyWithoutCreatedByInput
+  activities?: Prisma.ActivityCreateNestedManyWithoutCreatedByInput
+  sessions?: Prisma.AuthSessionCreateNestedManyWithoutUserInput
   assignedClients?: Prisma.ClientCreateNestedManyWithoutAssignedBdeInput
+  clientsCreated?: Prisma.ClientCreateNestedManyWithoutCreatedByInput
+  clientServiceSelections?: Prisma.ClientServiceSelectionCreateNestedManyWithoutCreatedByInput
+  approvedIncentivePayouts?: Prisma.IncentivePayoutCreateNestedManyWithoutApprovedByInput
+  incentivePayouts?: Prisma.IncentivePayoutCreateNestedManyWithoutBdeInput
   assignedLeads?: Prisma.LeadCreateNestedManyWithoutAssignedToInput
   createdLeads?: Prisma.LeadCreateNestedManyWithoutCreatedByInput
-  activities?: Prisma.ActivityCreateNestedManyWithoutCreatedByInput
-  notifications?: Prisma.NotificationCreateNestedManyWithoutRecipientInput
   leadServiceSelections?: Prisma.LeadServiceSelectionCreateNestedManyWithoutCreatedByInput
-  clientServiceSelections?: Prisma.ClientServiceSelectionCreateNestedManyWithoutCreatedByInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutRecipientInput
   psgasAsBde?: Prisma.PSGACreateNestedManyWithoutBdeInput
   approvedIncentives?: Prisma.PSGAIncentiveAllocationCreateNestedManyWithoutApprovedByInput
-  incentivePayouts?: Prisma.IncentivePayoutCreateNestedManyWithoutBdeInput
-  approvedIncentivePayouts?: Prisma.IncentivePayoutCreateNestedManyWithoutApprovedByInput
-  sessions?: Prisma.AuthSessionCreateNestedManyWithoutUserInput
+  incentiveAllocations?: Prisma.PSGAIncentiveAllocationCreateNestedManyWithoutBdeInput
+  role: Prisma.RoleCreateNestedOneWithoutUsersInput
 }
 
-export type UserUncheckedCreateWithoutIncentiveAllocationsInput = {
+export type UserUncheckedCreateWithoutAdminIncentiveAllocationsInput = {
   id?: string
   firstName: string
   lastName?: string | null
@@ -2189,24 +2257,25 @@ export type UserUncheckedCreateWithoutIncentiveAllocationsInput = {
   lastLoginAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  clientsCreated?: Prisma.ClientUncheckedCreateNestedManyWithoutCreatedByInput
+  activities?: Prisma.ActivityUncheckedCreateNestedManyWithoutCreatedByInput
+  sessions?: Prisma.AuthSessionUncheckedCreateNestedManyWithoutUserInput
   assignedClients?: Prisma.ClientUncheckedCreateNestedManyWithoutAssignedBdeInput
+  clientsCreated?: Prisma.ClientUncheckedCreateNestedManyWithoutCreatedByInput
+  clientServiceSelections?: Prisma.ClientServiceSelectionUncheckedCreateNestedManyWithoutCreatedByInput
+  approvedIncentivePayouts?: Prisma.IncentivePayoutUncheckedCreateNestedManyWithoutApprovedByInput
+  incentivePayouts?: Prisma.IncentivePayoutUncheckedCreateNestedManyWithoutBdeInput
   assignedLeads?: Prisma.LeadUncheckedCreateNestedManyWithoutAssignedToInput
   createdLeads?: Prisma.LeadUncheckedCreateNestedManyWithoutCreatedByInput
-  activities?: Prisma.ActivityUncheckedCreateNestedManyWithoutCreatedByInput
-  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput
   leadServiceSelections?: Prisma.LeadServiceSelectionUncheckedCreateNestedManyWithoutCreatedByInput
-  clientServiceSelections?: Prisma.ClientServiceSelectionUncheckedCreateNestedManyWithoutCreatedByInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput
   psgasAsBde?: Prisma.PSGAUncheckedCreateNestedManyWithoutBdeInput
   approvedIncentives?: Prisma.PSGAIncentiveAllocationUncheckedCreateNestedManyWithoutApprovedByInput
-  incentivePayouts?: Prisma.IncentivePayoutUncheckedCreateNestedManyWithoutBdeInput
-  approvedIncentivePayouts?: Prisma.IncentivePayoutUncheckedCreateNestedManyWithoutApprovedByInput
-  sessions?: Prisma.AuthSessionUncheckedCreateNestedManyWithoutUserInput
+  incentiveAllocations?: Prisma.PSGAIncentiveAllocationUncheckedCreateNestedManyWithoutBdeInput
 }
 
-export type UserCreateOrConnectWithoutIncentiveAllocationsInput = {
+export type UserCreateOrConnectWithoutAdminIncentiveAllocationsInput = {
   where: Prisma.UserWhereUniqueInput
-  create: Prisma.XOR<Prisma.UserCreateWithoutIncentiveAllocationsInput, Prisma.UserUncheckedCreateWithoutIncentiveAllocationsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutAdminIncentiveAllocationsInput, Prisma.UserUncheckedCreateWithoutAdminIncentiveAllocationsInput>
 }
 
 export type UserCreateWithoutApprovedIncentivesInput = {
@@ -2220,20 +2289,21 @@ export type UserCreateWithoutApprovedIncentivesInput = {
   lastLoginAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  role: Prisma.RoleCreateNestedOneWithoutUsersInput
-  clientsCreated?: Prisma.ClientCreateNestedManyWithoutCreatedByInput
+  activities?: Prisma.ActivityCreateNestedManyWithoutCreatedByInput
+  sessions?: Prisma.AuthSessionCreateNestedManyWithoutUserInput
   assignedClients?: Prisma.ClientCreateNestedManyWithoutAssignedBdeInput
+  clientsCreated?: Prisma.ClientCreateNestedManyWithoutCreatedByInput
+  clientServiceSelections?: Prisma.ClientServiceSelectionCreateNestedManyWithoutCreatedByInput
+  approvedIncentivePayouts?: Prisma.IncentivePayoutCreateNestedManyWithoutApprovedByInput
+  incentivePayouts?: Prisma.IncentivePayoutCreateNestedManyWithoutBdeInput
   assignedLeads?: Prisma.LeadCreateNestedManyWithoutAssignedToInput
   createdLeads?: Prisma.LeadCreateNestedManyWithoutCreatedByInput
-  activities?: Prisma.ActivityCreateNestedManyWithoutCreatedByInput
-  notifications?: Prisma.NotificationCreateNestedManyWithoutRecipientInput
   leadServiceSelections?: Prisma.LeadServiceSelectionCreateNestedManyWithoutCreatedByInput
-  clientServiceSelections?: Prisma.ClientServiceSelectionCreateNestedManyWithoutCreatedByInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutRecipientInput
   psgasAsBde?: Prisma.PSGACreateNestedManyWithoutBdeInput
+  adminIncentiveAllocations?: Prisma.PSGAIncentiveAllocationCreateNestedManyWithoutAdminInput
   incentiveAllocations?: Prisma.PSGAIncentiveAllocationCreateNestedManyWithoutBdeInput
-  incentivePayouts?: Prisma.IncentivePayoutCreateNestedManyWithoutBdeInput
-  approvedIncentivePayouts?: Prisma.IncentivePayoutCreateNestedManyWithoutApprovedByInput
-  sessions?: Prisma.AuthSessionCreateNestedManyWithoutUserInput
+  role: Prisma.RoleCreateNestedOneWithoutUsersInput
 }
 
 export type UserUncheckedCreateWithoutApprovedIncentivesInput = {
@@ -2248,19 +2318,20 @@ export type UserUncheckedCreateWithoutApprovedIncentivesInput = {
   lastLoginAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  clientsCreated?: Prisma.ClientUncheckedCreateNestedManyWithoutCreatedByInput
+  activities?: Prisma.ActivityUncheckedCreateNestedManyWithoutCreatedByInput
+  sessions?: Prisma.AuthSessionUncheckedCreateNestedManyWithoutUserInput
   assignedClients?: Prisma.ClientUncheckedCreateNestedManyWithoutAssignedBdeInput
+  clientsCreated?: Prisma.ClientUncheckedCreateNestedManyWithoutCreatedByInput
+  clientServiceSelections?: Prisma.ClientServiceSelectionUncheckedCreateNestedManyWithoutCreatedByInput
+  approvedIncentivePayouts?: Prisma.IncentivePayoutUncheckedCreateNestedManyWithoutApprovedByInput
+  incentivePayouts?: Prisma.IncentivePayoutUncheckedCreateNestedManyWithoutBdeInput
   assignedLeads?: Prisma.LeadUncheckedCreateNestedManyWithoutAssignedToInput
   createdLeads?: Prisma.LeadUncheckedCreateNestedManyWithoutCreatedByInput
-  activities?: Prisma.ActivityUncheckedCreateNestedManyWithoutCreatedByInput
-  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput
   leadServiceSelections?: Prisma.LeadServiceSelectionUncheckedCreateNestedManyWithoutCreatedByInput
-  clientServiceSelections?: Prisma.ClientServiceSelectionUncheckedCreateNestedManyWithoutCreatedByInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput
   psgasAsBde?: Prisma.PSGAUncheckedCreateNestedManyWithoutBdeInput
+  adminIncentiveAllocations?: Prisma.PSGAIncentiveAllocationUncheckedCreateNestedManyWithoutAdminInput
   incentiveAllocations?: Prisma.PSGAIncentiveAllocationUncheckedCreateNestedManyWithoutBdeInput
-  incentivePayouts?: Prisma.IncentivePayoutUncheckedCreateNestedManyWithoutBdeInput
-  approvedIncentivePayouts?: Prisma.IncentivePayoutUncheckedCreateNestedManyWithoutApprovedByInput
-  sessions?: Prisma.AuthSessionUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutApprovedIncentivesInput = {
@@ -2268,18 +2339,79 @@ export type UserCreateOrConnectWithoutApprovedIncentivesInput = {
   create: Prisma.XOR<Prisma.UserCreateWithoutApprovedIncentivesInput, Prisma.UserUncheckedCreateWithoutApprovedIncentivesInput>
 }
 
-export type UserUpsertWithoutIncentiveAllocationsInput = {
-  update: Prisma.XOR<Prisma.UserUpdateWithoutIncentiveAllocationsInput, Prisma.UserUncheckedUpdateWithoutIncentiveAllocationsInput>
+export type UserCreateWithoutIncentiveAllocationsInput = {
+  id?: string
+  firstName: string
+  lastName?: string | null
+  email: string
+  passwordHash: string
+  mobile?: string | null
+  status?: $Enums.UserStatus
+  lastLoginAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  activities?: Prisma.ActivityCreateNestedManyWithoutCreatedByInput
+  sessions?: Prisma.AuthSessionCreateNestedManyWithoutUserInput
+  assignedClients?: Prisma.ClientCreateNestedManyWithoutAssignedBdeInput
+  clientsCreated?: Prisma.ClientCreateNestedManyWithoutCreatedByInput
+  clientServiceSelections?: Prisma.ClientServiceSelectionCreateNestedManyWithoutCreatedByInput
+  approvedIncentivePayouts?: Prisma.IncentivePayoutCreateNestedManyWithoutApprovedByInput
+  incentivePayouts?: Prisma.IncentivePayoutCreateNestedManyWithoutBdeInput
+  assignedLeads?: Prisma.LeadCreateNestedManyWithoutAssignedToInput
+  createdLeads?: Prisma.LeadCreateNestedManyWithoutCreatedByInput
+  leadServiceSelections?: Prisma.LeadServiceSelectionCreateNestedManyWithoutCreatedByInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutRecipientInput
+  psgasAsBde?: Prisma.PSGACreateNestedManyWithoutBdeInput
+  adminIncentiveAllocations?: Prisma.PSGAIncentiveAllocationCreateNestedManyWithoutAdminInput
+  approvedIncentives?: Prisma.PSGAIncentiveAllocationCreateNestedManyWithoutApprovedByInput
+  role: Prisma.RoleCreateNestedOneWithoutUsersInput
+}
+
+export type UserUncheckedCreateWithoutIncentiveAllocationsInput = {
+  id?: string
+  firstName: string
+  lastName?: string | null
+  email: string
+  passwordHash: string
+  mobile?: string | null
+  status?: $Enums.UserStatus
+  roleId: string
+  lastLoginAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  activities?: Prisma.ActivityUncheckedCreateNestedManyWithoutCreatedByInput
+  sessions?: Prisma.AuthSessionUncheckedCreateNestedManyWithoutUserInput
+  assignedClients?: Prisma.ClientUncheckedCreateNestedManyWithoutAssignedBdeInput
+  clientsCreated?: Prisma.ClientUncheckedCreateNestedManyWithoutCreatedByInput
+  clientServiceSelections?: Prisma.ClientServiceSelectionUncheckedCreateNestedManyWithoutCreatedByInput
+  approvedIncentivePayouts?: Prisma.IncentivePayoutUncheckedCreateNestedManyWithoutApprovedByInput
+  incentivePayouts?: Prisma.IncentivePayoutUncheckedCreateNestedManyWithoutBdeInput
+  assignedLeads?: Prisma.LeadUncheckedCreateNestedManyWithoutAssignedToInput
+  createdLeads?: Prisma.LeadUncheckedCreateNestedManyWithoutCreatedByInput
+  leadServiceSelections?: Prisma.LeadServiceSelectionUncheckedCreateNestedManyWithoutCreatedByInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput
+  psgasAsBde?: Prisma.PSGAUncheckedCreateNestedManyWithoutBdeInput
+  adminIncentiveAllocations?: Prisma.PSGAIncentiveAllocationUncheckedCreateNestedManyWithoutAdminInput
+  approvedIncentives?: Prisma.PSGAIncentiveAllocationUncheckedCreateNestedManyWithoutApprovedByInput
+}
+
+export type UserCreateOrConnectWithoutIncentiveAllocationsInput = {
+  where: Prisma.UserWhereUniqueInput
   create: Prisma.XOR<Prisma.UserCreateWithoutIncentiveAllocationsInput, Prisma.UserUncheckedCreateWithoutIncentiveAllocationsInput>
+}
+
+export type UserUpsertWithoutAdminIncentiveAllocationsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutAdminIncentiveAllocationsInput, Prisma.UserUncheckedUpdateWithoutAdminIncentiveAllocationsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutAdminIncentiveAllocationsInput, Prisma.UserUncheckedCreateWithoutAdminIncentiveAllocationsInput>
   where?: Prisma.UserWhereInput
 }
 
-export type UserUpdateToOneWithWhereWithoutIncentiveAllocationsInput = {
+export type UserUpdateToOneWithWhereWithoutAdminIncentiveAllocationsInput = {
   where?: Prisma.UserWhereInput
-  data: Prisma.XOR<Prisma.UserUpdateWithoutIncentiveAllocationsInput, Prisma.UserUncheckedUpdateWithoutIncentiveAllocationsInput>
+  data: Prisma.XOR<Prisma.UserUpdateWithoutAdminIncentiveAllocationsInput, Prisma.UserUncheckedUpdateWithoutAdminIncentiveAllocationsInput>
 }
 
-export type UserUpdateWithoutIncentiveAllocationsInput = {
+export type UserUpdateWithoutAdminIncentiveAllocationsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2290,23 +2422,24 @@ export type UserUpdateWithoutIncentiveAllocationsInput = {
   lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  role?: Prisma.RoleUpdateOneRequiredWithoutUsersNestedInput
-  clientsCreated?: Prisma.ClientUpdateManyWithoutCreatedByNestedInput
+  activities?: Prisma.ActivityUpdateManyWithoutCreatedByNestedInput
+  sessions?: Prisma.AuthSessionUpdateManyWithoutUserNestedInput
   assignedClients?: Prisma.ClientUpdateManyWithoutAssignedBdeNestedInput
+  clientsCreated?: Prisma.ClientUpdateManyWithoutCreatedByNestedInput
+  clientServiceSelections?: Prisma.ClientServiceSelectionUpdateManyWithoutCreatedByNestedInput
+  approvedIncentivePayouts?: Prisma.IncentivePayoutUpdateManyWithoutApprovedByNestedInput
+  incentivePayouts?: Prisma.IncentivePayoutUpdateManyWithoutBdeNestedInput
   assignedLeads?: Prisma.LeadUpdateManyWithoutAssignedToNestedInput
   createdLeads?: Prisma.LeadUpdateManyWithoutCreatedByNestedInput
-  activities?: Prisma.ActivityUpdateManyWithoutCreatedByNestedInput
-  notifications?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput
   leadServiceSelections?: Prisma.LeadServiceSelectionUpdateManyWithoutCreatedByNestedInput
-  clientServiceSelections?: Prisma.ClientServiceSelectionUpdateManyWithoutCreatedByNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput
   psgasAsBde?: Prisma.PSGAUpdateManyWithoutBdeNestedInput
   approvedIncentives?: Prisma.PSGAIncentiveAllocationUpdateManyWithoutApprovedByNestedInput
-  incentivePayouts?: Prisma.IncentivePayoutUpdateManyWithoutBdeNestedInput
-  approvedIncentivePayouts?: Prisma.IncentivePayoutUpdateManyWithoutApprovedByNestedInput
-  sessions?: Prisma.AuthSessionUpdateManyWithoutUserNestedInput
+  incentiveAllocations?: Prisma.PSGAIncentiveAllocationUpdateManyWithoutBdeNestedInput
+  role?: Prisma.RoleUpdateOneRequiredWithoutUsersNestedInput
 }
 
-export type UserUncheckedUpdateWithoutIncentiveAllocationsInput = {
+export type UserUncheckedUpdateWithoutAdminIncentiveAllocationsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2318,19 +2451,20 @@ export type UserUncheckedUpdateWithoutIncentiveAllocationsInput = {
   lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  clientsCreated?: Prisma.ClientUncheckedUpdateManyWithoutCreatedByNestedInput
+  activities?: Prisma.ActivityUncheckedUpdateManyWithoutCreatedByNestedInput
+  sessions?: Prisma.AuthSessionUncheckedUpdateManyWithoutUserNestedInput
   assignedClients?: Prisma.ClientUncheckedUpdateManyWithoutAssignedBdeNestedInput
+  clientsCreated?: Prisma.ClientUncheckedUpdateManyWithoutCreatedByNestedInput
+  clientServiceSelections?: Prisma.ClientServiceSelectionUncheckedUpdateManyWithoutCreatedByNestedInput
+  approvedIncentivePayouts?: Prisma.IncentivePayoutUncheckedUpdateManyWithoutApprovedByNestedInput
+  incentivePayouts?: Prisma.IncentivePayoutUncheckedUpdateManyWithoutBdeNestedInput
   assignedLeads?: Prisma.LeadUncheckedUpdateManyWithoutAssignedToNestedInput
   createdLeads?: Prisma.LeadUncheckedUpdateManyWithoutCreatedByNestedInput
-  activities?: Prisma.ActivityUncheckedUpdateManyWithoutCreatedByNestedInput
-  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput
   leadServiceSelections?: Prisma.LeadServiceSelectionUncheckedUpdateManyWithoutCreatedByNestedInput
-  clientServiceSelections?: Prisma.ClientServiceSelectionUncheckedUpdateManyWithoutCreatedByNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput
   psgasAsBde?: Prisma.PSGAUncheckedUpdateManyWithoutBdeNestedInput
   approvedIncentives?: Prisma.PSGAIncentiveAllocationUncheckedUpdateManyWithoutApprovedByNestedInput
-  incentivePayouts?: Prisma.IncentivePayoutUncheckedUpdateManyWithoutBdeNestedInput
-  approvedIncentivePayouts?: Prisma.IncentivePayoutUncheckedUpdateManyWithoutApprovedByNestedInput
-  sessions?: Prisma.AuthSessionUncheckedUpdateManyWithoutUserNestedInput
+  incentiveAllocations?: Prisma.PSGAIncentiveAllocationUncheckedUpdateManyWithoutBdeNestedInput
 }
 
 export type UserUpsertWithoutApprovedIncentivesInput = {
@@ -2355,20 +2489,21 @@ export type UserUpdateWithoutApprovedIncentivesInput = {
   lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  role?: Prisma.RoleUpdateOneRequiredWithoutUsersNestedInput
-  clientsCreated?: Prisma.ClientUpdateManyWithoutCreatedByNestedInput
+  activities?: Prisma.ActivityUpdateManyWithoutCreatedByNestedInput
+  sessions?: Prisma.AuthSessionUpdateManyWithoutUserNestedInput
   assignedClients?: Prisma.ClientUpdateManyWithoutAssignedBdeNestedInput
+  clientsCreated?: Prisma.ClientUpdateManyWithoutCreatedByNestedInput
+  clientServiceSelections?: Prisma.ClientServiceSelectionUpdateManyWithoutCreatedByNestedInput
+  approvedIncentivePayouts?: Prisma.IncentivePayoutUpdateManyWithoutApprovedByNestedInput
+  incentivePayouts?: Prisma.IncentivePayoutUpdateManyWithoutBdeNestedInput
   assignedLeads?: Prisma.LeadUpdateManyWithoutAssignedToNestedInput
   createdLeads?: Prisma.LeadUpdateManyWithoutCreatedByNestedInput
-  activities?: Prisma.ActivityUpdateManyWithoutCreatedByNestedInput
-  notifications?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput
   leadServiceSelections?: Prisma.LeadServiceSelectionUpdateManyWithoutCreatedByNestedInput
-  clientServiceSelections?: Prisma.ClientServiceSelectionUpdateManyWithoutCreatedByNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput
   psgasAsBde?: Prisma.PSGAUpdateManyWithoutBdeNestedInput
+  adminIncentiveAllocations?: Prisma.PSGAIncentiveAllocationUpdateManyWithoutAdminNestedInput
   incentiveAllocations?: Prisma.PSGAIncentiveAllocationUpdateManyWithoutBdeNestedInput
-  incentivePayouts?: Prisma.IncentivePayoutUpdateManyWithoutBdeNestedInput
-  approvedIncentivePayouts?: Prisma.IncentivePayoutUpdateManyWithoutApprovedByNestedInput
-  sessions?: Prisma.AuthSessionUpdateManyWithoutUserNestedInput
+  role?: Prisma.RoleUpdateOneRequiredWithoutUsersNestedInput
 }
 
 export type UserUncheckedUpdateWithoutApprovedIncentivesInput = {
@@ -2383,78 +2518,87 @@ export type UserUncheckedUpdateWithoutApprovedIncentivesInput = {
   lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  clientsCreated?: Prisma.ClientUncheckedUpdateManyWithoutCreatedByNestedInput
+  activities?: Prisma.ActivityUncheckedUpdateManyWithoutCreatedByNestedInput
+  sessions?: Prisma.AuthSessionUncheckedUpdateManyWithoutUserNestedInput
   assignedClients?: Prisma.ClientUncheckedUpdateManyWithoutAssignedBdeNestedInput
+  clientsCreated?: Prisma.ClientUncheckedUpdateManyWithoutCreatedByNestedInput
+  clientServiceSelections?: Prisma.ClientServiceSelectionUncheckedUpdateManyWithoutCreatedByNestedInput
+  approvedIncentivePayouts?: Prisma.IncentivePayoutUncheckedUpdateManyWithoutApprovedByNestedInput
+  incentivePayouts?: Prisma.IncentivePayoutUncheckedUpdateManyWithoutBdeNestedInput
   assignedLeads?: Prisma.LeadUncheckedUpdateManyWithoutAssignedToNestedInput
   createdLeads?: Prisma.LeadUncheckedUpdateManyWithoutCreatedByNestedInput
-  activities?: Prisma.ActivityUncheckedUpdateManyWithoutCreatedByNestedInput
-  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput
   leadServiceSelections?: Prisma.LeadServiceSelectionUncheckedUpdateManyWithoutCreatedByNestedInput
-  clientServiceSelections?: Prisma.ClientServiceSelectionUncheckedUpdateManyWithoutCreatedByNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput
   psgasAsBde?: Prisma.PSGAUncheckedUpdateManyWithoutBdeNestedInput
+  adminIncentiveAllocations?: Prisma.PSGAIncentiveAllocationUncheckedUpdateManyWithoutAdminNestedInput
   incentiveAllocations?: Prisma.PSGAIncentiveAllocationUncheckedUpdateManyWithoutBdeNestedInput
-  incentivePayouts?: Prisma.IncentivePayoutUncheckedUpdateManyWithoutBdeNestedInput
-  approvedIncentivePayouts?: Prisma.IncentivePayoutUncheckedUpdateManyWithoutApprovedByNestedInput
+}
+
+export type UserUpsertWithoutIncentiveAllocationsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutIncentiveAllocationsInput, Prisma.UserUncheckedUpdateWithoutIncentiveAllocationsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutIncentiveAllocationsInput, Prisma.UserUncheckedCreateWithoutIncentiveAllocationsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutIncentiveAllocationsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutIncentiveAllocationsInput, Prisma.UserUncheckedUpdateWithoutIncentiveAllocationsInput>
+}
+
+export type UserUpdateWithoutIncentiveAllocationsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  firstName?: Prisma.StringFieldUpdateOperationsInput | string
+  lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  mobile?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+  lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  activities?: Prisma.ActivityUpdateManyWithoutCreatedByNestedInput
+  sessions?: Prisma.AuthSessionUpdateManyWithoutUserNestedInput
+  assignedClients?: Prisma.ClientUpdateManyWithoutAssignedBdeNestedInput
+  clientsCreated?: Prisma.ClientUpdateManyWithoutCreatedByNestedInput
+  clientServiceSelections?: Prisma.ClientServiceSelectionUpdateManyWithoutCreatedByNestedInput
+  approvedIncentivePayouts?: Prisma.IncentivePayoutUpdateManyWithoutApprovedByNestedInput
+  incentivePayouts?: Prisma.IncentivePayoutUpdateManyWithoutBdeNestedInput
+  assignedLeads?: Prisma.LeadUpdateManyWithoutAssignedToNestedInput
+  createdLeads?: Prisma.LeadUpdateManyWithoutCreatedByNestedInput
+  leadServiceSelections?: Prisma.LeadServiceSelectionUpdateManyWithoutCreatedByNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput
+  psgasAsBde?: Prisma.PSGAUpdateManyWithoutBdeNestedInput
+  adminIncentiveAllocations?: Prisma.PSGAIncentiveAllocationUpdateManyWithoutAdminNestedInput
+  approvedIncentives?: Prisma.PSGAIncentiveAllocationUpdateManyWithoutApprovedByNestedInput
+  role?: Prisma.RoleUpdateOneRequiredWithoutUsersNestedInput
+}
+
+export type UserUncheckedUpdateWithoutIncentiveAllocationsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  firstName?: Prisma.StringFieldUpdateOperationsInput | string
+  lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  mobile?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+  roleId?: Prisma.StringFieldUpdateOperationsInput | string
+  lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  activities?: Prisma.ActivityUncheckedUpdateManyWithoutCreatedByNestedInput
   sessions?: Prisma.AuthSessionUncheckedUpdateManyWithoutUserNestedInput
-}
-
-export type UserCreateWithoutIncentivePayoutsInput = {
-  id?: string
-  firstName: string
-  lastName?: string | null
-  email: string
-  passwordHash: string
-  mobile?: string | null
-  status?: $Enums.UserStatus
-  lastLoginAt?: Date | string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  role: Prisma.RoleCreateNestedOneWithoutUsersInput
-  clientsCreated?: Prisma.ClientCreateNestedManyWithoutCreatedByInput
-  assignedClients?: Prisma.ClientCreateNestedManyWithoutAssignedBdeInput
-  assignedLeads?: Prisma.LeadCreateNestedManyWithoutAssignedToInput
-  createdLeads?: Prisma.LeadCreateNestedManyWithoutCreatedByInput
-  activities?: Prisma.ActivityCreateNestedManyWithoutCreatedByInput
-  notifications?: Prisma.NotificationCreateNestedManyWithoutRecipientInput
-  leadServiceSelections?: Prisma.LeadServiceSelectionCreateNestedManyWithoutCreatedByInput
-  clientServiceSelections?: Prisma.ClientServiceSelectionCreateNestedManyWithoutCreatedByInput
-  psgasAsBde?: Prisma.PSGACreateNestedManyWithoutBdeInput
-  incentiveAllocations?: Prisma.PSGAIncentiveAllocationCreateNestedManyWithoutBdeInput
-  approvedIncentives?: Prisma.PSGAIncentiveAllocationCreateNestedManyWithoutApprovedByInput
-  approvedIncentivePayouts?: Prisma.IncentivePayoutCreateNestedManyWithoutApprovedByInput
-  sessions?: Prisma.AuthSessionCreateNestedManyWithoutUserInput
-}
-
-export type UserUncheckedCreateWithoutIncentivePayoutsInput = {
-  id?: string
-  firstName: string
-  lastName?: string | null
-  email: string
-  passwordHash: string
-  mobile?: string | null
-  status?: $Enums.UserStatus
-  roleId: string
-  lastLoginAt?: Date | string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  clientsCreated?: Prisma.ClientUncheckedCreateNestedManyWithoutCreatedByInput
-  assignedClients?: Prisma.ClientUncheckedCreateNestedManyWithoutAssignedBdeInput
-  assignedLeads?: Prisma.LeadUncheckedCreateNestedManyWithoutAssignedToInput
-  createdLeads?: Prisma.LeadUncheckedCreateNestedManyWithoutCreatedByInput
-  activities?: Prisma.ActivityUncheckedCreateNestedManyWithoutCreatedByInput
-  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput
-  leadServiceSelections?: Prisma.LeadServiceSelectionUncheckedCreateNestedManyWithoutCreatedByInput
-  clientServiceSelections?: Prisma.ClientServiceSelectionUncheckedCreateNestedManyWithoutCreatedByInput
-  psgasAsBde?: Prisma.PSGAUncheckedCreateNestedManyWithoutBdeInput
-  incentiveAllocations?: Prisma.PSGAIncentiveAllocationUncheckedCreateNestedManyWithoutBdeInput
-  approvedIncentives?: Prisma.PSGAIncentiveAllocationUncheckedCreateNestedManyWithoutApprovedByInput
-  approvedIncentivePayouts?: Prisma.IncentivePayoutUncheckedCreateNestedManyWithoutApprovedByInput
-  sessions?: Prisma.AuthSessionUncheckedCreateNestedManyWithoutUserInput
-}
-
-export type UserCreateOrConnectWithoutIncentivePayoutsInput = {
-  where: Prisma.UserWhereUniqueInput
-  create: Prisma.XOR<Prisma.UserCreateWithoutIncentivePayoutsInput, Prisma.UserUncheckedCreateWithoutIncentivePayoutsInput>
+  assignedClients?: Prisma.ClientUncheckedUpdateManyWithoutAssignedBdeNestedInput
+  clientsCreated?: Prisma.ClientUncheckedUpdateManyWithoutCreatedByNestedInput
+  clientServiceSelections?: Prisma.ClientServiceSelectionUncheckedUpdateManyWithoutCreatedByNestedInput
+  approvedIncentivePayouts?: Prisma.IncentivePayoutUncheckedUpdateManyWithoutApprovedByNestedInput
+  incentivePayouts?: Prisma.IncentivePayoutUncheckedUpdateManyWithoutBdeNestedInput
+  assignedLeads?: Prisma.LeadUncheckedUpdateManyWithoutAssignedToNestedInput
+  createdLeads?: Prisma.LeadUncheckedUpdateManyWithoutCreatedByNestedInput
+  leadServiceSelections?: Prisma.LeadServiceSelectionUncheckedUpdateManyWithoutCreatedByNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput
+  psgasAsBde?: Prisma.PSGAUncheckedUpdateManyWithoutBdeNestedInput
+  adminIncentiveAllocations?: Prisma.PSGAIncentiveAllocationUncheckedUpdateManyWithoutAdminNestedInput
+  approvedIncentives?: Prisma.PSGAIncentiveAllocationUncheckedUpdateManyWithoutApprovedByNestedInput
 }
 
 export type UserCreateWithoutApprovedIncentivePayoutsInput = {
@@ -2468,20 +2612,21 @@ export type UserCreateWithoutApprovedIncentivePayoutsInput = {
   lastLoginAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  role: Prisma.RoleCreateNestedOneWithoutUsersInput
-  clientsCreated?: Prisma.ClientCreateNestedManyWithoutCreatedByInput
+  activities?: Prisma.ActivityCreateNestedManyWithoutCreatedByInput
+  sessions?: Prisma.AuthSessionCreateNestedManyWithoutUserInput
   assignedClients?: Prisma.ClientCreateNestedManyWithoutAssignedBdeInput
+  clientsCreated?: Prisma.ClientCreateNestedManyWithoutCreatedByInput
+  clientServiceSelections?: Prisma.ClientServiceSelectionCreateNestedManyWithoutCreatedByInput
+  incentivePayouts?: Prisma.IncentivePayoutCreateNestedManyWithoutBdeInput
   assignedLeads?: Prisma.LeadCreateNestedManyWithoutAssignedToInput
   createdLeads?: Prisma.LeadCreateNestedManyWithoutCreatedByInput
-  activities?: Prisma.ActivityCreateNestedManyWithoutCreatedByInput
-  notifications?: Prisma.NotificationCreateNestedManyWithoutRecipientInput
   leadServiceSelections?: Prisma.LeadServiceSelectionCreateNestedManyWithoutCreatedByInput
-  clientServiceSelections?: Prisma.ClientServiceSelectionCreateNestedManyWithoutCreatedByInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutRecipientInput
   psgasAsBde?: Prisma.PSGACreateNestedManyWithoutBdeInput
-  incentiveAllocations?: Prisma.PSGAIncentiveAllocationCreateNestedManyWithoutBdeInput
+  adminIncentiveAllocations?: Prisma.PSGAIncentiveAllocationCreateNestedManyWithoutAdminInput
   approvedIncentives?: Prisma.PSGAIncentiveAllocationCreateNestedManyWithoutApprovedByInput
-  incentivePayouts?: Prisma.IncentivePayoutCreateNestedManyWithoutBdeInput
-  sessions?: Prisma.AuthSessionCreateNestedManyWithoutUserInput
+  incentiveAllocations?: Prisma.PSGAIncentiveAllocationCreateNestedManyWithoutBdeInput
+  role: Prisma.RoleCreateNestedOneWithoutUsersInput
 }
 
 export type UserUncheckedCreateWithoutApprovedIncentivePayoutsInput = {
@@ -2496,19 +2641,20 @@ export type UserUncheckedCreateWithoutApprovedIncentivePayoutsInput = {
   lastLoginAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  clientsCreated?: Prisma.ClientUncheckedCreateNestedManyWithoutCreatedByInput
+  activities?: Prisma.ActivityUncheckedCreateNestedManyWithoutCreatedByInput
+  sessions?: Prisma.AuthSessionUncheckedCreateNestedManyWithoutUserInput
   assignedClients?: Prisma.ClientUncheckedCreateNestedManyWithoutAssignedBdeInput
+  clientsCreated?: Prisma.ClientUncheckedCreateNestedManyWithoutCreatedByInput
+  clientServiceSelections?: Prisma.ClientServiceSelectionUncheckedCreateNestedManyWithoutCreatedByInput
+  incentivePayouts?: Prisma.IncentivePayoutUncheckedCreateNestedManyWithoutBdeInput
   assignedLeads?: Prisma.LeadUncheckedCreateNestedManyWithoutAssignedToInput
   createdLeads?: Prisma.LeadUncheckedCreateNestedManyWithoutCreatedByInput
-  activities?: Prisma.ActivityUncheckedCreateNestedManyWithoutCreatedByInput
-  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput
   leadServiceSelections?: Prisma.LeadServiceSelectionUncheckedCreateNestedManyWithoutCreatedByInput
-  clientServiceSelections?: Prisma.ClientServiceSelectionUncheckedCreateNestedManyWithoutCreatedByInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput
   psgasAsBde?: Prisma.PSGAUncheckedCreateNestedManyWithoutBdeInput
-  incentiveAllocations?: Prisma.PSGAIncentiveAllocationUncheckedCreateNestedManyWithoutBdeInput
+  adminIncentiveAllocations?: Prisma.PSGAIncentiveAllocationUncheckedCreateNestedManyWithoutAdminInput
   approvedIncentives?: Prisma.PSGAIncentiveAllocationUncheckedCreateNestedManyWithoutApprovedByInput
-  incentivePayouts?: Prisma.IncentivePayoutUncheckedCreateNestedManyWithoutBdeInput
-  sessions?: Prisma.AuthSessionUncheckedCreateNestedManyWithoutUserInput
+  incentiveAllocations?: Prisma.PSGAIncentiveAllocationUncheckedCreateNestedManyWithoutBdeInput
 }
 
 export type UserCreateOrConnectWithoutApprovedIncentivePayoutsInput = {
@@ -2516,69 +2662,65 @@ export type UserCreateOrConnectWithoutApprovedIncentivePayoutsInput = {
   create: Prisma.XOR<Prisma.UserCreateWithoutApprovedIncentivePayoutsInput, Prisma.UserUncheckedCreateWithoutApprovedIncentivePayoutsInput>
 }
 
-export type UserUpsertWithoutIncentivePayoutsInput = {
-  update: Prisma.XOR<Prisma.UserUpdateWithoutIncentivePayoutsInput, Prisma.UserUncheckedUpdateWithoutIncentivePayoutsInput>
+export type UserCreateWithoutIncentivePayoutsInput = {
+  id?: string
+  firstName: string
+  lastName?: string | null
+  email: string
+  passwordHash: string
+  mobile?: string | null
+  status?: $Enums.UserStatus
+  lastLoginAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  activities?: Prisma.ActivityCreateNestedManyWithoutCreatedByInput
+  sessions?: Prisma.AuthSessionCreateNestedManyWithoutUserInput
+  assignedClients?: Prisma.ClientCreateNestedManyWithoutAssignedBdeInput
+  clientsCreated?: Prisma.ClientCreateNestedManyWithoutCreatedByInput
+  clientServiceSelections?: Prisma.ClientServiceSelectionCreateNestedManyWithoutCreatedByInput
+  approvedIncentivePayouts?: Prisma.IncentivePayoutCreateNestedManyWithoutApprovedByInput
+  assignedLeads?: Prisma.LeadCreateNestedManyWithoutAssignedToInput
+  createdLeads?: Prisma.LeadCreateNestedManyWithoutCreatedByInput
+  leadServiceSelections?: Prisma.LeadServiceSelectionCreateNestedManyWithoutCreatedByInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutRecipientInput
+  psgasAsBde?: Prisma.PSGACreateNestedManyWithoutBdeInput
+  adminIncentiveAllocations?: Prisma.PSGAIncentiveAllocationCreateNestedManyWithoutAdminInput
+  approvedIncentives?: Prisma.PSGAIncentiveAllocationCreateNestedManyWithoutApprovedByInput
+  incentiveAllocations?: Prisma.PSGAIncentiveAllocationCreateNestedManyWithoutBdeInput
+  role: Prisma.RoleCreateNestedOneWithoutUsersInput
+}
+
+export type UserUncheckedCreateWithoutIncentivePayoutsInput = {
+  id?: string
+  firstName: string
+  lastName?: string | null
+  email: string
+  passwordHash: string
+  mobile?: string | null
+  status?: $Enums.UserStatus
+  roleId: string
+  lastLoginAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  activities?: Prisma.ActivityUncheckedCreateNestedManyWithoutCreatedByInput
+  sessions?: Prisma.AuthSessionUncheckedCreateNestedManyWithoutUserInput
+  assignedClients?: Prisma.ClientUncheckedCreateNestedManyWithoutAssignedBdeInput
+  clientsCreated?: Prisma.ClientUncheckedCreateNestedManyWithoutCreatedByInput
+  clientServiceSelections?: Prisma.ClientServiceSelectionUncheckedCreateNestedManyWithoutCreatedByInput
+  approvedIncentivePayouts?: Prisma.IncentivePayoutUncheckedCreateNestedManyWithoutApprovedByInput
+  assignedLeads?: Prisma.LeadUncheckedCreateNestedManyWithoutAssignedToInput
+  createdLeads?: Prisma.LeadUncheckedCreateNestedManyWithoutCreatedByInput
+  leadServiceSelections?: Prisma.LeadServiceSelectionUncheckedCreateNestedManyWithoutCreatedByInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput
+  psgasAsBde?: Prisma.PSGAUncheckedCreateNestedManyWithoutBdeInput
+  adminIncentiveAllocations?: Prisma.PSGAIncentiveAllocationUncheckedCreateNestedManyWithoutAdminInput
+  approvedIncentives?: Prisma.PSGAIncentiveAllocationUncheckedCreateNestedManyWithoutApprovedByInput
+  incentiveAllocations?: Prisma.PSGAIncentiveAllocationUncheckedCreateNestedManyWithoutBdeInput
+}
+
+export type UserCreateOrConnectWithoutIncentivePayoutsInput = {
+  where: Prisma.UserWhereUniqueInput
   create: Prisma.XOR<Prisma.UserCreateWithoutIncentivePayoutsInput, Prisma.UserUncheckedCreateWithoutIncentivePayoutsInput>
-  where?: Prisma.UserWhereInput
-}
-
-export type UserUpdateToOneWithWhereWithoutIncentivePayoutsInput = {
-  where?: Prisma.UserWhereInput
-  data: Prisma.XOR<Prisma.UserUpdateWithoutIncentivePayoutsInput, Prisma.UserUncheckedUpdateWithoutIncentivePayoutsInput>
-}
-
-export type UserUpdateWithoutIncentivePayoutsInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  firstName?: Prisma.StringFieldUpdateOperationsInput | string
-  lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  email?: Prisma.StringFieldUpdateOperationsInput | string
-  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
-  mobile?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
-  lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  role?: Prisma.RoleUpdateOneRequiredWithoutUsersNestedInput
-  clientsCreated?: Prisma.ClientUpdateManyWithoutCreatedByNestedInput
-  assignedClients?: Prisma.ClientUpdateManyWithoutAssignedBdeNestedInput
-  assignedLeads?: Prisma.LeadUpdateManyWithoutAssignedToNestedInput
-  createdLeads?: Prisma.LeadUpdateManyWithoutCreatedByNestedInput
-  activities?: Prisma.ActivityUpdateManyWithoutCreatedByNestedInput
-  notifications?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput
-  leadServiceSelections?: Prisma.LeadServiceSelectionUpdateManyWithoutCreatedByNestedInput
-  clientServiceSelections?: Prisma.ClientServiceSelectionUpdateManyWithoutCreatedByNestedInput
-  psgasAsBde?: Prisma.PSGAUpdateManyWithoutBdeNestedInput
-  incentiveAllocations?: Prisma.PSGAIncentiveAllocationUpdateManyWithoutBdeNestedInput
-  approvedIncentives?: Prisma.PSGAIncentiveAllocationUpdateManyWithoutApprovedByNestedInput
-  approvedIncentivePayouts?: Prisma.IncentivePayoutUpdateManyWithoutApprovedByNestedInput
-  sessions?: Prisma.AuthSessionUpdateManyWithoutUserNestedInput
-}
-
-export type UserUncheckedUpdateWithoutIncentivePayoutsInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  firstName?: Prisma.StringFieldUpdateOperationsInput | string
-  lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  email?: Prisma.StringFieldUpdateOperationsInput | string
-  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
-  mobile?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
-  roleId?: Prisma.StringFieldUpdateOperationsInput | string
-  lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  clientsCreated?: Prisma.ClientUncheckedUpdateManyWithoutCreatedByNestedInput
-  assignedClients?: Prisma.ClientUncheckedUpdateManyWithoutAssignedBdeNestedInput
-  assignedLeads?: Prisma.LeadUncheckedUpdateManyWithoutAssignedToNestedInput
-  createdLeads?: Prisma.LeadUncheckedUpdateManyWithoutCreatedByNestedInput
-  activities?: Prisma.ActivityUncheckedUpdateManyWithoutCreatedByNestedInput
-  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput
-  leadServiceSelections?: Prisma.LeadServiceSelectionUncheckedUpdateManyWithoutCreatedByNestedInput
-  clientServiceSelections?: Prisma.ClientServiceSelectionUncheckedUpdateManyWithoutCreatedByNestedInput
-  psgasAsBde?: Prisma.PSGAUncheckedUpdateManyWithoutBdeNestedInput
-  incentiveAllocations?: Prisma.PSGAIncentiveAllocationUncheckedUpdateManyWithoutBdeNestedInput
-  approvedIncentives?: Prisma.PSGAIncentiveAllocationUncheckedUpdateManyWithoutApprovedByNestedInput
-  approvedIncentivePayouts?: Prisma.IncentivePayoutUncheckedUpdateManyWithoutApprovedByNestedInput
-  sessions?: Prisma.AuthSessionUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserUpsertWithoutApprovedIncentivePayoutsInput = {
@@ -2603,20 +2745,21 @@ export type UserUpdateWithoutApprovedIncentivePayoutsInput = {
   lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  role?: Prisma.RoleUpdateOneRequiredWithoutUsersNestedInput
-  clientsCreated?: Prisma.ClientUpdateManyWithoutCreatedByNestedInput
+  activities?: Prisma.ActivityUpdateManyWithoutCreatedByNestedInput
+  sessions?: Prisma.AuthSessionUpdateManyWithoutUserNestedInput
   assignedClients?: Prisma.ClientUpdateManyWithoutAssignedBdeNestedInput
+  clientsCreated?: Prisma.ClientUpdateManyWithoutCreatedByNestedInput
+  clientServiceSelections?: Prisma.ClientServiceSelectionUpdateManyWithoutCreatedByNestedInput
+  incentivePayouts?: Prisma.IncentivePayoutUpdateManyWithoutBdeNestedInput
   assignedLeads?: Prisma.LeadUpdateManyWithoutAssignedToNestedInput
   createdLeads?: Prisma.LeadUpdateManyWithoutCreatedByNestedInput
-  activities?: Prisma.ActivityUpdateManyWithoutCreatedByNestedInput
-  notifications?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput
   leadServiceSelections?: Prisma.LeadServiceSelectionUpdateManyWithoutCreatedByNestedInput
-  clientServiceSelections?: Prisma.ClientServiceSelectionUpdateManyWithoutCreatedByNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput
   psgasAsBde?: Prisma.PSGAUpdateManyWithoutBdeNestedInput
-  incentiveAllocations?: Prisma.PSGAIncentiveAllocationUpdateManyWithoutBdeNestedInput
+  adminIncentiveAllocations?: Prisma.PSGAIncentiveAllocationUpdateManyWithoutAdminNestedInput
   approvedIncentives?: Prisma.PSGAIncentiveAllocationUpdateManyWithoutApprovedByNestedInput
-  incentivePayouts?: Prisma.IncentivePayoutUpdateManyWithoutBdeNestedInput
-  sessions?: Prisma.AuthSessionUpdateManyWithoutUserNestedInput
+  incentiveAllocations?: Prisma.PSGAIncentiveAllocationUpdateManyWithoutBdeNestedInput
+  role?: Prisma.RoleUpdateOneRequiredWithoutUsersNestedInput
 }
 
 export type UserUncheckedUpdateWithoutApprovedIncentivePayoutsInput = {
@@ -2631,19 +2774,87 @@ export type UserUncheckedUpdateWithoutApprovedIncentivePayoutsInput = {
   lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  clientsCreated?: Prisma.ClientUncheckedUpdateManyWithoutCreatedByNestedInput
+  activities?: Prisma.ActivityUncheckedUpdateManyWithoutCreatedByNestedInput
+  sessions?: Prisma.AuthSessionUncheckedUpdateManyWithoutUserNestedInput
   assignedClients?: Prisma.ClientUncheckedUpdateManyWithoutAssignedBdeNestedInput
+  clientsCreated?: Prisma.ClientUncheckedUpdateManyWithoutCreatedByNestedInput
+  clientServiceSelections?: Prisma.ClientServiceSelectionUncheckedUpdateManyWithoutCreatedByNestedInput
+  incentivePayouts?: Prisma.IncentivePayoutUncheckedUpdateManyWithoutBdeNestedInput
   assignedLeads?: Prisma.LeadUncheckedUpdateManyWithoutAssignedToNestedInput
   createdLeads?: Prisma.LeadUncheckedUpdateManyWithoutCreatedByNestedInput
-  activities?: Prisma.ActivityUncheckedUpdateManyWithoutCreatedByNestedInput
-  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput
   leadServiceSelections?: Prisma.LeadServiceSelectionUncheckedUpdateManyWithoutCreatedByNestedInput
-  clientServiceSelections?: Prisma.ClientServiceSelectionUncheckedUpdateManyWithoutCreatedByNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput
   psgasAsBde?: Prisma.PSGAUncheckedUpdateManyWithoutBdeNestedInput
-  incentiveAllocations?: Prisma.PSGAIncentiveAllocationUncheckedUpdateManyWithoutBdeNestedInput
+  adminIncentiveAllocations?: Prisma.PSGAIncentiveAllocationUncheckedUpdateManyWithoutAdminNestedInput
   approvedIncentives?: Prisma.PSGAIncentiveAllocationUncheckedUpdateManyWithoutApprovedByNestedInput
-  incentivePayouts?: Prisma.IncentivePayoutUncheckedUpdateManyWithoutBdeNestedInput
+  incentiveAllocations?: Prisma.PSGAIncentiveAllocationUncheckedUpdateManyWithoutBdeNestedInput
+}
+
+export type UserUpsertWithoutIncentivePayoutsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutIncentivePayoutsInput, Prisma.UserUncheckedUpdateWithoutIncentivePayoutsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutIncentivePayoutsInput, Prisma.UserUncheckedCreateWithoutIncentivePayoutsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutIncentivePayoutsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutIncentivePayoutsInput, Prisma.UserUncheckedUpdateWithoutIncentivePayoutsInput>
+}
+
+export type UserUpdateWithoutIncentivePayoutsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  firstName?: Prisma.StringFieldUpdateOperationsInput | string
+  lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  mobile?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+  lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  activities?: Prisma.ActivityUpdateManyWithoutCreatedByNestedInput
+  sessions?: Prisma.AuthSessionUpdateManyWithoutUserNestedInput
+  assignedClients?: Prisma.ClientUpdateManyWithoutAssignedBdeNestedInput
+  clientsCreated?: Prisma.ClientUpdateManyWithoutCreatedByNestedInput
+  clientServiceSelections?: Prisma.ClientServiceSelectionUpdateManyWithoutCreatedByNestedInput
+  approvedIncentivePayouts?: Prisma.IncentivePayoutUpdateManyWithoutApprovedByNestedInput
+  assignedLeads?: Prisma.LeadUpdateManyWithoutAssignedToNestedInput
+  createdLeads?: Prisma.LeadUpdateManyWithoutCreatedByNestedInput
+  leadServiceSelections?: Prisma.LeadServiceSelectionUpdateManyWithoutCreatedByNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput
+  psgasAsBde?: Prisma.PSGAUpdateManyWithoutBdeNestedInput
+  adminIncentiveAllocations?: Prisma.PSGAIncentiveAllocationUpdateManyWithoutAdminNestedInput
+  approvedIncentives?: Prisma.PSGAIncentiveAllocationUpdateManyWithoutApprovedByNestedInput
+  incentiveAllocations?: Prisma.PSGAIncentiveAllocationUpdateManyWithoutBdeNestedInput
+  role?: Prisma.RoleUpdateOneRequiredWithoutUsersNestedInput
+}
+
+export type UserUncheckedUpdateWithoutIncentivePayoutsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  firstName?: Prisma.StringFieldUpdateOperationsInput | string
+  lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  mobile?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+  roleId?: Prisma.StringFieldUpdateOperationsInput | string
+  lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  activities?: Prisma.ActivityUncheckedUpdateManyWithoutCreatedByNestedInput
   sessions?: Prisma.AuthSessionUncheckedUpdateManyWithoutUserNestedInput
+  assignedClients?: Prisma.ClientUncheckedUpdateManyWithoutAssignedBdeNestedInput
+  clientsCreated?: Prisma.ClientUncheckedUpdateManyWithoutCreatedByNestedInput
+  clientServiceSelections?: Prisma.ClientServiceSelectionUncheckedUpdateManyWithoutCreatedByNestedInput
+  approvedIncentivePayouts?: Prisma.IncentivePayoutUncheckedUpdateManyWithoutApprovedByNestedInput
+  assignedLeads?: Prisma.LeadUncheckedUpdateManyWithoutAssignedToNestedInput
+  createdLeads?: Prisma.LeadUncheckedUpdateManyWithoutCreatedByNestedInput
+  leadServiceSelections?: Prisma.LeadServiceSelectionUncheckedUpdateManyWithoutCreatedByNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput
+  psgasAsBde?: Prisma.PSGAUncheckedUpdateManyWithoutBdeNestedInput
+  adminIncentiveAllocations?: Prisma.PSGAIncentiveAllocationUncheckedUpdateManyWithoutAdminNestedInput
+  approvedIncentives?: Prisma.PSGAIncentiveAllocationUncheckedUpdateManyWithoutApprovedByNestedInput
+  incentiveAllocations?: Prisma.PSGAIncentiveAllocationUncheckedUpdateManyWithoutBdeNestedInput
 }
 
 export type UserCreateManyRoleInput = {
@@ -2670,20 +2881,21 @@ export type UserUpdateWithoutRoleInput = {
   lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  clientsCreated?: Prisma.ClientUpdateManyWithoutCreatedByNestedInput
+  activities?: Prisma.ActivityUpdateManyWithoutCreatedByNestedInput
+  sessions?: Prisma.AuthSessionUpdateManyWithoutUserNestedInput
   assignedClients?: Prisma.ClientUpdateManyWithoutAssignedBdeNestedInput
+  clientsCreated?: Prisma.ClientUpdateManyWithoutCreatedByNestedInput
+  clientServiceSelections?: Prisma.ClientServiceSelectionUpdateManyWithoutCreatedByNestedInput
+  approvedIncentivePayouts?: Prisma.IncentivePayoutUpdateManyWithoutApprovedByNestedInput
+  incentivePayouts?: Prisma.IncentivePayoutUpdateManyWithoutBdeNestedInput
   assignedLeads?: Prisma.LeadUpdateManyWithoutAssignedToNestedInput
   createdLeads?: Prisma.LeadUpdateManyWithoutCreatedByNestedInput
-  activities?: Prisma.ActivityUpdateManyWithoutCreatedByNestedInput
-  notifications?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput
   leadServiceSelections?: Prisma.LeadServiceSelectionUpdateManyWithoutCreatedByNestedInput
-  clientServiceSelections?: Prisma.ClientServiceSelectionUpdateManyWithoutCreatedByNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput
   psgasAsBde?: Prisma.PSGAUpdateManyWithoutBdeNestedInput
-  incentiveAllocations?: Prisma.PSGAIncentiveAllocationUpdateManyWithoutBdeNestedInput
+  adminIncentiveAllocations?: Prisma.PSGAIncentiveAllocationUpdateManyWithoutAdminNestedInput
   approvedIncentives?: Prisma.PSGAIncentiveAllocationUpdateManyWithoutApprovedByNestedInput
-  incentivePayouts?: Prisma.IncentivePayoutUpdateManyWithoutBdeNestedInput
-  approvedIncentivePayouts?: Prisma.IncentivePayoutUpdateManyWithoutApprovedByNestedInput
-  sessions?: Prisma.AuthSessionUpdateManyWithoutUserNestedInput
+  incentiveAllocations?: Prisma.PSGAIncentiveAllocationUpdateManyWithoutBdeNestedInput
 }
 
 export type UserUncheckedUpdateWithoutRoleInput = {
@@ -2697,20 +2909,21 @@ export type UserUncheckedUpdateWithoutRoleInput = {
   lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  clientsCreated?: Prisma.ClientUncheckedUpdateManyWithoutCreatedByNestedInput
+  activities?: Prisma.ActivityUncheckedUpdateManyWithoutCreatedByNestedInput
+  sessions?: Prisma.AuthSessionUncheckedUpdateManyWithoutUserNestedInput
   assignedClients?: Prisma.ClientUncheckedUpdateManyWithoutAssignedBdeNestedInput
+  clientsCreated?: Prisma.ClientUncheckedUpdateManyWithoutCreatedByNestedInput
+  clientServiceSelections?: Prisma.ClientServiceSelectionUncheckedUpdateManyWithoutCreatedByNestedInput
+  approvedIncentivePayouts?: Prisma.IncentivePayoutUncheckedUpdateManyWithoutApprovedByNestedInput
+  incentivePayouts?: Prisma.IncentivePayoutUncheckedUpdateManyWithoutBdeNestedInput
   assignedLeads?: Prisma.LeadUncheckedUpdateManyWithoutAssignedToNestedInput
   createdLeads?: Prisma.LeadUncheckedUpdateManyWithoutCreatedByNestedInput
-  activities?: Prisma.ActivityUncheckedUpdateManyWithoutCreatedByNestedInput
-  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput
   leadServiceSelections?: Prisma.LeadServiceSelectionUncheckedUpdateManyWithoutCreatedByNestedInput
-  clientServiceSelections?: Prisma.ClientServiceSelectionUncheckedUpdateManyWithoutCreatedByNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput
   psgasAsBde?: Prisma.PSGAUncheckedUpdateManyWithoutBdeNestedInput
-  incentiveAllocations?: Prisma.PSGAIncentiveAllocationUncheckedUpdateManyWithoutBdeNestedInput
+  adminIncentiveAllocations?: Prisma.PSGAIncentiveAllocationUncheckedUpdateManyWithoutAdminNestedInput
   approvedIncentives?: Prisma.PSGAIncentiveAllocationUncheckedUpdateManyWithoutApprovedByNestedInput
-  incentivePayouts?: Prisma.IncentivePayoutUncheckedUpdateManyWithoutBdeNestedInput
-  approvedIncentivePayouts?: Prisma.IncentivePayoutUncheckedUpdateManyWithoutApprovedByNestedInput
-  sessions?: Prisma.AuthSessionUncheckedUpdateManyWithoutUserNestedInput
+  incentiveAllocations?: Prisma.PSGAIncentiveAllocationUncheckedUpdateManyWithoutBdeNestedInput
 }
 
 export type UserUncheckedUpdateManyWithoutRoleInput = {
@@ -2732,37 +2945,39 @@ export type UserUncheckedUpdateManyWithoutRoleInput = {
  */
 
 export type UserCountOutputType = {
-  clientsCreated: number
+  activities: number
+  sessions: number
   assignedClients: number
+  clientsCreated: number
+  clientServiceSelections: number
+  approvedIncentivePayouts: number
+  incentivePayouts: number
   assignedLeads: number
   createdLeads: number
-  activities: number
-  notifications: number
   leadServiceSelections: number
-  clientServiceSelections: number
+  notifications: number
   psgasAsBde: number
-  incentiveAllocations: number
+  adminIncentiveAllocations: number
   approvedIncentives: number
-  incentivePayouts: number
-  approvedIncentivePayouts: number
-  sessions: number
+  incentiveAllocations: number
 }
 
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  clientsCreated?: boolean | UserCountOutputTypeCountClientsCreatedArgs
+  activities?: boolean | UserCountOutputTypeCountActivitiesArgs
+  sessions?: boolean | UserCountOutputTypeCountSessionsArgs
   assignedClients?: boolean | UserCountOutputTypeCountAssignedClientsArgs
+  clientsCreated?: boolean | UserCountOutputTypeCountClientsCreatedArgs
+  clientServiceSelections?: boolean | UserCountOutputTypeCountClientServiceSelectionsArgs
+  approvedIncentivePayouts?: boolean | UserCountOutputTypeCountApprovedIncentivePayoutsArgs
+  incentivePayouts?: boolean | UserCountOutputTypeCountIncentivePayoutsArgs
   assignedLeads?: boolean | UserCountOutputTypeCountAssignedLeadsArgs
   createdLeads?: boolean | UserCountOutputTypeCountCreatedLeadsArgs
-  activities?: boolean | UserCountOutputTypeCountActivitiesArgs
-  notifications?: boolean | UserCountOutputTypeCountNotificationsArgs
   leadServiceSelections?: boolean | UserCountOutputTypeCountLeadServiceSelectionsArgs
-  clientServiceSelections?: boolean | UserCountOutputTypeCountClientServiceSelectionsArgs
+  notifications?: boolean | UserCountOutputTypeCountNotificationsArgs
   psgasAsBde?: boolean | UserCountOutputTypeCountPsgasAsBdeArgs
-  incentiveAllocations?: boolean | UserCountOutputTypeCountIncentiveAllocationsArgs
+  adminIncentiveAllocations?: boolean | UserCountOutputTypeCountAdminIncentiveAllocationsArgs
   approvedIncentives?: boolean | UserCountOutputTypeCountApprovedIncentivesArgs
-  incentivePayouts?: boolean | UserCountOutputTypeCountIncentivePayoutsArgs
-  approvedIncentivePayouts?: boolean | UserCountOutputTypeCountApprovedIncentivePayoutsArgs
-  sessions?: boolean | UserCountOutputTypeCountSessionsArgs
+  incentiveAllocations?: boolean | UserCountOutputTypeCountIncentiveAllocationsArgs
 }
 
 /**
@@ -2778,8 +2993,15 @@ export type UserCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensi
 /**
  * UserCountOutputType without action
  */
-export type UserCountOutputTypeCountClientsCreatedArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.ClientWhereInput
+export type UserCountOutputTypeCountActivitiesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ActivityWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountSessionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.AuthSessionWhereInput
 }
 
 /**
@@ -2787,6 +3009,34 @@ export type UserCountOutputTypeCountClientsCreatedArgs<ExtArgs extends runtime.T
  */
 export type UserCountOutputTypeCountAssignedClientsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.ClientWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountClientsCreatedArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ClientWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountClientServiceSelectionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ClientServiceSelectionWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountApprovedIncentivePayoutsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.IncentivePayoutWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountIncentivePayoutsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.IncentivePayoutWhereInput
 }
 
 /**
@@ -2806,8 +3056,8 @@ export type UserCountOutputTypeCountCreatedLeadsArgs<ExtArgs extends runtime.Typ
 /**
  * UserCountOutputType without action
  */
-export type UserCountOutputTypeCountActivitiesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.ActivityWhereInput
+export type UserCountOutputTypeCountLeadServiceSelectionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.LeadServiceSelectionWhereInput
 }
 
 /**
@@ -2820,20 +3070,6 @@ export type UserCountOutputTypeCountNotificationsArgs<ExtArgs extends runtime.Ty
 /**
  * UserCountOutputType without action
  */
-export type UserCountOutputTypeCountLeadServiceSelectionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.LeadServiceSelectionWhereInput
-}
-
-/**
- * UserCountOutputType without action
- */
-export type UserCountOutputTypeCountClientServiceSelectionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.ClientServiceSelectionWhereInput
-}
-
-/**
- * UserCountOutputType without action
- */
 export type UserCountOutputTypeCountPsgasAsBdeArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.PSGAWhereInput
 }
@@ -2841,7 +3077,7 @@ export type UserCountOutputTypeCountPsgasAsBdeArgs<ExtArgs extends runtime.Types
 /**
  * UserCountOutputType without action
  */
-export type UserCountOutputTypeCountIncentiveAllocationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type UserCountOutputTypeCountAdminIncentiveAllocationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.PSGAIncentiveAllocationWhereInput
 }
 
@@ -2855,22 +3091,8 @@ export type UserCountOutputTypeCountApprovedIncentivesArgs<ExtArgs extends runti
 /**
  * UserCountOutputType without action
  */
-export type UserCountOutputTypeCountIncentivePayoutsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.IncentivePayoutWhereInput
-}
-
-/**
- * UserCountOutputType without action
- */
-export type UserCountOutputTypeCountApprovedIncentivePayoutsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.IncentivePayoutWhereInput
-}
-
-/**
- * UserCountOutputType without action
- */
-export type UserCountOutputTypeCountSessionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.AuthSessionWhereInput
+export type UserCountOutputTypeCountIncentiveAllocationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.PSGAIncentiveAllocationWhereInput
 }
 
 
@@ -2886,21 +3108,22 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   lastLoginAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  role?: boolean | Prisma.RoleDefaultArgs<ExtArgs>
-  clientsCreated?: boolean | Prisma.User$clientsCreatedArgs<ExtArgs>
+  activities?: boolean | Prisma.User$activitiesArgs<ExtArgs>
+  sessions?: boolean | Prisma.User$sessionsArgs<ExtArgs>
   assignedClients?: boolean | Prisma.User$assignedClientsArgs<ExtArgs>
+  clientsCreated?: boolean | Prisma.User$clientsCreatedArgs<ExtArgs>
+  clientServiceSelections?: boolean | Prisma.User$clientServiceSelectionsArgs<ExtArgs>
+  approvedIncentivePayouts?: boolean | Prisma.User$approvedIncentivePayoutsArgs<ExtArgs>
+  incentivePayouts?: boolean | Prisma.User$incentivePayoutsArgs<ExtArgs>
   assignedLeads?: boolean | Prisma.User$assignedLeadsArgs<ExtArgs>
   createdLeads?: boolean | Prisma.User$createdLeadsArgs<ExtArgs>
-  activities?: boolean | Prisma.User$activitiesArgs<ExtArgs>
-  notifications?: boolean | Prisma.User$notificationsArgs<ExtArgs>
   leadServiceSelections?: boolean | Prisma.User$leadServiceSelectionsArgs<ExtArgs>
-  clientServiceSelections?: boolean | Prisma.User$clientServiceSelectionsArgs<ExtArgs>
+  notifications?: boolean | Prisma.User$notificationsArgs<ExtArgs>
   psgasAsBde?: boolean | Prisma.User$psgasAsBdeArgs<ExtArgs>
-  incentiveAllocations?: boolean | Prisma.User$incentiveAllocationsArgs<ExtArgs>
+  adminIncentiveAllocations?: boolean | Prisma.User$adminIncentiveAllocationsArgs<ExtArgs>
   approvedIncentives?: boolean | Prisma.User$approvedIncentivesArgs<ExtArgs>
-  incentivePayouts?: boolean | Prisma.User$incentivePayoutsArgs<ExtArgs>
-  approvedIncentivePayouts?: boolean | Prisma.User$approvedIncentivePayoutsArgs<ExtArgs>
-  sessions?: boolean | Prisma.User$sessionsArgs<ExtArgs>
+  incentiveAllocations?: boolean | Prisma.User$incentiveAllocationsArgs<ExtArgs>
+  role?: boolean | Prisma.RoleDefaultArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
@@ -2950,21 +3173,22 @@ export type UserSelectScalar = {
 
 export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "firstName" | "lastName" | "email" | "passwordHash" | "mobile" | "status" | "roleId" | "lastLoginAt" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  role?: boolean | Prisma.RoleDefaultArgs<ExtArgs>
-  clientsCreated?: boolean | Prisma.User$clientsCreatedArgs<ExtArgs>
+  activities?: boolean | Prisma.User$activitiesArgs<ExtArgs>
+  sessions?: boolean | Prisma.User$sessionsArgs<ExtArgs>
   assignedClients?: boolean | Prisma.User$assignedClientsArgs<ExtArgs>
+  clientsCreated?: boolean | Prisma.User$clientsCreatedArgs<ExtArgs>
+  clientServiceSelections?: boolean | Prisma.User$clientServiceSelectionsArgs<ExtArgs>
+  approvedIncentivePayouts?: boolean | Prisma.User$approvedIncentivePayoutsArgs<ExtArgs>
+  incentivePayouts?: boolean | Prisma.User$incentivePayoutsArgs<ExtArgs>
   assignedLeads?: boolean | Prisma.User$assignedLeadsArgs<ExtArgs>
   createdLeads?: boolean | Prisma.User$createdLeadsArgs<ExtArgs>
-  activities?: boolean | Prisma.User$activitiesArgs<ExtArgs>
-  notifications?: boolean | Prisma.User$notificationsArgs<ExtArgs>
   leadServiceSelections?: boolean | Prisma.User$leadServiceSelectionsArgs<ExtArgs>
-  clientServiceSelections?: boolean | Prisma.User$clientServiceSelectionsArgs<ExtArgs>
+  notifications?: boolean | Prisma.User$notificationsArgs<ExtArgs>
   psgasAsBde?: boolean | Prisma.User$psgasAsBdeArgs<ExtArgs>
-  incentiveAllocations?: boolean | Prisma.User$incentiveAllocationsArgs<ExtArgs>
+  adminIncentiveAllocations?: boolean | Prisma.User$adminIncentiveAllocationsArgs<ExtArgs>
   approvedIncentives?: boolean | Prisma.User$approvedIncentivesArgs<ExtArgs>
-  incentivePayouts?: boolean | Prisma.User$incentivePayoutsArgs<ExtArgs>
-  approvedIncentivePayouts?: boolean | Prisma.User$approvedIncentivePayoutsArgs<ExtArgs>
-  sessions?: boolean | Prisma.User$sessionsArgs<ExtArgs>
+  incentiveAllocations?: boolean | Prisma.User$incentiveAllocationsArgs<ExtArgs>
+  role?: boolean | Prisma.RoleDefaultArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -2977,21 +3201,22 @@ export type UserIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensi
 export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "User"
   objects: {
-    role: Prisma.$RolePayload<ExtArgs>
-    clientsCreated: Prisma.$ClientPayload<ExtArgs>[]
+    activities: Prisma.$ActivityPayload<ExtArgs>[]
+    sessions: Prisma.$AuthSessionPayload<ExtArgs>[]
     assignedClients: Prisma.$ClientPayload<ExtArgs>[]
+    clientsCreated: Prisma.$ClientPayload<ExtArgs>[]
+    clientServiceSelections: Prisma.$ClientServiceSelectionPayload<ExtArgs>[]
+    approvedIncentivePayouts: Prisma.$IncentivePayoutPayload<ExtArgs>[]
+    incentivePayouts: Prisma.$IncentivePayoutPayload<ExtArgs>[]
     assignedLeads: Prisma.$LeadPayload<ExtArgs>[]
     createdLeads: Prisma.$LeadPayload<ExtArgs>[]
-    activities: Prisma.$ActivityPayload<ExtArgs>[]
-    notifications: Prisma.$NotificationPayload<ExtArgs>[]
     leadServiceSelections: Prisma.$LeadServiceSelectionPayload<ExtArgs>[]
-    clientServiceSelections: Prisma.$ClientServiceSelectionPayload<ExtArgs>[]
+    notifications: Prisma.$NotificationPayload<ExtArgs>[]
     psgasAsBde: Prisma.$PSGAPayload<ExtArgs>[]
-    incentiveAllocations: Prisma.$PSGAIncentiveAllocationPayload<ExtArgs>[]
+    adminIncentiveAllocations: Prisma.$PSGAIncentiveAllocationPayload<ExtArgs>[]
     approvedIncentives: Prisma.$PSGAIncentiveAllocationPayload<ExtArgs>[]
-    incentivePayouts: Prisma.$IncentivePayoutPayload<ExtArgs>[]
-    approvedIncentivePayouts: Prisma.$IncentivePayoutPayload<ExtArgs>[]
-    sessions: Prisma.$AuthSessionPayload<ExtArgs>[]
+    incentiveAllocations: Prisma.$PSGAIncentiveAllocationPayload<ExtArgs>[]
+    role: Prisma.$RolePayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -3399,21 +3624,22 @@ readonly fields: UserFieldRefs;
  */
 export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  role<T extends Prisma.RoleDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.RoleDefaultArgs<ExtArgs>>): Prisma.Prisma__RoleClient<runtime.Types.Result.GetResult<Prisma.$RolePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-  clientsCreated<T extends Prisma.User$clientsCreatedArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$clientsCreatedArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ClientPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  activities<T extends Prisma.User$activitiesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$activitiesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ActivityPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  sessions<T extends Prisma.User$sessionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$sessionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AuthSessionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   assignedClients<T extends Prisma.User$assignedClientsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$assignedClientsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ClientPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  clientsCreated<T extends Prisma.User$clientsCreatedArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$clientsCreatedArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ClientPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  clientServiceSelections<T extends Prisma.User$clientServiceSelectionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$clientServiceSelectionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ClientServiceSelectionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  approvedIncentivePayouts<T extends Prisma.User$approvedIncentivePayoutsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$approvedIncentivePayoutsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$IncentivePayoutPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  incentivePayouts<T extends Prisma.User$incentivePayoutsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$incentivePayoutsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$IncentivePayoutPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   assignedLeads<T extends Prisma.User$assignedLeadsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$assignedLeadsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LeadPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   createdLeads<T extends Prisma.User$createdLeadsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$createdLeadsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LeadPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  activities<T extends Prisma.User$activitiesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$activitiesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ActivityPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  notifications<T extends Prisma.User$notificationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$notificationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$NotificationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   leadServiceSelections<T extends Prisma.User$leadServiceSelectionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$leadServiceSelectionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LeadServiceSelectionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  clientServiceSelections<T extends Prisma.User$clientServiceSelectionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$clientServiceSelectionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ClientServiceSelectionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  notifications<T extends Prisma.User$notificationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$notificationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$NotificationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   psgasAsBde<T extends Prisma.User$psgasAsBdeArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$psgasAsBdeArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PSGAPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  incentiveAllocations<T extends Prisma.User$incentiveAllocationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$incentiveAllocationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PSGAIncentiveAllocationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  adminIncentiveAllocations<T extends Prisma.User$adminIncentiveAllocationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$adminIncentiveAllocationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PSGAIncentiveAllocationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   approvedIncentives<T extends Prisma.User$approvedIncentivesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$approvedIncentivesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PSGAIncentiveAllocationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  incentivePayouts<T extends Prisma.User$incentivePayoutsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$incentivePayoutsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$IncentivePayoutPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  approvedIncentivePayouts<T extends Prisma.User$approvedIncentivePayoutsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$approvedIncentivePayoutsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$IncentivePayoutPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  sessions<T extends Prisma.User$sessionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$sessionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AuthSessionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  incentiveAllocations<T extends Prisma.User$incentiveAllocationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$incentiveAllocationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PSGAIncentiveAllocationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  role<T extends Prisma.RoleDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.RoleDefaultArgs<ExtArgs>>): Prisma.Prisma__RoleClient<runtime.Types.Result.GetResult<Prisma.$RolePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -3855,27 +4081,51 @@ export type UserDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Internal
 }
 
 /**
- * User.clientsCreated
+ * User.activities
  */
-export type User$clientsCreatedArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type User$activitiesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Select specific fields to fetch from the Client
+   * Select specific fields to fetch from the Activity
    */
-  select?: Prisma.ClientSelect<ExtArgs> | null
+  select?: Prisma.ActivitySelect<ExtArgs> | null
   /**
-   * Omit specific fields from the Client
+   * Omit specific fields from the Activity
    */
-  omit?: Prisma.ClientOmit<ExtArgs> | null
+  omit?: Prisma.ActivityOmit<ExtArgs> | null
   /**
    * Choose, which related nodes to fetch as well
    */
-  include?: Prisma.ClientInclude<ExtArgs> | null
-  where?: Prisma.ClientWhereInput
-  orderBy?: Prisma.ClientOrderByWithRelationInput | Prisma.ClientOrderByWithRelationInput[]
-  cursor?: Prisma.ClientWhereUniqueInput
+  include?: Prisma.ActivityInclude<ExtArgs> | null
+  where?: Prisma.ActivityWhereInput
+  orderBy?: Prisma.ActivityOrderByWithRelationInput | Prisma.ActivityOrderByWithRelationInput[]
+  cursor?: Prisma.ActivityWhereUniqueInput
   take?: number
   skip?: number
-  distinct?: Prisma.ClientScalarFieldEnum | Prisma.ClientScalarFieldEnum[]
+  distinct?: Prisma.ActivityScalarFieldEnum | Prisma.ActivityScalarFieldEnum[]
+}
+
+/**
+ * User.sessions
+ */
+export type User$sessionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the AuthSession
+   */
+  select?: Prisma.AuthSessionSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the AuthSession
+   */
+  omit?: Prisma.AuthSessionOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.AuthSessionInclude<ExtArgs> | null
+  where?: Prisma.AuthSessionWhereInput
+  orderBy?: Prisma.AuthSessionOrderByWithRelationInput | Prisma.AuthSessionOrderByWithRelationInput[]
+  cursor?: Prisma.AuthSessionWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.AuthSessionScalarFieldEnum | Prisma.AuthSessionScalarFieldEnum[]
 }
 
 /**
@@ -3900,6 +4150,102 @@ export type User$assignedClientsArgs<ExtArgs extends runtime.Types.Extensions.In
   take?: number
   skip?: number
   distinct?: Prisma.ClientScalarFieldEnum | Prisma.ClientScalarFieldEnum[]
+}
+
+/**
+ * User.clientsCreated
+ */
+export type User$clientsCreatedArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Client
+   */
+  select?: Prisma.ClientSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Client
+   */
+  omit?: Prisma.ClientOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ClientInclude<ExtArgs> | null
+  where?: Prisma.ClientWhereInput
+  orderBy?: Prisma.ClientOrderByWithRelationInput | Prisma.ClientOrderByWithRelationInput[]
+  cursor?: Prisma.ClientWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ClientScalarFieldEnum | Prisma.ClientScalarFieldEnum[]
+}
+
+/**
+ * User.clientServiceSelections
+ */
+export type User$clientServiceSelectionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ClientServiceSelection
+   */
+  select?: Prisma.ClientServiceSelectionSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the ClientServiceSelection
+   */
+  omit?: Prisma.ClientServiceSelectionOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ClientServiceSelectionInclude<ExtArgs> | null
+  where?: Prisma.ClientServiceSelectionWhereInput
+  orderBy?: Prisma.ClientServiceSelectionOrderByWithRelationInput | Prisma.ClientServiceSelectionOrderByWithRelationInput[]
+  cursor?: Prisma.ClientServiceSelectionWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ClientServiceSelectionScalarFieldEnum | Prisma.ClientServiceSelectionScalarFieldEnum[]
+}
+
+/**
+ * User.approvedIncentivePayouts
+ */
+export type User$approvedIncentivePayoutsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the IncentivePayout
+   */
+  select?: Prisma.IncentivePayoutSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the IncentivePayout
+   */
+  omit?: Prisma.IncentivePayoutOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.IncentivePayoutInclude<ExtArgs> | null
+  where?: Prisma.IncentivePayoutWhereInput
+  orderBy?: Prisma.IncentivePayoutOrderByWithRelationInput | Prisma.IncentivePayoutOrderByWithRelationInput[]
+  cursor?: Prisma.IncentivePayoutWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.IncentivePayoutScalarFieldEnum | Prisma.IncentivePayoutScalarFieldEnum[]
+}
+
+/**
+ * User.incentivePayouts
+ */
+export type User$incentivePayoutsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the IncentivePayout
+   */
+  select?: Prisma.IncentivePayoutSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the IncentivePayout
+   */
+  omit?: Prisma.IncentivePayoutOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.IncentivePayoutInclude<ExtArgs> | null
+  where?: Prisma.IncentivePayoutWhereInput
+  orderBy?: Prisma.IncentivePayoutOrderByWithRelationInput | Prisma.IncentivePayoutOrderByWithRelationInput[]
+  cursor?: Prisma.IncentivePayoutWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.IncentivePayoutScalarFieldEnum | Prisma.IncentivePayoutScalarFieldEnum[]
 }
 
 /**
@@ -3951,27 +4297,27 @@ export type User$createdLeadsArgs<ExtArgs extends runtime.Types.Extensions.Inter
 }
 
 /**
- * User.activities
+ * User.leadServiceSelections
  */
-export type User$activitiesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type User$leadServiceSelectionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Select specific fields to fetch from the Activity
+   * Select specific fields to fetch from the LeadServiceSelection
    */
-  select?: Prisma.ActivitySelect<ExtArgs> | null
+  select?: Prisma.LeadServiceSelectionSelect<ExtArgs> | null
   /**
-   * Omit specific fields from the Activity
+   * Omit specific fields from the LeadServiceSelection
    */
-  omit?: Prisma.ActivityOmit<ExtArgs> | null
+  omit?: Prisma.LeadServiceSelectionOmit<ExtArgs> | null
   /**
    * Choose, which related nodes to fetch as well
    */
-  include?: Prisma.ActivityInclude<ExtArgs> | null
-  where?: Prisma.ActivityWhereInput
-  orderBy?: Prisma.ActivityOrderByWithRelationInput | Prisma.ActivityOrderByWithRelationInput[]
-  cursor?: Prisma.ActivityWhereUniqueInput
+  include?: Prisma.LeadServiceSelectionInclude<ExtArgs> | null
+  where?: Prisma.LeadServiceSelectionWhereInput
+  orderBy?: Prisma.LeadServiceSelectionOrderByWithRelationInput | Prisma.LeadServiceSelectionOrderByWithRelationInput[]
+  cursor?: Prisma.LeadServiceSelectionWhereUniqueInput
   take?: number
   skip?: number
-  distinct?: Prisma.ActivityScalarFieldEnum | Prisma.ActivityScalarFieldEnum[]
+  distinct?: Prisma.LeadServiceSelectionScalarFieldEnum | Prisma.LeadServiceSelectionScalarFieldEnum[]
 }
 
 /**
@@ -3999,54 +4345,6 @@ export type User$notificationsArgs<ExtArgs extends runtime.Types.Extensions.Inte
 }
 
 /**
- * User.leadServiceSelections
- */
-export type User$leadServiceSelectionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the LeadServiceSelection
-   */
-  select?: Prisma.LeadServiceSelectionSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the LeadServiceSelection
-   */
-  omit?: Prisma.LeadServiceSelectionOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.LeadServiceSelectionInclude<ExtArgs> | null
-  where?: Prisma.LeadServiceSelectionWhereInput
-  orderBy?: Prisma.LeadServiceSelectionOrderByWithRelationInput | Prisma.LeadServiceSelectionOrderByWithRelationInput[]
-  cursor?: Prisma.LeadServiceSelectionWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.LeadServiceSelectionScalarFieldEnum | Prisma.LeadServiceSelectionScalarFieldEnum[]
-}
-
-/**
- * User.clientServiceSelections
- */
-export type User$clientServiceSelectionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the ClientServiceSelection
-   */
-  select?: Prisma.ClientServiceSelectionSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the ClientServiceSelection
-   */
-  omit?: Prisma.ClientServiceSelectionOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.ClientServiceSelectionInclude<ExtArgs> | null
-  where?: Prisma.ClientServiceSelectionWhereInput
-  orderBy?: Prisma.ClientServiceSelectionOrderByWithRelationInput | Prisma.ClientServiceSelectionOrderByWithRelationInput[]
-  cursor?: Prisma.ClientServiceSelectionWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.ClientServiceSelectionScalarFieldEnum | Prisma.ClientServiceSelectionScalarFieldEnum[]
-}
-
-/**
  * User.psgasAsBde
  */
 export type User$psgasAsBdeArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -4071,9 +4369,9 @@ export type User$psgasAsBdeArgs<ExtArgs extends runtime.Types.Extensions.Interna
 }
 
 /**
- * User.incentiveAllocations
+ * User.adminIncentiveAllocations
  */
-export type User$incentiveAllocationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type User$adminIncentiveAllocationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
    * Select specific fields to fetch from the PSGAIncentiveAllocation
    */
@@ -4119,75 +4417,27 @@ export type User$approvedIncentivesArgs<ExtArgs extends runtime.Types.Extensions
 }
 
 /**
- * User.incentivePayouts
+ * User.incentiveAllocations
  */
-export type User$incentivePayoutsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type User$incentiveAllocationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Select specific fields to fetch from the IncentivePayout
+   * Select specific fields to fetch from the PSGAIncentiveAllocation
    */
-  select?: Prisma.IncentivePayoutSelect<ExtArgs> | null
+  select?: Prisma.PSGAIncentiveAllocationSelect<ExtArgs> | null
   /**
-   * Omit specific fields from the IncentivePayout
+   * Omit specific fields from the PSGAIncentiveAllocation
    */
-  omit?: Prisma.IncentivePayoutOmit<ExtArgs> | null
+  omit?: Prisma.PSGAIncentiveAllocationOmit<ExtArgs> | null
   /**
    * Choose, which related nodes to fetch as well
    */
-  include?: Prisma.IncentivePayoutInclude<ExtArgs> | null
-  where?: Prisma.IncentivePayoutWhereInput
-  orderBy?: Prisma.IncentivePayoutOrderByWithRelationInput | Prisma.IncentivePayoutOrderByWithRelationInput[]
-  cursor?: Prisma.IncentivePayoutWhereUniqueInput
+  include?: Prisma.PSGAIncentiveAllocationInclude<ExtArgs> | null
+  where?: Prisma.PSGAIncentiveAllocationWhereInput
+  orderBy?: Prisma.PSGAIncentiveAllocationOrderByWithRelationInput | Prisma.PSGAIncentiveAllocationOrderByWithRelationInput[]
+  cursor?: Prisma.PSGAIncentiveAllocationWhereUniqueInput
   take?: number
   skip?: number
-  distinct?: Prisma.IncentivePayoutScalarFieldEnum | Prisma.IncentivePayoutScalarFieldEnum[]
-}
-
-/**
- * User.approvedIncentivePayouts
- */
-export type User$approvedIncentivePayoutsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the IncentivePayout
-   */
-  select?: Prisma.IncentivePayoutSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the IncentivePayout
-   */
-  omit?: Prisma.IncentivePayoutOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.IncentivePayoutInclude<ExtArgs> | null
-  where?: Prisma.IncentivePayoutWhereInput
-  orderBy?: Prisma.IncentivePayoutOrderByWithRelationInput | Prisma.IncentivePayoutOrderByWithRelationInput[]
-  cursor?: Prisma.IncentivePayoutWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.IncentivePayoutScalarFieldEnum | Prisma.IncentivePayoutScalarFieldEnum[]
-}
-
-/**
- * User.sessions
- */
-export type User$sessionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the AuthSession
-   */
-  select?: Prisma.AuthSessionSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the AuthSession
-   */
-  omit?: Prisma.AuthSessionOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.AuthSessionInclude<ExtArgs> | null
-  where?: Prisma.AuthSessionWhereInput
-  orderBy?: Prisma.AuthSessionOrderByWithRelationInput | Prisma.AuthSessionOrderByWithRelationInput[]
-  cursor?: Prisma.AuthSessionWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.AuthSessionScalarFieldEnum | Prisma.AuthSessionScalarFieldEnum[]
+  distinct?: Prisma.PSGAIncentiveAllocationScalarFieldEnum | Prisma.PSGAIncentiveAllocationScalarFieldEnum[]
 }
 
 /**

@@ -1,5 +1,4 @@
 import { z } from "zod";
-
 import prisma from "../config/prisma.js";
 
 // ============================================================
@@ -37,16 +36,91 @@ function canAccessLead(req, lead) {
 }
 
 // ============================================================
+// LEAD INCLUDE
+// ============================================================
+
+const leadInclude = {
+    assignedTo: {
+        select: {
+            id: true,
+            firstName: true,
+            lastName: true,
+            email: true,
+            role: {
+                select: {
+                    name: true,
+                },
+            },
+        },
+    },
+
+    createdBy: {
+        select: {
+            id: true,
+            firstName: true,
+            lastName: true,
+            email: true,
+        },
+    },
+
+    assets: {
+        orderBy: {
+            createdAt: "asc",
+        },
+    },
+};
+
+// ============================================================
 // CREATE LEAD
 // ============================================================
 
 const createLeadSchema = z.object({
     associationName: z.string().trim().min(2),
     contactName: z.string().trim().min(2),
+
     email: z.string().trim().email().optional(),
     mobile: z.string().trim().optional(),
+
     source: z.string().trim().optional(),
     notes: z.string().trim().optional(),
+
+    // Customer details
+    customerType: z.string().trim().optional(),
+    address: z.string().trim().optional(),
+    city: z.string().trim().optional(),
+    state: z.string().trim().optional(),
+    pincode: z.string().trim().optional(),
+
+    // Follow-up
+    nextFollowUpAt: z.string().datetime().optional().nullable(),
+    followUpRemarks: z.string().trim().optional(),
+    nextAction: z.string().trim().optional(),
+
+    // Site / premises
+    siteName: z.string().trim().optional(),
+    siteAddress: z.string().trim().optional(),
+    siteCity: z.string().trim().optional(),
+    siteState: z.string().trim().optional(),
+
+    // Assets
+    assets: z
+        .array(
+            z.object({
+                assetName: z.string().trim().optional(),
+                assetReference: z.string().trim().optional(),
+                installationLocation: z.string().trim().optional(),
+                manufacturer: z.string().trim().optional(),
+                model: z.string().trim().optional(),
+                installationYear: z
+                    .union([z.number().int(), z.string()])
+                    .optional()
+                    .nullable(),
+                existingAmc: z.string().trim().optional(),
+                currentServiceProvider: z.string().trim().optional(),
+            })
+        )
+        .optional(),
+
     assignedToId: z.string().trim().optional(),
 });
 
@@ -67,11 +141,7 @@ export async function createLead(req, res) {
         let assignedToId = data.assignedToId || null;
 
         // --------------------------------------------------------
-        // BDE:
-        // If no assignee is provided, automatically assign
-        // the lead to the logged-in BDE.
-        //
-        // A BDE cannot assign a lead to another BDE.
+        // BDE assignment restriction
         // --------------------------------------------------------
 
         if (isBde(req)) {
@@ -130,53 +200,92 @@ export async function createLead(req, res) {
         }
 
         // --------------------------------------------------------
-        // Create lead
+        // Create lead + assets
         // --------------------------------------------------------
 
         const lead = await prisma.lead.create({
             data: {
                 associationName: data.associationName,
                 contactName: data.contactName,
+
                 email: data.email
                     ? data.email.toLowerCase()
                     : null,
+
                 mobile: data.mobile || null,
                 source: data.source || null,
                 notes: data.notes || null,
+
+                customerType: data.customerType || null,
+                address: data.address || null,
+                city: data.city || null,
+                state: data.state || null,
+                pincode: data.pincode || null,
+
+                nextFollowUpAt: data.nextFollowUpAt
+                    ? new Date(data.nextFollowUpAt)
+                    : null,
+
+                followUpRemarks:
+                    data.followUpRemarks || null,
+
+                nextAction: data.nextAction || null,
+
+                siteName: data.siteName || null,
+                siteAddress: data.siteAddress || null,
+                siteCity: data.siteCity || null,
+                siteState: data.siteState || null,
+
                 status: "NEW",
+
                 assignedToId,
                 createdById: req.user.userId,
+
+                assets:
+                    data.assets && data.assets.length > 0
+                        ? {
+                            create: data.assets.map((asset) => ({
+                                assetName:
+                                    asset.assetName || null,
+
+                                assetReference:
+                                    asset.assetReference || null,
+
+                                installationLocation:
+                                    asset.installationLocation ||
+                                    null,
+
+                                manufacturer:
+                                    asset.manufacturer || null,
+
+                                model:
+                                    asset.model || null,
+
+                                installationYear:
+                                    asset.installationYear
+                                        ? Number(
+                                            asset.installationYear
+                                        )
+                                        : null,
+
+                                existingAmc:
+                                    asset.existingAmc || null,
+
+                                currentServiceProvider:
+                                    asset.currentServiceProvider ||
+                                    null,
+                            })),
+                        }
+                        : undefined,
             },
 
-            include: {
-                assignedTo: {
-                    select: {
-                        id: true,
-                        firstName: true,
-                        lastName: true,
-                        email: true,
-                        role: {
-                            select: {
-                                name: true,
-                            },
-                        },
-                    },
-                },
-
-                createdBy: {
-                    select: {
-                        id: true,
-                        firstName: true,
-                        lastName: true,
-                        email: true,
-                    },
-                },
-            },
+            include: leadInclude,
         });
 
         return res.status(201).json({
             success: true,
             message: "Lead created successfully",
+
             data: {
                 lead,
             },
@@ -280,6 +389,7 @@ export async function getLeadStats(req, res) {
 
         return res.status(200).json({
             success: true,
+
             data: {
                 total,
                 new: newLeads,
@@ -309,11 +419,8 @@ export async function getLeads(req, res) {
     try {
         let where = {};
 
-        // --------------------------------------------------------
         // Admin → all leads
         // BDE → only created/assigned leads
-        // --------------------------------------------------------
-
         if (isBde(req)) {
             where = {
                 OR: [
@@ -334,35 +441,13 @@ export async function getLeads(req, res) {
                 createdAt: "desc",
             },
 
-            include: {
-                assignedTo: {
-                    select: {
-                        id: true,
-                        firstName: true,
-                        lastName: true,
-                        email: true,
-                        role: {
-                            select: {
-                                name: true,
-                            },
-                        },
-                    },
-                },
-
-                createdBy: {
-                    select: {
-                        id: true,
-                        firstName: true,
-                        lastName: true,
-                        email: true,
-                    },
-                },
-            },
+            include: leadInclude,
         });
 
         return res.status(200).json({
             success: true,
             message: "Leads fetched successfully",
+
             data: {
                 leads,
                 total: leads.length,
@@ -391,30 +476,7 @@ export async function getLeadById(req, res) {
                 id,
             },
 
-            include: {
-                assignedTo: {
-                    select: {
-                        id: true,
-                        firstName: true,
-                        lastName: true,
-                        email: true,
-                        role: {
-                            select: {
-                                name: true,
-                            },
-                        },
-                    },
-                },
-
-                createdBy: {
-                    select: {
-                        id: true,
-                        firstName: true,
-                        lastName: true,
-                        email: true,
-                    },
-                },
-            },
+            include: leadInclude,
         });
 
         if (!lead) {
@@ -424,10 +486,7 @@ export async function getLeadById(req, res) {
             });
         }
 
-        // --------------------------------------------------------
         // Data-level access check
-        // --------------------------------------------------------
-
         if (!canAccessLead(req, lead)) {
             return res.status(403).json({
                 success: false,
@@ -439,6 +498,7 @@ export async function getLeadById(req, res) {
         return res.status(200).json({
             success: true,
             message: "Lead fetched successfully",
+
             data: {
                 lead,
             },
@@ -473,7 +533,8 @@ export async function updateLeadStage(req, res) {
     try {
         const { id } = req.params;
 
-        const validation = updateLeadStageSchema.safeParse(req.body);
+        const validation =
+            updateLeadStageSchema.safeParse(req.body);
 
         if (!validation.success) {
             return res.status(400).json({
@@ -483,11 +544,12 @@ export async function updateLeadStage(req, res) {
             });
         }
 
-        const existingLead = await prisma.lead.findUnique({
-            where: {
-                id,
-            },
-        });
+        const existingLead =
+            await prisma.lead.findUnique({
+                where: {
+                    id,
+                },
+            });
 
         if (!existingLead) {
             return res.status(404).json({
@@ -496,11 +558,11 @@ export async function updateLeadStage(req, res) {
             });
         }
 
-        // Data-level access check
         if (!canAccessLead(req, existingLead)) {
             return res.status(403).json({
                 success: false,
-                message: "You do not have permission to update this lead",
+                message:
+                    "You do not have permission to update this lead",
             });
         }
 
@@ -513,35 +575,13 @@ export async function updateLeadStage(req, res) {
                 status: validation.data.status,
             },
 
-            include: {
-                assignedTo: {
-                    select: {
-                        id: true,
-                        firstName: true,
-                        lastName: true,
-                        email: true,
-                        role: {
-                            select: {
-                                name: true,
-                            },
-                        },
-                    },
-                },
-
-                createdBy: {
-                    select: {
-                        id: true,
-                        firstName: true,
-                        lastName: true,
-                        email: true,
-                    },
-                },
-            },
+            include: leadInclude,
         });
 
         return res.status(200).json({
             success: true,
             message: "Lead stage updated successfully",
+
             data: {
                 lead,
             },
@@ -561,12 +601,62 @@ export async function updateLeadStage(req, res) {
 // ============================================================
 
 const updateLeadSchema = z.object({
-    associationName: z.string().trim().min(2).optional(),
-    contactName: z.string().trim().min(2).optional(),
-    email: z.string().trim().email().optional(),
-    mobile: z.string().trim().optional(),
-    source: z.string().trim().optional(),
-    notes: z.string().trim().optional(),
+    associationName:
+        z.string().trim().min(2).optional(),
+
+    contactName:
+        z.string().trim().min(2).optional(),
+
+    email:
+        z.string().trim().email().optional(),
+
+    mobile:
+        z.string().trim().optional(),
+
+    source:
+        z.string().trim().optional(),
+
+    notes:
+        z.string().trim().optional(),
+
+    // Customer details
+    customerType:
+        z.string().trim().optional().nullable(),
+
+    address:
+        z.string().trim().optional().nullable(),
+
+    city:
+        z.string().trim().optional().nullable(),
+
+    state:
+        z.string().trim().optional().nullable(),
+
+    pincode:
+        z.string().trim().optional().nullable(),
+
+    // Follow-up
+    nextFollowUpAt:
+        z.string().datetime().optional().nullable(),
+
+    followUpRemarks:
+        z.string().trim().optional().nullable(),
+
+    nextAction:
+        z.string().trim().optional().nullable(),
+
+    // Site / premises
+    siteName:
+        z.string().trim().optional().nullable(),
+
+    siteAddress:
+        z.string().trim().optional().nullable(),
+
+    siteCity:
+        z.string().trim().optional().nullable(),
+
+    siteState:
+        z.string().trim().optional().nullable(),
 
     status: z
         .enum([
@@ -580,14 +670,55 @@ const updateLeadSchema = z.object({
         ])
         .optional(),
 
-    assignedToId: z.string().trim().optional(),
+    assignedToId:
+        z.string().trim().optional(),
+
+    // Assets
+    assets: z
+        .array(
+            z.object({
+                id: z.string().optional(),
+
+                assetName:
+                    z.string().trim().optional(),
+
+                assetReference:
+                    z.string().trim().optional(),
+
+                installationLocation:
+                    z.string().trim().optional(),
+
+                manufacturer:
+                    z.string().trim().optional(),
+
+                model:
+                    z.string().trim().optional(),
+
+                installationYear:
+                    z
+                        .union([
+                            z.number().int(),
+                            z.string(),
+                        ])
+                        .optional()
+                        .nullable(),
+
+                existingAmc:
+                    z.string().trim().optional(),
+
+                currentServiceProvider:
+                    z.string().trim().optional(),
+            })
+        )
+        .optional(),
 });
 
 export async function updateLead(req, res) {
     try {
         const { id } = req.params;
 
-        const validation = updateLeadSchema.safeParse(req.body);
+        const validation =
+            updateLeadSchema.safeParse(req.body);
 
         if (!validation.success) {
             return res.status(400).json({
@@ -597,11 +728,16 @@ export async function updateLead(req, res) {
             });
         }
 
-        const existingLead = await prisma.lead.findUnique({
-            where: {
-                id,
-            },
-        });
+        const existingLead =
+            await prisma.lead.findUnique({
+                where: {
+                    id,
+                },
+
+                include: {
+                    assets: true,
+                },
+            });
 
         if (!existingLead) {
             return res.status(404).json({
@@ -611,7 +747,7 @@ export async function updateLead(req, res) {
         }
 
         // --------------------------------------------------------
-        // Data-level access
+        // DATA-LEVEL ACCESS
         // --------------------------------------------------------
 
         if (!canAccessLead(req, existingLead)) {
@@ -625,13 +761,10 @@ export async function updateLead(req, res) {
         const data = validation.data;
 
         // --------------------------------------------------------
-        // BDE restrictions
+        // BDE RESTRICTIONS
         // --------------------------------------------------------
 
         if (isBde(req)) {
-            /*
-             * BDE cannot reassign a lead to another user.
-             */
             if (
                 data.assignedToId !== undefined &&
                 data.assignedToId !== req.user.userId
@@ -645,19 +778,20 @@ export async function updateLead(req, res) {
         }
 
         // --------------------------------------------------------
-        // Validate assigned user
+        // VALIDATE ASSIGNED USER
         // --------------------------------------------------------
 
         if (data.assignedToId) {
-            const assignedUser = await prisma.user.findUnique({
-                where: {
-                    id: data.assignedToId,
-                },
+            const assignedUser =
+                await prisma.user.findUnique({
+                    where: {
+                        id: data.assignedToId,
+                    },
 
-                include: {
-                    role: true,
-                },
-            });
+                    include: {
+                        role: true,
+                    },
+                });
 
             if (!assignedUser) {
                 return res.status(400).json({
@@ -667,7 +801,8 @@ export async function updateLead(req, res) {
             }
 
             if (
-                assignedUser.role.name !== "BDE/Sales" &&
+                assignedUser.role.name !==
+                "BDE/Sales" &&
                 assignedUser.role.name !== "Admin"
             ) {
                 return res.status(400).json({
@@ -680,83 +815,223 @@ export async function updateLead(req, res) {
             if (assignedUser.status !== "ACTIVE") {
                 return res.status(400).json({
                     success: false,
-                    message: "Assigned user is not active",
+                    message:
+                        "Assigned user is not active",
                 });
             }
         }
 
         // --------------------------------------------------------
-        // Update
+        // UPDATE LEAD + ASSETS
         // --------------------------------------------------------
 
-        const lead = await prisma.lead.update({
-            where: {
-                id,
-            },
-
-            data: {
-                ...(data.associationName !== undefined && {
-                    associationName: data.associationName,
-                }),
-
-                ...(data.contactName !== undefined && {
-                    contactName: data.contactName,
-                }),
-
-                ...(data.email !== undefined && {
-                    email: data.email.toLowerCase(),
-                }),
-
-                ...(data.mobile !== undefined && {
-                    mobile: data.mobile,
-                }),
-
-                ...(data.source !== undefined && {
-                    source: data.source,
-                }),
-
-                ...(data.notes !== undefined && {
-                    notes: data.notes,
-                }),
-
-                ...(data.status !== undefined && {
-                    status: data.status,
-                }),
-
-                ...(data.assignedToId !== undefined && {
-                    assignedToId: data.assignedToId,
-                }),
-            },
-
-            include: {
-                assignedTo: {
-                    select: {
-                        id: true,
-                        firstName: true,
-                        lastName: true,
-                        email: true,
-                        role: {
-                            select: {
-                                name: true,
-                            },
+        const lead = await prisma.$transaction(
+            async (tx) => {
+                const updatedLead =
+                    await tx.lead.update({
+                        where: {
+                            id,
                         },
-                    },
-                },
 
-                createdBy: {
-                    select: {
-                        id: true,
-                        firstName: true,
-                        lastName: true,
-                        email: true,
+                        data: {
+                            ...(data.associationName !==
+                                undefined && {
+                                associationName:
+                                    data.associationName,
+                            }),
+
+                            ...(data.contactName !==
+                                undefined && {
+                                contactName:
+                                    data.contactName,
+                            }),
+
+                            ...(data.email !==
+                                undefined && {
+                                email: data.email
+                                    ? data.email.toLowerCase()
+                                    : null,
+                            }),
+
+                            ...(data.mobile !==
+                                undefined && {
+                                mobile:
+                                    data.mobile || null,
+                            }),
+
+                            ...(data.source !==
+                                undefined && {
+                                source:
+                                    data.source || null,
+                            }),
+
+                            ...(data.notes !==
+                                undefined && {
+                                notes:
+                                    data.notes || null,
+                            }),
+
+                            ...(data.customerType !==
+                                undefined && {
+                                customerType:
+                                    data.customerType || null,
+                            }),
+
+                            ...(data.address !==
+                                undefined && {
+                                address:
+                                    data.address || null,
+                            }),
+
+                            ...(data.city !==
+                                undefined && {
+                                city:
+                                    data.city || null,
+                            }),
+
+                            ...(data.state !==
+                                undefined && {
+                                state:
+                                    data.state || null,
+                            }),
+
+                            ...(data.pincode !==
+                                undefined && {
+                                pincode:
+                                    data.pincode || null,
+                            }),
+
+                            ...(data.nextFollowUpAt !==
+                                undefined && {
+                                nextFollowUpAt:
+                                    data.nextFollowUpAt
+                                        ? new Date(
+                                            data.nextFollowUpAt
+                                        )
+                                        : null,
+                            }),
+
+                            ...(data.followUpRemarks !==
+                                undefined && {
+                                followUpRemarks:
+                                    data.followUpRemarks ||
+                                    null,
+                            }),
+
+                            ...(data.nextAction !==
+                                undefined && {
+                                nextAction:
+                                    data.nextAction || null,
+                            }),
+
+                            ...(data.siteName !==
+                                undefined && {
+                                siteName:
+                                    data.siteName || null,
+                            }),
+
+                            ...(data.siteAddress !==
+                                undefined && {
+                                siteAddress:
+                                    data.siteAddress ||
+                                    null,
+                            }),
+
+                            ...(data.siteCity !==
+                                undefined && {
+                                siteCity:
+                                    data.siteCity || null,
+                            }),
+
+                            ...(data.siteState !==
+                                undefined && {
+                                siteState:
+                                    data.siteState || null,
+                            }),
+
+                            ...(data.status !==
+                                undefined && {
+                                status: data.status,
+                            }),
+
+                            ...(data.assignedToId !==
+                                undefined && {
+                                assignedToId:
+                                    data.assignedToId,
+                            }),
+                        },
+                    });
+
+                // ------------------------------------------------
+                // REPLACE ASSETS
+                // ------------------------------------------------
+
+                if (data.assets !== undefined) {
+                    await tx.leadAsset.deleteMany({
+                        where: {
+                            leadId: id,
+                        },
+                    });
+
+                    if (data.assets.length > 0) {
+                        await tx.leadAsset.createMany({
+                            data: data.assets.map(
+                                (asset) => ({
+                                    leadId: id,
+
+                                    assetName:
+                                        asset.assetName ||
+                                        null,
+
+                                    assetReference:
+                                        asset.assetReference ||
+                                        null,
+
+                                    installationLocation:
+                                        asset.installationLocation ||
+                                        null,
+
+                                    manufacturer:
+                                        asset.manufacturer ||
+                                        null,
+
+                                    model:
+                                        asset.model || null,
+
+                                    installationYear:
+                                        asset.installationYear
+                                            ? Number(
+                                                asset.installationYear
+                                            )
+                                            : null,
+
+                                    existingAmc:
+                                        asset.existingAmc ||
+                                        null,
+
+                                    currentServiceProvider:
+                                        asset.currentServiceProvider ||
+                                        null,
+                                })
+                            ),
+                        });
+                    }
+                }
+
+                return tx.lead.findUnique({
+                    where: {
+                        id: updatedLead.id,
                     },
-                },
-            },
-        });
+
+                    include: leadInclude,
+                });
+            }
+        );
 
         return res.status(200).json({
             success: true,
             message: "Lead updated successfully",
+
             data: {
                 lead,
             },
@@ -779,11 +1054,12 @@ export async function deleteLead(req, res) {
     try {
         const { id } = req.params;
 
-        const existingLead = await prisma.lead.findUnique({
-            where: {
-                id,
-            },
-        });
+        const existingLead =
+            await prisma.lead.findUnique({
+                where: {
+                    id,
+                },
+            });
 
         if (!existingLead) {
             return res.status(404).json({
@@ -791,10 +1067,6 @@ export async function deleteLead(req, res) {
                 message: "Lead not found",
             });
         }
-
-        // --------------------------------------------------------
-        // Data-level access
-        // --------------------------------------------------------
 
         if (!canAccessLead(req, existingLead)) {
             return res.status(403).json({
@@ -840,7 +1112,8 @@ export async function convertLeadToClient(req, res) {
     try {
         const { id } = req.params;
 
-        const validation = convertLeadSchema.safeParse(req.body);
+        const validation =
+            convertLeadSchema.safeParse(req.body);
 
         if (!validation.success) {
             return res.status(400).json({
@@ -850,21 +1123,22 @@ export async function convertLeadToClient(req, res) {
             });
         }
 
-        const lead = await prisma.lead.findUnique({
-            where: {
-                id,
-            },
+        const lead =
+            await prisma.lead.findUnique({
+                where: {
+                    id,
+                },
 
-            include: {
-                client: true,
+                include: {
+                    client: true,
 
-                serviceSelections: {
-                    orderBy: {
-                        createdAt: "asc",
+                    serviceSelections: {
+                        orderBy: {
+                            createdAt: "asc",
+                        },
                     },
                 },
-            },
-        });
+            });
 
         if (!lead) {
             return res.status(404).json({
@@ -916,181 +1190,254 @@ export async function convertLeadToClient(req, res) {
         // TRANSACTION
         // --------------------------------------------------------
 
-        const result = await prisma.$transaction(async (tx) => {
+        const result =
+            await prisma.$transaction(
+                async (tx) => {
+                    // ------------------------------------------------
+                    // CREATE CLIENT
+                    // ------------------------------------------------
 
-            // ----------------------------------------------------
-            // CREATE CLIENT
-            // ----------------------------------------------------
+                    const client =
+                        await tx.client.create({
+                            data: {
+                                associationName:
+                                    lead.associationName,
 
-            const client = await tx.client.create({
-                data: {
-                    associationName: lead.associationName,
-                    contactName: lead.contactName,
-                    email: lead.email,
-                    mobile: lead.mobile,
+                                contactName:
+                                    lead.contactName,
 
-                    address: clientData.address || null,
-                    city: clientData.city || null,
-                    state: clientData.state || null,
-                    pincode: clientData.pincode || null,
-                    gstNumber: clientData.gstNumber || null,
+                                email: lead.email,
 
-                    status: "ACTIVE",
+                                mobile: lead.mobile,
 
-                    createdById: req.user.userId,
+                                address:
+                                    clientData.address ??
+                                    lead.address ??
+                                    null,
 
-                    // Carry Lead BDE assignment into Client
-                    assignedBdeId: lead.assignedToId || null,
-                },
-            });
+                                city:
+                                    clientData.city ??
+                                    lead.city ??
+                                    null,
 
-            // ----------------------------------------------------
-            // COPY LEAD SERVICE SELECTIONS → CLIENT
-            // ----------------------------------------------------
+                                state:
+                                    clientData.state ??
+                                    lead.state ??
+                                    null,
 
-            if (lead.serviceSelections.length > 0) {
-                await tx.clientServiceSelection.createMany({
-                    data: lead.serviceSelections.map((selection) => ({
-                        clientId: client.id,
+                                pincode:
+                                    clientData.pincode ??
+                                    lead.pincode ??
+                                    null,
 
-                        serviceId: selection.serviceId,
+                                gstNumber:
+                                    clientData.gstNumber ||
+                                    null,
 
-                        serviceCode: selection.serviceCode,
-                        serviceName: selection.serviceName,
+                                status: "ACTIVE",
 
-                        pricingBasis: selection.pricingBasis,
-                        pricingLabel: selection.pricingLabel,
-                        assetCategory: selection.assetCategory,
+                                createdById:
+                                    req.user.userId,
 
-                        quantity: selection.quantity,
-                        unitRate: selection.unitRate,
-
-                        baseAmount: selection.baseAmount,
-
-                        gstPercent: selection.gstPercent,
-                        gstAmount: selection.gstAmount,
-
-                        totalAmount: selection.totalAmount,
-
-                        notes: selection.notes,
-
-                        createdById: selection.createdById,
-                    })),
-                });
-            }
-
-            // ----------------------------------------------------
-            // UPDATE LEAD
-            // ----------------------------------------------------
-
-            const updatedLead = await tx.lead.update({
-                where: {
-                    id: lead.id,
-                },
-
-                data: {
-                    status: "WON",
-                    clientId: client.id,
-                },
-
-                include: {
-                    assignedTo: {
-                        select: {
-                            id: true,
-                            firstName: true,
-                            lastName: true,
-                            email: true,
-                        },
-                    },
-
-                    createdBy: {
-                        select: {
-                            id: true,
-                            firstName: true,
-                            lastName: true,
-                            email: true,
-                        },
-                    },
-
-                    client: true,
-                },
-            });
-
-            // ----------------------------------------------------
-            // FETCH CLIENT WITH COPIED SERVICES
-            // ----------------------------------------------------
-
-            const finalClient =
-                await tx.client.findUnique({
-                    where: {
-                        id: client.id,
-                    },
-
-                    include: {
-                        serviceSelections: {
-                            orderBy: {
-                                createdAt: "asc",
+                                assignedBdeId:
+                                    lead.assignedToId ||
+                                    null,
                             },
-                        },
+                        });
 
-                        assignedBde: {
-                            select: {
-                                id: true,
-                                firstName: true,
-                                lastName: true,
-                                email: true,
+                    // ------------------------------------------------
+                    // COPY LEAD SERVICE SELECTIONS
+                    // ------------------------------------------------
+
+                    if (
+                        lead.serviceSelections.length >
+                        0
+                    ) {
+                        await tx.clientServiceSelection.createMany(
+                            {
+                                data: lead.serviceSelections.map(
+                                    (selection) => ({
+                                        clientId:
+                                            client.id,
+
+                                        serviceId:
+                                            selection.serviceId,
+
+                                        serviceCode:
+                                            selection.serviceCode,
+
+                                        serviceName:
+                                            selection.serviceName,
+
+                                        pricingBasis:
+                                            selection.pricingBasis,
+
+                                        pricingLabel:
+                                            selection.pricingLabel,
+
+                                        assetCategory:
+                                            selection.assetCategory,
+
+                                        quantity:
+                                            selection.quantity,
+
+                                        unitRate:
+                                            selection.unitRate,
+
+                                        baseAmount:
+                                            selection.baseAmount,
+
+                                        gstPercent:
+                                            selection.gstPercent,
+
+                                        gstAmount:
+                                            selection.gstAmount,
+
+                                        totalAmount:
+                                            selection.totalAmount,
+
+                                        notes:
+                                            selection.notes,
+
+                                        createdById:
+                                            selection.createdById,
+                                    })
+                                ),
+                            }
+                        );
+                    }
+
+                    // ------------------------------------------------
+                    // UPDATE LEAD
+                    // ------------------------------------------------
+
+                    const updatedLead =
+                        await tx.lead.update({
+                            where: {
+                                id: lead.id,
                             },
-                        },
 
-                        createdBy: {
-                            select: {
-                                id: true,
-                                firstName: true,
-                                lastName: true,
-                                email: true,
+                            data: {
+                                status: "WON",
+                                clientId: client.id,
                             },
-                        },
-                    },
-                });
 
-            return {
-                client: finalClient,
-                lead: updatedLead,
-            };
-        });
+                            include: {
+                                assignedTo: {
+                                    select: {
+                                        id: true,
+                                        firstName: true,
+                                        lastName: true,
+                                        email: true,
+                                    },
+                                },
+
+                                createdBy: {
+                                    select: {
+                                        id: true,
+                                        firstName: true,
+                                        lastName: true,
+                                        email: true,
+                                    },
+                                },
+
+                                client: true,
+                            },
+                        });
+
+                    // ------------------------------------------------
+                    // FETCH FINAL CLIENT
+                    // ------------------------------------------------
+
+                    const finalClient =
+                        await tx.client.findUnique(
+                            {
+                                where: {
+                                    id: client.id,
+                                },
+
+                                include: {
+                                    serviceSelections: {
+                                        orderBy: {
+                                            createdAt:
+                                                "asc",
+                                        },
+                                    },
+
+                                    assignedBde: {
+                                        select: {
+                                            id: true,
+                                            firstName: true,
+                                            lastName: true,
+                                            email: true,
+                                        },
+                                    },
+
+                                    createdBy: {
+                                        select: {
+                                            id: true,
+                                            firstName: true,
+                                            lastName: true,
+                                            email: true,
+                                        },
+                                    },
+                                },
+                            }
+                        );
+
+                    return {
+                        client: finalClient,
+                        lead: updatedLead,
+                    };
+                }
+            );
 
         // --------------------------------------------------------
-        // CALCULATE SERVICE SUMMARY
+        // SERVICE SUMMARY
         // --------------------------------------------------------
 
         const serviceSelections =
             result.client?.serviceSelections || [];
 
         const serviceSummary = {
-            serviceCount: serviceSelections.length,
+            serviceCount:
+                serviceSelections.length,
 
-            baseAmount: serviceSelections.reduce(
-                (sum, item) =>
-                    sum + Number(item.baseAmount || 0),
-                0
-            ),
+            baseAmount:
+                serviceSelections.reduce(
+                    (sum, item) =>
+                        sum +
+                        Number(
+                            item.baseAmount || 0
+                        ),
+                    0
+                ),
 
-            gstAmount: serviceSelections.reduce(
-                (sum, item) =>
-                    sum + Number(item.gstAmount || 0),
-                0
-            ),
+            gstAmount:
+                serviceSelections.reduce(
+                    (sum, item) =>
+                        sum +
+                        Number(
+                            item.gstAmount || 0
+                        ),
+                    0
+                ),
 
-            totalAmount: serviceSelections.reduce(
-                (sum, item) =>
-                    sum + Number(item.totalAmount || 0),
-                0
-            ),
+            totalAmount:
+                serviceSelections.reduce(
+                    (sum, item) =>
+                        sum +
+                        Number(
+                            item.totalAmount || 0
+                        ),
+                    0
+                ),
         };
 
         return res.status(201).json({
             success: true,
-            message: "Lead converted to client successfully",
+            message:
+                "Lead converted to client successfully",
 
             data: {
                 client: result.client,
@@ -1127,27 +1474,32 @@ export async function assignLeadBde(req, res) {
         const { id } = req.params;
 
         // --------------------------------------------------------
-        // Only Admin can assign/reassign a lead to a BDE
+        // Only Admin can assign/reassign
         // --------------------------------------------------------
 
         if (!isAdmin(req)) {
             return res.status(403).json({
                 success: false,
-                message: "Only Admin can assign or reassign a lead to a BDE",
+                message:
+                    "Only Admin can assign or reassign a lead to a BDE",
             });
         }
 
         // --------------------------------------------------------
-        // Validate request body
+        // Validate request
         // --------------------------------------------------------
 
-        const validation = assignLeadBdeSchema.safeParse(req.body);
+        const validation =
+            assignLeadBdeSchema.safeParse(
+                req.body
+            );
 
         if (!validation.success) {
             return res.status(400).json({
                 success: false,
                 message: "Valid bdeId is required",
-                errors: validation.error.flatten(),
+                errors:
+                    validation.error.flatten(),
             });
         }
 
@@ -1157,11 +1509,12 @@ export async function assignLeadBde(req, res) {
         // Check lead
         // --------------------------------------------------------
 
-        const existingLead = await prisma.lead.findUnique({
-            where: {
-                id,
-            },
-        });
+        const existingLead =
+            await prisma.lead.findUnique({
+                where: {
+                    id,
+                },
+            });
 
         if (!existingLead) {
             return res.status(404).json({
@@ -1174,15 +1527,16 @@ export async function assignLeadBde(req, res) {
         // Check selected BDE
         // --------------------------------------------------------
 
-        const bde = await prisma.user.findUnique({
-            where: {
-                id: bdeId,
-            },
+        const bde =
+            await prisma.user.findUnique({
+                where: {
+                    id: bdeId,
+                },
 
-            include: {
-                role: true,
-            },
-        });
+                include: {
+                    role: true,
+                },
+            });
 
         if (!bde) {
             return res.status(404).json({
@@ -1194,14 +1548,16 @@ export async function assignLeadBde(req, res) {
         if (bde.role.name !== "BDE/Sales") {
             return res.status(400).json({
                 success: false,
-                message: "Selected user is not a BDE/Sales user",
+                message:
+                    "Selected user is not a BDE/Sales user",
             });
         }
 
         if (bde.status !== "ACTIVE") {
             return res.status(400).json({
                 success: false,
-                message: "Selected BDE is not active",
+                message:
+                    "Selected BDE is not active",
             });
         }
 
@@ -1209,55 +1565,69 @@ export async function assignLeadBde(req, res) {
         // Assign / Reassign lead
         // --------------------------------------------------------
 
-        const lead = await prisma.lead.update({
-            where: {
-                id,
-            },
+        const lead =
+            await prisma.lead.update({
+                where: {
+                    id,
+                },
 
-            data: {
-                assignedToId: bde.id,
-            },
+                data: {
+                    assignedToId: bde.id,
+                },
 
-            include: {
-                assignedTo: {
-                    select: {
-                        id: true,
-                        firstName: true,
-                        lastName: true,
-                        email: true,
-                        mobile: true,
-                        role: {
-                            select: {
-                                name: true,
+                include: {
+                    assignedTo: {
+                        select: {
+                            id: true,
+                            firstName: true,
+                            lastName: true,
+                            email: true,
+                            mobile: true,
+
+                            role: {
+                                select: {
+                                    name: true,
+                                },
                             },
                         },
                     },
-                },
 
-                createdBy: {
-                    select: {
-                        id: true,
-                        firstName: true,
-                        lastName: true,
-                        email: true,
+                    createdBy: {
+                        select: {
+                            id: true,
+                            firstName: true,
+                            lastName: true,
+                            email: true,
+                        },
+                    },
+
+                    assets: {
+                        orderBy: {
+                            createdAt: "asc",
+                        },
                     },
                 },
-            },
-        });
+            });
 
         return res.status(200).json({
             success: true,
-            message: "Lead assigned to BDE successfully",
+            message:
+                "Lead assigned to BDE successfully",
+
             data: {
                 lead,
             },
         });
     } catch (error) {
-        console.error("ASSIGN LEAD BDE ERROR:", error);
+        console.error(
+            "ASSIGN LEAD BDE ERROR:",
+            error
+        );
 
         return res.status(500).json({
             success: false,
-            message: "Unable to assign lead to BDE",
+            message:
+                "Unable to assign lead to BDE",
         });
     }
 }

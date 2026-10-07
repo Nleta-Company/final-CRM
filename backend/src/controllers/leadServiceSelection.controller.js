@@ -89,7 +89,8 @@ function calculateAmounts({
         Number(quantity) * Number(unitRate);
 
     const gstAmount =
-        baseAmount * (Number(gstPercent) / 100);
+        baseAmount *
+        (Number(gstPercent) / 100);
 
     const totalAmount =
         baseAmount + gstAmount;
@@ -257,7 +258,7 @@ export async function addLeadServiceSelection(
         }
 
         // --------------------------------------------------------
-        // Pricing rule
+        // Pricing Rule
         // --------------------------------------------------------
 
         const pricingRule =
@@ -278,7 +279,7 @@ export async function addLeadServiceSelection(
         }
 
         // --------------------------------------------------------
-        // Quantity validation
+        // Quantity Validation
         // --------------------------------------------------------
 
         if (
@@ -290,48 +291,42 @@ export async function addLeadServiceSelection(
             return res.status(400).json({
                 success: false,
                 message:
-                    `Quantity must be between ${pricingRule.minQuantity ?? "minimum"} and ${pricingRule.maxQuantity ?? "maximum"} for the selected pricing rule`,
+                    `Quantity must be between ${
+                        pricingRule.minQuantity ??
+                        "minimum"
+                    } and ${
+                        pricingRule.maxQuantity ??
+                        "maximum"
+                    } for the selected pricing rule`,
             });
         }
 
         // --------------------------------------------------------
-        // Prevent duplicate service
+        // IMPORTANT:
+        // Duplicate service check has intentionally been removed.
+        //
+        // Same service can now be selected multiple times
+        // for the same lead.
         // --------------------------------------------------------
 
-        const existingSelection =
-            await prisma.leadServiceSelection.findFirst({
-                where: {
-                    leadId,
-                    serviceId: data.serviceId,
-                },
-            });
-
-        if (existingSelection) {
-            return res.status(409).json({
-                success: false,
-                message:
-                    "This service is already selected for this lead",
-                data: {
-                    selection:
-                        existingSelection,
-                },
-            });
-        }
-
         // --------------------------------------------------------
-        // Calculate
+        // Calculate Amounts
         // --------------------------------------------------------
 
         const amounts =
             calculateAmounts({
-                quantity: data.quantity,
-                unitRate: pricingRule.unitRate,
+                quantity:
+                    data.quantity,
+
+                unitRate:
+                    pricingRule.unitRate,
+
                 gstPercent:
                     pricingRule.gstPercent,
             });
 
         // --------------------------------------------------------
-        // Create snapshot
+        // Create Selection Snapshot
         // --------------------------------------------------------
 
         const selection =
@@ -470,12 +465,18 @@ export async function updateLeadServiceSelection(
             });
         }
 
+        // --------------------------------------------------------
+        // Pricing Rule
+        // --------------------------------------------------------
+
         const pricingRule =
             await prisma.servicePricingRule.findFirst({
                 where: {
                     id: data.pricingRuleId,
+
                     serviceId:
                         existingSelection.serviceId,
+
                     isActive: true,
                 },
             });
@@ -488,6 +489,10 @@ export async function updateLeadServiceSelection(
             });
         }
 
+        // --------------------------------------------------------
+        // Quantity Validation
+        // --------------------------------------------------------
+
         if (
             !validateQuantityAgainstRule(
                 data.quantity,
@@ -497,18 +502,35 @@ export async function updateLeadServiceSelection(
             return res.status(400).json({
                 success: false,
                 message:
-                    `Quantity must be between ${pricingRule.minQuantity ?? "minimum"} and ${pricingRule.maxQuantity ?? "maximum"} for the selected pricing rule`,
+                    `Quantity must be between ${
+                        pricingRule.minQuantity ??
+                        "minimum"
+                    } and ${
+                        pricingRule.maxQuantity ??
+                        "maximum"
+                    } for the selected pricing rule`,
             });
         }
 
+        // --------------------------------------------------------
+        // Calculate
+        // --------------------------------------------------------
+
         const amounts =
             calculateAmounts({
-                quantity: data.quantity,
+                quantity:
+                    data.quantity,
+
                 unitRate:
                     pricingRule.unitRate,
+
                 gstPercent:
                     pricingRule.gstPercent,
             });
+
+        // --------------------------------------------------------
+        // Update Selection
+        // --------------------------------------------------------
 
         const selection =
             await prisma.leadServiceSelection.update({

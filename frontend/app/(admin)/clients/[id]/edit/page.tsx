@@ -8,24 +8,32 @@ import { ClientItem } from "@/types/client";
 import Button from "@/components/ui/Button";
 
 const API_BASE_URL =
-  process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/api";
+  process.env.NEXT_PUBLIC_API_URL ||
+  "http://localhost:5000/api";
 
 interface BackendClient {
   id: string;
+
   associationName: string;
   contactName: string;
+
   email?: string | null;
   mobile?: string | null;
+
   address?: string | null;
   city?: string | null;
   state?: string | null;
   pincode?: string | null;
+
   gstNumber?: string | null;
+
   status?: string | null;
+
   createdAt?: string;
   updatedAt?: string;
 
   assignedBdeId?: string | null;
+
   assignedBde?: {
     id: string;
     firstName: string;
@@ -53,19 +61,69 @@ interface BackendClient {
     quantity?: number | null;
     unitPrice?: number | null;
     totalPrice?: number | null;
+
     service?: {
       id: string;
       code?: string | null;
       name?: string | null;
     } | null;
   }>;
+
+  /*
+  |--------------------------------------------------------------------------
+  | CLIENT PROCESS TRACKING
+  |--------------------------------------------------------------------------
+  */
+
+  processStage?:
+    | "CLIENT_CREATED"
+    | "FSO_GENERATED"
+    | "PSGA_GENERATED"
+    | "PSGA_COMPLETED";
+
+  externalClientId?: string | null;
+
+  fsoNumber?: string | null;
+
+  fsoGeneratedAt?: string | null;
+
+  psgaGeneratedAt?: string | null;
+
+  processUpdatedAt?: string | null;
 }
+
+/*
+|--------------------------------------------------------------------------
+| API RESPONSE
+|--------------------------------------------------------------------------
+|
+| Backend returns:
+|
+| {
+|   success: true,
+|   data: {
+|     client: {...}
+|   }
+| }
+|
+|--------------------------------------------------------------------------
+*/
 
 interface ApiResponse {
   success: boolean;
-  data?: BackendClient;
+
+  data?: {
+    client: BackendClient;
+  };
+
   message?: string;
 }
+
+/*
+|--------------------------------------------------------------------------
+| AUTH TOKEN
+|--------------------------------------------------------------------------
+*/
 
 function getAuthToken(): string | null {
   if (typeof window === "undefined") {
@@ -79,21 +137,32 @@ function getAuthToken(): string | null {
   );
 }
 
-async function getClientById(id: string): Promise<BackendClient> {
+/*
+|--------------------------------------------------------------------------
+| GET CLIENT BY ID
+|--------------------------------------------------------------------------
+*/
+
+async function getClientById(
+  id: string
+): Promise<BackendClient> {
   const token = getAuthToken();
 
   const response = await fetch(
     `${API_BASE_URL}/clients/${encodeURIComponent(id)}`,
     {
       method: "GET",
+
       headers: {
         "Content-Type": "application/json",
+
         ...(token
           ? {
               Authorization: `Bearer ${token}`,
             }
           : {}),
       },
+
       cache: "no-store",
     }
   );
@@ -108,16 +177,41 @@ async function getClientById(id: string): Promise<BackendClient> {
 
   if (!response.ok) {
     throw new Error(
-      result?.message || `Failed to fetch client (${response.status})`
+      result?.message ||
+        `Failed to fetch client (${response.status})`
     );
   }
 
-  if (!result?.success || !result.data) {
-    throw new Error(result?.message || "Client record not found");
+  /*
+  |--------------------------------------------------------------------------
+  | IMPORTANT
+  |--------------------------------------------------------------------------
+  |
+  | Backend response:
+  |
+  | result.data.client
+  |
+  |--------------------------------------------------------------------------
+  */
+
+  if (
+    !result?.success ||
+    !result.data?.client
+  ) {
+    throw new Error(
+      result?.message ||
+        "Client record not found"
+    );
   }
 
-  return result.data;
+  return result.data.client;
 }
+
+/*
+|--------------------------------------------------------------------------
+| FULL NAME
+|--------------------------------------------------------------------------
+*/
 
 function getFullName(
   user?: {
@@ -125,32 +219,66 @@ function getFullName(
     lastName?: string | null;
   } | null
 ): string {
-  if (!user) return "";
+  if (!user) {
+    return "";
+  }
 
-  return [user.firstName, user.lastName]
+  return [
+    user.firstName,
+    user.lastName,
+  ]
     .filter(Boolean)
     .join(" ")
     .trim();
 }
 
+/*
+|--------------------------------------------------------------------------
+| MAP BACKEND CLIENT
+|--------------------------------------------------------------------------
+*/
+
 function mapBackendClientToClientItem(
   client: BackendClient
 ): ClientItem {
-  const assignedBdeName = getFullName(client.assignedBde);
+  const assignedBdeName =
+    getFullName(client.assignedBde);
 
   return {
     id: client.id,
 
-    companyName: client.associationName,
-    clientType: "Association" as ClientItem["clientType"],
+    companyName:
+      client.associationName,
 
-    contactPerson: client.contactName,
-    contactEmail: client.email || "",
-    contactPhone: client.mobile || "",
+    clientType:
+      "Residential RWA" as ClientItem["clientType"],
 
-    address: client.address || "",
-    city: client.city || "",
-    state: client.state || "",
+    contactPerson:
+      client.contactName,
+
+    contactEmail:
+      client.email || "",
+
+    contactPhone:
+      client.mobile || "",
+
+    address:
+      client.address || "",
+
+    city:
+      client.city || "",
+
+    state:
+      client.state || "",
+
+    /*
+    |--------------------------------------------------------------------------
+    | PINCODE
+    |--------------------------------------------------------------------------
+    */
+
+    pincode:
+      client.pincode || "",
 
     totalAssetsCount: 0,
 
@@ -160,40 +288,111 @@ function mapBackendClientToClientItem(
         : "Expired",
 
     contractValue: "—",
+
     numericContractValue: 0,
 
-    accountManager: assignedBdeName || "Unassigned",
+    accountManager:
+      assignedBdeName ||
+      "Unassigned",
 
-    assignedBdeId: client.assignedBdeId || undefined,
-    assignedBdeName: assignedBdeName || undefined,
+    assignedBdeId:
+      client.assignedBdeId ||
+      undefined,
 
-    assignedTechnicianId: undefined,
-    assignedTechnicianName: undefined,
+    assignedBdeName:
+      assignedBdeName ||
+      undefined,
 
-    joinedDate: client.createdAt
-      ? new Date(client.createdAt).toISOString().slice(0, 10)
-      : "",
+    assignedTechnicianId:
+      undefined,
 
-    nextAuditDate: undefined,
+    assignedTechnicianName:
+      undefined,
 
-    notes: client.sourceLead
-      ? `Converted from Lead: ${client.sourceLead.id}`
-      : "",
-  } as ClientItem;
+    joinedDate:
+      client.createdAt
+        ? new Date(
+            client.createdAt
+          )
+            .toISOString()
+            .slice(0, 10)
+        : "",
+
+    nextAuditDate:
+      undefined,
+
+    notes:
+      client.sourceLead
+        ? `Converted from Lead: ${client.sourceLead.id}`
+        : "",
+
+    /*
+    |--------------------------------------------------------------------------
+    | PROCESS TRACKING
+    |--------------------------------------------------------------------------
+    */
+
+    processStage:
+      client.processStage,
+
+    externalClientId:
+      client.externalClientId ||
+      undefined,
+
+    fsoNumber:
+      client.fsoNumber ||
+      undefined,
+
+    fsoGeneratedAt:
+      client.fsoGeneratedAt ||
+      undefined,
+
+    psgaGeneratedAt:
+      client.psgaGeneratedAt ||
+      undefined,
+
+    processUpdatedAt:
+      client.processUpdatedAt ||
+      undefined,
+  };
 }
+
+/*
+|--------------------------------------------------------------------------
+| EDIT CLIENT PAGE
+|--------------------------------------------------------------------------
+*/
 
 export default function EditClientPage({
   params,
 }: {
   params: Promise<{ id: string }>;
 }) {
-  const resolvedParams = use(params);
-  const clientId = resolvedParams.id;
+  const resolvedParams =
+    use(params);
 
-  const [client, setClient] = useState<ClientItem | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [notFound, setNotFound] = useState(false);
-  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const clientId =
+    resolvedParams.id;
+
+  const [client, setClient] =
+    useState<ClientItem | null>(
+      null
+    );
+
+  const [loading, setLoading] =
+    useState(true);
+
+  const [notFound, setNotFound] =
+    useState(false);
+
+  const [errorMessage, setErrorMessage] =
+    useState<string | null>(null);
+
+  /*
+  |--------------------------------------------------------------------------
+  | FETCH CLIENT
+  |--------------------------------------------------------------------------
+  */
 
   useEffect(() => {
     let mounted = true;
@@ -201,21 +400,35 @@ export default function EditClientPage({
     async function fetchClient() {
       try {
         setLoading(true);
+
         setNotFound(false);
+
         setErrorMessage(null);
 
-        const backendClient = await getClientById(clientId);
+        const backendClient =
+          await getClientById(
+            clientId
+          );
 
-        if (!mounted) return;
+        if (!mounted) {
+          return;
+        }
 
         const mappedClient =
-          mapBackendClientToClientItem(backendClient);
+          mapBackendClientToClientItem(
+            backendClient
+          );
 
         setClient(mappedClient);
       } catch (error) {
-        console.error("Error fetching client:", error);
+        console.error(
+          "Error fetching client:",
+          error
+        );
 
-        if (!mounted) return;
+        if (!mounted) {
+          return;
+        }
 
         const message =
           error instanceof Error
@@ -223,6 +436,7 @@ export default function EditClientPage({
             : "Unable to load client record.";
 
         setErrorMessage(message);
+
         setNotFound(true);
       } finally {
         if (mounted) {
@@ -237,6 +451,12 @@ export default function EditClientPage({
       mounted = false;
     };
   }, [clientId]);
+
+  /*
+  |--------------------------------------------------------------------------
+  | LOADING
+  |--------------------------------------------------------------------------
+  */
 
   if (loading) {
     return (
@@ -256,7 +476,16 @@ export default function EditClientPage({
     );
   }
 
-  if (notFound || !client) {
+  /*
+  |--------------------------------------------------------------------------
+  | NOT FOUND / ERROR
+  |--------------------------------------------------------------------------
+  */
+
+  if (
+    notFound ||
+    !client
+  ) {
     return (
       <div className="space-y-6">
         <Breadcrumb
@@ -278,7 +507,9 @@ export default function EditClientPage({
 
         <div className="rounded-2xl border border-gray-200 bg-white p-12 text-center shadow-theme-xs dark:border-gray-800 dark:bg-gray-900">
           <h2 className="text-xl font-bold text-gray-900 dark:text-white">
-            Client &ldquo;{clientId}&rdquo; Not Found
+            Client &ldquo;
+            {clientId}
+            &rdquo; Not Found
           </h2>
 
           <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">
@@ -297,6 +528,12 @@ export default function EditClientPage({
       </div>
     );
   }
+
+  /*
+  |--------------------------------------------------------------------------
+  | EDIT FORM
+  |--------------------------------------------------------------------------
+  */
 
   return (
     <div className="space-y-6">

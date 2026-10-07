@@ -31,6 +31,16 @@ export const LeadStatus = {
 export type LeadStatus = (typeof LeadStatus)[keyof typeof LeadStatus]
 
 
+export const ClientProcessStage = {
+  CLIENT_CREATED: 'CLIENT_CREATED',
+  FSO_GENERATED: 'FSO_GENERATED',
+  PSGA_GENERATED: 'PSGA_GENERATED',
+  PSGA_COMPLETED: 'PSGA_COMPLETED'
+} as const
+
+export type ClientProcessStage = (typeof ClientProcessStage)[keyof typeof ClientProcessStage]
+
+
 export const ClientStatus = {
   ACTIVE: 'ACTIVE',
   INACTIVE: 'INACTIVE'
@@ -61,12 +71,12 @@ export type ActivityStatus = (typeof ActivityStatus)[keyof typeof ActivityStatus
 
 export const NotificationType = {
   LEAD_ASSIGNED: 'LEAD_ASSIGNED',
-  FOLLOW_UP_REMINDER: 'FOLLOW_UP_REMINDER',
   FOLLOW_UP_DUE: 'FOLLOW_UP_DUE',
   FOLLOW_UP_OVERDUE: 'FOLLOW_UP_OVERDUE',
   LEAD_CONVERTED: 'LEAD_CONVERTED',
   ACTIVITY_CREATED: 'ACTIVITY_CREATED',
-  GENERAL: 'GENERAL'
+  GENERAL: 'GENERAL',
+  FOLLOW_UP_REMINDER: 'FOLLOW_UP_REMINDER'
 } as const
 
 export type NotificationType = (typeof NotificationType)[keyof typeof NotificationType]
@@ -109,6 +119,14 @@ export const IncentiveRole = {
 } as const
 
 export type IncentiveRole = (typeof IncentiveRole)[keyof typeof IncentiveRole]
+
+
+export const IncentiveRecipientType = {
+  BDE: 'BDE',
+  ADMIN: 'ADMIN'
+} as const
+
+export type IncentiveRecipientType = (typeof IncentiveRecipientType)[keyof typeof IncentiveRecipientType]
 
 
 export const IncentivePayoutStatus = {

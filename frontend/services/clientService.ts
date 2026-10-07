@@ -45,6 +45,40 @@ function getFullName(user: any): string {
 }
 
 /* ============================================================
+   CLIENT PROCESS TYPES
+============================================================ */
+
+export type ClientProcessStage =
+  | "CLIENT_CREATED"
+  | "FSO_GENERATED"
+  | "PSGA_GENERATED"
+  | "PSGA_COMPLETED";
+
+export interface ClientProcessData {
+  processStage: ClientProcessStage;
+  externalClientId?: string | null;
+  fsoNumber?: string | null;
+  fsoGeneratedAt?: string | null;
+  psgaGeneratedAt?: string | null;
+  processUpdatedAt?: string | null;
+}
+
+export interface UpdateClientProcessInput {
+  processStage: ClientProcessStage;
+  externalClientId?: string;
+  fsoNumber?: string;
+  fsoGeneratedAt?: string;
+  psgaGeneratedAt?: string;
+}
+
+export interface ClientProcessStats {
+  clientCreated: number;
+  fsoGenerated: number;
+  psgaGenerated: number;
+  psgaCompleted: number;
+}
+
+/* ============================================================
    BACKEND CLIENT -> FRONTEND CLIENT
 ============================================================ */
 
@@ -125,6 +159,36 @@ function mapClient(client: any): ClientItem {
 
     notes:
       client?.notes ||
+      undefined,
+
+    /*
+    |--------------------------------------------------------------------------
+    | PROCESS TRACKING
+    |--------------------------------------------------------------------------
+    */
+
+    processStage:
+      client?.processStage ||
+      "CLIENT_CREATED",
+
+    externalClientId:
+      client?.externalClientId ||
+      undefined,
+
+    fsoNumber:
+      client?.fsoNumber ||
+      undefined,
+
+    fsoGeneratedAt:
+      client?.fsoGeneratedAt ||
+      undefined,
+
+    psgaGeneratedAt:
+      client?.psgaGeneratedAt ||
+      undefined,
+
+    processUpdatedAt:
+      client?.processUpdatedAt ||
       undefined,
   };
 }
@@ -520,65 +584,66 @@ export const clientService = {
       unknown
     > = {};
 
-    /* --------------------------------------------------------
-       IMPORTANT FIX
-
-       Do NOT send null for optional Zod string fields.
-
-       Backend schema expects:
-         string | undefined
-
-       Not:
-         null
-
-       This was causing:
-         "Invalid client data"
-       -------------------------------------------------------- */
+    /*
+    |--------------------------------------------------------------------------
+    | COMPANY NAME
+    |--------------------------------------------------------------------------
+    */
 
     if (
       updates.companyName !==
       undefined
     ) {
       payload.associationName =
-        updates.companyName
-          .trim();
+        updates.companyName.trim();
     }
+
+    /*
+    |--------------------------------------------------------------------------
+    | CONTACT PERSON
+    |--------------------------------------------------------------------------
+    */
 
     if (
       updates.contactPerson !==
       undefined
     ) {
       payload.contactName =
-        updates.contactPerson
-          .trim();
+        updates.contactPerson.trim();
     }
+
+    /*
+    |--------------------------------------------------------------------------
+    | EMAIL
+    |--------------------------------------------------------------------------
+    */
 
     if (
       updates.contactEmail !==
       undefined
     ) {
       const email =
-        updates.contactEmail
-          .trim();
+        updates.contactEmail.trim();
 
       if (email) {
         payload.email = email;
       } else {
-        /*
-         * Send undefined by simply
-         * omitting the property.
-         */
         delete payload.email;
       }
     }
+
+    /*
+    |--------------------------------------------------------------------------
+    | MOBILE
+    |--------------------------------------------------------------------------
+    */
 
     if (
       updates.contactPhone !==
       undefined
     ) {
       const mobile =
-        updates.contactPhone
-          .trim();
+        updates.contactPhone.trim();
 
       if (mobile) {
         payload.mobile = mobile;
@@ -586,6 +651,12 @@ export const clientService = {
         delete payload.mobile;
       }
     }
+
+    /*
+    |--------------------------------------------------------------------------
+    | ADDRESS
+    |--------------------------------------------------------------------------
+    */
 
     if (
       updates.address !==
@@ -601,6 +672,12 @@ export const clientService = {
       }
     }
 
+    /*
+    |--------------------------------------------------------------------------
+    | CITY
+    |--------------------------------------------------------------------------
+    */
+
     if (
       updates.city !==
       undefined
@@ -615,6 +692,12 @@ export const clientService = {
       }
     }
 
+    /*
+    |--------------------------------------------------------------------------
+    | STATE
+    |--------------------------------------------------------------------------
+    */
+
     if (
       updates.state !==
       undefined
@@ -628,6 +711,12 @@ export const clientService = {
         delete payload.state;
       }
     }
+
+    /*
+    |--------------------------------------------------------------------------
+    | PINCODE
+    |--------------------------------------------------------------------------
+    */
 
     if (
       (updates as any).pincode !==
@@ -685,6 +774,134 @@ export const clientService = {
   },
 
   /* ==========================================================
+     UPDATE CLIENT PROCESS
+  ========================================================== */
+
+  async updateClientProcess(
+    id: string,
+    input: UpdateClientProcessInput
+  ): Promise<ClientItem> {
+    if (!id) {
+      throw new Error(
+        "Client ID is required."
+      );
+    }
+
+    if (!input.processStage) {
+      throw new Error(
+        "Client process stage is required."
+      );
+    }
+
+    const payload: Record<
+      string,
+      unknown
+    > = {
+      processStage:
+        input.processStage,
+    };
+
+    /*
+    |--------------------------------------------------------------------------
+    | EXTERNAL CLIENT ID
+    |--------------------------------------------------------------------------
+    */
+
+    if (
+      input.externalClientId !==
+      undefined
+    ) {
+      const externalClientId =
+        input.externalClientId
+          .trim();
+
+      if (externalClientId) {
+        payload.externalClientId =
+          externalClientId;
+      }
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | FSO NUMBER
+    |--------------------------------------------------------------------------
+    */
+
+    if (
+      input.fsoNumber !==
+      undefined
+    ) {
+      const fsoNumber =
+        input.fsoNumber.trim();
+
+      if (fsoNumber) {
+        payload.fsoNumber =
+          fsoNumber;
+      }
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | FSO GENERATED DATE
+    |--------------------------------------------------------------------------
+    */
+
+    if (
+      input.fsoGeneratedAt !==
+      undefined
+    ) {
+      payload.fsoGeneratedAt =
+        input.fsoGeneratedAt;
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | PSGA GENERATED DATE
+    |--------------------------------------------------------------------------
+    */
+
+    if (
+      input.psgaGeneratedAt !==
+      undefined
+    ) {
+      payload.psgaGeneratedAt =
+        input.psgaGeneratedAt;
+    }
+
+    const response = await fetch(
+      `${API_BASE_URL}/clients/${id}/process`,
+      {
+        method: "PATCH",
+        headers: getHeaders(),
+        credentials: "include",
+        body: JSON.stringify(payload),
+      }
+    );
+
+    const data = await handleResponse<{
+      success: boolean;
+      message?: string;
+      data?: {
+        client?: any;
+      };
+    }>(response);
+
+    if (!data.data?.client) {
+      throw new Error(
+        "Updated client process data was not returned."
+      );
+    }
+
+    const client = mapClient(
+      data.data.client
+    );
+
+    notifyChange();
+
+    return client;
+  },
+
+  /* ==========================================================
      DELETE CLIENT
   ========================================================== */
 
@@ -729,6 +946,13 @@ export const clientService = {
           totalClients?: number;
           activeClients?: number;
           inactiveClients?: number;
+
+          process?: {
+            clientCreated?: number;
+            fsoGenerated?: number;
+            psgaGenerated?: number;
+            psgaCompleted?: number;
+          };
         };
       }>(response);
 
@@ -773,6 +997,53 @@ export const clientService = {
   },
 
   /* ==========================================================
+     GET CLIENT PROCESS STATS
+  ========================================================== */
+
+  async getClientProcessStats(): Promise<ClientProcessStats> {
+    const response = await fetch(
+      `${API_BASE_URL}/clients/stats`,
+      {
+        method: "GET",
+        headers: getHeaders(),
+        credentials: "include",
+        cache: "no-store",
+      }
+    );
+
+    const data =
+      await handleResponse<{
+        success: boolean;
+        data?: {
+          process?: {
+            clientCreated?: number;
+            fsoGenerated?: number;
+            psgaGenerated?: number;
+            psgaCompleted?: number;
+          };
+        };
+      }>(response);
+
+    return {
+      clientCreated:
+        data.data?.process
+          ?.clientCreated || 0,
+
+      fsoGenerated:
+        data.data?.process
+          ?.fsoGenerated || 0,
+
+      psgaGenerated:
+        data.data?.process
+          ?.psgaGenerated || 0,
+
+      psgaCompleted:
+        data.data?.process
+          ?.psgaCompleted || 0,
+    };
+  },
+
+  /* ==========================================================
      ADMIN ONLY: ASSIGN CLIENT TO BDE
   ========================================================== */
 
@@ -780,6 +1051,18 @@ export const clientService = {
     clientId: string,
     bdeId: string
   ): Promise<ClientItem> {
+    if (!clientId) {
+      throw new Error(
+        "Client ID is required."
+      );
+    }
+
+    if (!bdeId) {
+      throw new Error(
+        "BDE ID is required."
+      );
+    }
+
     const response = await fetch(
       `${API_BASE_URL}/clients/${clientId}/assign-bde`,
       {

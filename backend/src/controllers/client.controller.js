@@ -29,9 +29,6 @@ const createClientSchema = z.object({
 |--------------------------------------------------------------------------
 | COMPLETE CLIENT CREATION SCHEMA
 |--------------------------------------------------------------------------
-|
-| Client + service selections are submitted together.
-|
 */
 
 const completeClientSelectionSchema = z.object({
@@ -39,9 +36,7 @@ const completeClientSelectionSchema = z.object({
 
     pricingRuleId: z.string().trim().min(1),
 
-    quantity: z.coerce
-        .number()
-        .positive(),
+    quantity: z.coerce.number().positive(),
 
     notes: z.string().trim().optional(),
 });
@@ -93,12 +88,68 @@ const updateClientSchema = z.object({
 
 /*
 |--------------------------------------------------------------------------
+| UPDATE CLIENT PROCESS SCHEMA
+|--------------------------------------------------------------------------
+|
+| FSO / PSGA are generated in the separate external dashboard.
+|
+| CRM only tracks their current process stage and references.
+|
+*/
+
+const updateClientProcessSchema = z.object({
+    processStage: z.enum([
+        "CLIENT_CREATED",
+        "FSO_GENERATED",
+        "PSGA_GENERATED",
+        "PSGA_COMPLETED",
+    ]),
+
+    externalClientId: z
+        .string()
+        .trim()
+        .optional(),
+
+    fsoNumber: z
+        .string()
+        .trim()
+        .optional(),
+
+    fsoGeneratedAt: z
+        .string()
+        .datetime()
+        .optional(),
+
+    psgaGeneratedAt: z
+        .string()
+        .datetime()
+        .optional(),
+});
+
+/*
+|--------------------------------------------------------------------------
 | CLIENT INCLUDE
+|--------------------------------------------------------------------------
+|
+| IMPORTANT:
+| processStage, externalClientId, fsoNumber,
+| fsoGeneratedAt, psgaGeneratedAt and processUpdatedAt
+| are scalar fields.
+|
+| Prisma include() accepts relation fields only.
+| Scalar fields are automatically returned by Prisma.
+|
 |--------------------------------------------------------------------------
 */
 
 function clientInclude() {
     return {
+        /*
+        |--------------------------------------------------------------------------
+        | ASSIGNED BDE
+        |--------------------------------------------------------------------------
+        */
+
         assignedBde: {
             select: {
                 id: true,
@@ -115,6 +166,12 @@ function clientInclude() {
             },
         },
 
+        /*
+        |--------------------------------------------------------------------------
+        | CREATED BY
+        |--------------------------------------------------------------------------
+        */
+
         createdBy: {
             select: {
                 id: true,
@@ -123,6 +180,12 @@ function clientInclude() {
                 email: true,
             },
         },
+
+        /*
+        |--------------------------------------------------------------------------
+        | SOURCE LEAD
+        |--------------------------------------------------------------------------
+        */
 
         sourceLead: {
             select: {
@@ -151,6 +214,12 @@ function clientInclude() {
                 },
             },
         },
+
+        /*
+        |--------------------------------------------------------------------------
+        | SELECTED SERVICES
+        |--------------------------------------------------------------------------
+        */
 
         serviceSelections: {
             orderBy: {
@@ -210,10 +279,7 @@ function buildBdeClientWhere(userId) {
 |--------------------------------------------------------------------------
 */
 
-async function getAccessibleClient(
-    id,
-    req
-) {
+async function getAccessibleClient(id, req) {
     if (isAdmin(req)) {
         return prisma.client.findUnique({
             where: {
@@ -245,19 +311,9 @@ async function getAccessibleClient(
 |--------------------------------------------------------------------------
 | CREATE CLIENT
 |--------------------------------------------------------------------------
-|
-| Existing/simple client creation.
-|
-| IMPORTANT:
-| BDE Client Form CREATE mode should use
-| createCompleteClient() instead.
-|
 */
 
-export async function createClient(
-    req,
-    res
-) {
+export async function createClient(req, res) {
     try {
         const validation =
             createClientSchema.safeParse(
@@ -276,8 +332,7 @@ export async function createClient(
             });
         }
 
-        const data =
-            validation.data;
+        const data = validation.data;
 
         const client =
             await prisma.client.create({
@@ -309,14 +364,15 @@ export async function createClient(
 
                     status: "ACTIVE",
 
+                    processStage:
+                        "CLIENT_CREATED",
+
+                    processUpdatedAt:
+                        new Date(),
+
                     createdById:
                         req.user.userId,
 
-                    /*
-                     * If BDE creates the client,
-                     * automatically make that BDE
-                     * the assigned BDE.
-                     */
                     ...(isBde(req)
                         ? {
                               assignedBdeId:
@@ -349,7 +405,14 @@ export async function createClient(
             success: false,
 
             message:
-                "Unable to create client",
+                error instanceof Error
+                    ? error.message
+                    : "Unable to create client",
+
+            error:
+                error instanceof Error
+                    ? error.stack
+                    : String(error),
         });
     }
 }
@@ -358,20 +421,6 @@ export async function createClient(
 |--------------------------------------------------------------------------
 | CREATE COMPLETE CLIENT
 |--------------------------------------------------------------------------
-|
-| THIS IS THE IMPORTANT NEW ENDPOINT.
-|
-| Client + ALL service selections are created
-| inside ONE Prisma transaction.
-|
-| If ANY validation/database operation fails:
-|
-|     Client creation -> ROLLBACK
-|     Service creation -> ROLLBACK
-|
-| Therefore incomplete clients cannot remain
-| in the database.
-|
 */
 
 export async function createCompleteClient(
@@ -379,12 +428,6 @@ export async function createCompleteClient(
     res
 ) {
     try {
-        /*
-         * ----------------------------------------------------------
-         * REQUEST VALIDATION
-         * ----------------------------------------------------------
-         */
-
         const validation =
             createCompleteClientSchema.safeParse(
                 req.body
@@ -414,26 +457,14 @@ export async function createCompleteClient(
             selections,
         } = validation.data;
 
-        /*
-         * ----------------------------------------------------------
-         * TRANSACTION
-         * ----------------------------------------------------------
-         */
-
         const client =
             await prisma.$transaction(
                 async (tx) => {
                     /*
-                     * ==================================================
-                     * STEP 1: VALIDATE ALL SERVICES + PRICING RULES
-                     * BEFORE CREATING CLIENT
-                     * ==================================================
-                     *
-                     * This is important.
-                     *
-                     * If service #3 is invalid, we don't even create
-                     * the client.
-                     */
+                    |--------------------------------------------------------------------------
+                    | STEP 1: VALIDATE SERVICES + PRICING
+                    |--------------------------------------------------------------------------
+                    */
 
                     const validatedSelections =
                         [];
@@ -441,12 +472,6 @@ export async function createCompleteClient(
                     for (
                         const selection of selections
                     ) {
-                        /*
-                         * ------------------------------------------------
-                         * SERVICE
-                         * ------------------------------------------------
-                         */
-
                         const service =
                             await tx.serviceCatalog.findUnique(
                                 {
@@ -468,12 +493,6 @@ export async function createCompleteClient(
                                 `Selected service "${service.name}" is inactive`
                             );
                         }
-
-                        /*
-                         * ------------------------------------------------
-                         * PRICING RULE
-                         * ------------------------------------------------
-                         */
 
                         const pricingRule =
                             await tx.servicePricingRule.findUnique(
@@ -499,11 +518,6 @@ export async function createCompleteClient(
                             );
                         }
 
-                        /*
-                         * Pricing rule must belong
-                         * to selected service.
-                         */
-
                         if (
                             pricingRule.serviceId !==
                             selection.serviceId
@@ -512,26 +526,6 @@ export async function createCompleteClient(
                                 `Pricing rule does not belong to selected service "${service.name}"`
                             );
                         }
-
-                        /*
-                         * ------------------------------------------------
-                         * QUANTITY VALIDATION
-                         * ------------------------------------------------
-                         *
-                         * IMPORTANT BUSINESS RULE:
-                         *
-                         * ASSET_CATEGORY:
-                         *   quantity can be any positive number.
-                         *
-                         * LIFT_COUNT:
-                         *   quantity must fall inside its slab.
-                         *
-                         * This prevents the old:
-                         *
-                         * "Maximum quantity is 1"
-                         *
-                         * problem for normal asset-category pricing.
-                         */
 
                         const pricingBasis =
                             String(
@@ -566,17 +560,6 @@ export async function createCompleteClient(
                             }
                         }
 
-                        /*
-                         * For ASSET_CATEGORY / SERVICE_RATE /
-                         * CUSTOM, only positive quantity is required.
-                         */
-
-                        /*
-                         * ------------------------------------------------
-                         * CALCULATE PRICE
-                         * ------------------------------------------------
-                         */
-
                         const unitRate =
                             Number(
                                 pricingRule.unitRate
@@ -593,8 +576,7 @@ export async function createCompleteClient(
                             );
 
                         const baseAmount =
-                            quantity *
-                            unitRate;
+                            quantity * unitRate;
 
                         const gstAmount =
                             (baseAmount *
@@ -605,41 +587,40 @@ export async function createCompleteClient(
                             baseAmount +
                             gstAmount;
 
-                        /*
-                         * Save everything required to create
-                         * the selection later.
-                         */
+                        validatedSelections.push({
+                            service,
 
-                        validatedSelections.push(
-                            {
-                                service,
-                                pricingRule,
-                                quantity,
-                                unitRate,
-                                gstPercent,
-                                baseAmount,
-                                gstAmount,
-                                totalAmount,
-                                notes:
-                                    selection.notes ||
-                                    null,
-                            }
-                        );
+                            pricingRule,
+
+                            quantity,
+
+                            unitRate,
+
+                            gstPercent,
+
+                            baseAmount,
+
+                            gstAmount,
+
+                            totalAmount,
+
+                            notes:
+                                selection.notes ||
+                                null,
+                        });
                     }
 
                     /*
-                     * ==================================================
-                     * STEP 2: CREATE CLIENT
-                     * ==================================================
-                     *
-                     * At this point ALL services and pricing rules
-                     * are already validated.
-                     */
+                    |--------------------------------------------------------------------------
+                    | STEP 2: CREATE CLIENT
+                    |--------------------------------------------------------------------------
+                    */
 
                     const createdClient =
                         await tx.client.create({
                             data: {
                                 associationName,
+
                                 contactName,
 
                                 email: email
@@ -647,38 +628,32 @@ export async function createCompleteClient(
                                     : null,
 
                                 mobile:
-                                    mobile ||
-                                    null,
+                                    mobile || null,
 
                                 address:
-                                    address ||
-                                    null,
+                                    address || null,
 
                                 city:
-                                    city ||
-                                    null,
+                                    city || null,
 
                                 state:
-                                    state ||
-                                    null,
+                                    state || null,
 
                                 pincode:
-                                    pincode ||
-                                    null,
+                                    pincode || null,
 
                                 status:
                                     "ACTIVE",
 
+                                processStage:
+                                    "CLIENT_CREATED",
+
+                                processUpdatedAt:
+                                    new Date(),
+
                                 createdById:
                                     req.user.userId,
 
-                                /*
-                                 * BDE automatically owns
-                                 * the client.
-                                 *
-                                 * Admin can later assign
-                                 * it to a BDE.
-                                 */
                                 ...(isBde(req)
                                     ? {
                                           assignedBdeId:
@@ -690,10 +665,10 @@ export async function createCompleteClient(
                         });
 
                     /*
-                     * ==================================================
-                     * STEP 3: CREATE ALL SERVICE SELECTIONS
-                     * ==================================================
-                     */
+                    |--------------------------------------------------------------------------
+                    | STEP 3: CREATE SERVICE SELECTIONS
+                    |--------------------------------------------------------------------------
+                    */
 
                     for (
                         const selection of
@@ -710,9 +685,6 @@ export async function createCompleteClient(
                                             .service
                                             .id,
 
-                                    /*
-                                     * Snapshot fields
-                                     */
                                     serviceCode:
                                         selection
                                             .service
@@ -769,10 +741,10 @@ export async function createCompleteClient(
                     }
 
                     /*
-                     * ==================================================
-                     * STEP 4: FETCH COMPLETE CLIENT
-                     * ==================================================
-                     */
+                    |--------------------------------------------------------------------------
+                    | STEP 4: FETCH COMPLETE CLIENT
+                    |--------------------------------------------------------------------------
+                    */
 
                     const completeClient =
                         await tx.client.findUnique(
@@ -791,12 +763,6 @@ export async function createCompleteClient(
                 }
             );
 
-        /*
-         * ----------------------------------------------------------
-         * SUCCESS
-         * ----------------------------------------------------------
-         */
-
         return res.status(201).json({
             success: true,
 
@@ -813,11 +779,6 @@ export async function createCompleteClient(
             error
         );
 
-        /*
-         * Prisma transaction automatically rolls back
-         * if an error is thrown inside $transaction().
-         */
-
         return res.status(400).json({
             success: false,
 
@@ -825,6 +786,11 @@ export async function createCompleteClient(
                 error instanceof Error
                     ? error.message
                     : "Unable to create complete client",
+
+            error:
+                error instanceof Error
+                    ? error.stack
+                    : String(error),
         });
     }
 }
@@ -835,10 +801,7 @@ export async function createCompleteClient(
 |--------------------------------------------------------------------------
 */
 
-export async function getClients(
-    req,
-    res
-) {
+export async function getClients(req, res) {
     try {
         let where = {};
 
@@ -884,7 +847,17 @@ export async function getClients(
             success: false,
 
             message:
-                "Unable to fetch clients",
+                error instanceof Error
+                    ? error.message
+                    : "Unable to fetch clients",
+
+            error:
+                error instanceof Error
+                    ? error.stack
+                    : String(error),
+
+            prismaCode:
+                error?.code || null,
         });
     }
 }
@@ -900,8 +873,7 @@ export async function getClientById(
     res
 ) {
     try {
-        const { id } =
-            req.params;
+        const { id } = req.params;
 
         const client =
             await getAccessibleClient(
@@ -938,7 +910,17 @@ export async function getClientById(
             success: false,
 
             message:
-                "Unable to fetch client",
+                error instanceof Error
+                    ? error.message
+                    : "Unable to fetch client",
+
+            error:
+                error instanceof Error
+                    ? error.stack
+                    : String(error),
+
+            prismaCode:
+                error?.code || null,
         });
     }
 }
@@ -954,8 +936,7 @@ export async function updateClient(
     res
 ) {
     try {
-        const { id } =
-            req.params;
+        const { id } = req.params;
 
         const validation =
             updateClientSchema.safeParse(
@@ -1058,6 +1039,9 @@ export async function updateClient(
                         status:
                             data.status,
                     }),
+
+                    processUpdatedAt:
+                        new Date(),
                 },
 
                 include:
@@ -1084,7 +1068,176 @@ export async function updateClient(
             success: false,
 
             message:
-                "Unable to update client",
+                error instanceof Error
+                    ? error.message
+                    : "Unable to update client",
+
+            error:
+                error instanceof Error
+                    ? error.stack
+                    : String(error),
+
+            prismaCode:
+                error?.code || null,
+        });
+    }
+}
+
+/*
+|--------------------------------------------------------------------------
+| UPDATE CLIENT PROCESS
+|--------------------------------------------------------------------------
+*/
+
+export async function updateClientProcess(
+    req,
+    res
+) {
+    try {
+        const { id } = req.params;
+
+        const existingClient =
+            await getAccessibleClient(
+                id,
+                req
+            );
+
+        if (!existingClient) {
+            return res.status(404).json({
+                success: false,
+
+                message:
+                    "Client not found",
+            });
+        }
+
+        const validation =
+            updateClientProcessSchema.safeParse(
+                req.body
+            );
+
+        if (!validation.success) {
+            return res.status(400).json({
+                success: false,
+
+                message:
+                    "Invalid client process data",
+
+                errors:
+                    validation.error.flatten(),
+            });
+        }
+
+        const {
+            processStage,
+            externalClientId,
+            fsoNumber,
+            fsoGeneratedAt,
+            psgaGeneratedAt,
+        } = validation.data;
+
+        const updateData = {
+            processStage,
+
+            processUpdatedAt:
+                new Date(),
+
+            ...(externalClientId !==
+                undefined && {
+                externalClientId:
+                    externalClientId ||
+                    null,
+            }),
+
+            ...(fsoNumber !==
+                undefined && {
+                fsoNumber:
+                    fsoNumber ||
+                    null,
+            }),
+
+            ...(fsoGeneratedAt !==
+                undefined && {
+                fsoGeneratedAt:
+                    fsoGeneratedAt
+                        ? new Date(
+                              fsoGeneratedAt
+                          )
+                        : null,
+            }),
+
+            ...(psgaGeneratedAt !==
+                undefined && {
+                psgaGeneratedAt:
+                    psgaGeneratedAt
+                        ? new Date(
+                              psgaGeneratedAt
+                          )
+                        : null,
+            }),
+        };
+
+        if (
+            processStage ===
+                "FSO_GENERATED" &&
+            fsoGeneratedAt === undefined
+        ) {
+            updateData.fsoGeneratedAt =
+                new Date();
+        }
+
+        if (
+            processStage ===
+                "PSGA_GENERATED" &&
+            psgaGeneratedAt === undefined
+        ) {
+            updateData.psgaGeneratedAt =
+                new Date();
+        }
+
+        const client =
+            await prisma.client.update({
+                where: {
+                    id,
+                },
+
+                data: updateData,
+
+                include:
+                    clientInclude(),
+            });
+
+        return res.status(200).json({
+            success: true,
+
+            message:
+                "Client process updated successfully",
+
+            data: {
+                client,
+            },
+        });
+    } catch (error) {
+        console.error(
+            "UPDATE CLIENT PROCESS ERROR:",
+            error
+        );
+
+        return res.status(500).json({
+            success: false,
+
+            message:
+                error instanceof Error
+                    ? error.message
+                    : "Unable to update client process",
+
+            error:
+                error instanceof Error
+                    ? error.stack
+                    : String(error),
+
+            prismaCode:
+                error?.code || null,
         });
     }
 }
@@ -1102,12 +1255,6 @@ export async function deleteClient(
     try {
         const { id } = req.params;
 
-        /*
-        |--------------------------------------------------------------------------
-        | ACCESS CHECK
-        |--------------------------------------------------------------------------
-        */
-
         const existingClient =
             await getAccessibleClient(
                 id,
@@ -1123,28 +1270,12 @@ export async function deleteClient(
             });
         }
 
-        /*
-        |--------------------------------------------------------------------------
-        | PERMANENT DELETE
-        |--------------------------------------------------------------------------
-        |
-        | Everything related to this client is
-        | removed inside ONE transaction.
-        |
-        */
-
         await prisma.$transaction(
             async (tx) => {
                 /*
                 |--------------------------------------------------------------------------
                 | 1. PRESERVE LEAD HISTORY
                 |--------------------------------------------------------------------------
-                |
-                | If this client came from a Lead,
-                | don't delete the Lead.
-                |
-                | Just remove the client reference.
-                |
                 */
 
                 await tx.lead.updateMany({
@@ -1175,11 +1306,13 @@ export async function deleteClient(
                 |--------------------------------------------------------------------------
                 */
 
-                await tx.clientServiceSelection.deleteMany({
-                    where: {
-                        clientId: id,
-                    },
-                });
+                await tx.clientServiceSelection.deleteMany(
+                    {
+                        where: {
+                            clientId: id,
+                        },
+                    }
+                );
 
                 /*
                 |--------------------------------------------------------------------------
@@ -1200,7 +1333,8 @@ export async function deleteClient(
 
                 const psgIds =
                     psgas.map(
-                        (psga) => psga.id
+                        (psga) =>
+                            psga.id
                     );
 
                 /*
@@ -1210,13 +1344,15 @@ export async function deleteClient(
                 */
 
                 if (psgIds.length > 0) {
-                    await tx.pSGAIncentiveAllocation.deleteMany({
-                        where: {
-                            psgId: {
-                                in: psgIds,
+                    await tx.pSGAIncentiveAllocation.deleteMany(
+                        {
+                            where: {
+                                psgId: {
+                                    in: psgIds,
+                                },
                             },
-                        },
-                    });
+                        }
+                    );
                 }
 
                 /*
@@ -1245,12 +1381,6 @@ export async function deleteClient(
             }
         );
 
-        /*
-        |--------------------------------------------------------------------------
-        | SUCCESS
-        |--------------------------------------------------------------------------
-        */
-
         return res.status(200).json({
             success: true,
 
@@ -1267,7 +1397,17 @@ export async function deleteClient(
             success: false,
 
             message:
-                "Unable to delete client",
+                error instanceof Error
+                    ? error.message
+                    : "Unable to delete client",
+
+            error:
+                error instanceof Error
+                    ? error.stack
+                    : String(error),
+
+            prismaCode:
+                error?.code || null,
         });
     }
 }
@@ -1298,8 +1438,7 @@ export async function assignClientBde(
             });
         }
 
-        const { id } =
-            req.params;
+        const { id } = req.params;
 
         const validation =
             assignClientBdeSchema.safeParse(
@@ -1322,13 +1461,11 @@ export async function assignClientBde(
             validation.data;
 
         const existingClient =
-            await prisma.client.findUnique(
-                {
-                    where: {
-                        id,
-                    },
-                }
-            );
+            await prisma.client.findUnique({
+                where: {
+                    id,
+                },
+            });
 
         if (!existingClient) {
             return res.status(404).json({
@@ -1392,6 +1529,9 @@ export async function assignClientBde(
                 data: {
                     assignedBdeId:
                         bde.id,
+
+                    processUpdatedAt:
+                        new Date(),
                 },
 
                 include:
@@ -1418,7 +1558,17 @@ export async function assignClientBde(
             success: false,
 
             message:
-                "Unable to assign client to BDE",
+                error instanceof Error
+                    ? error.message
+                    : "Unable to assign client to BDE",
+
+            error:
+                error instanceof Error
+                    ? error.stack
+                    : String(error),
+
+            prismaCode:
+                error?.code || null,
         });
     }
 }
@@ -1468,6 +1618,46 @@ export async function getClientStats(
                 },
             });
 
+        const clientCreated =
+            await prisma.client.count({
+                where: {
+                    ...where,
+
+                    processStage:
+                        "CLIENT_CREATED",
+                },
+            });
+
+        const fsoGenerated =
+            await prisma.client.count({
+                where: {
+                    ...where,
+
+                    processStage:
+                        "FSO_GENERATED",
+                },
+            });
+
+        const psgaGenerated =
+            await prisma.client.count({
+                where: {
+                    ...where,
+
+                    processStage:
+                        "PSGA_GENERATED",
+                },
+            });
+
+        const psgaCompleted =
+            await prisma.client.count({
+                where: {
+                    ...where,
+
+                    processStage:
+                        "PSGA_COMPLETED",
+                },
+            });
+
         return res.status(200).json({
             success: true,
 
@@ -1480,6 +1670,16 @@ export async function getClientStats(
                 activeClients,
 
                 inactiveClients,
+
+                process: {
+                    clientCreated,
+
+                    fsoGenerated,
+
+                    psgaGenerated,
+
+                    psgaCompleted,
+                },
             },
         });
     } catch (error) {
@@ -1492,7 +1692,17 @@ export async function getClientStats(
             success: false,
 
             message:
-                "Unable to fetch client statistics",
+                error instanceof Error
+                    ? error.message
+                    : "Unable to fetch client statistics",
+
+            error:
+                error instanceof Error
+                    ? error.stack
+                    : String(error),
+
+            prismaCode:
+                error?.code || null,
         });
     }
 }

@@ -1,12 +1,50 @@
 "use client";
 
-import React, { useEffect, useState, use } from "react";
+import React, { use, useEffect, useState } from "react";
 import Link from "next/link";
 import Breadcrumb from "@/components/breadcrumb/Breadcrumb";
 import LeadForm from "@/components/leads/LeadForm";
 import { leadService } from "@/services/leadService";
 import { LeadItem } from "@/types/lead";
 import Button from "@/components/ui/Button";
+
+interface StoredUser {
+  role?: string | { name?: string };
+  roleName?: string;
+}
+
+function getCurrentRole(): string {
+  if (typeof window === "undefined") {
+    return "";
+  }
+
+  try {
+    const rawUser = localStorage.getItem("nleta_user");
+
+    if (!rawUser) {
+      return "";
+    }
+
+    const user = JSON.parse(rawUser) as StoredUser;
+
+    if (typeof user.role === "string") {
+      return user.role;
+    }
+
+    if (
+      user.role &&
+      typeof user.role === "object" &&
+      typeof user.role.name === "string"
+    ) {
+      return user.role.name;
+    }
+
+    return user.roleName || "";
+  } catch (error) {
+    console.error("Failed to read current user:", error);
+    return "";
+  }
+}
 
 export default function EditLeadPage({
   params,
@@ -19,29 +57,57 @@ export default function EditLeadPage({
   const [lead, setLead] = useState<LeadItem | null>(null);
   const [loading, setLoading] = useState(true);
   const [notFound, setNotFound] = useState(false);
+  const [currentRole, setCurrentRole] = useState("");
+
+  const isBde = currentRole === "BDE/Sales";
+
+  const leadsPath = isBde ? "/bde/leads" : "/leads";
+  const dashboardPath = isBde ? "/bde/dashboard" : "/dashboard";
+  const portalLabel = isBde ? "BDE / Sales" : "Admin Portal";
 
   useEffect(() => {
+    setCurrentRole(getCurrentRole());
+  }, []);
+
+  useEffect(() => {
+    let cancelled = false;
+
     async function fetchLead() {
       try {
         setLoading(true);
+        setNotFound(false);
 
         const data = await leadService.getLeadById(leadId);
 
+        if (cancelled) {
+          return;
+        }
+
         if (data) {
           setLead(data);
-          setNotFound(false);
         } else {
+          setLead(null);
           setNotFound(true);
         }
-      } catch (err) {
-        console.error("Error fetching lead:", err);
-        setNotFound(true);
+      } catch (error) {
+        console.error("Error fetching lead:", error);
+
+        if (!cancelled) {
+          setLead(null);
+          setNotFound(true);
+        }
       } finally {
-        setLoading(false);
+        if (!cancelled) {
+          setLoading(false);
+        }
       }
     }
 
     fetchLead();
+
+    return () => {
+      cancelled = true;
+    };
   }, [leadId]);
 
   if (loading) {
@@ -56,7 +122,7 @@ export default function EditLeadPage({
         </div>
 
         <p className="text-sm font-medium text-gray-500 dark:text-gray-400">
-          Loading lead record details...
+          Loading lead details...
         </p>
       </div>
     );
@@ -68,8 +134,8 @@ export default function EditLeadPage({
         <Breadcrumb
           pageTitle="Lead Not Found"
           items={[
-            { label: "Admin Portal", href: "/dashboard" },
-            { label: "Leads", href: "/leads" },
+            { label: portalLabel, href: dashboardPath },
+            { label: "Leads", href: leadsPath },
             { label: "Not Found" },
           ]}
         />
@@ -92,17 +158,17 @@ export default function EditLeadPage({
           </div>
 
           <h2 className="text-xl font-bold text-gray-900 dark:text-white">
-            Lead Record &ldquo;{leadId}&rdquo; Does Not Exist
+            Lead Not Found
           </h2>
 
           <p className="mx-auto mt-1 max-w-md text-sm text-gray-500 dark:text-gray-400">
-            The lead you are trying to edit may have been removed or the ID in
-            the URL is incorrect.
+            This lead may have been removed or the ID in the URL may be
+            incorrect.
           </p>
 
-          <div className="mt-6 flex justify-center gap-3">
-            <Link href="/leads">
-              <Button variant="primary">Return to Leads List</Button>
+          <div className="mt-6 flex justify-center">
+            <Link href={leadsPath}>
+              <Button variant="primary">Back to Leads</Button>
             </Link>
           </div>
         </div>
@@ -113,14 +179,14 @@ export default function EditLeadPage({
   return (
     <div className="space-y-6">
       <Breadcrumb
-        pageTitle={`Edit Lead: ${lead.associationName} (${lead.id})`}
+        pageTitle={`Edit Lead: ${lead.associationName}`}
         items={[
-          { label: "Admin Portal", href: "/dashboard" },
-          { label: "Leads Pipeline", href: "/leads" },
+          { label: portalLabel, href: dashboardPath },
+          { label: "Leads", href: leadsPath },
           { label: `Edit ${lead.id}` },
         ]}
         actions={
-          <Link href="/leads">
+          <Link href={leadsPath}>
             <Button
               variant="outline"
               size="sm"
@@ -144,7 +210,7 @@ export default function EditLeadPage({
         }
       />
 
-      <LeadForm initialLead={lead} isEdit={true} />
+      <LeadForm initialLead={lead} isEdit />
     </div>
   );
 }

@@ -13,6 +13,13 @@ export type ClientContractStatus =
   | "Expired"
   | "Onboarding";
 
+// Client process tracking
+export type ClientProcessStage =
+  | "CLIENT_CREATED"
+  | "FSO_GENERATED"
+  | "PSGA_GENERATED"
+  | "PSGA_COMPLETED";
+
 export interface ClientItem {
   id: string;
 
@@ -28,7 +35,7 @@ export interface ClientItem {
   city: string;
   state: string;
 
-  // ✅ Added
+  // Added
   pincode?: string;
 
   totalAssetsCount: number;
@@ -51,6 +58,19 @@ export interface ClientItem {
   nextAuditDate?: string;
 
   notes?: string;
+
+  // Client Process Tracking
+  processStage?: ClientProcessStage;
+
+  externalClientId?: string;
+
+  fsoNumber?: string;
+
+  fsoGeneratedAt?: string;
+
+  psgaGeneratedAt?: string;
+
+  processUpdatedAt?: string;
 }
 
 export type CreateClientInput =
@@ -83,6 +103,14 @@ export interface ClientStats {
     ClientContractStatus,
     number
   >;
+
+  // Client Process Tracking Stats
+  process?: {
+    clientCreated: number;
+    fsoGenerated: number;
+    psgaGenerated: number;
+    psgaCompleted: number;
+  };
 }
 
 export interface ClientFilterOptions {

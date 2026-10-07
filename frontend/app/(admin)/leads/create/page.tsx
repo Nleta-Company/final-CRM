@@ -8,18 +8,18 @@ export default function CreateLeadPage() {
   return (
     <div className="space-y-6">
       <Breadcrumb
-        pageTitle="Register New Lead"
+        pageTitle="Create New Lead"
         items={[
           {
-            label: "BDE / Sales",
-            href: "/bde/dashboard",
+            label: "Admin",
+            href: "/dashboard",
           },
           {
-            label: "My Leads",
+            label: "Leads",
             href: "/leads",
           },
           {
-            label: "New Lead Registration",
+            label: "Create Lead",
           },
         ]}
       />

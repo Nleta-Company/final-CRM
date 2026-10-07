@@ -42,3 +42,5 @@ prisma/*.db
 prisma/*.db-journal
 
 .env
+
+nleta_crm_backup.dump
