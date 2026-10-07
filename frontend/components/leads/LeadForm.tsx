@@ -1935,17 +1935,6 @@ export default function LeadForm({
         }
       }
 
-      if (
-        userIsBde &&
-        assignedToId
-      ) {
-        setErrorMessage(
-          "BDE/Sales users cannot manually assign leads to another user."
-        );
-
-        return false;
-      }
-
       // Same service can be selected multiple times
       // for the same lead. Backend now creates a
       // separate lead-service selection record for
@@ -2276,6 +2265,9 @@ export default function LeadForm({
         // ----------------------------------------------------
         // ADMIN BDE ASSIGNMENT
         // ----------------------------------------------------
+        // Only Admin can change lead assignment.
+        // BDE edit requests do not send assignedToId,
+        // so the existing BDE assignment remains unchanged.
 
         if (
           userIsAdmin &&
@@ -2296,17 +2288,6 @@ export default function LeadForm({
         ) {
           throw new Error(
             "BDE unassignment is not available from the current CRM API. Please keep the existing BDE assignment."
-          );
-        }
-
-        if (
-          userIsBde &&
-          assignedToId &&
-          assignedToId !==
-          initialLead.assignedToId
-        ) {
-          throw new Error(
-            "BDE/Sales users cannot reassign a lead to another BDE."
           );
         }
 

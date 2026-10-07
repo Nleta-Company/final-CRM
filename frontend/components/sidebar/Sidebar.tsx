@@ -2,7 +2,6 @@
 
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
-import Image from "next/image";
 import { usePathname } from "next/navigation";
 
 export interface NavItem {
@@ -282,6 +281,33 @@ export default function Sidebar({
           ],
         },
 
+        // ======================================================
+        // INCENTIVES
+        // ======================================================
+
+        {
+          id: "incentives",
+          label: "Incentives",
+          href: "/incentives",
+          badge: {
+            text: "PSGA",
+            variant: "pro",
+          },
+          icon: (
+            <svg
+              className="w-5 h-5 fill-current"
+              viewBox="0 0 20 20"
+              fill="none"
+            >
+              <path
+                fillRule="evenodd"
+                d="M10 1.667a8.333 8.333 0 100 16.666 8.333 8.333 0 000-16.666zM10 5a.833.833 0 01.833.833v.834h.834a.833.833 0 110 1.666h-.834V10h.834a.833.833 0 110 1.667h-.834v.833a.833.833 0 11-1.666 0v-.833H8.333a.833.833 0 110-1.667h.834v-1.666H8.333a.833.833 0 110-1.667h.834v-.834A.833.833 0 0110 5z"
+                clipRule="evenodd"
+              />
+            </svg>
+          ),
+        },
+
         {
           id: "analytics",
           label: "Business Analysis",
@@ -504,90 +530,110 @@ export default function Sidebar({
                         {/* Collapsible Children Accordion */}
                         {!collapsed && isSubOpen && (
                           <ul className="mt-1 space-y-1 pl-9 pr-1">
-                            {item.children?.map((child) => {
-                              const isSubItemActive =
-                                child.href
-                                  ? pathname === child.href
-                                  : activeItem === child.id;
+                            {item.children?.map(
+                              (child) => {
+                                const isSubItemActive =
+                                  child.href
+                                    ? pathname ===
+                                      child.href
+                                    : activeItem ===
+                                      child.id;
 
-                              return (
-                                <li key={child.id}>
-                                  {child.href &&
-                                  child.href.startsWith("/") ? (
-                                    <Link
-                                      href={child.href}
-                                      onClick={() => {
-                                        if (
-                                          typeof window !==
-                                            "undefined" &&
-                                          window.innerWidth <
-                                            1024
-                                        ) {
-                                          setSidebarOpen(false);
-                                        }
-                                      }}
-                                      className={`flex items-center justify-between rounded-lg px-3 py-2 text-xs font-medium transition-colors ${
-                                        isSubItemActive
-                                          ? "bg-brand-500 text-white font-semibold shadow-theme-xs"
-                                          : "text-gray-600 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-400 dark:hover:bg-gray-800 dark:hover:text-white"
-                                      }`}
-                                    >
-                                      <span>
-                                        {child.label}
-                                      </span>
-
-                                      {child.badge && (
-                                        <span
-                                          className={`rounded px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wider ${
-                                            isSubItemActive
-                                              ? "bg-white/20 text-white"
-                                              : "bg-brand-50 text-brand-600 dark:bg-brand-500/20 dark:text-brand-400"
-                                          }`}
-                                        >
-                                          {child.badge}
-                                        </span>
-                                      )}
-                                    </Link>
-                                  ) : (
-                                    <a
-                                      href={
-                                        child.href ||
-                                        `#${child.id}`
-                                      }
-                                      onClick={(e) => {
-                                        e.preventDefault();
-
-                                        handleItemClick(
-                                          child.id,
+                                return (
+                                  <li
+                                    key={child.id}
+                                  >
+                                    {child.href &&
+                                    child.href.startsWith(
+                                      "/"
+                                    ) ? (
+                                      <Link
+                                        href={
                                           child.href
-                                        );
-                                      }}
-                                      className={`flex items-center justify-between rounded-lg px-3 py-2 text-xs font-medium transition-colors ${
-                                        isSubItemActive
-                                          ? "bg-brand-500 text-white font-semibold shadow-theme-xs"
-                                          : "text-gray-600 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-400 dark:hover:bg-gray-800 dark:hover:text-white"
-                                      }`}
-                                    >
-                                      <span>
-                                        {child.label}
-                                      </span>
-
-                                      {child.badge && (
-                                        <span
-                                          className={`rounded px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wider ${
-                                            isSubItemActive
-                                              ? "bg-white/20 text-white"
-                                              : "bg-brand-50 text-brand-600 dark:bg-brand-500/20 dark:text-brand-400"
-                                          }`}
-                                        >
-                                          {child.badge}
+                                        }
+                                        onClick={() => {
+                                          if (
+                                            typeof window !==
+                                              "undefined" &&
+                                            window.innerWidth <
+                                              1024
+                                          ) {
+                                            setSidebarOpen(
+                                              false
+                                            );
+                                          }
+                                        }}
+                                        className={`flex items-center justify-between rounded-lg px-3 py-2 text-xs font-medium transition-colors ${
+                                          isSubItemActive
+                                            ? "bg-brand-500 text-white font-semibold shadow-theme-xs"
+                                            : "text-gray-600 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-400 dark:hover:bg-gray-800 dark:hover:text-white"
+                                        }`}
+                                      >
+                                        <span>
+                                          {
+                                            child.label
+                                          }
                                         </span>
-                                      )}
-                                    </a>
-                                  )}
-                                </li>
-                              );
-                            })}
+
+                                        {child.badge && (
+                                          <span
+                                            className={`rounded px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wider ${
+                                              isSubItemActive
+                                                ? "bg-white/20 text-white"
+                                                : "bg-brand-50 text-brand-600 dark:bg-brand-500/20 dark:text-brand-400"
+                                            }`}
+                                          >
+                                            {
+                                              child.badge
+                                            }
+                                          </span>
+                                        )}
+                                      </Link>
+                                    ) : (
+                                      <a
+                                        href={
+                                          child.href ||
+                                          `#${child.id}`
+                                        }
+                                        onClick={(e) => {
+                                          e.preventDefault();
+
+                                          handleItemClick(
+                                            child.id,
+                                            child.href
+                                          );
+                                        }}
+                                        className={`flex items-center justify-between rounded-lg px-3 py-2 text-xs font-medium transition-colors ${
+                                          isSubItemActive
+                                            ? "bg-brand-500 text-white font-semibold shadow-theme-xs"
+                                            : "text-gray-600 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-400 dark:hover:bg-gray-800 dark:hover:text-white"
+                                        }`}
+                                      >
+                                        <span>
+                                          {
+                                            child.label
+                                          }
+                                        </span>
+
+                                        {child.badge && (
+                                          <span
+                                            className={`rounded px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wider ${
+                                              isSubItemActive
+                                                ? "bg-white/20 text-white"
+                                                : "bg-brand-50 text-brand-600 dark:bg-brand-500/20 dark:text-brand-400"
+                                            }`}
+                                          >
+                                            {
+                                              child.badge
+                                            }
+                                          </span>
+                                        )}
+                                      </a>
+                                    )}
+                                  </li>
+                                );
+                              }
+                            )}
                           </ul>
                         )}
                       </li>
@@ -607,7 +653,8 @@ export default function Sidebar({
                             if (
                               typeof window !==
                                 "undefined" &&
-                              window.innerWidth < 1024
+                              window.innerWidth <
+                                1024
                             ) {
                               setSidebarOpen(false);
                             }
@@ -658,7 +705,9 @@ export default function Sidebar({
                                     : "bg-gray-100 text-gray-700 dark:bg-gray-800 dark:text-gray-300"
                                 }`}
                               >
-                                {item.badge.text}
+                                {
+                                  item.badge.text
+                                }
                               </span>
                             )}
                         </Link>

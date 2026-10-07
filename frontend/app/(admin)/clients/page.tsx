@@ -8,7 +8,10 @@ import Breadcrumb from "@/components/breadcrumb/Breadcrumb";
 import MetricCard from "@/components/metrics/MetricCard";
 import DynamicTable, { Column } from "@/components/tables/DynamicTable";
 import Button from "@/components/ui/Button";
-import { ClientItem } from "@/types/client";
+import {
+  ClientItem,
+  ClientProcessStage,
+} from "@/types/client";
 
 interface BackendClientStats {
   totalClients: number;
@@ -51,8 +54,6 @@ interface BackendClient {
     status: string;
   } | null;
 
-  // These are used when the backend starts returning
-  // complete client portfolio information.
   totalAssetsCount?: number | null;
   contractValue?: string | null;
   numericContractValue?: number | null;
@@ -62,6 +63,14 @@ interface BackendClient {
   joinedDate?: string | null;
   nextAuditDate?: string | null;
   notes?: string | null;
+
+  // Process tracking
+  processStage?: ClientProcessStage | null;
+  externalClientId?: string | null;
+  fsoNumber?: string | null;
+  fsoGeneratedAt?: string | null;
+  psgaGeneratedAt?: string | null;
+  processUpdatedAt?: string | null;
 }
 
 interface ClientRow extends ClientItem {
@@ -76,6 +85,14 @@ interface ClientRow extends ClientItem {
   createdAtRaw: string;
   updatedAtRaw: string;
   backendClientType: string;
+
+  // Process tracking
+  processStage: ClientProcessStage;
+  externalClientId: string;
+  fsoNumber: string;
+  fsoGeneratedAt: string;
+  psgaGeneratedAt: string;
+  processUpdatedAt: string;
 }
 
 interface ClientsApiResponse {
@@ -168,9 +185,7 @@ function mapContractStatus(
     return "Under Audit";
   }
 
-  if (
-    value === "ONBOARDING"
-  ) {
+  if (value === "ONBOARDING") {
     return "Onboarding";
   }
 
@@ -211,6 +226,58 @@ function getStatusBadge(status: string) {
   }
 }
 
+function getProcessStageLabel(
+  stage?: ClientProcessStage | null
+): string {
+  switch (stage) {
+    case "CLIENT_CREATED":
+      return "Client Created";
+
+    case "FSO_GENERATED":
+      return "FSO Generated";
+
+    case "PSGA_GENERATED":
+      return "PSGA Generated";
+
+    case "PSGA_COMPLETED":
+      return "PSGA Completed";
+
+    default:
+      return "Client Created";
+  }
+}
+
+function getProcessStageBadge(
+  stage?: ClientProcessStage | null
+) {
+  switch (stage) {
+    case "FSO_GENERATED":
+      return {
+        bg: "bg-blue-50 text-blue-700 border-blue-200 dark:bg-blue-500/15 dark:text-blue-400 dark:border-blue-800/40",
+        dot: "bg-blue-500",
+      };
+
+    case "PSGA_GENERATED":
+      return {
+        bg: "bg-violet-50 text-violet-700 border-violet-200 dark:bg-violet-500/15 dark:text-violet-400 dark:border-violet-800/40",
+        dot: "bg-violet-500",
+      };
+
+    case "PSGA_COMPLETED":
+      return {
+        bg: "bg-emerald-50 text-emerald-700 border-emerald-200 dark:bg-emerald-500/15 dark:text-emerald-400 dark:border-emerald-800/40",
+        dot: "bg-emerald-500",
+      };
+
+    case "CLIENT_CREATED":
+    default:
+      return {
+        bg: "bg-gray-100 text-gray-700 border-gray-200 dark:bg-gray-800 dark:text-gray-300 dark:border-gray-700",
+        dot: "bg-gray-400",
+      };
+  }
+}
+
 function DetailRow({
   label,
   value,
@@ -223,6 +290,7 @@ function DetailRow({
       <p className="text-[11px] font-medium uppercase tracking-wide text-gray-400">
         {label}
       </p>
+
       <p className="mt-1 break-words text-sm font-semibold text-gray-800 dark:text-white">
         {value || "Not available"}
       </p>
@@ -234,15 +302,21 @@ export default function ClientsViewPage() {
   const router = useRouter();
 
   const [clients, setClients] = useState<ClientRow[]>([]);
-  const [stats, setStats] = useState<BackendClientStats | null>(null);
+  const [stats, setStats] =
+    useState<BackendClientStats | null>(null);
+
   const [selectedClient, setSelectedClient] =
     useState<ClientRow | null>(null);
+
   const [clientToDelete, setClientToDelete] =
     useState<ClientRow | null>(null);
+
   const [toastMessage, setToastMessage] =
     useState<string | null>(null);
+
   const [quickStatusFilter, setQuickStatusFilter] =
     useState<string>("ALL");
+
   const [loading, setLoading] = useState(true);
 
   const API_BASE_URL = (
@@ -424,6 +498,26 @@ export default function ClientsViewPage() {
       backendClientType:
         client.clientType ||
         "Association",
+
+      // Process tracking
+      processStage:
+        client.processStage ||
+        "CLIENT_CREATED",
+
+      externalClientId:
+        client.externalClientId || "",
+
+      fsoNumber:
+        client.fsoNumber || "",
+
+      fsoGeneratedAt:
+        client.fsoGeneratedAt || "",
+
+      psgaGeneratedAt:
+        client.psgaGeneratedAt || "",
+
+      processUpdatedAt:
+        client.processUpdatedAt || "",
     };
   };
 
@@ -613,6 +707,7 @@ export default function ClientsViewPage() {
           <p className="truncate font-semibold text-gray-900 dark:text-white">
             {row.companyName}
           </p>
+
           <span className="text-[11px] text-gray-400">
             {row.backendClientType}
           </span>
@@ -680,10 +775,47 @@ export default function ClientsViewPage() {
             <span
               className={`h-1.5 w-1.5 rounded-full ${badge.dot}`}
             />
+
             <span>
               {row.contractStatus}
             </span>
           </span>
+        );
+      },
+    },
+
+    // NEW: Process Stage
+    {
+      key: "processStage",
+      header: "Process Stage",
+      sortable: true,
+      render: (row) => {
+        const badge =
+          getProcessStageBadge(
+            row.processStage
+          );
+
+        return (
+          <div className="min-w-[150px]">
+            <span
+              className={`inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-xs font-semibold ${badge.bg}`}
+            >
+              <span
+                className={`h-1.5 w-1.5 rounded-full ${badge.dot}`}
+              />
+
+              {getProcessStageLabel(
+                row.processStage
+              )}
+            </span>
+
+            {row.processStage ===
+              "PSGA_COMPLETED" && (
+              <p className="mt-1 text-[10px] font-semibold text-emerald-600 dark:text-emerald-400">
+                Incentive Eligible
+              </p>
+            )}
+          </div>
         );
       },
     },
@@ -764,6 +896,7 @@ export default function ClientsViewPage() {
                 strokeLinejoin="round"
                 d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
               />
+
               <path
                 strokeLinecap="round"
                 strokeLinejoin="round"
@@ -908,7 +1041,7 @@ export default function ClientsViewPage() {
                 className="h-6 w-6 fill-current text-blue-600 dark:text-blue-400"
                 viewBox="0 0 24 24"
               >
-                <path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z" />
+                <path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.89-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z" />
               </svg>
             }
           />
@@ -926,7 +1059,7 @@ export default function ClientsViewPage() {
                 className="h-6 w-6 fill-current text-gray-600 dark:text-gray-400"
                 viewBox="0 0 24 24"
               >
-                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.59 13.17L15.17 16.59 12 13.41l-3.17 3.18-1.42-1.42L10.59 12 7.41 8.83l1.42-1.42L12 10.59l3.17-3.18 1.42 1.42L13.41 12l3.18 3.17z" />
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.59 13.17L15.17 16.59 12 13.41l-3.17 3.18-3.18-3.17 1.42-1.42L10.59 12 7.41 8.83l1.42-1.42L12 10.59l3.17-3.18 1.42 1.42L13.41 12l3.18 3.17z" />
               </svg>
             }
           />
@@ -1116,6 +1249,7 @@ export default function ClientsViewPage() {
                         ).dot
                       }`}
                     />
+
                     {selectedClient.contractStatus}
                   </span>
                 </div>
@@ -1258,6 +1392,154 @@ export default function ClientsViewPage() {
                     value={formatDate(
                       selectedClient.joinedDate
                     )}
+                  />
+                </div>
+              </div>
+
+              {/* NEW: PROCESS TRACKING */}
+              <div className="mb-5">
+                <div className="mb-2 flex flex-wrap items-center justify-between gap-2">
+                  <h4 className="text-sm font-bold text-gray-900 dark:text-white">
+                    Process Tracking
+                  </h4>
+
+                  {selectedClient.processStage ===
+                    "PSGA_COMPLETED" && (
+                    <span className="inline-flex items-center gap-1.5 rounded-full border border-emerald-200 bg-emerald-50 px-2.5 py-1 text-xs font-semibold text-emerald-700 dark:border-emerald-800/40 dark:bg-emerald-500/15 dark:text-emerald-400">
+                      <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
+                      Incentive Eligible
+                    </span>
+                  )}
+                </div>
+
+                <div className="mb-4 rounded-xl border border-gray-100 bg-gray-50 p-4 dark:border-gray-800 dark:bg-gray-800/40">
+                  <div className="flex flex-wrap items-center gap-2">
+                    {(
+                      [
+                        "CLIENT_CREATED",
+                        "FSO_GENERATED",
+                        "PSGA_GENERATED",
+                        "PSGA_COMPLETED",
+                      ] as ClientProcessStage[]
+                    ).map((stage, index) => {
+                      const stageIndex = [
+                        "CLIENT_CREATED",
+                        "FSO_GENERATED",
+                        "PSGA_GENERATED",
+                        "PSGA_COMPLETED",
+                      ].indexOf(
+                        selectedClient.processStage
+                      );
+
+                      const completed =
+                        index <= stageIndex;
+
+                      return (
+                        <React.Fragment key={stage}>
+                          <div
+                            className={`inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-[11px] font-semibold ${
+                              completed
+                                ? "border-brand-200 bg-brand-50 text-brand-700 dark:border-brand-800/40 dark:bg-brand-500/15 dark:text-brand-400"
+                                : "border-gray-200 bg-white text-gray-400 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-500"
+                            }`}
+                          >
+                            <span
+                              className={`h-1.5 w-1.5 rounded-full ${
+                                completed
+                                  ? "bg-brand-500"
+                                  : "bg-gray-300 dark:bg-gray-600"
+                              }`}
+                            />
+
+                            {getProcessStageLabel(
+                              stage
+                            )}
+                          </div>
+
+                          {index < 3 && (
+                            <span className="text-gray-300 dark:text-gray-600">
+                              →
+                            </span>
+                          )}
+                        </React.Fragment>
+                      );
+                    })}
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
+                  <DetailRow
+                    label="Current Stage"
+                    value={
+                      <span
+                        className={`inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-xs font-semibold ${
+                          getProcessStageBadge(
+                            selectedClient.processStage
+                          ).bg
+                        }`}
+                      >
+                        <span
+                          className={`h-1.5 w-1.5 rounded-full ${
+                            getProcessStageBadge(
+                              selectedClient.processStage
+                            ).dot
+                          }`}
+                        />
+
+                        {getProcessStageLabel(
+                          selectedClient.processStage
+                        )}
+                      </span>
+                    }
+                  />
+
+                  <DetailRow
+                    label="External Client ID"
+                    value={
+                      selectedClient.externalClientId ||
+                      "Not available"
+                    }
+                  />
+
+                  <DetailRow
+                    label="FSO Number"
+                    value={
+                      selectedClient.fsoNumber ||
+                      "Not generated"
+                    }
+                  />
+
+                  <DetailRow
+                    label="FSO Generated At"
+                    value={
+                      selectedClient.fsoGeneratedAt
+                        ? formatDate(
+                            selectedClient.fsoGeneratedAt
+                          )
+                        : "Not available"
+                    }
+                  />
+
+                  <DetailRow
+                    label="PSGA Generated At"
+                    value={
+                      selectedClient.psgaGeneratedAt
+                        ? formatDate(
+                            selectedClient.psgaGeneratedAt
+                          )
+                        : "Not available"
+                    }
+                  />
+
+                  <DetailRow
+                    label="Process Updated At"
+                    value={
+                      selectedClient.processUpdatedAt
+                        ? formatDate(
+                            selectedClient.processUpdatedAt
+                          )
+                        : "Not available"
+                    }
                   />
                 </div>
               </div>
@@ -1436,12 +1718,10 @@ export default function ClientsViewPage() {
             </h3>
 
             <p className="mt-2 text-xs text-gray-500">
-              Permanently delete
-              {" "}
+              Permanently delete{" "}
               &ldquo;
               {clientToDelete.companyName}
-              &rdquo;
-              {" "}
+              &rdquo;{" "}
               (
               {clientToDelete.id}
               )?

@@ -44,22 +44,63 @@ function getRoleName(
 }
 
 function formatRole(role: string): string {
-  switch (role) {
-    case "BDE/Sales":
+  const normalizedRole = role.trim().toUpperCase();
+
+  switch (normalizedRole) {
+    case "BDE/SALES":
+    case "BDE":
+    case "SALES":
+    case "BDE_SALES":
       return "BDE / Sales";
 
-    case "Admin":
+    case "ADMIN":
       return "Administrator";
 
-    case "Client":
+    case "CLIENT":
+    case "OWNER":
       return "Client";
 
     case "SUB_ADMIN":
-    case "Sub Admin":
+    case "SUB ADMIN":
+    case "SUB-ADMIN":
+    case "SUBADMIN":
       return "Sub Administrator";
 
     default:
       return role || "User";
+  }
+}
+
+/*
+ * --------------------------------------------------
+ * GET PROFILE PATH ACCORDING TO LOGGED-IN ROLE
+ * --------------------------------------------------
+ */
+function getProfilePath(role: string): string {
+  const normalizedRole = role.trim().toUpperCase();
+
+  switch (normalizedRole) {
+    case "ADMIN":
+      return "/profile";
+
+    case "BDE":
+    case "SALES":
+    case "BDE/SALES":
+    case "BDE_SALES":
+      return "/bde/profile";
+
+    case "SUB_ADMIN":
+    case "SUB ADMIN":
+    case "SUB-ADMIN":
+    case "SUBADMIN":
+      return "/sub-admin/profile";
+
+    case "CLIENT":
+    case "OWNER":
+      return "/owner/profile";
+
+    default:
+      return "/profile";
   }
 }
 
@@ -184,6 +225,15 @@ export default function UserDropdown({
 
   /*
    * --------------------------------------------------
+   * PROFILE PATH
+   * --------------------------------------------------
+   */
+
+  const profilePath =
+    getProfilePath(actualRole);
+
+  /*
+   * --------------------------------------------------
    * CLOSE DROPDOWN ON OUTSIDE CLICK
    * --------------------------------------------------
    */
@@ -242,8 +292,8 @@ export default function UserDropdown({
             Accept: "application/json",
             ...(token
               ? {
-                Authorization: `Bearer ${token}`,
-              }
+                  Authorization: `Bearer ${token}`,
+                }
               : {}),
           },
         }
@@ -304,10 +354,11 @@ export default function UserDropdown({
 
         {/* Arrow */}
         <svg
-          className={`hidden h-4 w-4 text-gray-400 transition-transform lg:block ${isOpen
+          className={`hidden h-4 w-4 text-gray-400 transition-transform lg:block ${
+            isOpen
               ? "rotate-180"
               : ""
-            }`}
+          }`}
           viewBox="0 0 20 20"
           fill="currentColor"
         >
@@ -343,7 +394,7 @@ export default function UserDropdown({
               type="button"
               onClick={() => {
                 setIsOpen(false);
-                router.push("/bde/profile");
+                router.push(profilePath);
               }}
               className="flex w-full items-center gap-2.5 rounded-lg px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-white/5"
             >

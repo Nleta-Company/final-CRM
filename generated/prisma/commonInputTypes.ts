@@ -372,13 +372,6 @@ export type EnumIncentiveStatusWithAggregatesFilter<$PrismaModel = never> = {
   _max?: Prisma.NestedEnumIncentiveStatusFilter<$PrismaModel>
 }
 
-export type EnumIncentiveRoleFilter<$PrismaModel = never> = {
-  equals?: $Enums.IncentiveRole | Prisma.EnumIncentiveRoleFieldRefInput<$PrismaModel>
-  in?: $Enums.IncentiveRole[] | Prisma.ListEnumIncentiveRoleFieldRefInput<$PrismaModel>
-  notIn?: $Enums.IncentiveRole[] | Prisma.ListEnumIncentiveRoleFieldRefInput<$PrismaModel>
-  not?: Prisma.NestedEnumIncentiveRoleFilter<$PrismaModel> | $Enums.IncentiveRole
-}
-
 export type EnumIncentiveRecipientTypeFilter<$PrismaModel = never> = {
   equals?: $Enums.IncentiveRecipientType | Prisma.EnumIncentiveRecipientTypeFieldRefInput<$PrismaModel>
   in?: $Enums.IncentiveRecipientType[] | Prisma.ListEnumIncentiveRecipientTypeFieldRefInput<$PrismaModel>
@@ -386,14 +379,11 @@ export type EnumIncentiveRecipientTypeFilter<$PrismaModel = never> = {
   not?: Prisma.NestedEnumIncentiveRecipientTypeFilter<$PrismaModel> | $Enums.IncentiveRecipientType
 }
 
-export type EnumIncentiveRoleWithAggregatesFilter<$PrismaModel = never> = {
+export type EnumIncentiveRoleFilter<$PrismaModel = never> = {
   equals?: $Enums.IncentiveRole | Prisma.EnumIncentiveRoleFieldRefInput<$PrismaModel>
   in?: $Enums.IncentiveRole[] | Prisma.ListEnumIncentiveRoleFieldRefInput<$PrismaModel>
   notIn?: $Enums.IncentiveRole[] | Prisma.ListEnumIncentiveRoleFieldRefInput<$PrismaModel>
-  not?: Prisma.NestedEnumIncentiveRoleWithAggregatesFilter<$PrismaModel> | $Enums.IncentiveRole
-  _count?: Prisma.NestedIntFilter<$PrismaModel>
-  _min?: Prisma.NestedEnumIncentiveRoleFilter<$PrismaModel>
-  _max?: Prisma.NestedEnumIncentiveRoleFilter<$PrismaModel>
+  not?: Prisma.NestedEnumIncentiveRoleFilter<$PrismaModel> | $Enums.IncentiveRole
 }
 
 export type EnumIncentiveRecipientTypeWithAggregatesFilter<$PrismaModel = never> = {
@@ -404,6 +394,16 @@ export type EnumIncentiveRecipientTypeWithAggregatesFilter<$PrismaModel = never>
   _count?: Prisma.NestedIntFilter<$PrismaModel>
   _min?: Prisma.NestedEnumIncentiveRecipientTypeFilter<$PrismaModel>
   _max?: Prisma.NestedEnumIncentiveRecipientTypeFilter<$PrismaModel>
+}
+
+export type EnumIncentiveRoleWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.IncentiveRole | Prisma.EnumIncentiveRoleFieldRefInput<$PrismaModel>
+  in?: $Enums.IncentiveRole[] | Prisma.ListEnumIncentiveRoleFieldRefInput<$PrismaModel>
+  notIn?: $Enums.IncentiveRole[] | Prisma.ListEnumIncentiveRoleFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumIncentiveRoleWithAggregatesFilter<$PrismaModel> | $Enums.IncentiveRole
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumIncentiveRoleFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumIncentiveRoleFilter<$PrismaModel>
 }
 
 export type EnumIncentivePayoutStatusFilter<$PrismaModel = never> = {
@@ -794,13 +794,6 @@ export type NestedEnumIncentiveStatusWithAggregatesFilter<$PrismaModel = never> 
   _max?: Prisma.NestedEnumIncentiveStatusFilter<$PrismaModel>
 }
 
-export type NestedEnumIncentiveRoleFilter<$PrismaModel = never> = {
-  equals?: $Enums.IncentiveRole | Prisma.EnumIncentiveRoleFieldRefInput<$PrismaModel>
-  in?: $Enums.IncentiveRole[] | Prisma.ListEnumIncentiveRoleFieldRefInput<$PrismaModel>
-  notIn?: $Enums.IncentiveRole[] | Prisma.ListEnumIncentiveRoleFieldRefInput<$PrismaModel>
-  not?: Prisma.NestedEnumIncentiveRoleFilter<$PrismaModel> | $Enums.IncentiveRole
-}
-
 export type NestedEnumIncentiveRecipientTypeFilter<$PrismaModel = never> = {
   equals?: $Enums.IncentiveRecipientType | Prisma.EnumIncentiveRecipientTypeFieldRefInput<$PrismaModel>
   in?: $Enums.IncentiveRecipientType[] | Prisma.ListEnumIncentiveRecipientTypeFieldRefInput<$PrismaModel>
@@ -808,14 +801,11 @@ export type NestedEnumIncentiveRecipientTypeFilter<$PrismaModel = never> = {
   not?: Prisma.NestedEnumIncentiveRecipientTypeFilter<$PrismaModel> | $Enums.IncentiveRecipientType
 }
 
-export type NestedEnumIncentiveRoleWithAggregatesFilter<$PrismaModel = never> = {
+export type NestedEnumIncentiveRoleFilter<$PrismaModel = never> = {
   equals?: $Enums.IncentiveRole | Prisma.EnumIncentiveRoleFieldRefInput<$PrismaModel>
   in?: $Enums.IncentiveRole[] | Prisma.ListEnumIncentiveRoleFieldRefInput<$PrismaModel>
   notIn?: $Enums.IncentiveRole[] | Prisma.ListEnumIncentiveRoleFieldRefInput<$PrismaModel>
-  not?: Prisma.NestedEnumIncentiveRoleWithAggregatesFilter<$PrismaModel> | $Enums.IncentiveRole
-  _count?: Prisma.NestedIntFilter<$PrismaModel>
-  _min?: Prisma.NestedEnumIncentiveRoleFilter<$PrismaModel>
-  _max?: Prisma.NestedEnumIncentiveRoleFilter<$PrismaModel>
+  not?: Prisma.NestedEnumIncentiveRoleFilter<$PrismaModel> | $Enums.IncentiveRole
 }
 
 export type NestedEnumIncentiveRecipientTypeWithAggregatesFilter<$PrismaModel = never> = {
@@ -826,6 +816,16 @@ export type NestedEnumIncentiveRecipientTypeWithAggregatesFilter<$PrismaModel = 
   _count?: Prisma.NestedIntFilter<$PrismaModel>
   _min?: Prisma.NestedEnumIncentiveRecipientTypeFilter<$PrismaModel>
   _max?: Prisma.NestedEnumIncentiveRecipientTypeFilter<$PrismaModel>
+}
+
+export type NestedEnumIncentiveRoleWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.IncentiveRole | Prisma.EnumIncentiveRoleFieldRefInput<$PrismaModel>
+  in?: $Enums.IncentiveRole[] | Prisma.ListEnumIncentiveRoleFieldRefInput<$PrismaModel>
+  notIn?: $Enums.IncentiveRole[] | Prisma.ListEnumIncentiveRoleFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumIncentiveRoleWithAggregatesFilter<$PrismaModel> | $Enums.IncentiveRole
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumIncentiveRoleFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumIncentiveRoleFilter<$PrismaModel>
 }
 
 export type NestedEnumIncentivePayoutStatusFilter<$PrismaModel = never> = {

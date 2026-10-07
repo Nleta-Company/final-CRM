@@ -5,1245 +5,2433 @@ import { z } from "zod";
 // HELPERS
 // ============================================================
 
-const getBdeUser = async (bdeId) => {
-  return prisma.user.findFirst({
-    where: {
-      id: bdeId,
-      status: "ACTIVE",
-      role: {
-        name: "BDE/Sales",
-      },
-    },
-    select: {
-      id: true,
-      firstName: true,
-      lastName: true,
-      email: true,
-    },
-  });
+const isAdmin = (req) => {
+    return req.user?.role === "Admin";
 };
+
+const isBde = (req) => {
+    return req.user?.role === "BDE/Sales";
+};
+
+// ============================================================
+// GET ACTIVE BDE
+// ============================================================
+
+const getBdeUser = async (bdeId) => {
+    return prisma.user.findFirst({
+        where: {
+            id: bdeId,
+            status: "ACTIVE",
+            role: {
+                name: "BDE/Sales",
+            },
+        },
+        select: {
+            id: true,
+            firstName: true,
+            lastName: true,
+            email: true,
+        },
+    });
+};
+
+// ============================================================
+// GET ACTIVE ADMIN
+// ============================================================
+
+const getAdminUser = async (adminId) => {
+    return prisma.user.findFirst({
+        where: {
+            id: adminId,
+            status: "ACTIVE",
+            role: {
+                name: "Admin",
+            },
+        },
+        select: {
+            id: true,
+            firstName: true,
+            lastName: true,
+            email: true,
+        },
+    });
+};
+
+// ============================================================
+// MONTH RANGE
+// ============================================================
 
 const getMonthRange = (salaryMonth) => {
-  const date = new Date(salaryMonth);
+    const date = new Date(salaryMonth);
 
-  if (Number.isNaN(date.getTime())) {
-    return null;
-  }
+    if (Number.isNaN(date.getTime())) {
+        return null;
+    }
 
-  const start = new Date(
-    Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), 1)
-  );
+    const start = new Date(
+        Date.UTC(
+            date.getUTCFullYear(),
+            date.getUTCMonth(),
+            1
+        )
+    );
 
-  const end = new Date(
-    Date.UTC(date.getUTCFullYear(), date.getUTCMonth() + 1, 1)
-  );
+    const end = new Date(
+        Date.UTC(
+            date.getUTCFullYear(),
+            date.getUTCMonth() + 1,
+            1
+        )
+    );
 
-  return { start, end };
+    return {
+        start,
+        end,
+    };
 };
 
 // ============================================================
-// CALCULATE BDE INCENTIVE PERCENTAGE FOR PSGA
+// EXPLICIT INCENTIVE CALCULATION
+// ============================================================
+//
+// IMPORTANT:
+//
+// We do NOT calculate:
+//
+// PRIMARY = 100 - SUPPORTING
+//
+// Only an explicitly created incentive allocation is counted.
+//
+// This prevents the CRM from inventing an incentive percentage
+// before the actual business incentive rule is finalized.
 // ============================================================
 
-const calculateBdePercentage = (psg, bdeId) => {
-  const allocations = psg.incentiveAllocations || [];
+const calculateRecipientPercentage = (
+    psg,
+    recipientType,
+    recipientId
+) => {
+    const allocations =
+        psg.incentiveAllocations || [];
 
-  // ----------------------------------------------------------
-  // Primary BDE
-  // ----------------------------------------------------------
-  if (psg.bdeId === bdeId) {
-    const supportingTotal = allocations
-      .filter((allocation) => allocation.role === "SUPPORTING")
-      .reduce(
-        (total, allocation) => total + Number(allocation.incentivePercent),
+    const matchingAllocations =
+        allocations.filter((allocation) => {
+            if (
+                allocation.status ===
+                "NOT_ELIGIBLE"
+            ) {
+                return false;
+            }
+
+            if (
+                allocation.recipientType !==
+                recipientType
+            ) {
+                return false;
+            }
+
+            if (
+                recipientType ===
+                "BDE"
+            ) {
+                return (
+                    allocation.bdeId ===
+                    recipientId
+                );
+            }
+
+            if (
+                recipientType ===
+                "ADMIN"
+            ) {
+                return (
+                    allocation.adminId ===
+                    recipientId
+                );
+            }
+
+            return false;
+        });
+
+    return matchingAllocations.reduce(
+        (total, allocation) => {
+            return (
+                total +
+                Number(
+                    allocation.incentivePercent ||
+                        0
+                )
+            );
+        },
         0
-      );
+    );
+};
 
-    return Math.max(0, 100 - supportingTotal);
-  }
+// ============================================================
+// GET RECIPIENT NAME
+// ============================================================
 
-  // ----------------------------------------------------------
-  // Supporting BDE
-  // ----------------------------------------------------------
-  const supportingAllocation = allocations.find(
-    (allocation) =>
-      allocation.bdeId === bdeId &&
-      allocation.role === "SUPPORTING"
-  );
-
-  if (supportingAllocation) {
-    return Number(supportingAllocation.incentivePercent);
-  }
-
-  return 0;
+const getRecipientInclude = () => {
+    return {
+        bde: {
+            select: {
+                id: true,
+                firstName: true,
+                lastName: true,
+                email: true,
+            },
+        },
+        admin: {
+            select: {
+                id: true,
+                firstName: true,
+                lastName: true,
+                email: true,
+            },
+        },
+        approvedBy: {
+            select: {
+                id: true,
+                firstName: true,
+                lastName: true,
+                email: true,
+            },
+        },
+    };
 };
 
 // ============================================================
 // CREATE MONTHLY INCENTIVE PAYOUT
 // ============================================================
 
-export const createIncentivePayout = async (req, res) => {
-  try {
-    const schema = z.object({
-      bdeId: z.string().min(1),
-      salaryMonth: z.string().min(1),
-    });
+export const createIncentivePayout = async (
+    req,
+    res
+) => {
+    try {
+        const schema = z
+            .object({
+                recipientType: z
+                    .enum([
+                        "BDE",
+                        "ADMIN",
+                    ])
+                    .default("BDE"),
 
-    const parsed = schema.safeParse(req.body);
+                bdeId: z
+                    .string()
+                    .min(1)
+                    .optional(),
 
-    if (!parsed.success) {
-      return res.status(400).json({
-        success: false,
-        message: "Invalid payout data",
-        errors: parsed.error.flatten(),
-      });
-    }
+                adminId: z
+                    .string()
+                    .min(1)
+                    .optional(),
 
-    const { bdeId, salaryMonth } = parsed.data;
+                salaryMonth: z
+                    .string()
+                    .min(1),
+            })
+            .superRefine(
+                (data, ctx) => {
+                    if (
+                        data.recipientType ===
+                        "BDE" &&
+                        !data.bdeId
+                    ) {
+                        ctx.addIssue({
+                            code: z.ZodIssueCode
+                                .custom,
+                            path: ["bdeId"],
+                            message:
+                                "bdeId is required for BDE payout",
+                        });
+                    }
 
-    // --------------------------------------------------------
-    // Validate BDE
-    // --------------------------------------------------------
+                    if (
+                        data.recipientType ===
+                        "ADMIN" &&
+                        !data.adminId
+                    ) {
+                        ctx.addIssue({
+                            code: z.ZodIssueCode
+                                .custom,
+                            path: ["adminId"],
+                            message:
+                                "adminId is required for Admin payout",
+                        });
+                    }
 
-    const bde = await getBdeUser(bdeId);
+                    if (
+                        data.recipientType ===
+                            "BDE" &&
+                        data.adminId
+                    ) {
+                        ctx.addIssue({
+                            code: z.ZodIssueCode
+                                .custom,
+                            path: ["adminId"],
+                            message:
+                                "adminId is not allowed for BDE payout",
+                        });
+                    }
 
-    if (!bde) {
-      return res.status(404).json({
-        success: false,
-        message: "Active BDE/Sales user not found",
-      });
-    }
+                    if (
+                        data.recipientType ===
+                            "ADMIN" &&
+                        data.bdeId
+                    ) {
+                        ctx.addIssue({
+                            code: z.ZodIssueCode
+                                .custom,
+                            path: ["bdeId"],
+                            message:
+                                "bdeId is not allowed for Admin payout",
+                        });
+                    }
+                }
+            );
 
-    // --------------------------------------------------------
-    // Validate month
-    // --------------------------------------------------------
+        const parsed = schema.safeParse(
+            req.body
+        );
 
-    const monthRange = getMonthRange(salaryMonth);
+        if (!parsed.success) {
+            return res.status(400).json({
+                success: false,
+                message:
+                    "Invalid payout data",
+                errors:
+                    parsed.error.flatten(),
+            });
+        }
 
-    if (!monthRange) {
-      return res.status(400).json({
-        success: false,
-        message: "Invalid salaryMonth",
-      });
-    }
-
-    const { start, end } = monthRange;
-
-    // --------------------------------------------------------
-    // Check duplicate monthly payout
-    // --------------------------------------------------------
-
-    const existingPayout = await prisma.incentivePayout.findUnique({
-      where: {
-        bdeId_salaryMonth: {
-          bdeId,
-          salaryMonth: start,
-        },
-      },
-    });
-
-    if (existingPayout) {
-      return res.status(409).json({
-        success: false,
-        message: "Monthly incentive payout already exists for this BDE",
-        data: existingPayout,
-      });
-    }
-
-    // --------------------------------------------------------
-    // Find eligible PSGAs for this month
-    //
-    // We intentionally DO NOT filter by bdeId here.
-    //
-    // Reason:
-    // A BDE can receive incentive in two ways:
-    //
-    // 1. Primary BDE
-    //    PSGA.bdeId = requested bdeId
-    //
-    // 2. Supporting BDE
-    //    incentiveAllocations.bdeId = requested bdeId
-    // --------------------------------------------------------
-
-    const psgas = await prisma.pSGA.findMany({
-      where: {
-        status: "ACCEPTED",
-
-        incentiveStatus: {
-          in: ["ELIGIBLE", "APPROVED"],
-        },
-
-        acceptedAt: {
-          gte: start,
-          lt: end,
-        },
-
-        OR: [
-          {
+        const {
+            recipientType,
             bdeId,
-          },
-          {
-            incentiveAllocations: {
-              some: {
-                bdeId,
-                role: "SUPPORTING",
-              },
+            adminId,
+            salaryMonth,
+        } = parsed.data;
+
+        // ----------------------------------------------------
+        // Only Admin can create monthly payouts
+        // ----------------------------------------------------
+
+        if (!isAdmin(req)) {
+            return res.status(403).json({
+                success: false,
+                message:
+                    "Only Admin can create incentive payouts",
+            });
+        }
+
+        // ----------------------------------------------------
+        // Validate recipient
+        // ----------------------------------------------------
+
+        let recipient = null;
+
+        if (
+            recipientType ===
+            "BDE"
+        ) {
+            recipient =
+                await getBdeUser(
+                    bdeId
+                );
+
+            if (!recipient) {
+                return res.status(404).json({
+                    success: false,
+                    message:
+                        "Active BDE/Sales user not found",
+                });
+            }
+        }
+
+        if (
+            recipientType ===
+            "ADMIN"
+        ) {
+            recipient =
+                await getAdminUser(
+                    adminId
+                );
+
+            if (!recipient) {
+                return res.status(404).json({
+                    success: false,
+                    message:
+                        "Active Admin user not found",
+                });
+            }
+        }
+
+        // ----------------------------------------------------
+        // Validate month
+        // ----------------------------------------------------
+
+        const monthRange =
+            getMonthRange(
+                salaryMonth
+            );
+
+        if (!monthRange) {
+            return res.status(400).json({
+                success: false,
+                message:
+                    "Invalid salaryMonth",
+            });
+        }
+
+        const {
+            start,
+            end,
+        } = monthRange;
+
+        // ----------------------------------------------------
+        // Check duplicate payout
+        // ----------------------------------------------------
+        //
+        // We intentionally use findFirst instead of the old
+        // bdeId_salaryMonth compound key because payouts can
+        // now belong to either BDE or ADMIN.
+        //
+        // ----------------------------------------------------
+
+        const existingPayout =
+            await prisma.incentivePayout.findFirst(
+                {
+                    where: {
+                        recipientType,
+
+                        bdeId:
+                            recipientType ===
+                            "BDE"
+                                ? bdeId
+                                : null,
+
+                        adminId:
+                            recipientType ===
+                            "ADMIN"
+                                ? adminId
+                                : null,
+
+                        salaryMonth:
+                            start,
+                    },
+                }
+            );
+
+        if (existingPayout) {
+            return res.status(409).json({
+                success: false,
+                message:
+                    "Monthly incentive payout already exists for this recipient",
+                data:
+                    existingPayout,
+            });
+        }
+
+        // ----------------------------------------------------
+        // Find eligible PSGAs
+        // ----------------------------------------------------
+        //
+        // Eligibility is based on:
+        //
+        // Client.processStage = PSGA_COMPLETED
+        //
+        // NOT:
+        //
+        // PSGA.status = ACCEPTED
+        //
+        // ----------------------------------------------------
+
+        const recipientFilter =
+            recipientType ===
+            "BDE"
+                ? {
+                      OR: [
+                          {
+                              bdeId,
+                          },
+                          {
+                              incentiveAllocations:
+                                  {
+                                      some: {
+                                          recipientType:
+                                              "BDE",
+                                          bdeId,
+                                      },
+                                  },
+                          },
+                      ],
+                  }
+                : {
+                      incentiveAllocations:
+                          {
+                              some: {
+                                  recipientType:
+                                      "ADMIN",
+                                  adminId,
+                              },
+                          },
+                  };
+
+        const psgas =
+            await prisma.pSGA.findMany({
+                where: {
+                    client: {
+                        processStage:
+                            "PSGA_COMPLETED",
+
+                        processUpdatedAt: {
+                            gte: start,
+                            lt: end,
+                        },
+                    },
+
+                    incentiveStatus: {
+                        in: [
+                            "ELIGIBLE",
+                            "APPROVED",
+                            "PAID",
+                        ],
+                    },
+
+                    ...recipientFilter,
+                },
+
+                include: {
+                    client: {
+                        select: {
+                            id: true,
+                            associationName:
+                                true,
+                            processStage:
+                                true,
+                            processUpdatedAt:
+                                true,
+                            createdById:
+                                true,
+
+                            sourceLead: {
+                                select: {
+                                    id: true,
+                                    assignedToId:
+                                        true,
+                                    createdById:
+                                        true,
+                                },
+                            },
+                        },
+                    },
+
+                    incentiveAllocations: {
+                        select: {
+                            id: true,
+                            recipientType:
+                                true,
+                            bdeId: true,
+                            adminId: true,
+                            role: true,
+                            reason: true,
+                            incentivePercent:
+                                true,
+                            status: true,
+                        },
+
+                        orderBy: {
+                            createdAt:
+                                "asc",
+                        },
+                    },
+                },
+
+                orderBy: {
+                    client: {
+                        processUpdatedAt:
+                            "asc",
+                    },
+                },
+            });
+
+        // ----------------------------------------------------
+        // Calculate explicit percentage
+        // ----------------------------------------------------
+
+        let totalIncentivePercent =
+            0;
+
+        const psgaBreakdown = [];
+
+        for (
+            const psg of psgas
+        ) {
+            const percentage =
+                calculateRecipientPercentage(
+                    psg,
+                    recipientType,
+                    recipientType ===
+                        "BDE"
+                        ? bdeId
+                        : adminId
+                );
+
+            if (
+                percentage <= 0
+            ) {
+                continue;
+            }
+
+            totalIncentivePercent +=
+                percentage;
+
+            const allocations =
+                psg.incentiveAllocations.filter(
+                    (allocation) => {
+                        if (
+                            allocation.status ===
+                            "NOT_ELIGIBLE"
+                        ) {
+                            return false;
+                        }
+
+                        if (
+                            allocation.recipientType !==
+                            recipientType
+                        ) {
+                            return false;
+                        }
+
+                        if (
+                            recipientType ===
+                            "BDE"
+                        ) {
+                            return (
+                                allocation.bdeId ===
+                                bdeId
+                            );
+                        }
+
+                        return (
+                            allocation.adminId ===
+                            adminId
+                        );
+                    }
+                );
+
+            psgaBreakdown.push({
+                psgId:
+                    psg.id,
+
+                psgNumber:
+                    psg.psgNumber,
+
+                client:
+                    psg.client,
+
+                processCompletedAt:
+                    psg.client
+                        ?.processUpdatedAt,
+
+                recipientType,
+
+                recipientId:
+                    recipientType ===
+                    "BDE"
+                        ? bdeId
+                        : adminId,
+
+                incentivePercent:
+                    percentage,
+
+                allocations,
+            });
+        }
+
+        // ----------------------------------------------------
+        // Create payout
+        // ----------------------------------------------------
+
+        const payout =
+            await prisma.incentivePayout.create(
+                {
+                    data: {
+                        recipientType,
+
+                        bdeId:
+                            recipientType ===
+                            "BDE"
+                                ? bdeId
+                                : null,
+
+                        adminId:
+                            recipientType ===
+                            "ADMIN"
+                                ? adminId
+                                : null,
+
+                        salaryMonth:
+                            start,
+
+                        totalIncentivePercent,
+
+                        status:
+                            "PENDING",
+                    },
+
+                    include:
+                        getRecipientInclude(),
+                }
+            );
+
+        return res.status(201).json({
+            success: true,
+
+            message:
+                "Monthly incentive payout created successfully",
+
+            data: {
+                payout,
+
+                recipientType,
+
+                recipient,
+
+                eligiblePSGAs:
+                    psgaBreakdown.length,
+
+                totalEligiblePSGAs:
+                    psgas.length,
+
+                totalIncentivePercent,
+
+                psgaBreakdown,
             },
-          },
-        ],
-      },
-
-      include: {
-        incentiveAllocations: {
-          select: {
-            id: true,
-            bdeId: true,
-            role: true,
-            reason: true,
-            incentivePercent: true,
-            status: true,
-          },
-          orderBy: {
-            createdAt: "asc",
-          },
-        },
-      },
-
-      orderBy: {
-        acceptedAt: "asc",
-      },
-    });
-
-    // --------------------------------------------------------
-    // Calculate total incentive percentage
-    // --------------------------------------------------------
-
-    let totalIncentivePercent = 0;
-
-    const psgaBreakdown = [];
-
-    for (const psg of psgas) {
-      const percentage = calculateBdePercentage(psg, bdeId);
-
-      if (percentage > 0) {
-        totalIncentivePercent += percentage;
-
-        psgaBreakdown.push({
-          psgId: psg.id,
-          psgNumber: psg.psgNumber,
-          acceptedAt: psg.acceptedAt,
-          role: psg.bdeId === bdeId ? "PRIMARY" : "SUPPORTING",
-          incentivePercent: percentage,
         });
-      }
+    } catch (error) {
+        console.error(
+            "createIncentivePayout error:",
+            error
+        );
+
+        return res.status(500).json({
+            success: false,
+
+            message:
+                "Failed to create monthly incentive payout",
+
+            error:
+                error instanceof Error
+                    ? error.message
+                    : String(error),
+        });
     }
-
-    // --------------------------------------------------------
-    // Create monthly payout record
-    // --------------------------------------------------------
-
-    const payout = await prisma.incentivePayout.create({
-      data: {
-        bdeId,
-        salaryMonth: start,
-        totalIncentivePercent,
-        status: "PENDING",
-      },
-
-      include: {
-        bde: {
-          select: {
-            id: true,
-            firstName: true,
-            lastName: true,
-            email: true,
-          },
-        },
-      },
-    });
-
-    // --------------------------------------------------------
-    // Response
-    // --------------------------------------------------------
-
-    return res.status(201).json({
-      success: true,
-      message: "Monthly incentive payout created successfully",
-
-      data: {
-        payout,
-
-        eligiblePSGAs: psgas.length,
-
-        totalIncentivePercent,
-
-        psgaBreakdown,
-      },
-    });
-  } catch (error) {
-    console.error("createIncentivePayout error:", error);
-
-    return res.status(500).json({
-      success: false,
-      message: "Failed to create monthly incentive payout",
-    });
-  }
 };
+
 // ============================================================
 // GET MONTHLY PAYOUTS
 // ============================================================
 
-export const getIncentivePayouts = async (req, res) => {
-  try {
-    const { bdeId, salaryMonth, status } = req.query;
+export const getIncentivePayouts =
+    async (req, res) => {
+        try {
+            const {
+                recipientType,
+                bdeId,
+                adminId,
+                salaryMonth,
+                status,
+            } = req.query;
 
-    // ----------------------------------------------------------
-    // DATA-LEVEL ACCESS CHECK
-    // ----------------------------------------------------------
-    // BDE/Sales can only view their own incentive payouts.
-    // Admin can view payouts of any BDE.
-    // ----------------------------------------------------------
+            // ------------------------------------------------
+            // Validate recipient type
+            // ------------------------------------------------
 
-    if (req.user.role === "BDE/Sales") {
-      if (bdeId && bdeId !== req.user.userId) {
-        return res.status(404).json({
-          success: false,
-          message: "BDE not found",
-        });
-      }
-    }
+            if (
+                recipientType &&
+                ![
+                    "BDE",
+                    "ADMIN",
+                ].includes(
+                    recipientType
+                )
+            ) {
+                return res.status(400).json({
+                    success: false,
+                    message:
+                        "Invalid recipientType",
+                });
+            }
 
-    const where = {};
+            // ------------------------------------------------
+            // BDE access
+            // ------------------------------------------------
 
-    // ----------------------------------------------------------
-    // BDE FILTER
-    // ----------------------------------------------------------
+            if (isBde(req)) {
+                if (
+                    recipientType &&
+                    recipientType !==
+                        "BDE"
+                ) {
+                    return res.status(404).json({
+                        success: false,
+                        message:
+                            "Payout not found",
+                    });
+                }
 
-    if (req.user.role === "BDE/Sales") {
-      // Force BDE to see only their own payouts
-      where.bdeId = req.user.userId;
-    } else if (bdeId) {
-      // Admin can filter any BDE
-      where.bdeId = bdeId;
-    }
+                if (
+                    bdeId &&
+                    bdeId !==
+                        req.user.userId
+                ) {
+                    return res.status(404).json({
+                        success: false,
+                        message:
+                            "BDE payout not found",
+                    });
+                }
 
-    // ----------------------------------------------------------
-    // STATUS FILTER
-    // ----------------------------------------------------------
+                if (adminId) {
+                    return res.status(404).json({
+                        success: false,
+                        message:
+                            "Payout not found",
+                    });
+                }
+            }
 
-    if (status) {
-      where.status = status;
-    }
+            const where = {};
 
-    // ----------------------------------------------------------
-    // SALARY MONTH FILTER
-    // ----------------------------------------------------------
+            // ------------------------------------------------
+            // Recipient filter
+            // ------------------------------------------------
 
-    if (salaryMonth) {
-      const monthRange = getMonthRange(salaryMonth);
+            if (isBde(req)) {
+                where.recipientType =
+                    "BDE";
 
-      if (!monthRange) {
-        return res.status(400).json({
-          success: false,
-          message: "Invalid salaryMonth",
-        });
-      }
+                where.bdeId =
+                    req.user.userId;
+            } else {
+                if (recipientType) {
+                    where.recipientType =
+                        recipientType;
+                }
 
-      where.salaryMonth = monthRange.start;
-    }
+                if (bdeId) {
+                    where.bdeId =
+                        bdeId;
+                }
 
-    // ----------------------------------------------------------
-    // FETCH PAYOUTS
-    // ----------------------------------------------------------
+                if (adminId) {
+                    where.adminId =
+                        adminId;
+                }
+            }
 
-    const payouts = await prisma.incentivePayout.findMany({
-      where,
+            // ------------------------------------------------
+            // Status
+            // ------------------------------------------------
 
-      include: {
-        bde: {
-          select: {
-            id: true,
-            firstName: true,
-            lastName: true,
-            email: true,
-          },
-        },
+            if (status) {
+                if (
+                    ![
+                        "PENDING",
+                        "APPROVED",
+                        "PAID",
+                    ].includes(status)
+                ) {
+                    return res.status(400).json({
+                        success: false,
+                        message:
+                            "Invalid payout status",
+                    });
+                }
 
-        approvedBy: {
-          select: {
-            id: true,
-            firstName: true,
-            lastName: true,
-            email: true,
-          },
-        },
-      },
+                where.status =
+                    status;
+            }
 
-      orderBy: [
-        {
-          salaryMonth: "desc",
-        },
-        {
-          createdAt: "desc",
-        },
-      ],
-    });
+            // ------------------------------------------------
+            // Month
+            // ------------------------------------------------
 
-    return res.status(200).json({
-      success: true,
-      message: "Monthly incentive payouts fetched successfully",
-      data: payouts,
-    });
-  } catch (error) {
-    console.error("getIncentivePayouts error:", error);
+            if (salaryMonth) {
+                const monthRange =
+                    getMonthRange(
+                        salaryMonth
+                    );
 
-    return res.status(500).json({
-      success: false,
-      message: "Failed to fetch monthly incentive payouts",
-    });
-  }
-};
+                if (!monthRange) {
+                    return res.status(400).json({
+                        success: false,
+                        message:
+                            "Invalid salaryMonth",
+                    });
+                }
+
+                where.salaryMonth =
+                    monthRange.start;
+            }
+
+            const payouts =
+                await prisma.incentivePayout.findMany(
+                    {
+                        where,
+
+                        include:
+                            getRecipientInclude(),
+
+                        orderBy: [
+                            {
+                                salaryMonth:
+                                    "desc",
+                            },
+                            {
+                                createdAt:
+                                    "desc",
+                            },
+                        ],
+                    }
+                );
+
+            return res.status(200).json({
+                success: true,
+
+                message:
+                    "Monthly incentive payouts fetched successfully",
+
+                data: payouts,
+            });
+        } catch (error) {
+            console.error(
+                "getIncentivePayouts error:",
+                error
+            );
+
+            return res.status(500).json({
+                success: false,
+
+                message:
+                    "Failed to fetch monthly incentive payouts",
+
+                error:
+                    error instanceof Error
+                        ? error.message
+                        : String(error),
+            });
+        }
+    };
 
 // ============================================================
 // GET SINGLE MONTHLY PAYOUT
 // ============================================================
 
-export const getIncentivePayoutById = async (req, res) => {
-  try {
-    const { id } = req.params;
+export const getIncentivePayoutById =
+    async (req, res) => {
+        try {
+            const { id } =
+                req.params;
 
-    const payout = await prisma.incentivePayout.findUnique({
-      where: {
-        id,
-      },
+            const payout =
+                await prisma.incentivePayout.findUnique(
+                    {
+                        where: {
+                            id,
+                        },
 
-      include: {
-        bde: {
-          select: {
-            id: true,
-            firstName: true,
-            lastName: true,
-            email: true,
-          },
-        },
+                        include:
+                            getRecipientInclude(),
+                    }
+                );
 
-        approvedBy: {
-          select: {
-            id: true,
-            firstName: true,
-            lastName: true,
-            email: true,
-          },
-        },
-      },
-    });
+            if (!payout) {
+                return res.status(404).json({
+                    success: false,
+                    message:
+                        "Monthly incentive payout not found",
+                });
+            }
 
-    if (!payout) {
-      return res.status(404).json({
-        success: false,
-        message: "Monthly incentive payout not found",
-      });
-    }
+            // ------------------------------------------------
+            // BDE can only see own payout
+            // ------------------------------------------------
 
-    // ----------------------------------------------------------
-    // DATA-LEVEL ACCESS CHECK
-    // ----------------------------------------------------------
-    // BDE/Sales can only view their own payout.
-    // Admin can view any BDE payout.
-    // ----------------------------------------------------------
+            if (isBde(req)) {
+                if (
+                    payout.recipientType !==
+                        "BDE" ||
+                    payout.bdeId !==
+                        req.user.userId
+                ) {
+                    return res.status(404).json({
+                        success: false,
+                        message:
+                            "Monthly incentive payout not found",
+                    });
+                }
+            }
 
-    if (
-      req.user.role === "BDE/Sales" &&
-      payout.bdeId !== req.user.userId
-    ) {
-      return res.status(404).json({
-        success: false,
-        message: "Monthly incentive payout not found",
-      });
-    }
+            return res.status(200).json({
+                success: true,
 
-    return res.status(200).json({
-      success: true,
-      message: "Monthly incentive payout fetched successfully",
-      data: payout,
-    });
-  } catch (error) {
-    console.error("getIncentivePayoutById error:", error);
+                message:
+                    "Monthly incentive payout fetched successfully",
 
-    return res.status(500).json({
-      success: false,
-      message: "Failed to fetch monthly incentive payout",
-    });
-  }
-};
+                data: payout,
+            });
+        } catch (error) {
+            console.error(
+                "getIncentivePayoutById error:",
+                error
+            );
+
+            return res.status(500).json({
+                success: false,
+
+                message:
+                    "Failed to fetch monthly incentive payout",
+
+                error:
+                    error instanceof Error
+                        ? error.message
+                        : String(error),
+            });
+        }
+    };
 
 // ============================================================
 // APPROVE MONTHLY PAYOUT
 // ============================================================
 
-export const approveIncentivePayout = async (req, res) => {
-  try {
-    const { id } = req.params;
+export const approveIncentivePayout =
+    async (req, res) => {
+        try {
+            if (!isAdmin(req)) {
+                return res.status(403).json({
+                    success: false,
 
-    const payout = await prisma.incentivePayout.findUnique({
-      where: {
-        id,
-      },
-    });
+                    message:
+                        "Only Admin can approve incentive payouts",
+                });
+            }
 
-    if (!payout) {
-      return res.status(404).json({
-        success: false,
-        message: "Monthly incentive payout not found",
-      });
-    }
+            const { id } =
+                req.params;
 
-    if (payout.status === "PAID") {
-      return res.status(400).json({
-        success: false,
-        message: "Paid incentive payout cannot be approved again",
-      });
-    }
+            const payout =
+                await prisma.incentivePayout.findUnique(
+                    {
+                        where: {
+                            id,
+                        },
+                    }
+                );
 
-    if (payout.status === "APPROVED") {
-      return res.status(400).json({
-        success: false,
-        message: "Incentive payout is already approved",
-      });
-    }
+            if (!payout) {
+                return res.status(404).json({
+                    success: false,
 
-    const updatedPayout = await prisma.incentivePayout.update({
-      where: {
-        id,
-      },
+                    message:
+                        "Monthly incentive payout not found",
+                });
+            }
 
-      data: {
-        status: "APPROVED",
-        approvedById: req.user.userId,
-        approvedAt: new Date(),
-      },
+            if (
+                payout.status ===
+                "PAID"
+            ) {
+                return res.status(400).json({
+                    success: false,
 
-      include: {
-        bde: {
-          select: {
-            id: true,
-            firstName: true,
-            lastName: true,
-            email: true,
-          },
-        },
+                    message:
+                        "Paid incentive payout cannot be approved again",
+                });
+            }
 
-        approvedBy: {
-          select: {
-            id: true,
-            firstName: true,
-            lastName: true,
-            email: true,
-          },
-        },
-      },
-    });
+            if (
+                payout.status ===
+                "APPROVED"
+            ) {
+                return res.status(400).json({
+                    success: false,
 
-    return res.status(200).json({
-      success: true,
-      message: "Monthly incentive payout approved successfully",
-      data: updatedPayout,
-    });
-  } catch (error) {
-    console.error("approveIncentivePayout error:", error);
+                    message:
+                        "Incentive payout is already approved",
+                });
+            }
 
-    return res.status(500).json({
-      success: false,
-      message: "Failed to approve monthly incentive payout",
-    });
-  }
-};
+            const updatedPayout =
+                await prisma.incentivePayout.update(
+                    {
+                        where: {
+                            id,
+                        },
 
-// ============================================================
-// MARK PAYOUT AS PAID WITH SALARY
-// ============================================================
+                        data: {
+                            status:
+                                "APPROVED",
 
-export const markIncentivePayoutPaid = async (req, res) => {
-  try {
-    const schema = z.object({
-      paymentReference: z.string().min(1).max(200),
-    });
+                            approvedById:
+                                req.user.userId,
 
-    const parsed = schema.safeParse(req.body);
+                            approvedAt:
+                                new Date(),
+                        },
 
-    if (!parsed.success) {
-      return res.status(400).json({
-        success: false,
-        message: "Payment reference is required",
-        errors: parsed.error.flatten(),
-      });
-    }
+                        include:
+                            getRecipientInclude(),
+                    }
+                );
 
-    const { paymentReference } = parsed.data;
-    const { id } = req.params;
+            return res.status(200).json({
+                success: true,
 
-    const payout = await prisma.incentivePayout.findUnique({
-      where: {
-        id,
-      },
-    });
+                message:
+                    "Monthly incentive payout approved successfully",
 
-    if (!payout) {
-      return res.status(404).json({
-        success: false,
-        message: "Monthly incentive payout not found",
-      });
-    }
+                data:
+                    updatedPayout,
+            });
+        } catch (error) {
+            console.error(
+                "approveIncentivePayout error:",
+                error
+            );
 
-    if (payout.status === "PENDING") {
-      return res.status(400).json({
-        success: false,
-        message:
-          "Incentive payout must be approved before marking it as paid",
-      });
-    }
+            return res.status(500).json({
+                success: false,
 
-    if (payout.status === "PAID") {
-      return res.status(400).json({
-        success: false,
-        message: "Incentive payout is already marked as paid",
-      });
-    }
+                message:
+                    "Failed to approve monthly incentive payout",
 
-    const updatedPayout = await prisma.incentivePayout.update({
-      where: {
-        id,
-      },
-
-      data: {
-        status: "PAID",
-        paidAt: new Date(),
-        paymentReference,
-      },
-
-      include: {
-        bde: {
-          select: {
-            id: true,
-            firstName: true,
-            lastName: true,
-            email: true,
-          },
-        },
-
-        approvedBy: {
-          select: {
-            id: true,
-            firstName: true,
-            lastName: true,
-            email: true,
-          },
-        },
-      },
-    });
-
-    return res.status(200).json({
-      success: true,
-      message: "Incentive payout marked as paid with salary",
-      data: updatedPayout,
-    });
-  } catch (error) {
-    console.error("markIncentivePayoutPaid error:", error);
-
-    return res.status(500).json({
-      success: false,
-      message: "Failed to mark incentive payout as paid",
-    });
-  }
-};
-
-// ============================================================
-// MONTHLY INCENTIVE DASHBOARD
-// ============================================================
-
-export const getMonthlyIncentiveDashboard = async (req, res) => {
-  try {
-    const { bdeId } = req.params;
-    const { salaryMonth } = req.query;
-
-    if (!bdeId) {
-      return res.status(400).json({
-        success: false,
-        message: "BDE ID is required",
-      });
-    }
-
-    if (!salaryMonth) {
-      return res.status(400).json({
-        success: false,
-        message: "salaryMonth is required in YYYY-MM-DD format",
-      });
-    }
-
-    const monthDate = new Date(`${salaryMonth}T00:00:00.000Z`);
-
-    if (Number.isNaN(monthDate.getTime())) {
-      return res.status(400).json({
-        success: false,
-        message: "Invalid salaryMonth",
-      });
-    }
-
-    const startOfMonth = new Date(
-      Date.UTC(
-        monthDate.getUTCFullYear(),
-        monthDate.getUTCMonth(),
-        1
-      )
-    );
-
-    const startOfNextMonth = new Date(
-      Date.UTC(
-        monthDate.getUTCFullYear(),
-        monthDate.getUTCMonth() + 1,
-        1
-      )
-    );
-
-    // ----------------------------------------------------------
-    // Check BDE
-    // ----------------------------------------------------------
-
-    const bde = await prisma.user.findUnique({
-      where: {
-        id: bdeId,
-      },
-      include: {
-        role: true,
-      },
-    });
-
-    if (!bde) {
-      return res.status(404).json({
-        success: false,
-        message: "BDE not found",
-      });
-    }
-
-    if (bde.role.name !== "BDE/Sales") {
-      return res.status(400).json({
-        success: false,
-        message: "Selected user is not a BDE/Sales user",
-      });
-    }
-
-    // ----------------------------------------------------------
-    // DATA-LEVEL ACCESS CHECK
-    // ----------------------------------------------------------
-
-    if (req.user.role === "BDE/Sales") {
-      if (bdeId !== req.user.userId) {
-        return res.status(404).json({
-          success: false,
-          message: "BDE not found",
-        });
-      }
-    }
-
-    // ----------------------------------------------------------
-    // Existing monthly payout
-    // ----------------------------------------------------------
-
-    const payout = await prisma.incentivePayout.findUnique({
-      where: {
-        bdeId_salaryMonth: {
-          bdeId,
-          salaryMonth: startOfMonth,
-        },
-      },
-      include: {
-        approvedBy: {
-          select: {
-            id: true,
-            firstName: true,
-            lastName: true,
-            email: true,
-          },
-        },
-      },
-    });
-
-    // ----------------------------------------------------------
-    // Accepted PSGAs for this BDE/month
-    // ----------------------------------------------------------
-
-    const psgas = await prisma.pSGA.findMany({
-      where: {
-        status: "ACCEPTED",
-        acceptedAt: {
-          gte: startOfMonth,
-          lt: startOfNextMonth,
-        },
-        OR: [
-          {
-            bdeId,
-          },
-          {
-            incentiveAllocations: {
-              some: {
-                bdeId,
-                role: "SUPPORTING",
-              },
-            },
-          },
-        ],
-      },
-      include: {
-        client: {
-          select: {
-            id: true,
-            associationName: true,
-          },
-        },
-        incentiveAllocations: {
-          where: {
-            OR: [
-              {
-                bdeId,
-                role: "SUPPORTING",
-              },
-              {
-                role: "SUPPORTING",
-              },
-            ],
-          },
-          include: {
-            bde: {
-              select: {
-                id: true,
-                firstName: true,
-                lastName: true,
-                email: true,
-              },
-            },
-          },
-        },
-      },
-      orderBy: {
-        acceptedAt: "asc",
-      },
-    });
-
-    // ----------------------------------------------------------
-    // Calculate BDE percentage for every PSGA
-    // ----------------------------------------------------------
-
-    const psgaBreakdown = psgas.map((psg) => {
-      const supportingTotal = psg.incentiveAllocations.reduce(
-        (sum, allocation) =>
-          sum + Number(allocation.incentivePercent),
-        0
-      );
-
-      let incentivePercent = 0;
-      let role = null;
-
-      if (psg.bdeId === bdeId) {
-        incentivePercent = Math.max(
-          0,
-          100 - supportingTotal
-        );
-
-        role = "PRIMARY";
-      } else {
-        const supportingAllocation =
-          psg.incentiveAllocations.find(
-            (allocation) =>
-              allocation.bdeId === bdeId &&
-              allocation.role === "SUPPORTING"
-          );
-
-        if (supportingAllocation) {
-          incentivePercent = Number(
-            supportingAllocation.incentivePercent
-          );
-
-          role = "SUPPORTING";
+                error:
+                    error instanceof Error
+                        ? error.message
+                        : String(error),
+            });
         }
-      }
+    };
 
-      return {
-        psgId: psg.id,
-        psgNumber: psg.psgNumber,
-        client: psg.client,
-        acceptedAt: psg.acceptedAt,
-        role,
-        incentivePercent,
-      };
-    });
+// ============================================================
+// MARK PAYOUT AS PAID
+// ============================================================
 
-    const totalIncentivePercent = psgaBreakdown.reduce(
-      (sum, item) => sum + item.incentivePercent,
-      0
-    );
+export const markIncentivePayoutPaid =
+    async (req, res) => {
+        try {
+            if (!isAdmin(req)) {
+                return res.status(403).json({
+                    success: false,
 
-    return res.status(200).json({
-      success: true,
-      data: {
-        bde: {
-          id: bde.id,
-          firstName: bde.firstName,
-          lastName: bde.lastName,
-          email: bde.email,
-        },
+                    message:
+                        "Only Admin can mark incentive payout as paid",
+                });
+            }
 
-        salaryMonth: startOfMonth,
+            const schema = z.object({
+                paymentReference:
+                    z.string()
+                        .trim()
+                        .min(1)
+                        .max(200),
+            });
 
-        summary: {
-          totalIncentivePercent,
-          eligiblePSGAs: psgaBreakdown.length,
-          payoutStatus: payout?.status || "NOT_CREATED",
-          paymentReference:
-            payout?.paymentReference || null,
-          paidAt: payout?.paidAt || null,
-        },
+            const parsed =
+                schema.safeParse(
+                    req.body
+                );
 
-        payout: payout || null,
+            if (!parsed.success) {
+                return res.status(400).json({
+                    success: false,
 
-        psgaBreakdown,
-      },
-    });
-  } catch (error) {
-    console.error(
-      "getMonthlyIncentiveDashboard error:",
-      error
-    );
+                    message:
+                        "Payment reference is required",
 
-    return res.status(500).json({
-      success: false,
-      message: "Failed to fetch monthly incentive dashboard",
-    });
-  }
-};
+                    errors:
+                        parsed.error.flatten(),
+                });
+            }
+
+            const {
+                paymentReference,
+            } = parsed.data;
+
+            const { id } =
+                req.params;
+
+            const payout =
+                await prisma.incentivePayout.findUnique(
+                    {
+                        where: {
+                            id,
+                        },
+                    }
+                );
+
+            if (!payout) {
+                return res.status(404).json({
+                    success: false,
+
+                    message:
+                        "Monthly incentive payout not found",
+                });
+            }
+
+            if (
+                payout.status ===
+                "PENDING"
+            ) {
+                return res.status(400).json({
+                    success: false,
+
+                    message:
+                        "Incentive payout must be approved before marking it as paid",
+                });
+            }
+
+            if (
+                payout.status ===
+                "PAID"
+            ) {
+                return res.status(400).json({
+                    success: false,
+
+                    message:
+                        "Incentive payout is already marked as paid",
+                });
+            }
+
+            const updatedPayout =
+                await prisma.incentivePayout.update(
+                    {
+                        where: {
+                            id,
+                        },
+
+                        data: {
+                            status:
+                                "PAID",
+
+                            paidAt:
+                                new Date(),
+
+                            paymentReference,
+                        },
+
+                        include:
+                            getRecipientInclude(),
+                    }
+                );
+
+            return res.status(200).json({
+                success: true,
+
+                message:
+                    "Incentive payout marked as paid successfully",
+
+                data:
+                    updatedPayout,
+            });
+        } catch (error) {
+            console.error(
+                "markIncentivePayoutPaid error:",
+                error
+            );
+
+            return res.status(500).json({
+                success: false,
+
+                message:
+                    "Failed to mark incentive payout as paid",
+
+                error:
+                    error instanceof Error
+                        ? error.message
+                        : String(error),
+            });
+        }
+    };
+
+// ============================================================
+// MONTHLY BDE INCENTIVE DASHBOARD
+// ============================================================
+
+export const getMonthlyIncentiveDashboard =
+    async (req, res) => {
+        try {
+            const {
+                bdeId,
+            } = req.params;
+
+            const {
+                salaryMonth,
+            } = req.query;
+
+            if (!bdeId) {
+                return res.status(400).json({
+                    success: false,
+
+                    message:
+                        "BDE ID is required",
+                });
+            }
+
+            if (!salaryMonth) {
+                return res.status(400).json({
+                    success: false,
+
+                    message:
+                        "salaryMonth is required in YYYY-MM-DD format",
+                });
+            }
+
+            const monthRange =
+                getMonthRange(
+                    salaryMonth
+                );
+
+            if (!monthRange) {
+                return res.status(400).json({
+                    success: false,
+
+                    message:
+                        "Invalid salaryMonth",
+                });
+            }
+
+            const {
+                start,
+                end,
+            } = monthRange;
+
+            // ------------------------------------------------
+            // Check BDE
+            // ------------------------------------------------
+
+            const bde =
+                await prisma.user.findUnique(
+                    {
+                        where: {
+                            id: bdeId,
+                        },
+
+                        include: {
+                            role: true,
+                        },
+                    }
+                );
+
+            if (!bde) {
+                return res.status(404).json({
+                    success: false,
+
+                    message:
+                        "BDE not found",
+                });
+            }
+
+            if (
+                bde.role.name !==
+                "BDE/Sales"
+            ) {
+                return res.status(400).json({
+                    success: false,
+
+                    message:
+                        "Selected user is not a BDE/Sales user",
+                });
+            }
+
+            // ------------------------------------------------
+            // BDE access
+            // ------------------------------------------------
+
+            if (
+                isBde(req) &&
+                bdeId !==
+                    req.user.userId
+            ) {
+                return res.status(404).json({
+                    success: false,
+
+                    message:
+                        "BDE not found",
+                });
+            }
+
+            // ------------------------------------------------
+            // Existing payout
+            // ------------------------------------------------
+
+            const payout =
+                await prisma.incentivePayout.findFirst(
+                    {
+                        where: {
+                            recipientType:
+                                "BDE",
+
+                            bdeId,
+
+                            salaryMonth:
+                                start,
+                        },
+
+                        include: {
+                            approvedBy: {
+                                select: {
+                                    id: true,
+                                    firstName:
+                                        true,
+                                    lastName:
+                                        true,
+                                    email:
+                                        true,
+                                },
+                            },
+                        },
+                    }
+                );
+
+            // ------------------------------------------------
+            // Completed clients / PSGAs
+            // ------------------------------------------------
+
+            const psgas =
+                await prisma.pSGA.findMany({
+                    where: {
+                        client: {
+                            processStage:
+                                "PSGA_COMPLETED",
+
+                            processUpdatedAt: {
+                                gte: start,
+                                lt: end,
+                            },
+                        },
+
+                        incentiveStatus: {
+                            in: [
+                                "ELIGIBLE",
+                                "APPROVED",
+                                "PAID",
+                            ],
+                        },
+
+                        OR: [
+                            {
+                                bdeId,
+                            },
+
+                            {
+                                incentiveAllocations:
+                                    {
+                                        some: {
+                                            recipientType:
+                                                "BDE",
+
+                                            bdeId,
+                                        },
+                                    },
+                            },
+                        ],
+                    },
+
+                    include: {
+                        client: {
+                            select: {
+                                id: true,
+                                associationName:
+                                    true,
+                                processStage:
+                                    true,
+                                processUpdatedAt:
+                                    true,
+                            },
+                        },
+
+                        incentiveAllocations: {
+                            where: {
+                                recipientType:
+                                    "BDE",
+
+                                bdeId,
+                            },
+
+                            include: {
+                                bde: {
+                                    select: {
+                                        id: true,
+                                        firstName:
+                                            true,
+                                        lastName:
+                                            true,
+                                        email:
+                                            true,
+                                    },
+                                },
+                            },
+                        },
+                    },
+
+                    orderBy: {
+                        client: {
+                            processUpdatedAt:
+                                "asc",
+                        },
+                    },
+                });
+
+            // ------------------------------------------------
+            // Explicit incentive breakdown
+            // ------------------------------------------------
+
+            const psgaBreakdown =
+                psgas
+                    .map(
+                        (psg) => {
+                            const incentivePercent =
+                                calculateRecipientPercentage(
+                                    psg,
+                                    "BDE",
+                                    bdeId
+                                );
+
+                            let role =
+                                null;
+
+                            if (
+                                psg.incentiveAllocations.some(
+                                    (
+                                        allocation
+                                    ) =>
+                                        allocation.role ===
+                                        "SUPPORTING"
+                                )
+                            ) {
+                                role =
+                                    "SUPPORTING";
+                            }
+
+                            if (
+                                !role &&
+                                psg.bdeId ===
+                                    bdeId
+                            ) {
+                                role =
+                                    "PRIMARY";
+                            }
+
+                            return {
+                                psgId:
+                                    psg.id,
+
+                                psgNumber:
+                                    psg.psgNumber,
+
+                                client:
+                                    psg.client,
+
+                                processCompletedAt:
+                                    psg.client
+                                        ?.processUpdatedAt,
+
+                                role,
+
+                                recipientType:
+                                    "BDE",
+
+                                recipientId:
+                                    bdeId,
+
+                                incentivePercent,
+
+                                allocations:
+                                    psg.incentiveAllocations,
+                            };
+                        }
+                    )
+                    .filter(
+                        (item) =>
+                            item.role !==
+                                null &&
+                            item.incentivePercent >
+                                0
+                    );
+
+            const totalIncentivePercent =
+                psgaBreakdown.reduce(
+                    (
+                        sum,
+                        item
+                    ) =>
+                        sum +
+                        item.incentivePercent,
+                    0
+                );
+
+            return res.status(200).json({
+                success: true,
+
+                data: {
+                    bde: {
+                        id:
+                            bde.id,
+
+                        firstName:
+                            bde.firstName,
+
+                        lastName:
+                            bde.lastName,
+
+                        email:
+                            bde.email,
+                    },
+
+                    recipientType:
+                        "BDE",
+
+                    salaryMonth:
+                        start,
+
+                    summary: {
+                        totalIncentivePercent,
+
+                        eligiblePSGAs:
+                            psgaBreakdown.length,
+
+                        payoutStatus:
+                            payout?.status ||
+                            "NOT_CREATED",
+
+                        paymentReference:
+                            payout?.paymentReference ||
+                            null,
+
+                        paidAt:
+                            payout?.paidAt ||
+                            null,
+                    },
+
+                    payout:
+                        payout ||
+                        null,
+
+                    psgaBreakdown,
+                },
+            });
+        } catch (error) {
+            console.error(
+                "getMonthlyIncentiveDashboard error:",
+                error
+            );
+
+            return res.status(500).json({
+                success: false,
+
+                message:
+                    "Failed to fetch monthly incentive dashboard",
+
+                error:
+                    error instanceof Error
+                        ? error.message
+                        : String(error),
+            });
+        }
+    };
 
 // ============================================================
 // ADMIN INCENTIVE MANAGEMENT DASHBOARD
 // ============================================================
 
-export const getAdminIncentiveDashboard = async (req, res) => {
-  try {
-    const { salaryMonth, status } = req.query;
+export const getAdminIncentiveDashboard =
+    async (req, res) => {
+        try {
+            // ------------------------------------------------
+            // ADMIN ONLY
+            // ------------------------------------------------
 
-    // ----------------------------------------------------------
-    // ADMIN-ONLY ACCESS CHECK
-    // ----------------------------------------------------------
+            if (!isAdmin(req)) {
+                return res.status(403).json({
+                    success: false,
 
-    if (req.user.role !== "Admin") {
-      return res.status(403).json({
-        success: false,
-        message: "Admin access required",
-      });
-    }
+                    message:
+                        "Admin access required",
+                });
+            }
 
-    if (!salaryMonth) {
-      return res.status(400).json({
-        success: false,
-        message: "salaryMonth is required in YYYY-MM-DD format",
-      });
-    }
+            const {
+                salaryMonth,
+                status,
+            } = req.query;
 
-    const monthDate = new Date(`${salaryMonth}T00:00:00.000Z`);
+            if (!salaryMonth) {
+                return res.status(400).json({
+                    success: false,
 
-    if (Number.isNaN(monthDate.getTime())) {
-      return res.status(400).json({
-        success: false,
-        message: "Invalid salaryMonth",
-      });
-    }
+                    message:
+                        "salaryMonth is required in YYYY-MM-DD format",
+                });
+            }
 
-    const startOfMonth = new Date(
-      Date.UTC(
-        monthDate.getUTCFullYear(),
-        monthDate.getUTCMonth(),
-        1
-      )
-    );
+            const monthRange =
+                getMonthRange(
+                    salaryMonth
+                );
 
-    const startOfNextMonth = new Date(
-      Date.UTC(
-        monthDate.getUTCFullYear(),
-        monthDate.getUTCMonth() + 1,
-        1
-      )
-    );
+            if (!monthRange) {
+                return res.status(400).json({
+                    success: false,
 
-    // --------------------------------------------------------
-    // Get all active BDEs
-    // --------------------------------------------------------
+                    message:
+                        "Invalid salaryMonth",
+                });
+            }
 
-    const bdeRole = await prisma.role.findUnique({
-      where: {
-        name: "BDE/Sales",
-      },
-    });
+            const {
+                start,
+                end,
+            } = monthRange;
 
-    if (!bdeRole) {
-      return res.status(404).json({
-        success: false,
-        message: "BDE/Sales role not found",
-      });
-    }
+            // ------------------------------------------------
+            // BDE ROLE
+            // ------------------------------------------------
 
-    const bdes = await prisma.user.findMany({
-      where: {
-        roleId: bdeRole.id,
-        status: "ACTIVE",
-      },
-      select: {
-        id: true,
-        firstName: true,
-        lastName: true,
-        email: true,
-      },
-      orderBy: {
-        firstName: "asc",
-      },
-    });
+            const bdeRole =
+                await prisma.role.findUnique(
+                    {
+                        where: {
+                            name:
+                                "BDE/Sales",
+                        },
+                    }
+                );
 
-    // --------------------------------------------------------
-    // Get monthly payouts
-    // --------------------------------------------------------
+            if (!bdeRole) {
+                return res.status(404).json({
+                    success: false,
 
-    const payoutWhere = {
-      salaryMonth: startOfMonth,
-      ...(status ? { status } : {}),
+                    message:
+                        "BDE/Sales role not found",
+                });
+            }
+
+            // ------------------------------------------------
+            // ACTIVE BDEs
+            // ------------------------------------------------
+
+            const bdes =
+                await prisma.user.findMany(
+                    {
+                        where: {
+                            roleId:
+                                bdeRole.id,
+
+                            status:
+                                "ACTIVE",
+                        },
+
+                        select: {
+                            id: true,
+                            firstName:
+                                true,
+                            lastName:
+                                true,
+                            email:
+                                true,
+                        },
+
+                        orderBy: {
+                            firstName:
+                                "asc",
+                        },
+                    }
+                );
+
+            // ------------------------------------------------
+            // ADMIN ROLE
+            // ------------------------------------------------
+
+            const adminRole =
+                await prisma.role.findUnique(
+                    {
+                        where: {
+                            name:
+                                "Admin",
+                        },
+                    }
+                );
+
+            // ------------------------------------------------
+            // ACTIVE ADMINS
+            // ------------------------------------------------
+
+            const admins =
+                adminRole
+                    ? await prisma.user.findMany(
+                          {
+                              where: {
+                                  roleId:
+                                      adminRole.id,
+
+                                  status:
+                                      "ACTIVE",
+                              },
+
+                              select: {
+                                  id: true,
+                                  firstName:
+                                      true,
+                                  lastName:
+                                      true,
+                                  email:
+                                      true,
+                              },
+
+                              orderBy: {
+                                  firstName:
+                                      "asc",
+                              },
+                          }
+                      )
+                    : [];
+
+            // ------------------------------------------------
+            // MONTHLY PAYOUTS
+            // ------------------------------------------------
+
+            const payoutWhere = {
+                salaryMonth:
+                    start,
+
+                ...(status
+                    ? {
+                          status,
+                      }
+                    : {}),
+            };
+
+            const payouts =
+                await prisma.incentivePayout.findMany(
+                    {
+                        where:
+                            payoutWhere,
+
+                        include:
+                            getRecipientInclude(),
+
+                        orderBy: {
+                            createdAt:
+                                "asc",
+                        },
+                    }
+                );
+
+            // ------------------------------------------------
+            // COMPLETED CLIENTS / PSGAs
+            // ------------------------------------------------
+
+            const psgas =
+                await prisma.pSGA.findMany({
+                    where: {
+                        client: {
+                            processStage:
+                                "PSGA_COMPLETED",
+
+                            processUpdatedAt: {
+                                gte: start,
+                                lt: end,
+                            },
+                        },
+
+                        incentiveStatus: {
+                            in: [
+                                "ELIGIBLE",
+                                "APPROVED",
+                                "PAID",
+                            ],
+                        },
+                    },
+
+                    include: {
+                        client: {
+                            select: {
+                                id: true,
+                                associationName:
+                                    true,
+                                processStage:
+                                    true,
+                                processUpdatedAt:
+                                    true,
+                                createdById:
+                                    true,
+
+                                assignedBdeId:
+                                    true,
+
+                                sourceLead: {
+                                    select: {
+                                        id: true,
+                                        assignedToId:
+                                            true,
+                                        createdById:
+                                            true,
+                                    },
+                                },
+                            },
+                        },
+
+                        bde: {
+                            select: {
+                                id: true,
+                                firstName:
+                                    true,
+                                lastName:
+                                    true,
+                                email:
+                                    true,
+                            },
+                        },
+
+                        incentiveAllocations: {
+                            include: {
+                                bde: {
+                                    select: {
+                                        id: true,
+                                        firstName:
+                                            true,
+                                        lastName:
+                                            true,
+                                        email:
+                                            true,
+                                    },
+                                },
+
+                                admin: {
+                                    select: {
+                                        id: true,
+                                        firstName:
+                                            true,
+                                        lastName:
+                                            true,
+                                        email:
+                                            true,
+                                    },
+                                },
+                            },
+
+                            orderBy: {
+                                createdAt:
+                                    "asc",
+                            },
+                        },
+                    },
+
+                    orderBy: {
+                        client: {
+                            processUpdatedAt:
+                                "asc",
+                        },
+                    },
+                });
+
+            // =================================================
+            // BDE SUMMARY
+            // =================================================
+
+            const bdeSummary =
+                bdes.map(
+                    (bde) => {
+                        let totalIncentivePercent =
+                            0;
+
+                        let eligiblePSGAs =
+                            0;
+
+                        const breakdown =
+                            [];
+
+                        for (
+                            const psg of psgas
+                        ) {
+                            const incentivePercent =
+                                calculateRecipientPercentage(
+                                    psg,
+                                    "BDE",
+                                    bde.id
+                                );
+
+                            if (
+                                incentivePercent <=
+                                0
+                            ) {
+                                continue;
+                            }
+
+                            let role =
+                                null;
+
+                            if (
+                                psg.incentiveAllocations.some(
+                                    (
+                                        allocation
+                                    ) =>
+                                        allocation.recipientType ===
+                                            "BDE" &&
+                                        allocation.bdeId ===
+                                            bde.id &&
+                                        allocation.role ===
+                                            "SUPPORTING"
+                                )
+                            ) {
+                                role =
+                                    "SUPPORTING";
+                            }
+
+                            if (
+                                !role &&
+                                psg.bdeId ===
+                                    bde.id
+                            ) {
+                                role =
+                                    "PRIMARY";
+                            }
+
+                            if (!role) {
+                                continue;
+                            }
+
+                            eligiblePSGAs +=
+                                1;
+
+                            totalIncentivePercent +=
+                                incentivePercent;
+
+                            breakdown.push({
+                                psgId:
+                                    psg.id,
+
+                                psgNumber:
+                                    psg.psgNumber,
+
+                                client:
+                                    psg.client,
+
+                                role,
+
+                                recipientType:
+                                    "BDE",
+
+                                recipientId:
+                                    bde.id,
+
+                                incentivePercent,
+
+                                processCompletedAt:
+                                    psg.client
+                                        ?.processUpdatedAt,
+                            });
+                        }
+
+                        const payout =
+                            payouts.find(
+                                (
+                                    item
+                                ) =>
+                                    item.recipientType ===
+                                        "BDE" &&
+                                    item.bdeId ===
+                                        bde.id
+                            );
+
+                        return {
+                            bde: {
+                                id:
+                                    bde.id,
+
+                                firstName:
+                                    bde.firstName,
+
+                                lastName:
+                                    bde.lastName,
+
+                                email:
+                                    bde.email,
+                            },
+
+                            recipientType:
+                                "BDE",
+
+                            totalIncentivePercent,
+
+                            eligiblePSGAs,
+
+                            payoutStatus:
+                                payout?.status ||
+                                "NOT_CREATED",
+
+                            paymentReference:
+                                payout?.paymentReference ||
+                                null,
+
+                            approvedAt:
+                                payout?.approvedAt ||
+                                null,
+
+                            paidAt:
+                                payout?.paidAt ||
+                                null,
+
+                            payoutId:
+                                payout?.id ||
+                                null,
+
+                            breakdown,
+                        };
+                    }
+                );
+
+            // =================================================
+            // ADMIN SUMMARY
+            // =================================================
+
+            const adminSummary =
+                admins.map(
+                    (admin) => {
+                        let totalIncentivePercent =
+                            0;
+
+                        let eligiblePSGAs =
+                            0;
+
+                        const breakdown =
+                            [];
+
+                        for (
+                            const psg of psgas
+                        ) {
+                            const incentivePercent =
+                                calculateRecipientPercentage(
+                                    psg,
+                                    "ADMIN",
+                                    admin.id
+                                );
+
+                            if (
+                                incentivePercent <=
+                                0
+                            ) {
+                                continue;
+                            }
+
+                            eligiblePSGAs +=
+                                1;
+
+                            totalIncentivePercent +=
+                                incentivePercent;
+
+                            breakdown.push({
+                                psgId:
+                                    psg.id,
+
+                                psgNumber:
+                                    psg.psgNumber,
+
+                                client:
+                                    psg.client,
+
+                                role:
+                                    "ADMIN",
+
+                                recipientType:
+                                    "ADMIN",
+
+                                recipientId:
+                                    admin.id,
+
+                                incentivePercent,
+
+                                processCompletedAt:
+                                    psg.client
+                                        ?.processUpdatedAt,
+                            });
+                        }
+
+                        const payout =
+                            payouts.find(
+                                (
+                                    item
+                                ) =>
+                                    item.recipientType ===
+                                        "ADMIN" &&
+                                    item.adminId ===
+                                        admin.id
+                            );
+
+                        return {
+                            admin: {
+                                id:
+                                    admin.id,
+
+                                firstName:
+                                    admin.firstName,
+
+                                lastName:
+                                    admin.lastName,
+
+                                email:
+                                    admin.email,
+                            },
+
+                            recipientType:
+                                "ADMIN",
+
+                            totalIncentivePercent,
+
+                            eligiblePSGAs,
+
+                            payoutStatus:
+                                payout?.status ||
+                                "NOT_CREATED",
+
+                            paymentReference:
+                                payout?.paymentReference ||
+                                null,
+
+                            approvedAt:
+                                payout?.approvedAt ||
+                                null,
+
+                            paidAt:
+                                payout?.paidAt ||
+                                null,
+
+                            payoutId:
+                                payout?.id ||
+                                null,
+
+                            breakdown,
+                        };
+                    }
+                );
+
+            // =================================================
+            // DIRECT ADMIN CLIENTS
+            // =================================================
+            //
+            // These are clients without sourceLead.
+            //
+            // Their incentive recipient is the Admin who
+            // directly created the client.
+            //
+            // We only expose them as eligible candidates here
+            // unless an explicit ADMIN incentive allocation
+            // exists.
+            //
+            // No percentage is invented.
+            // =================================================
+
+            const adminEligibleClients =
+                psgas
+                    .filter(
+                        (psg) =>
+                            !psg.client
+                                ?.sourceLead
+                    )
+                    .map(
+                        (psg) => {
+                            const adminRecipientId =
+                                psg.client
+                                    ?.createdById ||
+                                null;
+
+                            const adminAllocation =
+                                psg.incentiveAllocations.filter(
+                                    (
+                                        allocation
+                                    ) =>
+                                        allocation.recipientType ===
+                                            "ADMIN" &&
+                                        allocation.adminId ===
+                                            adminRecipientId
+                                );
+
+                            const explicitPercent =
+                                adminAllocation.reduce(
+                                    (
+                                        total,
+                                        allocation
+                                    ) =>
+                                        total +
+                                        Number(
+                                            allocation.incentivePercent ||
+                                                0
+                                        ),
+                                    0
+                                );
+
+                            return {
+                                psgId:
+                                    psg.id,
+
+                                psgNumber:
+                                    psg.psgNumber,
+
+                                client:
+                                    psg.client,
+
+                                recipientType:
+                                    "ADMIN",
+
+                                recipientId:
+                                    adminRecipientId,
+
+                                incentiveStatus:
+                                    psg.incentiveStatus,
+
+                                explicitIncentivePercent:
+                                    explicitPercent,
+
+                                allocations:
+                                    adminAllocation,
+                            };
+                        }
+                    );
+
+            // =================================================
+            // OVERALL SUMMARY
+            // =================================================
+
+            const totalBdeIncentivePercent =
+                bdeSummary.reduce(
+                    (
+                        sum,
+                        item
+                    ) =>
+                        sum +
+                        item.totalIncentivePercent,
+                    0
+                );
+
+            const totalAdminIncentivePercent =
+                adminSummary.reduce(
+                    (
+                        sum,
+                        item
+                    ) =>
+                        sum +
+                        item.totalIncentivePercent,
+                    0
+                );
+
+            const totalEligibleBdePSGAs =
+                bdeSummary.reduce(
+                    (
+                        sum,
+                        item
+                    ) =>
+                        sum +
+                        item.eligiblePSGAs,
+                    0
+                );
+
+            const totalEligibleAdminPSGAs =
+                adminSummary.reduce(
+                    (
+                        sum,
+                        item
+                    ) =>
+                        sum +
+                        item.eligiblePSGAs,
+                    0
+                );
+
+            const pendingPayouts =
+                payouts.filter(
+                    (item) =>
+                        item.status ===
+                        "PENDING"
+                ).length;
+
+            const approvedPayouts =
+                payouts.filter(
+                    (item) =>
+                        item.status ===
+                        "APPROVED"
+                ).length;
+
+            const paidPayouts =
+                payouts.filter(
+                    (item) =>
+                        item.status ===
+                        "PAID"
+                ).length;
+
+            return res.status(200).json({
+                success: true,
+
+                data: {
+                    salaryMonth:
+                        start,
+
+                    summary: {
+                        totalBDEs:
+                            bdes.length,
+
+                        totalAdmins:
+                            admins.length,
+
+                        totalEligibleBdePSGAs,
+
+                        totalEligibleAdminPSGAs,
+
+                        totalIncentivePercent:
+                            totalBdeIncentivePercent +
+                            totalAdminIncentivePercent,
+
+                        totalBdeIncentivePercent,
+
+                        totalAdminIncentivePercent,
+
+                        pendingPayouts,
+
+                        approvedPayouts,
+
+                        paidPayouts,
+
+                        adminEligibleClients:
+                            adminEligibleClients.length,
+                    },
+
+                    bdeSummary,
+
+                    adminSummary,
+
+                    payouts,
+
+                    adminEligibleClients,
+                },
+            });
+        } catch (error) {
+            console.error(
+                "getAdminIncentiveDashboard error:",
+                error
+            );
+
+            return res.status(500).json({
+                success: false,
+
+                message:
+                    "Failed to fetch admin incentive dashboard",
+
+                error:
+                    error instanceof Error
+                        ? error.message
+                        : String(error),
+            });
+        }
     };
-
-    const payouts = await prisma.incentivePayout.findMany({
-      where: payoutWhere,
-      include: {
-        bde: {
-          select: {
-            id: true,
-            firstName: true,
-            lastName: true,
-            email: true,
-          },
-        },
-        approvedBy: {
-          select: {
-            id: true,
-            firstName: true,
-            lastName: true,
-            email: true,
-          },
-        },
-      },
-      orderBy: {
-        createdAt: "asc",
-      },
-    });
-
-    // --------------------------------------------------------
-    // Get accepted PSGAs for the month
-    // --------------------------------------------------------
-
-    const psgas = await prisma.pSGA.findMany({
-      where: {
-        status: "ACCEPTED",
-        acceptedAt: {
-          gte: startOfMonth,
-          lt: startOfNextMonth,
-        },
-      },
-      include: {
-        client: {
-          select: {
-            id: true,
-            associationName: true,
-          },
-        },
-        bde: {
-          select: {
-            id: true,
-            firstName: true,
-            lastName: true,
-            email: true,
-          },
-        },
-        incentiveAllocations: {
-          where: {
-            role: "SUPPORTING",
-          },
-          include: {
-            bde: {
-              select: {
-                id: true,
-                firstName: true,
-                lastName: true,
-                email: true,
-              },
-            },
-          },
-        },
-      },
-      orderBy: {
-        acceptedAt: "asc",
-      },
-    });
-
-    // --------------------------------------------------------
-    // Build BDE-wise summary
-    // --------------------------------------------------------
-
-    const bdeSummary = bdes.map((bde) => {
-      let totalIncentivePercent = 0;
-      let eligiblePSGAs = 0;
-
-      const breakdown = [];
-
-      for (const psg of psgas) {
-        const supportingTotal =
-          psg.incentiveAllocations.reduce(
-            (sum, allocation) =>
-              sum + Number(allocation.incentivePercent),
-            0
-          );
-
-        let incentivePercent = 0;
-        let role = null;
-
-        // Primary BDE
-        if (psg.bdeId === bde.id) {
-          incentivePercent = Math.max(
-            0,
-            100 - supportingTotal
-          );
-
-          role = "PRIMARY";
-        } else {
-          // Supporting BDE
-          const supportingAllocation =
-            psg.incentiveAllocations.find(
-              (allocation) =>
-                allocation.bdeId === bde.id
-            );
-
-          if (supportingAllocation) {
-            incentivePercent = Number(
-              supportingAllocation.incentivePercent
-            );
-
-            role = "SUPPORTING";
-          }
-        }
-
-        if (role) {
-          eligiblePSGAs += 1;
-          totalIncentivePercent += incentivePercent;
-
-          breakdown.push({
-            psgId: psg.id,
-            psgNumber: psg.psgNumber,
-            client: psg.client,
-            role,
-            incentivePercent,
-            acceptedAt: psg.acceptedAt,
-          });
-        }
-      }
-
-      const payout = payouts.find(
-        (item) => item.bdeId === bde.id
-      );
-
-      return {
-        bde: {
-          id: bde.id,
-          firstName: bde.firstName,
-          lastName: bde.lastName,
-          email: bde.email,
-        },
-
-        totalIncentivePercent,
-
-        eligiblePSGAs,
-
-        payoutStatus:
-          payout?.status || "NOT_CREATED",
-
-        paymentReference:
-          payout?.paymentReference || null,
-
-        approvedAt:
-          payout?.approvedAt || null,
-
-        paidAt:
-          payout?.paidAt || null,
-
-        payoutId:
-          payout?.id || null,
-
-        breakdown,
-      };
-    });
-
-    // --------------------------------------------------------
-    // Overall summary
-    // --------------------------------------------------------
-
-    const totalIncentivePercent =
-      bdeSummary.reduce(
-        (sum, item) =>
-          sum + item.totalIncentivePercent,
-        0
-      );
-
-    const totalEligiblePSGAs =
-      bdeSummary.reduce(
-        (sum, item) =>
-          sum + item.eligiblePSGAs,
-        0
-      );
-
-    const pendingPayouts = payouts.filter(
-      (item) => item.status === "PENDING"
-    ).length;
-
-    const approvedPayouts = payouts.filter(
-      (item) => item.status === "APPROVED"
-    ).length;
-
-    const paidPayouts = payouts.filter(
-      (item) => item.status === "PAID"
-    ).length;
-
-    return res.status(200).json({
-      success: true,
-
-      data: {
-        salaryMonth: startOfMonth,
-
-        summary: {
-          totalBDEs: bdes.length,
-          totalEligiblePSGAs,
-          totalIncentivePercent,
-
-          pendingPayouts,
-          approvedPayouts,
-          paidPayouts,
-        },
-
-        bdeSummary,
-
-        payouts,
-      },
-    });
-  } catch (error) {
-    console.error(
-      "getAdminIncentiveDashboard error:",
-      error
-    );
-
-    return res.status(500).json({
-      success: false,
-      message:
-        "Failed to fetch admin incentive dashboard",
-    });
-  }
-};

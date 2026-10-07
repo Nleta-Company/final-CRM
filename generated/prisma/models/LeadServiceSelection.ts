@@ -340,9 +340,9 @@ export type LeadServiceSelectionWhereInput = {
   createdById?: Prisma.StringFilter<"LeadServiceSelection"> | string
   createdAt?: Prisma.DateTimeFilter<"LeadServiceSelection"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"LeadServiceSelection"> | Date | string
-  createdBy?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   lead?: Prisma.XOR<Prisma.LeadScalarRelationFilter, Prisma.LeadWhereInput>
   service?: Prisma.XOR<Prisma.ServiceCatalogScalarRelationFilter, Prisma.ServiceCatalogWhereInput>
+  createdBy?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
 }
 
 export type LeadServiceSelectionOrderByWithRelationInput = {
@@ -364,9 +364,9 @@ export type LeadServiceSelectionOrderByWithRelationInput = {
   createdById?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
-  createdBy?: Prisma.UserOrderByWithRelationInput
   lead?: Prisma.LeadOrderByWithRelationInput
   service?: Prisma.ServiceCatalogOrderByWithRelationInput
+  createdBy?: Prisma.UserOrderByWithRelationInput
 }
 
 export type LeadServiceSelectionWhereUniqueInput = Prisma.AtLeast<{
@@ -391,9 +391,9 @@ export type LeadServiceSelectionWhereUniqueInput = Prisma.AtLeast<{
   createdById?: Prisma.StringFilter<"LeadServiceSelection"> | string
   createdAt?: Prisma.DateTimeFilter<"LeadServiceSelection"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"LeadServiceSelection"> | Date | string
-  createdBy?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   lead?: Prisma.XOR<Prisma.LeadScalarRelationFilter, Prisma.LeadWhereInput>
   service?: Prisma.XOR<Prisma.ServiceCatalogScalarRelationFilter, Prisma.ServiceCatalogWhereInput>
+  createdBy?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
 }, "id">
 
 export type LeadServiceSelectionOrderByWithAggregationInput = {
@@ -462,9 +462,9 @@ export type LeadServiceSelectionCreateInput = {
   notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  createdBy: Prisma.UserCreateNestedOneWithoutLeadServiceSelectionsInput
   lead: Prisma.LeadCreateNestedOneWithoutServiceSelectionsInput
   service: Prisma.ServiceCatalogCreateNestedOneWithoutLeadSelectionsInput
+  createdBy: Prisma.UserCreateNestedOneWithoutLeadServiceSelectionsInput
 }
 
 export type LeadServiceSelectionUncheckedCreateInput = {
@@ -504,9 +504,9 @@ export type LeadServiceSelectionUpdateInput = {
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdBy?: Prisma.UserUpdateOneRequiredWithoutLeadServiceSelectionsNestedInput
   lead?: Prisma.LeadUpdateOneRequiredWithoutServiceSelectionsNestedInput
   service?: Prisma.ServiceCatalogUpdateOneRequiredWithoutLeadSelectionsNestedInput
+  createdBy?: Prisma.UserUpdateOneRequiredWithoutLeadServiceSelectionsNestedInput
 }
 
 export type LeadServiceSelectionUncheckedUpdateInput = {
@@ -913,8 +913,8 @@ export type LeadServiceSelectionCreateWithoutLeadInput = {
   notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  createdBy: Prisma.UserCreateNestedOneWithoutLeadServiceSelectionsInput
   service: Prisma.ServiceCatalogCreateNestedOneWithoutLeadSelectionsInput
+  createdBy: Prisma.UserCreateNestedOneWithoutLeadServiceSelectionsInput
 }
 
 export type LeadServiceSelectionUncheckedCreateWithoutLeadInput = {
@@ -979,8 +979,8 @@ export type LeadServiceSelectionCreateWithoutServiceInput = {
   notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  createdBy: Prisma.UserCreateNestedOneWithoutLeadServiceSelectionsInput
   lead: Prisma.LeadCreateNestedOneWithoutServiceSelectionsInput
+  createdBy: Prisma.UserCreateNestedOneWithoutLeadServiceSelectionsInput
 }
 
 export type LeadServiceSelectionUncheckedCreateWithoutServiceInput = {
@@ -1145,8 +1145,8 @@ export type LeadServiceSelectionUpdateWithoutLeadInput = {
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdBy?: Prisma.UserUpdateOneRequiredWithoutLeadServiceSelectionsNestedInput
   service?: Prisma.ServiceCatalogUpdateOneRequiredWithoutLeadSelectionsNestedInput
+  createdBy?: Prisma.UserUpdateOneRequiredWithoutLeadServiceSelectionsNestedInput
 }
 
 export type LeadServiceSelectionUncheckedUpdateWithoutLeadInput = {
@@ -1225,8 +1225,8 @@ export type LeadServiceSelectionUpdateWithoutServiceInput = {
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdBy?: Prisma.UserUpdateOneRequiredWithoutLeadServiceSelectionsNestedInput
   lead?: Prisma.LeadUpdateOneRequiredWithoutServiceSelectionsNestedInput
+  createdBy?: Prisma.UserUpdateOneRequiredWithoutLeadServiceSelectionsNestedInput
 }
 
 export type LeadServiceSelectionUncheckedUpdateWithoutServiceInput = {
@@ -1290,9 +1290,9 @@ export type LeadServiceSelectionSelect<ExtArgs extends runtime.Types.Extensions.
   createdById?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  createdBy?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   lead?: boolean | Prisma.LeadDefaultArgs<ExtArgs>
   service?: boolean | Prisma.ServiceCatalogDefaultArgs<ExtArgs>
+  createdBy?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["leadServiceSelection"]>
 
 export type LeadServiceSelectionSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -1314,9 +1314,9 @@ export type LeadServiceSelectionSelectCreateManyAndReturn<ExtArgs extends runtim
   createdById?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  createdBy?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   lead?: boolean | Prisma.LeadDefaultArgs<ExtArgs>
   service?: boolean | Prisma.ServiceCatalogDefaultArgs<ExtArgs>
+  createdBy?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["leadServiceSelection"]>
 
 export type LeadServiceSelectionSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -1338,9 +1338,9 @@ export type LeadServiceSelectionSelectUpdateManyAndReturn<ExtArgs extends runtim
   createdById?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  createdBy?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   lead?: boolean | Prisma.LeadDefaultArgs<ExtArgs>
   service?: boolean | Prisma.ServiceCatalogDefaultArgs<ExtArgs>
+  createdBy?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["leadServiceSelection"]>
 
 export type LeadServiceSelectionSelectScalar = {
@@ -1366,27 +1366,27 @@ export type LeadServiceSelectionSelectScalar = {
 
 export type LeadServiceSelectionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "leadId" | "serviceId" | "serviceCode" | "serviceName" | "pricingBasis" | "pricingLabel" | "assetCategory" | "quantity" | "unitRate" | "baseAmount" | "gstPercent" | "gstAmount" | "totalAmount" | "notes" | "createdById" | "createdAt" | "updatedAt", ExtArgs["result"]["leadServiceSelection"]>
 export type LeadServiceSelectionInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  createdBy?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   lead?: boolean | Prisma.LeadDefaultArgs<ExtArgs>
   service?: boolean | Prisma.ServiceCatalogDefaultArgs<ExtArgs>
+  createdBy?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }
 export type LeadServiceSelectionIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  createdBy?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   lead?: boolean | Prisma.LeadDefaultArgs<ExtArgs>
   service?: boolean | Prisma.ServiceCatalogDefaultArgs<ExtArgs>
+  createdBy?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }
 export type LeadServiceSelectionIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  createdBy?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   lead?: boolean | Prisma.LeadDefaultArgs<ExtArgs>
   service?: boolean | Prisma.ServiceCatalogDefaultArgs<ExtArgs>
+  createdBy?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }
 
 export type $LeadServiceSelectionPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "LeadServiceSelection"
   objects: {
-    createdBy: Prisma.$UserPayload<ExtArgs>
     lead: Prisma.$LeadPayload<ExtArgs>
     service: Prisma.$ServiceCatalogPayload<ExtArgs>
+    createdBy: Prisma.$UserPayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1801,9 +1801,9 @@ readonly fields: LeadServiceSelectionFieldRefs;
  */
 export interface Prisma__LeadServiceSelectionClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  createdBy<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   lead<T extends Prisma.LeadDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.LeadDefaultArgs<ExtArgs>>): Prisma.Prisma__LeadClient<runtime.Types.Result.GetResult<Prisma.$LeadPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   service<T extends Prisma.ServiceCatalogDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ServiceCatalogDefaultArgs<ExtArgs>>): Prisma.Prisma__ServiceCatalogClient<runtime.Types.Result.GetResult<Prisma.$ServiceCatalogPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  createdBy<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.

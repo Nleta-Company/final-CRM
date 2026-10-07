@@ -341,8 +341,8 @@ export type ClientServiceSelectionWhereInput = {
   createdAt?: Prisma.DateTimeFilter<"ClientServiceSelection"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"ClientServiceSelection"> | Date | string
   client?: Prisma.XOR<Prisma.ClientScalarRelationFilter, Prisma.ClientWhereInput>
-  createdBy?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   service?: Prisma.XOR<Prisma.ServiceCatalogScalarRelationFilter, Prisma.ServiceCatalogWhereInput>
+  createdBy?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
 }
 
 export type ClientServiceSelectionOrderByWithRelationInput = {
@@ -365,8 +365,8 @@ export type ClientServiceSelectionOrderByWithRelationInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   client?: Prisma.ClientOrderByWithRelationInput
-  createdBy?: Prisma.UserOrderByWithRelationInput
   service?: Prisma.ServiceCatalogOrderByWithRelationInput
+  createdBy?: Prisma.UserOrderByWithRelationInput
 }
 
 export type ClientServiceSelectionWhereUniqueInput = Prisma.AtLeast<{
@@ -392,8 +392,8 @@ export type ClientServiceSelectionWhereUniqueInput = Prisma.AtLeast<{
   createdAt?: Prisma.DateTimeFilter<"ClientServiceSelection"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"ClientServiceSelection"> | Date | string
   client?: Prisma.XOR<Prisma.ClientScalarRelationFilter, Prisma.ClientWhereInput>
-  createdBy?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   service?: Prisma.XOR<Prisma.ServiceCatalogScalarRelationFilter, Prisma.ServiceCatalogWhereInput>
+  createdBy?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
 }, "id">
 
 export type ClientServiceSelectionOrderByWithAggregationInput = {
@@ -463,8 +463,8 @@ export type ClientServiceSelectionCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   client: Prisma.ClientCreateNestedOneWithoutServiceSelectionsInput
-  createdBy: Prisma.UserCreateNestedOneWithoutClientServiceSelectionsInput
   service: Prisma.ServiceCatalogCreateNestedOneWithoutClientSelectionsInput
+  createdBy: Prisma.UserCreateNestedOneWithoutClientServiceSelectionsInput
 }
 
 export type ClientServiceSelectionUncheckedCreateInput = {
@@ -505,8 +505,8 @@ export type ClientServiceSelectionUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   client?: Prisma.ClientUpdateOneRequiredWithoutServiceSelectionsNestedInput
-  createdBy?: Prisma.UserUpdateOneRequiredWithoutClientServiceSelectionsNestedInput
   service?: Prisma.ServiceCatalogUpdateOneRequiredWithoutClientSelectionsNestedInput
+  createdBy?: Prisma.UserUpdateOneRequiredWithoutClientServiceSelectionsNestedInput
 }
 
 export type ClientServiceSelectionUncheckedUpdateInput = {
@@ -913,8 +913,8 @@ export type ClientServiceSelectionCreateWithoutClientInput = {
   notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  createdBy: Prisma.UserCreateNestedOneWithoutClientServiceSelectionsInput
   service: Prisma.ServiceCatalogCreateNestedOneWithoutClientSelectionsInput
+  createdBy: Prisma.UserCreateNestedOneWithoutClientServiceSelectionsInput
 }
 
 export type ClientServiceSelectionUncheckedCreateWithoutClientInput = {
@@ -1145,8 +1145,8 @@ export type ClientServiceSelectionUpdateWithoutClientInput = {
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdBy?: Prisma.UserUpdateOneRequiredWithoutClientServiceSelectionsNestedInput
   service?: Prisma.ServiceCatalogUpdateOneRequiredWithoutClientSelectionsNestedInput
+  createdBy?: Prisma.UserUpdateOneRequiredWithoutClientServiceSelectionsNestedInput
 }
 
 export type ClientServiceSelectionUncheckedUpdateWithoutClientInput = {
@@ -1291,8 +1291,8 @@ export type ClientServiceSelectionSelect<ExtArgs extends runtime.Types.Extension
   createdAt?: boolean
   updatedAt?: boolean
   client?: boolean | Prisma.ClientDefaultArgs<ExtArgs>
-  createdBy?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   service?: boolean | Prisma.ServiceCatalogDefaultArgs<ExtArgs>
+  createdBy?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["clientServiceSelection"]>
 
 export type ClientServiceSelectionSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -1315,8 +1315,8 @@ export type ClientServiceSelectionSelectCreateManyAndReturn<ExtArgs extends runt
   createdAt?: boolean
   updatedAt?: boolean
   client?: boolean | Prisma.ClientDefaultArgs<ExtArgs>
-  createdBy?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   service?: boolean | Prisma.ServiceCatalogDefaultArgs<ExtArgs>
+  createdBy?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["clientServiceSelection"]>
 
 export type ClientServiceSelectionSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -1339,8 +1339,8 @@ export type ClientServiceSelectionSelectUpdateManyAndReturn<ExtArgs extends runt
   createdAt?: boolean
   updatedAt?: boolean
   client?: boolean | Prisma.ClientDefaultArgs<ExtArgs>
-  createdBy?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   service?: boolean | Prisma.ServiceCatalogDefaultArgs<ExtArgs>
+  createdBy?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["clientServiceSelection"]>
 
 export type ClientServiceSelectionSelectScalar = {
@@ -1367,26 +1367,26 @@ export type ClientServiceSelectionSelectScalar = {
 export type ClientServiceSelectionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "clientId" | "serviceId" | "serviceCode" | "serviceName" | "pricingBasis" | "pricingLabel" | "assetCategory" | "quantity" | "unitRate" | "baseAmount" | "gstPercent" | "gstAmount" | "totalAmount" | "notes" | "createdById" | "createdAt" | "updatedAt", ExtArgs["result"]["clientServiceSelection"]>
 export type ClientServiceSelectionInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   client?: boolean | Prisma.ClientDefaultArgs<ExtArgs>
-  createdBy?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   service?: boolean | Prisma.ServiceCatalogDefaultArgs<ExtArgs>
+  createdBy?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }
 export type ClientServiceSelectionIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   client?: boolean | Prisma.ClientDefaultArgs<ExtArgs>
-  createdBy?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   service?: boolean | Prisma.ServiceCatalogDefaultArgs<ExtArgs>
+  createdBy?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }
 export type ClientServiceSelectionIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   client?: boolean | Prisma.ClientDefaultArgs<ExtArgs>
-  createdBy?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   service?: boolean | Prisma.ServiceCatalogDefaultArgs<ExtArgs>
+  createdBy?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }
 
 export type $ClientServiceSelectionPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "ClientServiceSelection"
   objects: {
     client: Prisma.$ClientPayload<ExtArgs>
-    createdBy: Prisma.$UserPayload<ExtArgs>
     service: Prisma.$ServiceCatalogPayload<ExtArgs>
+    createdBy: Prisma.$UserPayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1802,8 +1802,8 @@ readonly fields: ClientServiceSelectionFieldRefs;
 export interface Prisma__ClientServiceSelectionClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   client<T extends Prisma.ClientDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ClientDefaultArgs<ExtArgs>>): Prisma.Prisma__ClientClient<runtime.Types.Result.GetResult<Prisma.$ClientPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-  createdBy<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   service<T extends Prisma.ServiceCatalogDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ServiceCatalogDefaultArgs<ExtArgs>>): Prisma.Prisma__ServiceCatalogClient<runtime.Types.Result.GetResult<Prisma.$ServiceCatalogPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  createdBy<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.

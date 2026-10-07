@@ -1,430 +1,1267 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
-import Link from "next/link";
+import React, { useEffect, useMemo, useState } from "react";
+
 import Breadcrumb from "@/components/breadcrumb/Breadcrumb";
-import MetricGroup, {
-  MetricGroupItem,
-} from "@/components/metrics/MetricGroup";
-import AreaChart from "@/components/charts/AreaChart";
-import RadialProgressChart from "@/components/charts/RadialProgressChart";
-import BarChart from "@/components/charts/BarChart";
 import LeadsTable from "@/components/tables/LeadsTable";
 import Button from "@/components/ui/Button";
 
 import { leadService } from "@/services/leadService";
-import { assetService } from "@/services/assetService";
+import { clientService } from "@/services/clientService";
 import { bdeService } from "@/services/bdeService";
-import { technicianService } from "@/services/technicianService";
 
 import { LeadStats } from "@/types/lead";
-import { AssetStats } from "@/types/asset";
+import { ClientStats } from "@/types/client";
 import { BdeStats } from "@/types/bde";
-import { TechnicianStats } from "@/types/technician";
+
+interface ProcessStats {
+  clientCreated: number;
+  fsoGenerated: number;
+  psgaGenerated: number;
+  psgaCompleted: number;
+}
+
+type ProcessStatus =
+  | "active"
+  | "pending"
+  | "completed";
 
 export default function AdminDashboardPage() {
-  const [selectedTimeframe, setSelectedTimeframe] = useState<
-    "monthly" | "quarterly" | "yearly"
-  >("monthly");
+  const [toastMessage, setToastMessage] =
+    useState<string | null>(null);
 
-  const [toastMessage, setToastMessage] = useState<string | null>(null);
+  const [leadStats, setLeadStats] =
+    useState<LeadStats | null>(null);
 
-  const [leadStats, setLeadStats] = useState<LeadStats | null>(null);
-  const [assetStats, setAssetStats] = useState<AssetStats | null>(null);
-  const [bdeStats, setBdeStats] = useState<BdeStats | null>(null);
-  const [techStats, setTechStats] = useState<TechnicianStats | null>(null);
+  const [clientStats, setClientStats] =
+    useState<ClientStats | null>(null);
 
-  const showToast = (msg: string) => {
-    setToastMessage(msg);
-    setTimeout(() => setToastMessage(null), 3000);
+  const [bdeStats, setBdeStats] =
+    useState<BdeStats | null>(null);
+
+  const [processStats, setProcessStats] =
+    useState<ProcessStats | null>(null);
+
+  const [loading, setLoading] =
+    useState(true);
+
+  const [error, setError] =
+    useState<string | null>(null);
+
+  const showToast = (message: string) => {
+    setToastMessage(message);
+
+    window.setTimeout(() => {
+      setToastMessage(null);
+    }, 3000);
   };
 
-  const loadLiveStats = async () => {
+  /*
+   * ============================================================
+   * LOAD REAL CRM DATA
+   * ============================================================
+   */
+
+  const loadDashboardData = async () => {
     try {
-      const [leads, assets, bdes, techs] = await Promise.all([
+      setError(null);
+
+      const [
+        leads,
+        clients,
+        process,
+        bdes,
+      ] = await Promise.all([
         leadService.getLeadStats(),
-        assetService.getAssetStats(),
+        clientService.getClientStats(),
+        clientService.getClientProcessStats(),
         bdeService.getBdeStats(),
-        technicianService.getTechnicianStats(),
       ]);
 
       setLeadStats(leads);
-      setAssetStats(assets);
+      setClientStats(clients);
+      setProcessStats(process);
       setBdeStats(bdes);
-      setTechStats(techs);
     } catch (err) {
-      console.error("Error loading dashboard live statistics:", err);
+      console.error(
+        "Failed to load admin dashboard:",
+        err
+      );
+
+      setError(
+        "Unable to load dashboard data. Please try again."
+      );
+    } finally {
+      setLoading(false);
     }
   };
 
   useEffect(() => {
-    loadLiveStats();
+    loadDashboardData();
 
-    const unsubLeads = leadService.subscribe(loadLiveStats);
-    const unsubAssets = assetService.subscribe(loadLiveStats);
-    const unsubBdes = bdeService.subscribe(loadLiveStats);
-    const unsubTechs = technicianService.subscribe(loadLiveStats);
+    const unsubscribeLeads =
+      leadService.subscribe(loadDashboardData);
+
+    const unsubscribeClients =
+      clientService.subscribe(loadDashboardData);
+
+    const unsubscribeBde =
+      bdeService.subscribe(loadDashboardData);
 
     return () => {
-      unsubLeads();
-      unsubAssets();
-      unsubBdes();
-      unsubTechs();
+      unsubscribeLeads();
+      unsubscribeClients();
+      unsubscribeBde();
     };
   }, []);
 
-  // Dashboard Summary Cards
-  const dynamicMetrics: MetricGroupItem[] = [
+  /*
+   * ============================================================
+   * REAL CRM VALUES
+   * ============================================================
+   */
+
+  const totalLeads =
+    leadStats?.total ?? null;
+
+  const totalClients =
+    clientStats?.totalClients ?? null;
+
+  const clientCreated =
+    processStats?.clientCreated ?? null;
+
+  const fsoGenerated =
+    processStats?.fsoGenerated ?? null;
+
+  const psgaGenerated =
+    processStats?.psgaGenerated ?? null;
+
+  const psgaCompleted =
+    processStats?.psgaCompleted ?? null;
+
+  /*
+   * ============================================================
+   * PROCESS PERCENTAGES
+   * ============================================================
+   */
+
+  const fsoRate = useMemo(() => {
+    if (
+      clientCreated === null ||
+      clientCreated <= 0 ||
+      fsoGenerated === null
+    ) {
+      return null;
+    }
+
+    return Math.min(
+      100,
+      Math.round(
+        (fsoGenerated / clientCreated) * 100
+      )
+    );
+  }, [clientCreated, fsoGenerated]);
+
+  const psgaRate = useMemo(() => {
+    if (
+      fsoGenerated === null ||
+      fsoGenerated <= 0 ||
+      psgaGenerated === null
+    ) {
+      return null;
+    }
+
+    return Math.min(
+      100,
+      Math.round(
+        (psgaGenerated / fsoGenerated) * 100
+      )
+    );
+  }, [fsoGenerated, psgaGenerated]);
+
+  const completionRate = useMemo(() => {
+    if (
+      psgaGenerated === null ||
+      psgaGenerated <= 0 ||
+      psgaCompleted === null
+    ) {
+      return null;
+    }
+
+    return Math.min(
+      100,
+      Math.round(
+        (psgaCompleted / psgaGenerated) * 100
+      )
+    );
+  }, [psgaGenerated, psgaCompleted]);
+
+  /*
+   * ============================================================
+   * PROCESS CHART SCALE
+   * ============================================================
+   */
+
+  const processMaximum = useMemo(() => {
+    const values = [
+      clientCreated,
+      fsoGenerated,
+      psgaGenerated,
+      psgaCompleted,
+    ].filter(
+      (value): value is number =>
+        typeof value === "number"
+    );
+
+    if (!values.length) {
+      return 0;
+    }
+
+    return Math.max(...values);
+  }, [
+    clientCreated,
+    fsoGenerated,
+    psgaGenerated,
+    psgaCompleted,
+  ]);
+
+  /*
+   * ============================================================
+   * KPI DATA
+   * ============================================================
+   */
+
+  const kpis = [
     {
       id: "leads",
       title: "Total Leads",
-      value: leadStats ? leadStats.total.toLocaleString() : "—",
-      change:
-        leadStats?.won !== undefined ? `${leadStats.won} won` : "—",
-      changeType: "increase",
-      period: "Current Pipeline",
-      icon: (
-        <svg
-          className="w-6 h-6 fill-current text-brand-600 dark:text-brand-400"
-          viewBox="0 0 24 24"
-        >
-          <path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z" />
-        </svg>
-      ),
+      value: totalLeads,
+      subtitle: "Lead pipeline",
+      icon: <LeadIcon />,
+      iconClass:
+        "bg-blue-50 text-blue-600 dark:bg-blue-500/10 dark:text-blue-400",
     },
 
     {
-      id: "inspections",
-      title: "Active Inspections",
-      value: assetStats
-        ? assetStats.totalAssets.toLocaleString()
-        : "—",
-      change:
-        assetStats?.certifiedOperational !== undefined
-          ? `${assetStats.certifiedOperational} certified`
-          : "—",
-      changeType: "increase",
-      period: "Active Assets",
-      icon: (
-        <svg
-          className="w-6 h-6 fill-current text-blue-600 dark:text-blue-400"
-          viewBox="0 0 24 24"
-        >
-          <path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z" />
-        </svg>
-      ),
+      id: "clients",
+      title: "Total Clients",
+      value: totalClients,
+      subtitle: "Customer base",
+      icon: <ClientIcon />,
+      iconClass:
+        "bg-violet-50 text-violet-600 dark:bg-violet-500/10 dark:text-violet-400",
+    },
+
+    {
+      id: "fso",
+      title: "FSO Generated",
+      value: fsoGenerated,
+      subtitle: "Client → FSO",
+      icon: <DocumentIcon />,
+      iconClass:
+        "bg-indigo-50 text-indigo-600 dark:bg-indigo-500/10 dark:text-indigo-400",
+    },
+
+    {
+      id: "psga",
+      title: "PSGA Generated",
+      value: psgaGenerated,
+      subtitle: "FSO → PSGA",
+      icon: <ProcessIcon />,
+      iconClass:
+        "bg-orange-50 text-orange-600 dark:bg-orange-500/10 dark:text-orange-400",
+    },
+
+    {
+      id: "completed",
+      title: "PSGA Completed",
+      value: psgaCompleted,
+      subtitle: "Incentive eligible",
+      icon: <CheckIcon />,
+      iconClass:
+        "bg-emerald-50 text-emerald-600 dark:bg-emerald-500/10 dark:text-emerald-400",
     },
 
     {
       id: "revenue",
-      title: "Total Deal Value",
-      value: bdeStats?.formattedTotalRevenue ?? "—",
-      change: bdeStats?.formattedTotalTarget
-        ? `Target ${bdeStats.formattedTotalTarget}`
-        : "—",
-      changeType: "increase",
-      period: "Current Quarter",
-      icon: (
-        <svg
-          className="w-6 h-6 fill-current text-emerald-600 dark:text-emerald-400"
-          viewBox="0 0 24 24"
-        >
-          <path d="M11.8 10.9c-2.27-.59-3-1.2-3-2.15 0-1.09 1.01-1.85 2.7-1.85 1.78 0 2.44.85 2.5 2.1h2.21c-.07-1.72-1.12-3.3-3.21-3.81V3h-3v2.16c-1.94.42-3.5 1.68-3.5 3.61 0 2.31 1.91 3.46 4.7 4.13 2.5.6 3 1.48 3 2.41 0 .69-.49 1.79-2.7 1.79-2.06 0-2.87-.92-2.98-2.1h-2.2c.12 2.19 1.76 3.42 3.68 3.83V21h3v-2.15c1.95-.37 3.5-1.5 3.5-3.55 0-2.84-2.43-3.81-4.7-4.4z" />
-        </svg>
-      ),
-    },
-
-    {
-      id: "compliance",
-      title: "Safety Score",
-      value:
-        assetStats?.averageSafetyScore !== undefined
-          ? `${assetStats.averageSafetyScore}%`
-          : "—",
-      change:
-        techStats?.availableOnField !== undefined
-          ? `${techStats.availableOnField} inspectors active`
-          : "—",
-      changeType: "increase",
-      period: "Current Safety Rating",
-      icon: (
-        <svg
-          className="w-6 h-6 fill-current text-purple-600 dark:text-purple-400"
-          viewBox="0 0 24 24"
-        >
-          <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z" />
-        </svg>
-      ),
+      title: "Total Revenue",
+      value: null,
+      displayValue:
+        bdeStats?.formattedTotalRevenue ?? "—",
+      subtitle: "Current CRM revenue",
+      icon: <RevenueIcon />,
+      iconClass:
+        "bg-amber-50 text-amber-600 dark:bg-amber-500/10 dark:text-amber-400",
     },
   ];
 
   return (
-    <div className="space-y-8">
-      {/* Toast Notification */}
+    <div className="min-h-full space-y-8 pb-10">
+      {/* ======================================================
+          TOAST
+      ======================================================= */}
+
       {toastMessage && (
-        <div className="fixed bottom-6 right-6 z-99999 flex items-center gap-3 rounded-xl bg-gray-900 px-4 py-3 text-sm text-white shadow-theme-xl dark:bg-white dark:text-gray-900 animate-fade-in">
-          <span className="flex h-2 w-2 rounded-full bg-emerald-400" />
-          <span>{toastMessage}</span>
+        <div className="fixed bottom-6 right-6 z-99999 flex items-center gap-3 rounded-xl border border-gray-200 bg-white px-4 py-3 text-sm font-medium text-gray-800 shadow-xl dark:border-gray-800 dark:bg-gray-900 dark:text-white">
+          <span className="h-2 w-2 rounded-full bg-emerald-500" />
+          {toastMessage}
         </div>
       )}
 
-      {/* Page Header */}
+      {/* ======================================================
+          PAGE HEADER
+      ======================================================= */}
+
       <Breadcrumb
         pageTitle="Admin Dashboard"
         items={[
-          { label: "Admin", href: "/dashboard" },
-          { label: "Overview" },
+          {
+            label: "Admin",
+            href: "/dashboard",
+          },
+          {
+            label: "Overview",
+          },
         ]}
         actions={
-          <div className="flex items-center gap-2.5">
+          <div className="flex items-center gap-3">
             <Button
               size="sm"
               variant="primary"
               onClick={() => {
-                const el = document.getElementById("leads");
+                document
+                  .getElementById("recent-leads")
+                  ?.scrollIntoView({
+                    behavior: "smooth",
+                    block: "start",
+                  });
 
-                if (el) {
-                  el.scrollIntoView({ behavior: "smooth" });
-                }
-
-                showToast("Viewing Leads & Inspections");
+                showToast("Opening lead pipeline");
               }}
-              leftIcon={
-                <svg
-                  className="w-4 h-4 fill-none stroke-current"
-                  viewBox="0 0 24 24"
-                  strokeWidth="2"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M12 4v16m8-8H4"
-                  />
-                </svg>
-              }
             >
-              Manage Leads
+              View Leads
             </Button>
           </div>
         }
       />
 
-      {/* Quick Access */}
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-        <Link
-          href="/bde/dashboard"
-          className="group flex items-center justify-between rounded-2xl border border-gray-200 bg-white p-4 shadow-theme-xs transition-all hover:border-brand-500 hover:shadow-theme-md dark:border-gray-800 dark:bg-gray-900"
-        >
-          <div className="flex items-center gap-3.5">
-            <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-brand-50 text-brand-600 dark:bg-brand-500/15 dark:text-brand-400 group-hover:scale-105 transition-transform">
-              <svg className="w-6 h-6 fill-current" viewBox="0 0 20 20">
-                <path d="M10 2a4 4 0 100 8 4 4 0 000-8zM3 16a7 7 0 1114 0H3z" />
-              </svg>
-            </div>
+      {/* ======================================================
+          ERROR
+      ======================================================= */}
 
-            <div>
-              <span className="block font-bold text-sm text-gray-900 dark:text-white group-hover:text-brand-600 transition-colors">
-                Sales Dashboard
-              </span>
+      {error && (
+        <div className="flex items-center justify-between rounded-xl border border-red-200 bg-red-50 px-4 py-3 dark:border-red-500/20 dark:bg-red-500/10">
+          <div className="flex items-center gap-3">
+            <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-red-100 text-red-600 dark:bg-red-500/20 dark:text-red-400">
+              !
+            </span>
 
-              <span className="text-xs text-gray-500 dark:text-gray-400">
-                View sales, deals and targets &rarr;
-              </span>
-            </div>
+            <p className="text-sm font-medium text-red-700 dark:text-red-300">
+              {error}
+            </p>
           </div>
-        </Link>
 
-        <Link
-          href="/employees/dashboard"
-          className="group flex items-center justify-between rounded-2xl border border-gray-200 bg-white p-4 shadow-theme-xs transition-all hover:border-blue-light-500 hover:shadow-theme-md dark:border-gray-800 dark:bg-gray-900"
-        >
-          <div className="flex items-center gap-3.5">
-            <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-blue-light-50 text-blue-light-600 dark:bg-blue-light-500/15 dark:text-blue-light-400 group-hover:scale-105 transition-transform">
-              <svg className="w-6 h-6 fill-current" viewBox="0 0 20 20">
-                <path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3zM6 8a2 2 0 11-4 0 2 2 0 014 0zM16 18v-3a5.972 5.972 0 00-.75-2.906A3.005 3.005 0 0119 15v3h-3zM4.75 12.094A5.973 5.973 0 004 15v3H1v-3a3 3 0 013.75-2.906z" />
-              </svg>
-            </div>
+          <button
+            type="button"
+            onClick={loadDashboardData}
+            className="text-sm font-semibold text-red-700 hover:underline dark:text-red-300"
+          >
+            Retry
+          </button>
+        </div>
+      )}
 
-            <div>
-              <span className="block font-bold text-sm text-gray-900 dark:text-white group-hover:text-blue-light-600 transition-colors">
-                Employee Dashboard
-              </span>
+      {/* ======================================================
+          OVERVIEW HEADER
+      ======================================================= */}
 
-              <span className="text-xs text-gray-500 dark:text-gray-400">
-                View staff and departments &rarr;
-              </span>
-            </div>
-          </div>
-        </Link>
-
-        <Link
-          href="/technicians/dashboard"
-          className="group flex items-center justify-between rounded-2xl border border-gray-200 bg-white p-4 shadow-theme-xs transition-all hover:border-purple-500 hover:shadow-theme-md dark:border-gray-800 dark:bg-gray-900"
-        >
-          <div className="flex items-center gap-3.5">
-            <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-purple-50 text-purple-600 dark:bg-purple-500/15 dark:text-purple-400 group-hover:scale-105 transition-transform">
-              <svg
-                className="w-6 h-6 fill-current"
-                viewBox="0 0 20 20"
-              >
-                <path
-                  fillRule="evenodd"
-                  d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561-2.6 0-2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z"
-                  clipRule="evenodd"
-                />
-              </svg>
-            </div>
-
-            <div>
-              <span className="block font-bold text-sm text-gray-900 dark:text-white group-hover:text-purple-600 transition-colors">
-                Inspector Dashboard
-              </span>
-
-              <span className="text-xs text-gray-500 dark:text-gray-400">
-                View inspections and field work &rarr;
-              </span>
-            </div>
-          </div>
-        </Link>
-      </div>
-
-      {/* Section 1: Business Overview */}
       <section>
-        <div className="flex items-center justify-between mb-4">
-          <div>
-            <h2 className="text-base font-semibold text-gray-800 dark:text-white/90">
+        <div className="mb-5">
+          <div className="flex flex-col gap-1">
+            <h2 className="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">
               Business Overview
             </h2>
 
-            <p className="text-xs text-gray-500 dark:text-gray-400">
-              Quick view of leads, assets, revenue and safety performance
-            </p>
-          </div>
-
-          <div className="flex items-center rounded-lg border border-gray-200 bg-white p-1 dark:border-gray-800 dark:bg-gray-900 text-xs">
-            <button
-              onClick={() => setSelectedTimeframe("monthly")}
-              className={`rounded px-2.5 py-1 font-medium transition ${
-                selectedTimeframe === "monthly"
-                  ? "bg-brand-500 text-white shadow-theme-xs font-semibold"
-                  : "text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
-              }`}
-            >
-              Monthly
-            </button>
-
-            <button
-              onClick={() => setSelectedTimeframe("quarterly")}
-              className={`rounded px-2.5 py-1 font-medium transition ${
-                selectedTimeframe === "quarterly"
-                  ? "bg-brand-500 text-white shadow-theme-xs font-semibold"
-                  : "text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
-              }`}
-            >
-              Quarterly
-            </button>
-
-            <button
-              onClick={() => setSelectedTimeframe("yearly")}
-              className={`rounded px-2.5 py-1 font-medium transition ${
-                selectedTimeframe === "yearly"
-                  ? "bg-brand-500 text-white shadow-theme-xs font-semibold"
-                  : "text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
-              }`}
-            >
-              Yearly
-            </button>
-          </div>
-        </div>
-
-        <MetricGroup metrics={dynamicMetrics} />
-      </section>
-
-      {/* Section 2: Reports */}
-      <section id="analytics" className="space-y-6">
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
-          <div>
-            <h2 className="text-base font-semibold text-gray-800 dark:text-white/90">
-              Business & Safety Reports
-            </h2>
-
-            <p className="text-xs text-gray-500 dark:text-gray-400">
-              Track inspections, revenue and safety progress
+            <p className="text-sm text-gray-500 dark:text-gray-400">
+              Real-time view of your CRM pipeline and business
+              performance.
             </p>
           </div>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          <div className="w-full">
-            <AreaChart
-              title="Inspections & Revenue"
-              subtitle="Monthly inspections and revenue progress"
-            />
-          </div>
+        {/* ====================================================
+            KPI CARDS
+        ===================================================== */}
 
-          <div className="w-full">
-            <RadialProgressChart
-              title="Inspection Target Progress"
-              subtitle="Target compared with completed inspections"
-              percentage={
-                assetStats?.totalAssets &&
-                assetStats.certifiedOperational !== undefined
-                  ? Math.min(
-                      100,
-                      Math.round(
-                        (assetStats.certifiedOperational /
-                          assetStats.totalAssets) *
-                          100
-                      )
-                    )
-                  : 0
-              }
-              targetAmount={
-                assetStats?.totalAssets !== undefined
-                  ? `${assetStats.totalAssets} Audits`
-                  : "—"
-              }
-              currentAmount={
-                assetStats?.certifiedOperational !== undefined
-                  ? `${assetStats.certifiedOperational} Completed`
-                  : "—"
-              }
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-6">
+          {kpis.map((kpi) => (
+            <KpiCard
+              key={kpi.id}
+              title={kpi.title}
+              value={kpi.value}
+              displayValue={kpi.displayValue}
+              subtitle={kpi.subtitle}
+              icon={kpi.icon}
+              iconClass={kpi.iconClass}
+              loading={loading}
             />
-          </div>
-
-          <div className="w-full">
-            <BarChart
-              title="Monthly Inspection Summary"
-              subtitle="Inspection volume across different equipment types"
-              data={[]}
-            />
-          </div>
-
-          <div className="w-full">
-            <AreaChart
-              title="Quarterly Inspection Progress"
-              subtitle="Inspection completion by quarter"
-            />
-          </div>
+          ))}
         </div>
       </section>
 
-      {/* Section 3: Leads & Inspections */}
-      <section id="leads" className="space-y-4 pt-2">
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
-          <div>
-            <h2 className="text-base font-semibold text-gray-800 dark:text-white/90">
-              Leads & Inspections
-            </h2>
+      {/* ======================================================
+          CRM PIPELINE
+      ======================================================= */}
 
-            <p className="text-xs text-gray-500 dark:text-gray-400">
-              View leads and manage inspection activities
-            </p>
+      <section>
+        <SectionHeader
+          title="CRM Pipeline"
+          description="Track the customer journey from lead creation to PSGA completion."
+        />
+
+        <div className="overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm dark:border-gray-800 dark:bg-gray-900">
+          <div className="border-b border-gray-100 px-6 py-5 dark:border-gray-800">
+            <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+              <div>
+                <h3 className="text-base font-semibold text-gray-900 dark:text-white">
+                  Customer Journey
+                </h3>
+
+                <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">
+                  Lead → Client → FSO → PSGA → Completed
+                </p>
+              </div>
+
+              {completionRate !== null && (
+                <div className="inline-flex w-fit items-center gap-2 rounded-full bg-emerald-50 px-3 py-1.5 text-xs font-semibold text-emerald-700 dark:bg-emerald-500/10 dark:text-emerald-400">
+                  <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
+                  {completionRate}% PSGA completion
+                </div>
+              )}
+            </div>
+          </div>
+
+          {/* ==================================================
+              SINGLE-LINE CUSTOMER JOURNEY
+          =================================================== */}
+
+          <div className="overflow-x-auto p-6">
+            <div className="flex min-w-[1120px] items-center gap-3">
+              <PipelineCard
+                number="01"
+                title="Leads"
+                value={totalLeads}
+                description="Incoming opportunities"
+                status="active"
+                loading={loading}
+              />
+
+              <PipelineConnector />
+
+              <PipelineCard
+                number="02"
+                title="Clients"
+                value={totalClients}
+                description="Customer accounts"
+                status="active"
+                loading={loading}
+              />
+
+              <PipelineConnector />
+
+              <PipelineCard
+                number="03"
+                title="FSO"
+                value={fsoGenerated}
+                description="FSO generated"
+                status={
+                  fsoGenerated !== null &&
+                  fsoGenerated > 0
+                    ? "active"
+                    : "pending"
+                }
+                loading={loading}
+              />
+
+              <PipelineConnector />
+
+              <PipelineCard
+                number="04"
+                title="PSGA"
+                value={psgaGenerated}
+                description="PSGA generated"
+                status={
+                  psgaGenerated !== null &&
+                  psgaGenerated > 0
+                    ? "active"
+                    : "pending"
+                }
+                loading={loading}
+              />
+
+              <PipelineConnector />
+
+              <PipelineCard
+                number="05"
+                title="Completed"
+                value={psgaCompleted}
+                description="Incentive eligible"
+                status={
+                  psgaCompleted !== null &&
+                  psgaCompleted > 0
+                    ? "completed"
+                    : "pending"
+                }
+                loading={loading}
+              />
+            </div>
           </div>
         </div>
+      </section>
 
-        <LeadsTable />
+      {/* ======================================================
+          ANALYTICS
+      ======================================================= */}
+
+      <section>
+        <SectionHeader
+          title="Business Analytics"
+          description="Current CRM process performance based only on available real data."
+        />
+
+        <div className="grid grid-cols-1 gap-6 xl:grid-cols-3">
+          {/* ==================================================
+              PROCESS PERFORMANCE
+          ================================================== */}
+
+          <div className="rounded-2xl border border-gray-200 bg-white shadow-sm dark:border-gray-800 dark:bg-gray-900 xl:col-span-2">
+            <div className="border-b border-gray-100 px-6 py-5 dark:border-gray-800">
+              <div className="flex items-center justify-between">
+                <div>
+                  <h3 className="text-base font-semibold text-gray-900 dark:text-white">
+                    Process Performance
+                  </h3>
+
+                  <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">
+                    Current records at each CRM stage
+                  </p>
+                </div>
+
+                <span className="rounded-lg border border-gray-200 px-3 py-1.5 text-xs font-medium text-gray-500 dark:border-gray-700 dark:text-gray-400">
+                  Live data
+                </span>
+              </div>
+            </div>
+
+            <div className="p-6">
+              <div className="space-y-6">
+                <ProcessBar
+                  label="Clients Created"
+                  value={clientCreated}
+                  maximum={processMaximum}
+                  color="bg-blue-500"
+                  percentage={100}
+                  loading={loading}
+                />
+
+                <ProcessBar
+                  label="FSO Generated"
+                  value={fsoGenerated}
+                  maximum={processMaximum}
+                  color="bg-indigo-500"
+                  percentage={fsoRate}
+                  loading={loading}
+                />
+
+                <ProcessBar
+                  label="PSGA Generated"
+                  value={psgaGenerated}
+                  maximum={processMaximum}
+                  color="bg-orange-500"
+                  percentage={psgaRate}
+                  loading={loading}
+                />
+
+                <ProcessBar
+                  label="PSGA Completed"
+                  value={psgaCompleted}
+                  maximum={processMaximum}
+                  color="bg-emerald-500"
+                  percentage={completionRate}
+                  loading={loading}
+                />
+              </div>
+            </div>
+          </div>
+
+          {/* ==================================================
+              PROCESS SUMMARY
+          ================================================== */}
+
+          <div className="rounded-2xl border border-gray-200 bg-white shadow-sm dark:border-gray-800 dark:bg-gray-900">
+            <div className="border-b border-gray-100 px-6 py-5 dark:border-gray-800">
+              <h3 className="text-base font-semibold text-gray-900 dark:text-white">
+                Process Summary
+              </h3>
+
+              <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">
+                Current pipeline status
+              </p>
+            </div>
+
+            <div className="space-y-1 p-4">
+              <SummaryRow
+                label="Clients Created"
+                value={clientCreated}
+                icon={<ClientIcon />}
+              />
+
+              <SummaryRow
+                label="FSO Generated"
+                value={fsoGenerated}
+                icon={<DocumentIcon />}
+              />
+
+              <SummaryRow
+                label="PSGA Generated"
+                value={psgaGenerated}
+                icon={<ProcessIcon />}
+              />
+
+              <SummaryRow
+                label="PSGA Completed"
+                value={psgaCompleted}
+                icon={<CheckIcon />}
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ======================================================
+          REVENUE
+      ======================================================= */}
+
+      <section>
+        <SectionHeader
+          title="Revenue"
+          description="Current revenue available from the CRM revenue service."
+        />
+
+        <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
+          <div className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-800 dark:bg-gray-900 lg:col-span-2">
+            <div className="flex flex-col justify-between gap-6 sm:flex-row sm:items-start">
+              <div>
+                <div className="flex items-center gap-3">
+                  <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-emerald-50 text-emerald-600 dark:bg-emerald-500/10 dark:text-emerald-400">
+                    <RevenueIcon />
+                  </div>
+
+                  <div>
+                    <p className="text-sm font-medium text-gray-500 dark:text-gray-400">
+                      Total Revenue
+                    </p>
+
+                    <h3 className="mt-1 text-3xl font-bold tracking-tight text-gray-900 dark:text-white">
+                      {loading
+                        ? "—"
+                        : bdeStats?.formattedTotalRevenue ??
+                          "—"}
+                    </h3>
+                  </div>
+                </div>
+
+                <p className="mt-5 max-w-xl text-sm leading-6 text-gray-500 dark:text-gray-400">
+                  Revenue shown here comes directly from the
+                  available CRM revenue statistics. No
+                  estimated or fabricated monthly values are
+                  displayed.
+                </p>
+              </div>
+
+              {bdeStats?.formattedTotalTarget && (
+                <div className="rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 dark:border-gray-700 dark:bg-gray-800/50">
+                  <p className="text-xs font-medium text-gray-500 dark:text-gray-400">
+                    Revenue Target
+                  </p>
+
+                  <p className="mt-1 text-lg font-semibold text-gray-900 dark:text-white">
+                    {bdeStats.formattedTotalTarget}
+                  </p>
+                </div>
+              )}
+            </div>
+          </div>
+
+          {/* Revenue status */}
+
+          <div className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-800 dark:bg-gray-900">
+            <div className="flex items-center gap-3">
+              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gray-100 text-gray-600 dark:bg-gray-800 dark:text-gray-300">
+                <ChartIcon />
+              </div>
+
+              <div>
+                <h3 className="text-sm font-semibold text-gray-900 dark:text-white">
+                  Revenue Analytics
+                </h3>
+
+                <p className="text-xs text-gray-500 dark:text-gray-400">
+                  Data availability
+                </p>
+              </div>
+            </div>
+
+            <div className="mt-6 rounded-xl border border-dashed border-gray-300 bg-gray-50 p-5 dark:border-gray-700 dark:bg-gray-800/40">
+              <p className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                Aggregate revenue available
+              </p>
+
+              <p className="mt-2 text-xs leading-5 text-gray-500 dark:text-gray-400">
+                A monthly or yearly revenue graph will be
+                shown once time-series revenue data is
+                available from the backend.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ======================================================
+          LEADS TABLE
+      ======================================================= */}
+
+      <section
+        id="recent-leads"
+        className="scroll-mt-6"
+      >
+        <SectionHeader
+          title="Lead Pipeline"
+          description="Current CRM leads and their business status."
+        />
+
+        <div className="overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm dark:border-gray-800 dark:bg-gray-900">
+          <div className="border-b border-gray-100 px-6 py-5 dark:border-gray-800">
+            <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+              <div>
+                <h3 className="text-base font-semibold text-gray-900 dark:text-white">
+                  Recent Leads
+                </h3>
+
+                <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">
+                  Manage and review your current lead pipeline.
+                </p>
+              </div>
+
+              {totalLeads !== null && (
+                <span className="w-fit rounded-lg bg-gray-100 px-3 py-1.5 text-xs font-semibold text-gray-600 dark:bg-gray-800 dark:text-gray-300">
+                  {totalLeads.toLocaleString()} total leads
+                </span>
+              )}
+            </div>
+          </div>
+
+          <div className="p-1">
+            <LeadsTable />
+          </div>
+        </div>
       </section>
     </div>
+  );
+}
+
+/* ============================================================
+   SECTION HEADER
+============================================================ */
+
+function SectionHeader({
+  title,
+  description,
+}: {
+  title: string;
+  description: string;
+}) {
+  return (
+    <div className="mb-5">
+      <h2 className="text-lg font-semibold tracking-tight text-gray-900 dark:text-white">
+        {title}
+      </h2>
+
+      <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
+        {description}
+      </p>
+    </div>
+  );
+}
+
+/* ============================================================
+   KPI CARD
+============================================================ */
+
+function KpiCard({
+  title,
+  value,
+  displayValue,
+  subtitle,
+  icon,
+  iconClass,
+  loading,
+}: {
+  title: string;
+  value: number | null;
+  displayValue?: string;
+  subtitle: string;
+  icon: React.ReactNode;
+  iconClass: string;
+  loading: boolean;
+}) {
+  const formattedValue =
+    displayValue !== undefined
+      ? displayValue
+      : value !== null
+      ? value.toLocaleString()
+      : "—";
+
+  return (
+    <div className="group rounded-2xl border border-gray-200 bg-white p-5 shadow-sm transition duration-200 hover:-translate-y-0.5 hover:shadow-md dark:border-gray-800 dark:bg-gray-900">
+      <div className="flex items-start justify-between gap-3">
+        <div
+          className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl ${iconClass}`}
+        >
+          {icon}
+        </div>
+      </div>
+
+      <div className="mt-5">
+        <p className="text-xs font-medium text-gray-500 dark:text-gray-400">
+          {title}
+        </p>
+
+        <div className="mt-1.5 min-h-9">
+          {loading ? (
+            <div className="h-8 w-20 animate-pulse rounded-md bg-gray-100 dark:bg-gray-800" />
+          ) : (
+            <p className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+              {formattedValue}
+            </p>
+          )}
+        </div>
+
+        <p className="mt-1 text-xs text-gray-500 dark:text-gray-500">
+          {subtitle}
+        </p>
+      </div>
+    </div>
+  );
+}
+
+/* ============================================================
+   PIPELINE CARD
+============================================================ */
+
+function PipelineCard({
+  number,
+  title,
+  value,
+  description,
+  status,
+  loading,
+}: {
+  number: string;
+  title: string;
+  value: number | null;
+  description: string;
+  status: ProcessStatus;
+  loading: boolean;
+}) {
+  const styles = {
+    active: {
+      wrapper:
+        "border-brand-200 bg-brand-50/60 dark:border-brand-500/20 dark:bg-brand-500/5",
+      badge:
+        "bg-brand-100 text-brand-700 dark:bg-brand-500/15 dark:text-brand-400",
+      dot: "bg-brand-500",
+    },
+
+    pending: {
+      wrapper:
+        "border-gray-200 bg-gray-50/70 dark:border-gray-800 dark:bg-gray-800/30",
+      badge:
+        "bg-gray-200 text-gray-500 dark:bg-gray-700 dark:text-gray-400",
+      dot: "bg-gray-400",
+    },
+
+    completed: {
+      wrapper:
+        "border-emerald-200 bg-emerald-50/60 dark:border-emerald-500/20 dark:bg-emerald-500/5",
+      badge:
+        "bg-emerald-100 text-emerald-700 dark:bg-emerald-500/15 dark:text-emerald-400",
+      dot: "bg-emerald-500",
+    },
+  };
+
+  const current = styles[status];
+
+  return (
+    <div
+      className={`w-[190px] shrink-0 rounded-xl border p-4 transition ${current.wrapper}`}
+    >
+      <div className="flex items-center justify-between">
+        <span
+          className={`flex h-8 w-8 items-center justify-center rounded-lg text-[11px] font-bold ${current.badge}`}
+        >
+          {number}
+        </span>
+
+        <span className="flex items-center gap-1.5 text-[10px] font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400">
+          <span
+            className={`h-1.5 w-1.5 rounded-full ${current.dot}`}
+          />
+
+          {status === "completed"
+            ? "Complete"
+            : status === "active"
+            ? "Active"
+            : "Pending"}
+        </span>
+      </div>
+
+      <div className="mt-5">
+        <p className="text-sm font-semibold text-gray-800 dark:text-white">
+          {title}
+        </p>
+
+        <div className="mt-1 min-h-8">
+          {loading ? (
+            <div className="h-7 w-12 animate-pulse rounded bg-gray-200 dark:bg-gray-700" />
+          ) : (
+            <p className="text-2xl font-bold text-gray-900 dark:text-white">
+              {value !== null
+                ? value.toLocaleString()
+                : "—"}
+            </p>
+          )}
+        </div>
+
+        <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">
+          {description}
+        </p>
+      </div>
+    </div>
+  );
+}
+
+/* ============================================================
+   PIPELINE CONNECTOR
+============================================================ */
+
+function PipelineConnector() {
+  return (
+    <div className="flex w-12 shrink-0 items-center justify-center">
+      <div className="relative w-full">
+        <div className="h-px w-full bg-gray-200 dark:bg-gray-700" />
+
+        <svg
+          className="absolute -right-1.5 -top-2 h-4 w-4 text-gray-400"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+        >
+          <path
+            d="M9 5l7 7-7 7"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+        </svg>
+      </div>
+    </div>
+  );
+}
+
+/* ============================================================
+   PROCESS BAR
+============================================================ */
+
+function ProcessBar({
+  label,
+  value,
+  maximum,
+  color,
+  percentage,
+  loading,
+}: {
+  label: string;
+  value: number | null;
+  maximum: number;
+  color: string;
+  percentage: number | null;
+  loading: boolean;
+}) {
+  const width =
+    value !== null &&
+    maximum > 0
+      ? Math.max(
+          2,
+          Math.round((value / maximum) * 100)
+        )
+      : 0;
+
+  return (
+    <div>
+      <div className="mb-2 flex items-center justify-between gap-4">
+        <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
+          {label}
+        </span>
+
+        <div className="flex items-center gap-3">
+          {percentage !== null && (
+            <span className="text-xs font-medium text-gray-400">
+              {percentage}%
+            </span>
+          )}
+
+          <span className="min-w-8 text-right text-sm font-semibold text-gray-900 dark:text-white">
+            {loading
+              ? "—"
+              : value !== null
+              ? value.toLocaleString()
+              : "—"}
+          </span>
+        </div>
+      </div>
+
+      <div className="h-2 overflow-hidden rounded-full bg-gray-100 dark:bg-gray-800">
+        <div
+          className={`h-full rounded-full transition-all duration-700 ${color}`}
+          style={{
+            width: `${width}%`,
+          }}
+        />
+      </div>
+    </div>
+  );
+}
+
+/* ============================================================
+   SUMMARY ROW
+============================================================ */
+
+function SummaryRow({
+  label,
+  value,
+  icon,
+}: {
+  label: string;
+  value: number | null;
+  icon: React.ReactNode;
+}) {
+  return (
+    <div className="flex items-center justify-between rounded-xl px-3 py-3 transition hover:bg-gray-50 dark:hover:bg-gray-800/50">
+      <div className="flex items-center gap-3">
+        <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-gray-100 text-gray-600 dark:bg-gray-800 dark:text-gray-300">
+          {icon}
+        </div>
+
+        <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
+          {label}
+        </span>
+      </div>
+
+      <span className="text-sm font-bold text-gray-900 dark:text-white">
+        {value !== null
+          ? value.toLocaleString()
+          : "—"}
+      </span>
+    </div>
+  );
+}
+
+/* ============================================================
+   ICONS
+============================================================ */
+
+function LeadIcon() {
+  return (
+    <svg
+      className="h-5 w-5"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.8"
+    >
+      <path
+        d="M16 21v-2a4 4 0 00-4-4H6a4 4 0 00-4 4v2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+
+      <circle
+        cx="9"
+        cy="7"
+        r="4"
+      />
+
+      <path
+        d="M22 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
+function ClientIcon() {
+  return (
+    <svg
+      className="h-5 w-5"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.8"
+    >
+      <path
+        d="M3 21h18"
+        strokeLinecap="round"
+      />
+
+      <path
+        d="M5 21V5a2 2 0 012-2h10a2 2 0 012 2v16"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+
+      <path
+        d="M9 7h2M13 7h2M9 11h2M13 11h2M9 15h2M13 15h2"
+        strokeLinecap="round"
+      />
+    </svg>
+  );
+}
+
+function DocumentIcon() {
+  return (
+    <svg
+      className="h-5 w-5"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.8"
+    >
+      <path
+        d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+
+      <path
+        d="M14 2v6h6M8 13h8M8 17h5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
+function ProcessIcon() {
+  return (
+    <svg
+      className="h-5 w-5"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.8"
+    >
+      <rect
+        x="3"
+        y="3"
+        width="7"
+        height="7"
+        rx="1.5"
+      />
+
+      <rect
+        x="14"
+        y="14"
+        width="7"
+        height="7"
+        rx="1.5"
+      />
+
+      <path
+        d="M10 6.5h4a2 2 0 012 2V14"
+        strokeLinecap="round"
+      />
+
+      <path
+        d="M14 17.5h-4a2 2 0 01-2-2V10"
+        strokeLinecap="round"
+      />
+    </svg>
+  );
+}
+
+function CheckIcon() {
+  return (
+    <svg
+      className="h-5 w-5"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+    >
+      <path
+        d="M20 6L9 17l-5-5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
+function RevenueIcon() {
+  return (
+    <svg
+      className="h-5 w-5"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.8"
+    >
+      <path
+        d="M12 1v22"
+        strokeLinecap="round"
+      />
+
+      <path
+        d="M17 5.5c-.9-1-2.4-1.5-4.5-1.5-3 0-4.5 1.4-4.5 3.2 0 2.1 2 2.8 4.5 3.4 2.5.6 4.5 1.3 4.5 3.5 0 2-1.7 3.4-4.8 3.4-2.2 0-3.8-.7-4.7-1.8"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
+function ChartIcon() {
+  return (
+    <svg
+      className="h-5 w-5"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.8"
+    >
+      <path
+        d="M4 19V5M4 19h16"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+
+      <path
+        d="M8 16l3-4 3 2 5-6"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
   );
 }

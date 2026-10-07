@@ -1,5 +1,4 @@
 import { z } from "zod";
-
 import prisma from "../config/prisma.js";
 
 /*
@@ -128,16 +127,29 @@ const updateClientProcessSchema = z.object({
 
 /*
 |--------------------------------------------------------------------------
+| CLIENT PROCESS ORDER
+|--------------------------------------------------------------------------
+*/
+
+const CLIENT_PROCESS_ORDER = {
+    CLIENT_CREATED: 0,
+    FSO_GENERATED: 1,
+    PSGA_GENERATED: 2,
+    PSGA_COMPLETED: 3,
+};
+
+/*
+|--------------------------------------------------------------------------
 | CLIENT INCLUDE
 |--------------------------------------------------------------------------
 |
 | IMPORTANT:
+|
 | processStage, externalClientId, fsoNumber,
 | fsoGeneratedAt, psgaGeneratedAt and processUpdatedAt
 | are scalar fields.
 |
 | Prisma include() accepts relation fields only.
-| Scalar fields are automatically returned by Prisma.
 |
 |--------------------------------------------------------------------------
 */
@@ -1087,6 +1099,21 @@ export async function updateClient(
 |--------------------------------------------------------------------------
 | UPDATE CLIENT PROCESS
 |--------------------------------------------------------------------------
+|
+| Business Flow:
+|
+| CLIENT_CREATED
+|       ↓
+| FSO_GENERATED
+|       ↓
+| PSGA_GENERATED
+|       ↓
+| PSGA_COMPLETED
+|
+| CRM does NOT generate FSO / PSGA.
+| CRM only records their process status.
+|
+|--------------------------------------------------------------------------
 */
 
 export async function updateClientProcess(
@@ -1095,6 +1122,12 @@ export async function updateClientProcess(
 ) {
     try {
         const { id } = req.params;
+
+        /*
+        |--------------------------------------------------------------------------
+        | STEP 1: FIND ACCESSIBLE CLIENT
+        |--------------------------------------------------------------------------
+        */
 
         const existingClient =
             await getAccessibleClient(
@@ -1110,6 +1143,12 @@ export async function updateClientProcess(
                     "Client not found",
             });
         }
+
+        /*
+        |--------------------------------------------------------------------------
+        | STEP 2: VALIDATE REQUEST
+        |--------------------------------------------------------------------------
+        */
 
         const validation =
             updateClientProcessSchema.safeParse(
@@ -1136,6 +1175,171 @@ export async function updateClientProcess(
             psgaGeneratedAt,
         } = validation.data;
 
+        const currentStage =
+            existingClient.processStage ||
+            "CLIENT_CREATED";
+
+        /*
+        |--------------------------------------------------------------------------
+        | STEP 3: CHECK VALID PROCESS TRANSITION
+        |--------------------------------------------------------------------------
+        */
+
+        const currentStageIndex =
+            CLIENT_PROCESS_ORDER[
+                currentStage
+            ];
+
+        const requestedStageIndex =
+            CLIENT_PROCESS_ORDER[
+                processStage
+            ];
+
+        if (
+            currentStageIndex ===
+                undefined ||
+            requestedStageIndex ===
+                undefined
+        ) {
+            return res.status(400).json({
+                success: false,
+
+                message:
+                    "Invalid client process stage",
+            });
+        }
+
+        /*
+        |--------------------------------------------------------------------------
+        | Same stage is allowed.
+        |
+        | Forward movement is allowed only one step.
+        |
+        | Backward movement / stage skipping is blocked.
+        |--------------------------------------------------------------------------
+        */
+
+        if (
+            requestedStageIndex <
+            currentStageIndex
+        ) {
+            return res.status(400).json({
+                success: false,
+
+                message:
+                    `Invalid process transition: ${currentStage} cannot move back to ${processStage}`,
+            });
+        }
+
+        if (
+            requestedStageIndex >
+                currentStageIndex + 1
+        ) {
+            return res.status(400).json({
+                success: false,
+
+                message:
+                    `Invalid process transition: ${currentStage} cannot directly move to ${processStage}`,
+            });
+        }
+
+        /*
+        |--------------------------------------------------------------------------
+        | STEP 4: RESOLVE EXISTING PROCESS DATA
+        |--------------------------------------------------------------------------
+        */
+
+        const resolvedFsoNumber =
+            fsoNumber !== undefined
+                ? fsoNumber.trim() || null
+                : existingClient.fsoNumber ||
+                  null;
+
+        const resolvedFsoGeneratedAt =
+            fsoGeneratedAt !== undefined
+                ? fsoGeneratedAt
+                    ? new Date(
+                          fsoGeneratedAt
+                      )
+                    : null
+                : existingClient.fsoGeneratedAt ||
+                  null;
+
+        const resolvedPsgaGeneratedAt =
+            psgaGeneratedAt !== undefined
+                ? psgaGeneratedAt
+                    ? new Date(
+                          psgaGeneratedAt
+                      )
+                    : null
+                : existingClient.psgaGeneratedAt ||
+                  null;
+
+        /*
+        |--------------------------------------------------------------------------
+        | STEP 5: FSO VALIDATION
+        |--------------------------------------------------------------------------
+        |
+        | Once process reaches FSO_GENERATED or later,
+        | CRM must have FSO number and generated date.
+        |--------------------------------------------------------------------------
+        */
+
+        const requiresFso =
+            requestedStageIndex >=
+            CLIENT_PROCESS_ORDER.FSO_GENERATED;
+
+        if (requiresFso) {
+            if (!resolvedFsoNumber) {
+                return res.status(400).json({
+                    success: false,
+
+                    message:
+                        "FSO number is required when client reaches FSO_GENERATED stage",
+                });
+            }
+
+            if (!resolvedFsoGeneratedAt) {
+                return res.status(400).json({
+                    success: false,
+
+                    message:
+                        "FSO generated date is required when client reaches FSO_GENERATED stage",
+                });
+            }
+        }
+
+        /*
+        |--------------------------------------------------------------------------
+        | STEP 6: PSGA VALIDATION
+        |--------------------------------------------------------------------------
+        |
+        | Once process reaches PSGA_GENERATED or later,
+        | CRM must have PSGA generated date.
+        |--------------------------------------------------------------------------
+        */
+
+        const requiresPsga =
+            requestedStageIndex >=
+            CLIENT_PROCESS_ORDER.PSGA_GENERATED;
+
+        if (requiresPsga) {
+            if (!resolvedPsgaGeneratedAt) {
+                return res.status(400).json({
+                    success: false,
+
+                    message:
+                        "PSGA generated date is required when client reaches PSGA_GENERATED stage",
+                });
+            }
+        }
+
+        /*
+        |--------------------------------------------------------------------------
+        | STEP 7: BUILD UPDATE DATA
+        |--------------------------------------------------------------------------
+        */
+
         const updateData = {
             processStage,
 
@@ -1145,14 +1349,14 @@ export async function updateClientProcess(
             ...(externalClientId !==
                 undefined && {
                 externalClientId:
-                    externalClientId ||
+                    externalClientId.trim() ||
                     null,
             }),
 
             ...(fsoNumber !==
                 undefined && {
                 fsoNumber:
-                    fsoNumber ||
+                    fsoNumber.trim() ||
                     null,
             }),
 
@@ -1177,6 +1381,16 @@ export async function updateClientProcess(
             }),
         };
 
+        /*
+        |--------------------------------------------------------------------------
+        | STEP 8: AUTO SET FSO DATE
+        |--------------------------------------------------------------------------
+        |
+        | If Admin moves client to FSO_GENERATED and
+        | does not manually provide date, use current time.
+        |--------------------------------------------------------------------------
+        */
+
         if (
             processStage ===
                 "FSO_GENERATED" &&
@@ -1185,6 +1399,16 @@ export async function updateClientProcess(
             updateData.fsoGeneratedAt =
                 new Date();
         }
+
+        /*
+        |--------------------------------------------------------------------------
+        | STEP 9: AUTO SET PSGA DATE
+        |--------------------------------------------------------------------------
+        |
+        | If Admin moves client to PSGA_GENERATED and
+        | does not manually provide date, use current time.
+        |--------------------------------------------------------------------------
+        */
 
         if (
             processStage ===
@@ -1195,26 +1419,100 @@ export async function updateClientProcess(
                 new Date();
         }
 
-        const client =
-            await prisma.client.update({
-                where: {
-                    id,
-                },
+        /*
+        |--------------------------------------------------------------------------
+        | STEP 10: UPDATE CLIENT + PSGA ELIGIBILITY
+        |--------------------------------------------------------------------------
+        |
+        | Important:
+        |
+        | Incentive eligibility is now based on the CRM
+        | client process reaching PSGA_COMPLETED.
+        |
+        | We do NOT calculate incentive percentage or amount here.
+        |--------------------------------------------------------------------------
+        */
 
-                data: updateData,
+        const result =
+            await prisma.$transaction(
+                async (tx) => {
+                    const client =
+                        await tx.client.update({
+                            where: {
+                                id,
+                            },
 
-                include:
-                    clientInclude(),
-            });
+                            data: updateData,
+
+                            include:
+                                clientInclude(),
+                        });
+
+                    /*
+                    |--------------------------------------------------------------------------
+                    | PSGA COMPLETED
+                    |--------------------------------------------------------------------------
+                    |
+                    | Mark all PSGA records belonging to this client
+                    | as incentive eligible.
+                    |
+                    | We intentionally do not create a new allocation
+                    | because incentive percentage / amount rules are
+                    | not defined yet.
+                    |--------------------------------------------------------------------------
+                    */
+
+                    if (
+                        processStage ===
+                        "PSGA_COMPLETED"
+                    ) {
+                        await tx.pSGA.updateMany({
+                            where: {
+                                clientId: id,
+                            },
+
+                            data: {
+                                incentiveStatus:
+                                    "ELIGIBLE",
+                            },
+                        });
+                    }
+
+                    return client;
+                }
+            );
 
         return res.status(200).json({
             success: true,
 
             message:
-                "Client process updated successfully",
+                processStage ===
+                "PSGA_COMPLETED"
+                    ? "Client process completed successfully. Linked PSGA incentive eligibility updated."
+                    : "Client process updated successfully",
 
             data: {
-                client,
+                client: result,
+
+                incentive:
+                    processStage ===
+                    "PSGA_COMPLETED"
+                        ? {
+                              status:
+                                  "ELIGIBLE",
+
+                              recipient:
+                                  result.sourceLead
+                                      ? "BDE"
+                                      : "ADMIN",
+
+                              amount:
+                                  null,
+
+                              percentage:
+                                  null,
+                          }
+                        : null,
             },
         });
     } catch (error) {
