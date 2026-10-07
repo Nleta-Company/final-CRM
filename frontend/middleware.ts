@@ -1,74 +1,30 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
-const AUTH_COOKIE_NAME = "nleta_token";
+/*
+ * Next.js middleware
+ *
+ * Authentication is handled by the backend using JWT.
+ * The backend is hosted on Render, while the frontend
+ * is hosted on Vercel.
+ *
+ * Therefore, the backend HTTP-only cookie cannot be
+ * reliably read by the Vercel middleware.
+ *
+ * The middleware only allows the request to continue.
+ * Backend authentication and RBAC remain responsible
+ * for protecting API resources.
+ */
 
 export function middleware(request: NextRequest) {
-  const { pathname } = request.nextUrl;
-
-  /*
-   * Public routes
-   */
-  const publicRoutes = [
-    "/signin",
-    "/signup",
-  ];
-
-  /*
-   * Allow public authentication pages.
-   */
-  if (
-    publicRoutes.some(
-      (route) =>
-        pathname === route ||
-        pathname.startsWith(`${route}/`)
-    )
-  ) {
-    return NextResponse.next();
-  }
-
-  /*
-   * Check HTTP-only authentication cookie.
-   */
-  const authCookie = request.cookies.get(
-    AUTH_COOKIE_NAME
-  );
-
-  /*
-   * No authentication cookie:
-   * redirect the user to Sign In.
-   */
-  if (!authCookie?.value) {
-    const loginUrl = new URL(
-      "/signin",
-      request.url
-    );
-
-    /*
-     * Remember the page the user originally
-     * tried to open.
-     */
-    loginUrl.searchParams.set(
-      "redirect",
-      pathname
-    );
-
-    return NextResponse.redirect(loginUrl);
-  }
-
-  /*
-   * Authentication cookie exists.
-   * Continue to the requested page.
-   *
-   * Actual JWT validation and RBAC remain
-   * handled by the backend.
-   */
   return NextResponse.next();
 }
 
 /*
- * Protect application routes while leaving
- * Next.js internal files and public assets alone.
+ * Application routes.
+ *
+ * These routes are passed through middleware.
+ * Authentication itself is handled by the backend/API.
  */
 export const config = {
   matcher: [
@@ -80,10 +36,7 @@ export const config = {
     "/analytics/:path*",
 
     /*
-     * These are old CRM sections and will be
-     * removed from the new CRM navigation later.
-     * Keeping them protected for now prevents
-     * unauthenticated direct access.
+     * Older CRM sections.
      */
     "/client-assets/:path*",
     "/technicians/:path*",
