@@ -12,6 +12,8 @@ interface BdeSidebarProps {
   setCollapsed?: (collapsed: boolean) => void;
 }
 
+type Section = "leads" | "clients" | "activities";
+
 export default function BdeSidebar({
   sidebarOpen,
   setSidebarOpen,
@@ -24,9 +26,12 @@ export default function BdeSidebar({
   // DROPDOWN STATE
   // ------------------------------------------------------------
 
-  const [openSections, setOpenSections] = useState({
-    leads: pathname.startsWith("/bde/leads"),
-    activities: pathname.startsWith("/bde/activities"),
+  const [openSections, setOpenSections] = useState<
+    Record<Section, boolean>
+  >({
+    leads: false,
+    clients: false,
+    activities: false,
   });
 
   // ------------------------------------------------------------
@@ -35,11 +40,13 @@ export default function BdeSidebar({
 
   useEffect(() => {
     setOpenSections((previous) => ({
-      ...previous,
-
       leads: pathname.startsWith("/bde/leads")
         ? true
         : previous.leads,
+
+      clients: pathname.startsWith("/bde/clients")
+        ? true
+        : previous.clients,
 
       activities: pathname.startsWith("/bde/activities")
         ? true
@@ -51,9 +58,7 @@ export default function BdeSidebar({
   // TOGGLE DROPDOWN
   // ------------------------------------------------------------
 
-  const toggleSection = (
-    section: "leads" | "activities"
-  ) => {
+  const toggleSection = (section: Section) => {
     setOpenSections((previous) => ({
       ...previous,
       [section]: !previous[section],
@@ -113,6 +118,30 @@ export default function BdeSidebar({
     }
   `;
 
+  // ------------------------------------------------------------
+  // DROPDOWN ARROW
+  // ------------------------------------------------------------
+
+  const DropdownArrow = ({
+    open,
+  }: {
+    open: boolean;
+  }) => (
+    <svg
+      className={`h-4 w-4 transition-transform duration-200 ${
+        open ? "rotate-180" : ""
+      }`}
+      viewBox="0 0 20 20"
+      fill="currentColor"
+    >
+      <path
+        fillRule="evenodd"
+        d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+        clipRule="evenodd"
+      />
+    </svg>
+  );
+
   return (
     <>
       {/* =====================================================
@@ -128,8 +157,6 @@ export default function BdeSidebar({
 
       {/* =====================================================
           SIDEBAR
-          DESKTOP = FIXED
-          MOBILE = FIXED + SLIDE
       ====================================================== */}
 
       <aside
@@ -203,13 +230,17 @@ export default function BdeSidebar({
           {setCollapsed && (
             <button
               type="button"
-              onClick={() => setCollapsed(!collapsed)}
+              onClick={() =>
+                setCollapsed(!collapsed)
+              }
               className="hidden h-8 w-8 items-center justify-center rounded-lg text-gray-500 hover:bg-gray-100 hover:text-gray-700 dark:text-gray-400 dark:hover:bg-gray-800 lg:flex"
               aria-label="Toggle sidebar"
             >
               <svg
                 className={`h-4 w-4 transition-transform ${
-                  collapsed ? "rotate-180" : ""
+                  collapsed
+                    ? "rotate-180"
+                    : ""
                 }`}
                 viewBox="0 0 20 20"
                 fill="currentColor"
@@ -227,7 +258,9 @@ export default function BdeSidebar({
 
           <button
             type="button"
-            onClick={() => setSidebarOpen(false)}
+            onClick={() =>
+              setSidebarOpen(false)
+            }
             className="flex h-8 w-8 items-center justify-center rounded-lg text-gray-500 hover:bg-gray-100 hover:text-gray-700 dark:text-gray-400 dark:hover:bg-gray-800 lg:hidden"
             aria-label="Close sidebar"
           >
@@ -249,7 +282,6 @@ export default function BdeSidebar({
 
         {/* =====================================================
             NAVIGATION
-            ONLY NAVIGATION SCROLLS
         ====================================================== */}
 
         <div className="min-h-0 flex-1 overflow-y-auto px-3 py-5 custom-scrollbar">
@@ -267,7 +299,11 @@ export default function BdeSidebar({
             <Link
               href="/bde/dashboard"
               onClick={closeMobileSidebar}
-              title={collapsed ? "Dashboard" : undefined}
+              title={
+                collapsed
+                  ? "Dashboard"
+                  : undefined
+              }
               className={mainItemClass(
                 isActive("/bde/dashboard")
               )}
@@ -312,213 +348,225 @@ export default function BdeSidebar({
                 />
               </svg>
 
-              {!collapsed && <span>Dashboard</span>}
+              {!collapsed && (
+                <span>Dashboard</span>
+              )}
             </Link>
 
             {/* =================================================
-                LEADS DROPDOWN
+                MY LEADS DROPDOWN
             ================================================= */}
 
             <div>
-              <div className="flex items-center">
-                <Link
-                  href="/bde/leads"
-                  onClick={closeMobileSidebar}
-                  title={collapsed ? "My Leads" : undefined}
-                  className={`${mainItemClass(
-                    isActive("/bde/leads")
-                  )} flex-1`}
+              <button
+                type="button"
+                onClick={() =>
+                  toggleSection("leads")
+                }
+                title={
+                  collapsed
+                    ? "My Leads"
+                    : undefined
+                }
+                className={mainItemClass(
+                  pathname === "/bde/leads"
+                )}
+              >
+                <svg
+                  className="h-5 w-5 shrink-0"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
                 >
-                  <svg
-                    className="h-5 w-5 shrink-0"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M16 21v-2a4 4 0 00-4-4H6a4 4 0 00-4 4v2"
-                    />
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M16 21v-2a4 4 0 00-4-4H6a4 4 0 00-4 4v2"
+                  />
 
-                    <circle
-                      cx="9"
-                      cy="7"
-                      r="4"
-                    />
+                  <circle
+                    cx="9"
+                    cy="7"
+                    r="4"
+                  />
 
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M22 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"
-                    />
-                  </svg>
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M22 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"
+                  />
+                </svg>
 
-                  {!collapsed && (
+                {!collapsed && (
+                  <>
                     <span className="flex-1 text-left">
                       My Leads
                     </span>
-                  )}
-                </Link>
 
-                {!collapsed && (
-                  <button
-                    type="button"
-                    onClick={() => toggleSection("leads")}
-                    className="ml-1 flex h-9 w-9 shrink-0 items-center justify-center rounded-lg text-gray-500 transition hover:bg-gray-100 hover:text-gray-700 dark:text-gray-400 dark:hover:bg-gray-800"
-                    aria-label={
-                      openSections.leads
-                        ? "Collapse leads"
-                        : "Expand leads"
-                    }
-                  >
-                    <svg
-                      className={`h-4 w-4 transition-transform duration-200 ${
+                    <DropdownArrow
+                      open={
                         openSections.leads
-                          ? "rotate-180"
-                          : ""
-                      }`}
-                      viewBox="0 0 20 20"
-                      fill="currentColor"
-                    >
-                      <path
-                        fillRule="evenodd"
-                        d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                        clipRule="evenodd"
-                      />
-                    </svg>
-                  </button>
+                      }
+                    />
+                  </>
                 )}
-              </div>
+              </button>
 
-              {!collapsed && openSections.leads && (
-                <div className="mt-1 space-y-1">
-                  <Link
-                    href="/bde/leads/create"
-                    onClick={closeMobileSidebar}
-                    className={subItemClass(
-                      pathname === "/bde/leads/create"
-                    )}
-                  >
-                    + Create Lead
-                  </Link>
-                </div>
-              )}
+              {!collapsed &&
+                openSections.leads && (
+                  <div className="mt-1 space-y-1">
+                    <Link
+                      href="/bde/leads"
+                      onClick={closeMobileSidebar}
+                      className={subItemClass(
+                        pathname ===
+                          "/bde/leads"
+                      )}
+                    >
+                      View All Leads
+                    </Link>
+
+                    <Link
+                      href="/bde/leads/create"
+                      onClick={closeMobileSidebar}
+                      className={subItemClass(
+                        pathname ===
+                          "/bde/leads/create"
+                      )}
+                    >
+                      + Create Lead
+                    </Link>
+                  </div>
+                )}
             </div>
 
             {/* =================================================
-                CLIENTS
-            ================================================= */}
-
-            <Link
-              href="/bde/clients"
-              onClick={closeMobileSidebar}
-              title={collapsed ? "My Clients" : undefined}
-              className={mainItemClass(
-                isActive("/bde/clients")
-              )}
-            >
-              <svg
-                className="h-5 w-5 shrink-0"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-              >
-                <rect
-                  x="3"
-                  y="4"
-                  width="18"
-                  height="16"
-                  rx="2"
-                />
-
-                <path
-                  strokeLinecap="round"
-                  d="M8 9h8M8 13h5"
-                />
-              </svg>
-
-              {!collapsed && <span>My Clients</span>}
-            </Link>
-
-            {/* =================================================
-                ACTIVITIES DROPDOWN
+                MY CLIENTS DROPDOWN
             ================================================= */}
 
             <div>
-              <div className="flex items-center">
-                <Link
-                  href="/bde/activities"
-                  onClick={closeMobileSidebar}
-                  title={
-                    collapsed
-                      ? "My Activities"
-                      : undefined
-                  }
-                  className={`${mainItemClass(
-                    isActive("/bde/activities")
-                  )} flex-1`}
+              <button
+                type="button"
+                onClick={() =>
+                  toggleSection("clients")
+                }
+                title={
+                  collapsed
+                    ? "My Clients"
+                    : undefined
+                }
+                className={mainItemClass(
+                  pathname === "/bde/clients"
+                )}
+              >
+                <svg
+                  className="h-5 w-5 shrink-0"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
                 >
-                  <svg
-                    className="h-5 w-5 shrink-0"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M9 11l3 3L22 4"
-                    />
+                  <rect
+                    x="3"
+                    y="4"
+                    width="18"
+                    height="16"
+                    rx="2"
+                  />
 
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"
-                    />
-                  </svg>
+                  <path
+                    strokeLinecap="round"
+                    d="M8 9h8M8 13h5"
+                  />
+                </svg>
 
-                  {!collapsed && (
+                {!collapsed && (
+                  <>
+                    <span className="flex-1 text-left">
+                      My Clients
+                    </span>
+
+                    <DropdownArrow
+                      open={
+                        openSections.clients
+                      }
+                    />
+                  </>
+                )}
+              </button>
+
+              {!collapsed &&
+                openSections.clients && (
+                  <div className="mt-1 space-y-1">
+                    <Link
+                      href="/bde/clients"
+                      onClick={closeMobileSidebar}
+                      className={subItemClass(
+                        pathname ===
+                          "/bde/clients"
+                      )}
+                    >
+                      View All Clients
+                    </Link>
+                  </div>
+                )}
+            </div>
+
+            {/* =================================================
+                MY ACTIVITIES DROPDOWN
+            ================================================= */}
+
+            <div>
+              <button
+                type="button"
+                onClick={() =>
+                  toggleSection("activities")
+                }
+                title={
+                  collapsed
+                    ? "My Activities"
+                    : undefined
+                }
+                className={mainItemClass(
+                  pathname ===
+                    "/bde/activities"
+                )}
+              >
+                <svg
+                  className="h-5 w-5 shrink-0"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M9 11l3 3L22 4"
+                  />
+
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"
+                  />
+                </svg>
+
+                {!collapsed && (
+                  <>
                     <span className="flex-1 text-left">
                       My Activities
                     </span>
-                  )}
-                </Link>
 
-                {!collapsed && (
-                  <button
-                    type="button"
-                    onClick={() =>
-                      toggleSection("activities")
-                    }
-                    className="ml-1 flex h-9 w-9 shrink-0 items-center justify-center rounded-lg text-gray-500 transition hover:bg-gray-100 hover:text-gray-700 dark:text-gray-400 dark:hover:bg-gray-800"
-                    aria-label={
-                      openSections.activities
-                        ? "Collapse activities"
-                        : "Expand activities"
-                    }
-                  >
-                    <svg
-                      className={`h-4 w-4 transition-transform duration-200 ${
+                    <DropdownArrow
+                      open={
                         openSections.activities
-                          ? "rotate-180"
-                          : ""
-                      }`}
-                      viewBox="0 0 20 20"
-                      fill="currentColor"
-                    >
-                      <path
-                        fillRule="evenodd"
-                        d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                        clipRule="evenodd"
-                      />
-                    </svg>
-                  </button>
+                      }
+                    />
+                  </>
                 )}
-              </div>
+              </button>
 
               {!collapsed &&
                 openSections.activities && (
@@ -527,7 +575,8 @@ export default function BdeSidebar({
                       href="/bde/activities"
                       onClick={closeMobileSidebar}
                       className={subItemClass(
-                        pathname === "/bde/activities"
+                        pathname ===
+                          "/bde/activities"
                       )}
                     >
                       Follow-ups
@@ -550,7 +599,8 @@ export default function BdeSidebar({
               </p>
 
               <p className="mt-1 text-[10px] leading-4 text-brand-600/80 dark:text-brand-400/80">
-                Manage your leads, clients and follow-ups.
+                Manage your leads, clients and
+                follow-ups.
               </p>
             </div>
           </div>

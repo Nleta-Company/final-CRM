@@ -213,6 +213,7 @@ export const ClientScalarFieldEnum = {
   externalClientId: 'externalClientId',
   fsoNumber: 'fsoNumber',
   fsoGeneratedAt: 'fsoGeneratedAt',
+  psgaNumber: 'psgaNumber',
   psgaGeneratedAt: 'psgaGeneratedAt',
   processUpdatedAt: 'processUpdatedAt',
   createdById: 'createdById',

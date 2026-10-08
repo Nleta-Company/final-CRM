@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState, use } from "react";
+import React, { use, useEffect, useState } from "react";
 import Link from "next/link";
 
 import Breadcrumb from "@/components/breadcrumb/Breadcrumb";
@@ -9,8 +9,7 @@ import { ClientItem, ClientProcessStage } from "@/types/client";
 import Button from "@/components/ui/Button";
 
 const API_BASE_URL = (
-  process.env.NEXT_PUBLIC_API_URL ||
-  "http://localhost:5000/api"
+  process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/api"
 ).replace(/\/+$/, "");
 
 interface BackendClient {
@@ -81,6 +80,8 @@ interface BackendClient {
 
   fsoNumber?: string | null;
 
+  psgaNumber?: string | null;
+
   fsoGeneratedAt?: string | null;
 
   psgaGeneratedAt?: string | null;
@@ -128,9 +129,7 @@ function getAuthToken(): string | null {
    GET CLIENT
 ============================================================ */
 
-async function getClientById(
-  id: string
-): Promise<BackendClient> {
+async function getClientById(id: string): Promise<BackendClient> {
   const token = getAuthToken();
 
   const response = await fetch(
@@ -162,19 +161,12 @@ async function getClientById(
 
   if (!response.ok) {
     throw new Error(
-      result?.message ||
-        `Failed to fetch client (${response.status})`
+      result?.message || `Failed to fetch client (${response.status})`
     );
   }
 
-  if (
-    !result?.success ||
-    !result.data?.client
-  ) {
-    throw new Error(
-      result?.message ||
-        "Client record not found"
-    );
+  if (!result?.success || !result.data?.client) {
+    throw new Error(result?.message || "Client record not found");
   }
 
   return result.data.client;
@@ -190,6 +182,7 @@ async function updateClientProcess(
     processStage: ClientProcessStage;
     externalClientId?: string;
     fsoNumber?: string;
+    psgaNumber?: string;
     fsoGeneratedAt?: string;
     psgaGeneratedAt?: string;
   }
@@ -197,9 +190,7 @@ async function updateClientProcess(
   const token = getAuthToken();
 
   const response = await fetch(
-    `${API_BASE_URL}/clients/${encodeURIComponent(
-      clientId
-    )}/process`,
+    `${API_BASE_URL}/clients/${encodeURIComponent(clientId)}/process`,
     {
       method: "PATCH",
 
@@ -220,8 +211,7 @@ async function updateClientProcess(
     }
   );
 
-  let result: ProcessUpdateResponse | null =
-    null;
+  let result: ProcessUpdateResponse | null = null;
 
   try {
     result = await response.json();
@@ -231,15 +221,13 @@ async function updateClientProcess(
 
   if (!response.ok) {
     throw new Error(
-      result?.message ||
-        `Failed to update process (${response.status})`
+      result?.message || `Failed to update process (${response.status})`
     );
   }
 
   if (!result?.success) {
     throw new Error(
-      result?.message ||
-        "Unable to update client process."
+      result?.message || "Unable to update client process."
     );
   }
 
@@ -260,10 +248,7 @@ function getFullName(
     return "";
   }
 
-  return [
-    user.firstName,
-    user.lastName,
-  ]
+  return [user.firstName, user.lastName]
     .filter(Boolean)
     .join(" ")
     .trim();
@@ -276,38 +261,28 @@ function getFullName(
 function mapBackendClientToClientItem(
   client: BackendClient
 ): ClientItem {
-  const assignedBdeName =
-    getFullName(client.assignedBde);
+  const assignedBdeName = getFullName(client.assignedBde);
 
   return {
     id: client.id,
 
-    companyName:
-      client.associationName,
+    companyName: client.associationName,
 
-    clientType:
-      "Residential RWA" as ClientItem["clientType"],
+    clientType: "Residential RWA" as ClientItem["clientType"],
 
-    contactPerson:
-      client.contactName,
+    contactPerson: client.contactName,
 
-    contactEmail:
-      client.email || "",
+    contactEmail: client.email || "",
 
-    contactPhone:
-      client.mobile || "",
+    contactPhone: client.mobile || "",
 
-    address:
-      client.address || "",
+    address: client.address || "",
 
-    city:
-      client.city || "",
+    city: client.city || "",
 
-    state:
-      client.state || "",
+    state: client.state || "",
 
-    pincode:
-      client.pincode || "",
+    pincode: client.pincode || "",
 
     totalAssetsCount: 0,
 
@@ -321,62 +296,46 @@ function mapBackendClientToClientItem(
     numericContractValue: 0,
 
     accountManager:
-      assignedBdeName ||
-      "Unassigned",
+      assignedBdeName || "Unassigned",
 
     assignedBdeId:
-      client.assignedBdeId ||
-      undefined,
+      client.assignedBdeId || undefined,
 
     assignedBdeName:
-      assignedBdeName ||
-      undefined,
+      assignedBdeName || undefined,
 
-    assignedTechnicianId:
-      undefined,
+    assignedTechnicianId: undefined,
 
-    assignedTechnicianName:
-      undefined,
+    assignedTechnicianName: undefined,
 
-    joinedDate:
-      client.createdAt
-        ? new Date(
-            client.createdAt
-          )
-            .toISOString()
-            .slice(0, 10)
-        : "",
+    joinedDate: client.createdAt
+      ? new Date(client.createdAt)
+          .toISOString()
+          .slice(0, 10)
+      : "",
 
-    nextAuditDate:
-      undefined,
+    nextAuditDate: undefined,
 
-    notes:
-      client.sourceLead
-        ? `Converted from Lead: ${client.sourceLead.id}`
-        : "",
+    notes: client.sourceLead
+      ? `Converted from Lead: ${client.sourceLead.id}`
+      : "",
 
-    processStage:
-      client.processStage,
+    processStage: client.processStage,
 
     externalClientId:
-      client.externalClientId ||
-      undefined,
+      client.externalClientId || undefined,
 
     fsoNumber:
-      client.fsoNumber ||
-      undefined,
+      client.fsoNumber || undefined,
 
     fsoGeneratedAt:
-      client.fsoGeneratedAt ||
-      undefined,
+      client.fsoGeneratedAt || undefined,
 
     psgaGeneratedAt:
-      client.psgaGeneratedAt ||
-      undefined,
+      client.psgaGeneratedAt || undefined,
 
     processUpdatedAt:
-      client.processUpdatedAt ||
-      undefined,
+      client.processUpdatedAt || undefined,
   };
 }
 
@@ -395,18 +354,21 @@ const PROCESS_STAGES: Array<{
     description:
       "Client account has been created in CRM.",
   },
+
   {
     value: "FSO_GENERATED",
     label: "FSO Generated",
     description:
       "FSO has been generated manually in the external process.",
   },
+
   {
     value: "PSGA_GENERATED",
     label: "PSGA Generated",
     description:
       "PSGA has been generated manually in the external process.",
   },
+
   {
     value: "PSGA_COMPLETED",
     label: "PSGA Completed",
@@ -587,8 +549,7 @@ export default function EditClientPage({
 }) {
   const resolvedParams = use(params);
 
-  const clientId =
-    resolvedParams.id;
+  const clientId = resolvedParams.id;
 
   const [client, setClient] =
     useState<ClientItem | null>(null);
@@ -615,6 +576,9 @@ export default function EditClientPage({
     useState("");
 
   const [fsoNumber, setFsoNumber] =
+    useState("");
+
+  const [psgaNumber, setPsgaNumber] =
     useState("");
 
   const [fsoGeneratedAt, setFsoGeneratedAt] =
@@ -669,13 +633,15 @@ export default function EditClientPage({
         );
 
         setExternalClientId(
-          backendClient.externalClientId ||
-            ""
+          backendClient.externalClientId || ""
         );
 
         setFsoNumber(
-          backendClient.fsoNumber ||
-            ""
+          backendClient.fsoNumber || ""
+        );
+
+        setPsgaNumber(
+          backendClient.psgaNumber || ""
         );
 
         setFsoGeneratedAt(
@@ -756,6 +722,12 @@ export default function EditClientPage({
         processStage === "PSGA_GENERATED" ||
         processStage === "PSGA_COMPLETED"
       ) {
+        if (!psgaNumber.trim()) {
+          throw new Error(
+            "Please enter the PSGA number before moving to PSGA Generated or PSGA Completed."
+          );
+        }
+
         if (!psgaGeneratedAt) {
           throw new Error(
             "Please select the PSGA generated date."
@@ -780,6 +752,13 @@ export default function EditClientPage({
               ? {
                   fsoNumber:
                     fsoNumber.trim(),
+                }
+              : {}),
+
+            ...(psgaNumber.trim()
+              ? {
+                  psgaNumber:
+                    psgaNumber.trim(),
                 }
               : {}),
 
@@ -817,13 +796,15 @@ export default function EditClientPage({
         );
 
         setExternalClientId(
-          updatedClient.externalClientId ||
-            ""
+          updatedClient.externalClientId || ""
         );
 
         setFsoNumber(
-          updatedClient.fsoNumber ||
-            ""
+          updatedClient.fsoNumber || ""
+        );
+
+        setPsgaNumber(
+          updatedClient.psgaNumber || ""
         );
 
         setFsoGeneratedAt(
@@ -1146,6 +1127,7 @@ export default function EditClientPage({
                 className="mb-2 block text-xs font-semibold text-gray-700 dark:text-gray-300"
               >
                 FSO Number
+
                 {(processStage ===
                   "FSO_GENERATED" ||
                   processStage ===
@@ -1180,6 +1162,7 @@ export default function EditClientPage({
                 className="mb-2 block text-xs font-semibold text-gray-700 dark:text-gray-300"
               >
                 FSO Generated Date
+
                 {(processStage ===
                   "FSO_GENERATED" ||
                   processStage ===
@@ -1205,6 +1188,39 @@ export default function EditClientPage({
               />
             </div>
 
+            {/* PSGA Number */}
+
+            <div>
+              <label
+                htmlFor="psgaNumber"
+                className="mb-2 block text-xs font-semibold text-gray-700 dark:text-gray-300"
+              >
+                PSGA Number
+
+                {(processStage ===
+                  "PSGA_GENERATED" ||
+                  processStage ===
+                    "PSGA_COMPLETED") && (
+                  <span className="ml-1 text-error-500">
+                    *
+                  </span>
+                )}
+              </label>
+
+              <input
+                id="psgaNumber"
+                type="text"
+                value={psgaNumber}
+                onChange={(event) =>
+                  setPsgaNumber(
+                    event.target.value
+                  )
+                }
+                placeholder="Enter PSGA number"
+                className="h-11 w-full rounded-xl border border-gray-200 bg-white px-3 text-sm text-gray-800 outline-none transition placeholder:text-gray-400 focus:border-brand-500 focus:ring-2 focus:ring-brand-500/10 dark:border-gray-700 dark:bg-gray-900 dark:text-white"
+              />
+            </div>
+
             {/* PSGA Date */}
 
             <div>
@@ -1213,6 +1229,7 @@ export default function EditClientPage({
                 className="mb-2 block text-xs font-semibold text-gray-700 dark:text-gray-300"
               >
                 PSGA Generated Date
+
                 {(processStage ===
                   "PSGA_GENERATED" ||
                   processStage ===

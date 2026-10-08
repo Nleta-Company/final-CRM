@@ -11,10 +11,13 @@ const API_BASE_URL = (
   "http://localhost:5000/api"
 ).replace(/\/+$/, "");
 
-const CLIENTS_CHANGE_EVENT = "nleta_clients_updated";
+const CLIENTS_CHANGE_EVENT =
+  "nleta_clients_updated";
 
 function getToken(): string | null {
-  if (typeof window === "undefined") return null;
+  if (typeof window === "undefined") {
+    return null;
+  }
 
   return (
     localStorage.getItem("token") ||
@@ -29,6 +32,7 @@ function getHeaders(): HeadersInit {
   return {
     "Content-Type": "application/json",
     Accept: "application/json",
+
     ...(token
       ? {
           Authorization: `Bearer ${token}`,
@@ -44,9 +48,9 @@ function getFullName(user: any): string {
     .trim();
 }
 
-/* ============================================================
-   CLIENT PROCESS TYPES
-============================================================ */
+// ============================================================
+// CLIENT PROCESS TYPES
+// ============================================================
 
 export type ClientProcessStage =
   | "CLIENT_CREATED"
@@ -56,18 +60,31 @@ export type ClientProcessStage =
 
 export interface ClientProcessData {
   processStage: ClientProcessStage;
+
   externalClientId?: string | null;
+
   fsoNumber?: string | null;
+
   fsoGeneratedAt?: string | null;
+
+  psgaNumber?: string | null;
+
   psgaGeneratedAt?: string | null;
+
   processUpdatedAt?: string | null;
 }
 
 export interface UpdateClientProcessInput {
   processStage: ClientProcessStage;
+
   externalClientId?: string;
+
   fsoNumber?: string;
+
   fsoGeneratedAt?: string;
+
+  psgaNumber?: string;
+
   psgaGeneratedAt?: string;
 }
 
@@ -78,13 +95,16 @@ export interface ClientProcessStats {
   psgaCompleted: number;
 }
 
-/* ============================================================
-   BACKEND CLIENT -> FRONTEND CLIENT
-============================================================ */
+// ============================================================
+// BACKEND CLIENT -> FRONTEND CLIENT
+// ============================================================
 
 function mapClient(client: any): ClientItem {
-  const assignedBde = client?.assignedBde;
-  const createdBy = client?.createdBy;
+  const assignedBde =
+    client?.assignedBde;
+
+  const createdBy =
+    client?.createdBy;
 
   return {
     id: client?.id || "",
@@ -113,14 +133,23 @@ function mapClient(client: any): ClientItem {
       client?.contactPhone ||
       "",
 
-    address: client?.address || "",
+    address:
+      client?.address || "",
 
-    city: client?.city || "",
+    city:
+      client?.city || "",
 
-    state: client?.state || "",
+    state:
+      client?.state || "",
+
+    pincode:
+      client?.pincode ||
+      undefined,
 
     totalAssetsCount:
-      Number(client?.totalAssetsCount) || 0,
+      Number(
+        client?.totalAssetsCount
+      ) || 0,
 
     contractStatus:
       client?.contractStatus ||
@@ -131,7 +160,9 @@ function mapClient(client: any): ClientItem {
       "₹ 0",
 
     numericContractValue:
-      Number(client?.numericContractValue) || 0,
+      Number(
+        client?.numericContractValue
+      ) || 0,
 
     accountManager:
       client?.accountManager ||
@@ -161,11 +192,9 @@ function mapClient(client: any): ClientItem {
       client?.notes ||
       undefined,
 
-    /*
-    |--------------------------------------------------------------------------
-    | PROCESS TRACKING
-    |--------------------------------------------------------------------------
-    */
+    // ========================================================
+    // PROCESS TRACKING
+    // ========================================================
 
     processStage:
       client?.processStage ||
@@ -183,6 +212,10 @@ function mapClient(client: any): ClientItem {
       client?.fsoGeneratedAt ||
       undefined,
 
+    psgaNumber:
+      client?.psgaNumber ||
+      undefined,
+
     psgaGeneratedAt:
       client?.psgaGeneratedAt ||
       undefined,
@@ -193,20 +226,36 @@ function mapClient(client: any): ClientItem {
   };
 }
 
+// ============================================================
+// CHANGE EVENT
+// ============================================================
+
 function notifyChange() {
-  if (typeof window === "undefined") return;
+  if (
+    typeof window ===
+    "undefined"
+  ) {
+    return;
+  }
 
   window.dispatchEvent(
-    new Event(CLIENTS_CHANGE_EVENT)
+    new Event(
+      CLIENTS_CHANGE_EVENT
+    )
   );
 }
+
+// ============================================================
+// RESPONSE HANDLER
+// ============================================================
 
 async function handleResponse<T>(
   response: Response
 ): Promise<T> {
-  const data = await response
-    .json()
-    .catch(() => null);
+  const data =
+    await response
+      .json()
+      .catch(() => null);
 
   if (!response.ok) {
     throw new Error(
@@ -218,65 +267,75 @@ async function handleResponse<T>(
   return data;
 }
 
-/* ============================================================
-   COMPLETE CLIENT TYPES
-============================================================ */
+// ============================================================
+// COMPLETE CLIENT TYPES
+// ============================================================
 
 export interface CompleteClientSelectionInput {
   serviceId: string;
+
   pricingRuleId: string;
+
   quantity: number;
+
   notes?: string;
 }
 
 export interface CreateCompleteClientInput
   extends CreateClientInput {
-  selections: CompleteClientSelectionInput[];
+  selections:
+    CompleteClientSelectionInput[];
 }
 
-/* ============================================================
-   CLIENT SERVICE
-============================================================ */
+// ============================================================
+// CLIENT SERVICE
+// ============================================================
 
 export const clientService = {
-  /* ==========================================================
-     GET ALL CLIENTS
-  ========================================================== */
+  // ==========================================================
+  // GET ALL CLIENTS
+  // ==========================================================
 
   async getAllClients(
     filters?: ClientFilterOptions
   ): Promise<ClientItem[]> {
-    const response = await fetch(
-      `${API_BASE_URL}/clients`,
-      {
-        method: "GET",
-        headers: getHeaders(),
-        credentials: "include",
-        cache: "no-store",
-      }
-    );
+    const response =
+      await fetch(
+        `${API_BASE_URL}/clients`,
+        {
+          method: "GET",
+          headers: getHeaders(),
+          credentials: "include",
+          cache: "no-store",
+        }
+      );
 
-    const data = await handleResponse<{
-      success: boolean;
-      data?: {
-        clients?: any[];
-        total?: number;
-      };
-    }>(response);
+    const data =
+      await handleResponse<{
+        success: boolean;
+
+        data?: {
+          clients?: any[];
+
+          total?: number;
+        };
+      }>(response);
 
     let clients = (
       data.data?.clients || []
     ).map(mapClient);
 
-    if (filters?.search?.trim()) {
+    if (
+      filters?.search?.trim()
+    ) {
       const query =
         filters.search
           .trim()
           .toLowerCase();
 
-      clients = clients.filter(
-        (client) => {
-          return (
+      clients =
+        clients.filter(
+          (client) =>
             client.companyName
               .toLowerCase()
               .includes(query) ||
@@ -295,67 +354,74 @@ export const clientService = {
             client.state
               .toLowerCase()
               .includes(query)
-          );
-        }
-      );
+        );
     }
 
     if (
       filters?.clientType &&
       filters.clientType !== "ALL"
     ) {
-      clients = clients.filter(
-        (client) =>
-          client.clientType ===
-          filters.clientType
-      );
+      clients =
+        clients.filter(
+          (client) =>
+            client.clientType ===
+            filters.clientType
+        );
     }
 
     if (
       filters?.contractStatus &&
       filters.contractStatus !== "ALL"
     ) {
-      clients = clients.filter(
-        (client) =>
-          client.contractStatus ===
-          filters.contractStatus
-      );
+      clients =
+        clients.filter(
+          (client) =>
+            client.contractStatus ===
+            filters.contractStatus
+        );
     }
 
     return clients;
   },
 
-  /* ==========================================================
-     GET CLIENT BY ID
-  ========================================================== */
+  // ==========================================================
+  // GET CLIENT BY ID
+  // ==========================================================
 
   async getClientById(
     id: string
   ): Promise<ClientItem | null> {
-    if (!id) return null;
+    if (!id) {
+      return null;
+    }
 
-    const response = await fetch(
-      `${API_BASE_URL}/clients/${id}`,
-      {
-        method: "GET",
-        headers: getHeaders(),
-        credentials: "include",
-        cache: "no-store",
-      }
-    );
+    const response =
+      await fetch(
+        `${API_BASE_URL}/clients/${id}`,
+        {
+          method: "GET",
+          headers: getHeaders(),
+          credentials: "include",
+          cache: "no-store",
+        }
+      );
 
     if (response.status === 404) {
       return null;
     }
 
-    const data = await handleResponse<{
-      success: boolean;
-      data?: {
-        client?: any;
-      };
-    }>(response);
+    const data =
+      await handleResponse<{
+        success: boolean;
 
-    if (!data.data?.client) {
+        data?: {
+          client?: any;
+        };
+      }>(response);
+
+    if (
+      !data.data?.client
+    ) {
       return null;
     }
 
@@ -364,9 +430,9 @@ export const clientService = {
     );
   },
 
-  /* ==========================================================
-     CREATE CLIENT
-  ========================================================== */
+  // ==========================================================
+  // CREATE CLIENT
+  // ==========================================================
 
   async createClient(
     input: CreateClientInput
@@ -403,41 +469,50 @@ export const clientService = {
         undefined,
     };
 
-    const response = await fetch(
-      `${API_BASE_URL}/clients`,
-      {
-        method: "POST",
-        headers: getHeaders(),
-        credentials: "include",
-        body: JSON.stringify(payload),
-      }
-    );
+    const response =
+      await fetch(
+        `${API_BASE_URL}/clients`,
+        {
+          method: "POST",
+          headers: getHeaders(),
+          credentials: "include",
 
-    const data = await handleResponse<{
-      success: boolean;
-      data?: {
-        client?: any;
-      };
-    }>(response);
+          body: JSON.stringify(
+            payload
+          ),
+        }
+      );
 
-    if (!data.data?.client) {
+    const data =
+      await handleResponse<{
+        success: boolean;
+
+        data?: {
+          client?: any;
+        };
+      }>(response);
+
+    if (
+      !data.data?.client
+    ) {
       throw new Error(
         "Client was created but no client data was returned."
       );
     }
 
-    const client = mapClient(
-      data.data.client
-    );
+    const client =
+      mapClient(
+        data.data.client
+      );
 
     notifyChange();
 
     return client;
   },
 
-  /* ==========================================================
-     CREATE COMPLETE CLIENT
-  ========================================================== */
+  // ==========================================================
+  // CREATE COMPLETE CLIENT
+  // ==========================================================
 
   async createCompleteClient(
     input: CreateCompleteClientInput
@@ -461,7 +536,9 @@ export const clientService = {
             selection.pricingRuleId?.trim(),
 
           quantity:
-            Number(selection.quantity),
+            Number(
+              selection.quantity
+            ),
 
           notes:
             selection.notes?.trim() ||
@@ -473,13 +550,17 @@ export const clientService = {
       const selection of
         normalizedSelections
     ) {
-      if (!selection.serviceId) {
+      if (
+        !selection.serviceId
+      ) {
         throw new Error(
           "Service is required for every selection."
         );
       }
 
-      if (!selection.pricingRuleId) {
+      if (
+        !selection.pricingRuleId
+      ) {
         throw new Error(
           "Pricing rule is required for every selection."
         );
@@ -532,42 +613,52 @@ export const clientService = {
         normalizedSelections,
     };
 
-    const response = await fetch(
-      `${API_BASE_URL}/clients/complete`,
-      {
-        method: "POST",
-        headers: getHeaders(),
-        credentials: "include",
-        body: JSON.stringify(payload),
-      }
-    );
+    const response =
+      await fetch(
+        `${API_BASE_URL}/clients/complete`,
+        {
+          method: "POST",
+          headers: getHeaders(),
+          credentials: "include",
 
-    const data = await handleResponse<{
-      success: boolean;
-      message?: string;
-      data?: {
-        client?: any;
-      };
-    }>(response);
+          body: JSON.stringify(
+            payload
+          ),
+        }
+      );
 
-    if (!data.data?.client) {
+    const data =
+      await handleResponse<{
+        success: boolean;
+
+        message?: string;
+
+        data?: {
+          client?: any;
+        };
+      }>(response);
+
+    if (
+      !data.data?.client
+    ) {
       throw new Error(
         "Complete client data was not returned."
       );
     }
 
-    const client = mapClient(
-      data.data.client
-    );
+    const client =
+      mapClient(
+        data.data.client
+      );
 
     notifyChange();
 
     return client;
   },
 
-  /* ==========================================================
-     UPDATE CLIENT
-  ========================================================== */
+  // ==========================================================
+  // UPDATE CLIENT
+  // ==========================================================
 
   async updateClient(
     id: string,
@@ -584,12 +675,6 @@ export const clientService = {
       unknown
     > = {};
 
-    /*
-    |--------------------------------------------------------------------------
-    | COMPANY NAME
-    |--------------------------------------------------------------------------
-    */
-
     if (
       updates.companyName !==
       undefined
@@ -597,12 +682,6 @@ export const clientService = {
       payload.associationName =
         updates.companyName.trim();
     }
-
-    /*
-    |--------------------------------------------------------------------------
-    | CONTACT PERSON
-    |--------------------------------------------------------------------------
-    */
 
     if (
       updates.contactPerson !==
@@ -612,12 +691,6 @@ export const clientService = {
         updates.contactPerson.trim();
     }
 
-    /*
-    |--------------------------------------------------------------------------
-    | EMAIL
-    |--------------------------------------------------------------------------
-    */
-
     if (
       updates.contactEmail !==
       undefined
@@ -625,18 +698,9 @@ export const clientService = {
       const email =
         updates.contactEmail.trim();
 
-      if (email) {
-        payload.email = email;
-      } else {
-        delete payload.email;
-      }
+      payload.email =
+        email || undefined;
     }
-
-    /*
-    |--------------------------------------------------------------------------
-    | MOBILE
-    |--------------------------------------------------------------------------
-    */
 
     if (
       updates.contactPhone !==
@@ -645,18 +709,9 @@ export const clientService = {
       const mobile =
         updates.contactPhone.trim();
 
-      if (mobile) {
-        payload.mobile = mobile;
-      } else {
-        delete payload.mobile;
-      }
+      payload.mobile =
+        mobile || undefined;
     }
-
-    /*
-    |--------------------------------------------------------------------------
-    | ADDRESS
-    |--------------------------------------------------------------------------
-    */
 
     if (
       updates.address !==
@@ -665,18 +720,9 @@ export const clientService = {
       const address =
         updates.address.trim();
 
-      if (address) {
-        payload.address = address;
-      } else {
-        delete payload.address;
-      }
+      payload.address =
+        address || undefined;
     }
-
-    /*
-    |--------------------------------------------------------------------------
-    | CITY
-    |--------------------------------------------------------------------------
-    */
 
     if (
       updates.city !==
@@ -685,18 +731,9 @@ export const clientService = {
       const city =
         updates.city.trim();
 
-      if (city) {
-        payload.city = city;
-      } else {
-        delete payload.city;
-      }
+      payload.city =
+        city || undefined;
     }
-
-    /*
-    |--------------------------------------------------------------------------
-    | STATE
-    |--------------------------------------------------------------------------
-    */
 
     if (
       updates.state !==
@@ -705,18 +742,9 @@ export const clientService = {
       const state =
         updates.state.trim();
 
-      if (state) {
-        payload.state = state;
-      } else {
-        delete payload.state;
-      }
+      payload.state =
+        state || undefined;
     }
-
-    /*
-    |--------------------------------------------------------------------------
-    | PINCODE
-    |--------------------------------------------------------------------------
-    */
 
     if (
       (updates as any).pincode !==
@@ -728,54 +756,56 @@ export const clientService = {
             .pincode || ""
         ).trim();
 
-      if (pincode) {
-        payload.pincode = pincode;
-      } else {
-        delete payload.pincode;
-      }
+      payload.pincode =
+        pincode || undefined;
     }
 
-    console.log(
-      "UPDATE CLIENT PAYLOAD:",
-      payload
-    );
+    const response =
+      await fetch(
+        `${API_BASE_URL}/clients/${id}`,
+        {
+          method: "PUT",
+          headers: getHeaders(),
+          credentials: "include",
 
-    const response = await fetch(
-      `${API_BASE_URL}/clients/${id}`,
-      {
-        method: "PUT",
-        headers: getHeaders(),
-        credentials: "include",
-        body: JSON.stringify(payload),
-      }
-    );
+          body: JSON.stringify(
+            payload
+          ),
+        }
+      );
 
-    const data = await handleResponse<{
-      success: boolean;
-      message?: string;
-      data?: {
-        client?: any;
-      };
-    }>(response);
+    const data =
+      await handleResponse<{
+        success: boolean;
 
-    if (!data.data?.client) {
+        message?: string;
+
+        data?: {
+          client?: any;
+        };
+      }>(response);
+
+    if (
+      !data.data?.client
+    ) {
       throw new Error(
         "Updated client data was not returned."
       );
     }
 
-    const client = mapClient(
-      data.data.client
-    );
+    const client =
+      mapClient(
+        data.data.client
+      );
 
     notifyChange();
 
     return client;
   },
 
-  /* ==========================================================
-     UPDATE CLIENT PROCESS
-  ========================================================== */
+  // ==========================================================
+  // UPDATE CLIENT PROCESS
+  // ==========================================================
 
   async updateClientProcess(
     id: string,
@@ -787,7 +817,9 @@ export const clientService = {
       );
     }
 
-    if (!input.processStage) {
+    if (
+      !input.processStage
+    ) {
       throw new Error(
         "Client process stage is required."
       );
@@ -801,31 +833,24 @@ export const clientService = {
         input.processStage,
     };
 
-    /*
-    |--------------------------------------------------------------------------
-    | EXTERNAL CLIENT ID
-    |--------------------------------------------------------------------------
-    */
+    // ========================================================
+    // EXTERNAL CLIENT ID
+    // ========================================================
 
     if (
       input.externalClientId !==
       undefined
     ) {
       const externalClientId =
-        input.externalClientId
-          .trim();
+        input.externalClientId.trim();
 
-      if (externalClientId) {
-        payload.externalClientId =
-          externalClientId;
-      }
+      payload.externalClientId =
+        externalClientId || undefined;
     }
 
-    /*
-    |--------------------------------------------------------------------------
-    | FSO NUMBER
-    |--------------------------------------------------------------------------
-    */
+    // ========================================================
+    // FSO NUMBER
+    // ========================================================
 
     if (
       input.fsoNumber !==
@@ -834,17 +859,13 @@ export const clientService = {
       const fsoNumber =
         input.fsoNumber.trim();
 
-      if (fsoNumber) {
-        payload.fsoNumber =
-          fsoNumber;
-      }
+      payload.fsoNumber =
+        fsoNumber || undefined;
     }
 
-    /*
-    |--------------------------------------------------------------------------
-    | FSO GENERATED DATE
-    |--------------------------------------------------------------------------
-    */
+    // ========================================================
+    // FSO DATE
+    // ========================================================
 
     if (
       input.fsoGeneratedAt !==
@@ -854,11 +875,24 @@ export const clientService = {
         input.fsoGeneratedAt;
     }
 
-    /*
-    |--------------------------------------------------------------------------
-    | PSGA GENERATED DATE
-    |--------------------------------------------------------------------------
-    */
+    // ========================================================
+    // PSGA NUMBER
+    // ========================================================
+
+    if (
+      input.psgaNumber !==
+      undefined
+    ) {
+      const psgaNumber =
+        input.psgaNumber.trim();
+
+      payload.psgaNumber =
+        psgaNumber || undefined;
+    }
+
+    // ========================================================
+    // PSGA DATE
+    // ========================================================
 
     if (
       input.psgaGeneratedAt !==
@@ -868,89 +902,119 @@ export const clientService = {
         input.psgaGeneratedAt;
     }
 
-    const response = await fetch(
-      `${API_BASE_URL}/clients/${id}/process`,
-      {
-        method: "PATCH",
-        headers: getHeaders(),
-        credentials: "include",
-        body: JSON.stringify(payload),
-      }
-    );
+    const response =
+      await fetch(
+        `${API_BASE_URL}/clients/${id}/process`,
+        {
+          method: "PATCH",
+          headers: getHeaders(),
+          credentials: "include",
 
-    const data = await handleResponse<{
-      success: boolean;
-      message?: string;
-      data?: {
-        client?: any;
-      };
-    }>(response);
+          body: JSON.stringify(
+            payload
+          ),
+        }
+      );
 
-    if (!data.data?.client) {
+    const data =
+      await handleResponse<{
+        success: boolean;
+
+        message?: string;
+
+        data?: {
+          client?: any;
+
+          incentive?: {
+            status?: string;
+
+            recipient?: string;
+
+            amount?: number | null;
+
+            percentage?: number | null;
+          } | null;
+        };
+      }>(response);
+
+    if (
+      !data.data?.client
+    ) {
       throw new Error(
         "Updated client process data was not returned."
       );
     }
 
-    const client = mapClient(
-      data.data.client
-    );
+    const client =
+      mapClient(
+        data.data.client
+      );
 
     notifyChange();
 
     return client;
   },
 
-  /* ==========================================================
-     DELETE CLIENT
-  ========================================================== */
+  // ==========================================================
+  // DELETE CLIENT
+  // ==========================================================
 
   async deleteClient(
     id: string
   ): Promise<boolean> {
-    const response = await fetch(
-      `${API_BASE_URL}/clients/${id}`,
-      {
-        method: "DELETE",
-        headers: getHeaders(),
-        credentials: "include",
-      }
-    );
+    const response =
+      await fetch(
+        `${API_BASE_URL}/clients/${id}`,
+        {
+          method: "DELETE",
+          headers: getHeaders(),
+          credentials: "include",
+        }
+      );
 
-    await handleResponse(response);
+    await handleResponse(
+      response
+    );
 
     notifyChange();
 
     return true;
   },
 
-  /* ==========================================================
-     CLIENT STATS
-  ========================================================== */
+  // ==========================================================
+  // CLIENT STATS
+  // ==========================================================
 
   async getClientStats(): Promise<ClientStats> {
-    const response = await fetch(
-      `${API_BASE_URL}/clients/stats`,
-      {
-        method: "GET",
-        headers: getHeaders(),
-        credentials: "include",
-        cache: "no-store",
-      }
-    );
+    const response =
+      await fetch(
+        `${API_BASE_URL}/clients/stats`,
+        {
+          method: "GET",
+          headers: getHeaders(),
+          credentials: "include",
+          cache: "no-store",
+        }
+      );
 
     const data =
       await handleResponse<{
         success: boolean;
+
         data?: {
           totalClients?: number;
+
           activeClients?: number;
+
           inactiveClients?: number;
 
           process?: {
             clientCreated?: number;
+
             fsoGenerated?: number;
+
             psgaGenerated?: number;
+
             psgaCompleted?: number;
           };
         };
@@ -993,32 +1057,55 @@ export const clientService = {
 
         Onboarding: 0,
       },
+
+      process: {
+        clientCreated:
+          data.data?.process
+            ?.clientCreated || 0,
+
+        fsoGenerated:
+          data.data?.process
+            ?.fsoGenerated || 0,
+
+        psgaGenerated:
+          data.data?.process
+            ?.psgaGenerated || 0,
+
+        psgaCompleted:
+          data.data?.process
+            ?.psgaCompleted || 0,
+      },
     };
   },
 
-  /* ==========================================================
-     GET CLIENT PROCESS STATS
-  ========================================================== */
+  // ==========================================================
+  // GET CLIENT PROCESS STATS
+  // ==========================================================
 
   async getClientProcessStats(): Promise<ClientProcessStats> {
-    const response = await fetch(
-      `${API_BASE_URL}/clients/stats`,
-      {
-        method: "GET",
-        headers: getHeaders(),
-        credentials: "include",
-        cache: "no-store",
-      }
-    );
+    const response =
+      await fetch(
+        `${API_BASE_URL}/clients/stats`,
+        {
+          method: "GET",
+          headers: getHeaders(),
+          credentials: "include",
+          cache: "no-store",
+        }
+      );
 
     const data =
       await handleResponse<{
         success: boolean;
+
         data?: {
           process?: {
             clientCreated?: number;
+
             fsoGenerated?: number;
+
             psgaGenerated?: number;
+
             psgaCompleted?: number;
           };
         };
@@ -1043,9 +1130,9 @@ export const clientService = {
     };
   },
 
-  /* ==========================================================
-     ADMIN ONLY: ASSIGN CLIENT TO BDE
-  ========================================================== */
+  // ==========================================================
+  // ADMIN ONLY: ASSIGN CLIENT TO BDE
+  // ==========================================================
 
   async assignClientBde(
     clientId: string,
@@ -1063,43 +1150,50 @@ export const clientService = {
       );
     }
 
-    const response = await fetch(
-      `${API_BASE_URL}/clients/${clientId}/assign-bde`,
-      {
-        method: "PATCH",
-        headers: getHeaders(),
-        credentials: "include",
-        body: JSON.stringify({
-          bdeId,
-        }),
-      }
-    );
+    const response =
+      await fetch(
+        `${API_BASE_URL}/clients/${clientId}/assign-bde`,
+        {
+          method: "PATCH",
+          headers: getHeaders(),
+          credentials: "include",
 
-    const data = await handleResponse<{
-      success: boolean;
-      data?: {
-        client?: any;
-      };
-    }>(response);
+          body: JSON.stringify({
+            bdeId,
+          }),
+        }
+      );
 
-    if (!data.data?.client) {
+    const data =
+      await handleResponse<{
+        success: boolean;
+
+        data?: {
+          client?: any;
+        };
+      }>(response);
+
+    if (
+      !data.data?.client
+    ) {
       throw new Error(
         "Updated client data was not returned."
       );
     }
 
-    const client = mapClient(
-      data.data.client
-    );
+    const client =
+      mapClient(
+        data.data.client
+      );
 
     notifyChange();
 
     return client;
   },
 
-  /* ==========================================================
-     SUBSCRIBE
-  ========================================================== */
+  // ==========================================================
+  // SUBSCRIBE
+  // ==========================================================
 
   subscribe(
     callback: () => void

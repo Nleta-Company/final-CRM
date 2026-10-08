@@ -198,9 +198,9 @@ export type ServiceCatalogWhereInput = {
   isActive?: Prisma.BoolFilter<"ServiceCatalog"> | boolean
   createdAt?: Prisma.DateTimeFilter<"ServiceCatalog"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"ServiceCatalog"> | Date | string
-  pricingRules?: Prisma.ServicePricingRuleListRelationFilter
-  leadSelections?: Prisma.LeadServiceSelectionListRelationFilter
   clientSelections?: Prisma.ClientServiceSelectionListRelationFilter
+  leadSelections?: Prisma.LeadServiceSelectionListRelationFilter
+  pricingRules?: Prisma.ServicePricingRuleListRelationFilter
 }
 
 export type ServiceCatalogOrderByWithRelationInput = {
@@ -211,9 +211,9 @@ export type ServiceCatalogOrderByWithRelationInput = {
   isActive?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
-  pricingRules?: Prisma.ServicePricingRuleOrderByRelationAggregateInput
-  leadSelections?: Prisma.LeadServiceSelectionOrderByRelationAggregateInput
   clientSelections?: Prisma.ClientServiceSelectionOrderByRelationAggregateInput
+  leadSelections?: Prisma.LeadServiceSelectionOrderByRelationAggregateInput
+  pricingRules?: Prisma.ServicePricingRuleOrderByRelationAggregateInput
 }
 
 export type ServiceCatalogWhereUniqueInput = Prisma.AtLeast<{
@@ -227,9 +227,9 @@ export type ServiceCatalogWhereUniqueInput = Prisma.AtLeast<{
   isActive?: Prisma.BoolFilter<"ServiceCatalog"> | boolean
   createdAt?: Prisma.DateTimeFilter<"ServiceCatalog"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"ServiceCatalog"> | Date | string
-  pricingRules?: Prisma.ServicePricingRuleListRelationFilter
-  leadSelections?: Prisma.LeadServiceSelectionListRelationFilter
   clientSelections?: Prisma.ClientServiceSelectionListRelationFilter
+  leadSelections?: Prisma.LeadServiceSelectionListRelationFilter
+  pricingRules?: Prisma.ServicePricingRuleListRelationFilter
 }, "id" | "code">
 
 export type ServiceCatalogOrderByWithAggregationInput = {
@@ -266,9 +266,9 @@ export type ServiceCatalogCreateInput = {
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  pricingRules?: Prisma.ServicePricingRuleCreateNestedManyWithoutServiceInput
-  leadSelections?: Prisma.LeadServiceSelectionCreateNestedManyWithoutServiceInput
   clientSelections?: Prisma.ClientServiceSelectionCreateNestedManyWithoutServiceInput
+  leadSelections?: Prisma.LeadServiceSelectionCreateNestedManyWithoutServiceInput
+  pricingRules?: Prisma.ServicePricingRuleCreateNestedManyWithoutServiceInput
 }
 
 export type ServiceCatalogUncheckedCreateInput = {
@@ -279,9 +279,9 @@ export type ServiceCatalogUncheckedCreateInput = {
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  pricingRules?: Prisma.ServicePricingRuleUncheckedCreateNestedManyWithoutServiceInput
-  leadSelections?: Prisma.LeadServiceSelectionUncheckedCreateNestedManyWithoutServiceInput
   clientSelections?: Prisma.ClientServiceSelectionUncheckedCreateNestedManyWithoutServiceInput
+  leadSelections?: Prisma.LeadServiceSelectionUncheckedCreateNestedManyWithoutServiceInput
+  pricingRules?: Prisma.ServicePricingRuleUncheckedCreateNestedManyWithoutServiceInput
 }
 
 export type ServiceCatalogUpdateInput = {
@@ -292,9 +292,9 @@ export type ServiceCatalogUpdateInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  pricingRules?: Prisma.ServicePricingRuleUpdateManyWithoutServiceNestedInput
-  leadSelections?: Prisma.LeadServiceSelectionUpdateManyWithoutServiceNestedInput
   clientSelections?: Prisma.ClientServiceSelectionUpdateManyWithoutServiceNestedInput
+  leadSelections?: Prisma.LeadServiceSelectionUpdateManyWithoutServiceNestedInput
+  pricingRules?: Prisma.ServicePricingRuleUpdateManyWithoutServiceNestedInput
 }
 
 export type ServiceCatalogUncheckedUpdateInput = {
@@ -305,9 +305,9 @@ export type ServiceCatalogUncheckedUpdateInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  pricingRules?: Prisma.ServicePricingRuleUncheckedUpdateManyWithoutServiceNestedInput
-  leadSelections?: Prisma.LeadServiceSelectionUncheckedUpdateManyWithoutServiceNestedInput
   clientSelections?: Prisma.ClientServiceSelectionUncheckedUpdateManyWithoutServiceNestedInput
+  leadSelections?: Prisma.LeadServiceSelectionUncheckedUpdateManyWithoutServiceNestedInput
+  pricingRules?: Prisma.ServicePricingRuleUncheckedUpdateManyWithoutServiceNestedInput
 }
 
 export type ServiceCatalogCreateManyInput = {
@@ -425,8 +425,8 @@ export type ServiceCatalogCreateWithoutPricingRulesInput = {
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  leadSelections?: Prisma.LeadServiceSelectionCreateNestedManyWithoutServiceInput
   clientSelections?: Prisma.ClientServiceSelectionCreateNestedManyWithoutServiceInput
+  leadSelections?: Prisma.LeadServiceSelectionCreateNestedManyWithoutServiceInput
 }
 
 export type ServiceCatalogUncheckedCreateWithoutPricingRulesInput = {
@@ -437,8 +437,8 @@ export type ServiceCatalogUncheckedCreateWithoutPricingRulesInput = {
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  leadSelections?: Prisma.LeadServiceSelectionUncheckedCreateNestedManyWithoutServiceInput
   clientSelections?: Prisma.ClientServiceSelectionUncheckedCreateNestedManyWithoutServiceInput
+  leadSelections?: Prisma.LeadServiceSelectionUncheckedCreateNestedManyWithoutServiceInput
 }
 
 export type ServiceCatalogCreateOrConnectWithoutPricingRulesInput = {
@@ -465,8 +465,8 @@ export type ServiceCatalogUpdateWithoutPricingRulesInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  leadSelections?: Prisma.LeadServiceSelectionUpdateManyWithoutServiceNestedInput
   clientSelections?: Prisma.ClientServiceSelectionUpdateManyWithoutServiceNestedInput
+  leadSelections?: Prisma.LeadServiceSelectionUpdateManyWithoutServiceNestedInput
 }
 
 export type ServiceCatalogUncheckedUpdateWithoutPricingRulesInput = {
@@ -477,8 +477,8 @@ export type ServiceCatalogUncheckedUpdateWithoutPricingRulesInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  leadSelections?: Prisma.LeadServiceSelectionUncheckedUpdateManyWithoutServiceNestedInput
   clientSelections?: Prisma.ClientServiceSelectionUncheckedUpdateManyWithoutServiceNestedInput
+  leadSelections?: Prisma.LeadServiceSelectionUncheckedUpdateManyWithoutServiceNestedInput
 }
 
 export type ServiceCatalogCreateWithoutLeadSelectionsInput = {
@@ -489,8 +489,8 @@ export type ServiceCatalogCreateWithoutLeadSelectionsInput = {
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  pricingRules?: Prisma.ServicePricingRuleCreateNestedManyWithoutServiceInput
   clientSelections?: Prisma.ClientServiceSelectionCreateNestedManyWithoutServiceInput
+  pricingRules?: Prisma.ServicePricingRuleCreateNestedManyWithoutServiceInput
 }
 
 export type ServiceCatalogUncheckedCreateWithoutLeadSelectionsInput = {
@@ -501,8 +501,8 @@ export type ServiceCatalogUncheckedCreateWithoutLeadSelectionsInput = {
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  pricingRules?: Prisma.ServicePricingRuleUncheckedCreateNestedManyWithoutServiceInput
   clientSelections?: Prisma.ClientServiceSelectionUncheckedCreateNestedManyWithoutServiceInput
+  pricingRules?: Prisma.ServicePricingRuleUncheckedCreateNestedManyWithoutServiceInput
 }
 
 export type ServiceCatalogCreateOrConnectWithoutLeadSelectionsInput = {
@@ -529,8 +529,8 @@ export type ServiceCatalogUpdateWithoutLeadSelectionsInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  pricingRules?: Prisma.ServicePricingRuleUpdateManyWithoutServiceNestedInput
   clientSelections?: Prisma.ClientServiceSelectionUpdateManyWithoutServiceNestedInput
+  pricingRules?: Prisma.ServicePricingRuleUpdateManyWithoutServiceNestedInput
 }
 
 export type ServiceCatalogUncheckedUpdateWithoutLeadSelectionsInput = {
@@ -541,8 +541,8 @@ export type ServiceCatalogUncheckedUpdateWithoutLeadSelectionsInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  pricingRules?: Prisma.ServicePricingRuleUncheckedUpdateManyWithoutServiceNestedInput
   clientSelections?: Prisma.ClientServiceSelectionUncheckedUpdateManyWithoutServiceNestedInput
+  pricingRules?: Prisma.ServicePricingRuleUncheckedUpdateManyWithoutServiceNestedInput
 }
 
 export type ServiceCatalogCreateWithoutClientSelectionsInput = {
@@ -553,8 +553,8 @@ export type ServiceCatalogCreateWithoutClientSelectionsInput = {
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  pricingRules?: Prisma.ServicePricingRuleCreateNestedManyWithoutServiceInput
   leadSelections?: Prisma.LeadServiceSelectionCreateNestedManyWithoutServiceInput
+  pricingRules?: Prisma.ServicePricingRuleCreateNestedManyWithoutServiceInput
 }
 
 export type ServiceCatalogUncheckedCreateWithoutClientSelectionsInput = {
@@ -565,8 +565,8 @@ export type ServiceCatalogUncheckedCreateWithoutClientSelectionsInput = {
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  pricingRules?: Prisma.ServicePricingRuleUncheckedCreateNestedManyWithoutServiceInput
   leadSelections?: Prisma.LeadServiceSelectionUncheckedCreateNestedManyWithoutServiceInput
+  pricingRules?: Prisma.ServicePricingRuleUncheckedCreateNestedManyWithoutServiceInput
 }
 
 export type ServiceCatalogCreateOrConnectWithoutClientSelectionsInput = {
@@ -593,8 +593,8 @@ export type ServiceCatalogUpdateWithoutClientSelectionsInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  pricingRules?: Prisma.ServicePricingRuleUpdateManyWithoutServiceNestedInput
   leadSelections?: Prisma.LeadServiceSelectionUpdateManyWithoutServiceNestedInput
+  pricingRules?: Prisma.ServicePricingRuleUpdateManyWithoutServiceNestedInput
 }
 
 export type ServiceCatalogUncheckedUpdateWithoutClientSelectionsInput = {
@@ -605,8 +605,8 @@ export type ServiceCatalogUncheckedUpdateWithoutClientSelectionsInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  pricingRules?: Prisma.ServicePricingRuleUncheckedUpdateManyWithoutServiceNestedInput
   leadSelections?: Prisma.LeadServiceSelectionUncheckedUpdateManyWithoutServiceNestedInput
+  pricingRules?: Prisma.ServicePricingRuleUncheckedUpdateManyWithoutServiceNestedInput
 }
 
 
@@ -615,15 +615,15 @@ export type ServiceCatalogUncheckedUpdateWithoutClientSelectionsInput = {
  */
 
 export type ServiceCatalogCountOutputType = {
-  pricingRules: number
-  leadSelections: number
   clientSelections: number
+  leadSelections: number
+  pricingRules: number
 }
 
 export type ServiceCatalogCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  pricingRules?: boolean | ServiceCatalogCountOutputTypeCountPricingRulesArgs
-  leadSelections?: boolean | ServiceCatalogCountOutputTypeCountLeadSelectionsArgs
   clientSelections?: boolean | ServiceCatalogCountOutputTypeCountClientSelectionsArgs
+  leadSelections?: boolean | ServiceCatalogCountOutputTypeCountLeadSelectionsArgs
+  pricingRules?: boolean | ServiceCatalogCountOutputTypeCountPricingRulesArgs
 }
 
 /**
@@ -639,8 +639,8 @@ export type ServiceCatalogCountOutputTypeDefaultArgs<ExtArgs extends runtime.Typ
 /**
  * ServiceCatalogCountOutputType without action
  */
-export type ServiceCatalogCountOutputTypeCountPricingRulesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.ServicePricingRuleWhereInput
+export type ServiceCatalogCountOutputTypeCountClientSelectionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ClientServiceSelectionWhereInput
 }
 
 /**
@@ -653,8 +653,8 @@ export type ServiceCatalogCountOutputTypeCountLeadSelectionsArgs<ExtArgs extends
 /**
  * ServiceCatalogCountOutputType without action
  */
-export type ServiceCatalogCountOutputTypeCountClientSelectionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.ClientServiceSelectionWhereInput
+export type ServiceCatalogCountOutputTypeCountPricingRulesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ServicePricingRuleWhereInput
 }
 
 
@@ -666,9 +666,9 @@ export type ServiceCatalogSelect<ExtArgs extends runtime.Types.Extensions.Intern
   isActive?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  pricingRules?: boolean | Prisma.ServiceCatalog$pricingRulesArgs<ExtArgs>
-  leadSelections?: boolean | Prisma.ServiceCatalog$leadSelectionsArgs<ExtArgs>
   clientSelections?: boolean | Prisma.ServiceCatalog$clientSelectionsArgs<ExtArgs>
+  leadSelections?: boolean | Prisma.ServiceCatalog$leadSelectionsArgs<ExtArgs>
+  pricingRules?: boolean | Prisma.ServiceCatalog$pricingRulesArgs<ExtArgs>
   _count?: boolean | Prisma.ServiceCatalogCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["serviceCatalog"]>
 
@@ -704,9 +704,9 @@ export type ServiceCatalogSelectScalar = {
 
 export type ServiceCatalogOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "code" | "name" | "description" | "isActive" | "createdAt" | "updatedAt", ExtArgs["result"]["serviceCatalog"]>
 export type ServiceCatalogInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  pricingRules?: boolean | Prisma.ServiceCatalog$pricingRulesArgs<ExtArgs>
-  leadSelections?: boolean | Prisma.ServiceCatalog$leadSelectionsArgs<ExtArgs>
   clientSelections?: boolean | Prisma.ServiceCatalog$clientSelectionsArgs<ExtArgs>
+  leadSelections?: boolean | Prisma.ServiceCatalog$leadSelectionsArgs<ExtArgs>
+  pricingRules?: boolean | Prisma.ServiceCatalog$pricingRulesArgs<ExtArgs>
   _count?: boolean | Prisma.ServiceCatalogCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type ServiceCatalogIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -715,9 +715,9 @@ export type ServiceCatalogIncludeUpdateManyAndReturn<ExtArgs extends runtime.Typ
 export type $ServiceCatalogPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "ServiceCatalog"
   objects: {
-    pricingRules: Prisma.$ServicePricingRulePayload<ExtArgs>[]
-    leadSelections: Prisma.$LeadServiceSelectionPayload<ExtArgs>[]
     clientSelections: Prisma.$ClientServiceSelectionPayload<ExtArgs>[]
+    leadSelections: Prisma.$LeadServiceSelectionPayload<ExtArgs>[]
+    pricingRules: Prisma.$ServicePricingRulePayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1121,9 +1121,9 @@ readonly fields: ServiceCatalogFieldRefs;
  */
 export interface Prisma__ServiceCatalogClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  pricingRules<T extends Prisma.ServiceCatalog$pricingRulesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ServiceCatalog$pricingRulesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ServicePricingRulePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  leadSelections<T extends Prisma.ServiceCatalog$leadSelectionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ServiceCatalog$leadSelectionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LeadServiceSelectionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   clientSelections<T extends Prisma.ServiceCatalog$clientSelectionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ServiceCatalog$clientSelectionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ClientServiceSelectionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  leadSelections<T extends Prisma.ServiceCatalog$leadSelectionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ServiceCatalog$leadSelectionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LeadServiceSelectionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  pricingRules<T extends Prisma.ServiceCatalog$pricingRulesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ServiceCatalog$pricingRulesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ServicePricingRulePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1553,27 +1553,27 @@ export type ServiceCatalogDeleteManyArgs<ExtArgs extends runtime.Types.Extension
 }
 
 /**
- * ServiceCatalog.pricingRules
+ * ServiceCatalog.clientSelections
  */
-export type ServiceCatalog$pricingRulesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type ServiceCatalog$clientSelectionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Select specific fields to fetch from the ServicePricingRule
+   * Select specific fields to fetch from the ClientServiceSelection
    */
-  select?: Prisma.ServicePricingRuleSelect<ExtArgs> | null
+  select?: Prisma.ClientServiceSelectionSelect<ExtArgs> | null
   /**
-   * Omit specific fields from the ServicePricingRule
+   * Omit specific fields from the ClientServiceSelection
    */
-  omit?: Prisma.ServicePricingRuleOmit<ExtArgs> | null
+  omit?: Prisma.ClientServiceSelectionOmit<ExtArgs> | null
   /**
    * Choose, which related nodes to fetch as well
    */
-  include?: Prisma.ServicePricingRuleInclude<ExtArgs> | null
-  where?: Prisma.ServicePricingRuleWhereInput
-  orderBy?: Prisma.ServicePricingRuleOrderByWithRelationInput | Prisma.ServicePricingRuleOrderByWithRelationInput[]
-  cursor?: Prisma.ServicePricingRuleWhereUniqueInput
+  include?: Prisma.ClientServiceSelectionInclude<ExtArgs> | null
+  where?: Prisma.ClientServiceSelectionWhereInput
+  orderBy?: Prisma.ClientServiceSelectionOrderByWithRelationInput | Prisma.ClientServiceSelectionOrderByWithRelationInput[]
+  cursor?: Prisma.ClientServiceSelectionWhereUniqueInput
   take?: number
   skip?: number
-  distinct?: Prisma.ServicePricingRuleScalarFieldEnum | Prisma.ServicePricingRuleScalarFieldEnum[]
+  distinct?: Prisma.ClientServiceSelectionScalarFieldEnum | Prisma.ClientServiceSelectionScalarFieldEnum[]
 }
 
 /**
@@ -1601,27 +1601,27 @@ export type ServiceCatalog$leadSelectionsArgs<ExtArgs extends runtime.Types.Exte
 }
 
 /**
- * ServiceCatalog.clientSelections
+ * ServiceCatalog.pricingRules
  */
-export type ServiceCatalog$clientSelectionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type ServiceCatalog$pricingRulesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Select specific fields to fetch from the ClientServiceSelection
+   * Select specific fields to fetch from the ServicePricingRule
    */
-  select?: Prisma.ClientServiceSelectionSelect<ExtArgs> | null
+  select?: Prisma.ServicePricingRuleSelect<ExtArgs> | null
   /**
-   * Omit specific fields from the ClientServiceSelection
+   * Omit specific fields from the ServicePricingRule
    */
-  omit?: Prisma.ClientServiceSelectionOmit<ExtArgs> | null
+  omit?: Prisma.ServicePricingRuleOmit<ExtArgs> | null
   /**
    * Choose, which related nodes to fetch as well
    */
-  include?: Prisma.ClientServiceSelectionInclude<ExtArgs> | null
-  where?: Prisma.ClientServiceSelectionWhereInput
-  orderBy?: Prisma.ClientServiceSelectionOrderByWithRelationInput | Prisma.ClientServiceSelectionOrderByWithRelationInput[]
-  cursor?: Prisma.ClientServiceSelectionWhereUniqueInput
+  include?: Prisma.ServicePricingRuleInclude<ExtArgs> | null
+  where?: Prisma.ServicePricingRuleWhereInput
+  orderBy?: Prisma.ServicePricingRuleOrderByWithRelationInput | Prisma.ServicePricingRuleOrderByWithRelationInput[]
+  cursor?: Prisma.ServicePricingRuleWhereUniqueInput
   take?: number
   skip?: number
-  distinct?: Prisma.ClientServiceSelectionScalarFieldEnum | Prisma.ClientServiceSelectionScalarFieldEnum[]
+  distinct?: Prisma.ServicePricingRuleScalarFieldEnum | Prisma.ServicePricingRuleScalarFieldEnum[]
 }
 
 /**

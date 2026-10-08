@@ -124,6 +124,8 @@ export const UserScalarFieldEnum = {
   lastName: 'lastName',
   email: 'email',
   passwordHash: 'passwordHash',
+  designation: 'designation',
+  region: 'region',
   mobile: 'mobile',
   status: 'status',
   roleId: 'roleId',
@@ -150,30 +152,30 @@ export type AuthSessionScalarFieldEnum = (typeof AuthSessionScalarFieldEnum)[key
 
 export const LeadScalarFieldEnum = {
   id: 'id',
-  associationName: 'associationName',
   contactName: 'contactName',
   email: 'email',
   mobile: 'mobile',
-  customerType: 'customerType',
-  address: 'address',
-  city: 'city',
-  state: 'state',
-  pincode: 'pincode',
   source: 'source',
   notes: 'notes',
-  nextFollowUpAt: 'nextFollowUpAt',
-  followUpRemarks: 'followUpRemarks',
-  nextAction: 'nextAction',
-  siteName: 'siteName',
-  siteAddress: 'siteAddress',
-  siteCity: 'siteCity',
-  siteState: 'siteState',
   status: 'status',
   assignedToId: 'assignedToId',
   createdById: 'createdById',
-  clientId: 'clientId',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  associationName: 'associationName',
+  clientId: 'clientId',
+  address: 'address',
+  city: 'city',
+  customerType: 'customerType',
+  followUpRemarks: 'followUpRemarks',
+  nextAction: 'nextAction',
+  nextFollowUpAt: 'nextFollowUpAt',
+  pincode: 'pincode',
+  siteAddress: 'siteAddress',
+  siteCity: 'siteCity',
+  siteName: 'siteName',
+  siteState: 'siteState',
+  state: 'state'
 } as const
 
 export type LeadScalarFieldEnum = (typeof LeadScalarFieldEnum)[keyof typeof LeadScalarFieldEnum]
@@ -209,16 +211,17 @@ export const ClientScalarFieldEnum = {
   pincode: 'pincode',
   gstNumber: 'gstNumber',
   status: 'status',
-  processStage: 'processStage',
-  externalClientId: 'externalClientId',
-  fsoNumber: 'fsoNumber',
-  fsoGeneratedAt: 'fsoGeneratedAt',
-  psgaGeneratedAt: 'psgaGeneratedAt',
-  processUpdatedAt: 'processUpdatedAt',
   createdById: 'createdById',
-  assignedBdeId: 'assignedBdeId',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  assignedBdeId: 'assignedBdeId',
+  externalClientId: 'externalClientId',
+  fsoGeneratedAt: 'fsoGeneratedAt',
+  fsoNumber: 'fsoNumber',
+  processStage: 'processStage',
+  processUpdatedAt: 'processUpdatedAt',
+  psgaNumber: 'psgaNumber',
+  psgaGeneratedAt: 'psgaGeneratedAt'
 } as const
 
 export type ClientScalarFieldEnum = (typeof ClientScalarFieldEnum)[keyof typeof ClientScalarFieldEnum]
@@ -247,12 +250,12 @@ export const NotificationScalarFieldEnum = {
   title: 'title',
   message: 'message',
   isRead: 'isRead',
-  referenceId: 'referenceId',
-  referenceType: 'referenceType',
-  notificationKey: 'notificationKey',
   recipientId: 'recipientId',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  notificationKey: 'notificationKey',
+  referenceId: 'referenceId',
+  referenceType: 'referenceType'
 } as const
 
 export type NotificationScalarFieldEnum = (typeof NotificationScalarFieldEnum)[keyof typeof NotificationScalarFieldEnum]
@@ -361,9 +364,7 @@ export type PSGAScalarFieldEnum = (typeof PSGAScalarFieldEnum)[keyof typeof PSGA
 export const PSGAIncentiveAllocationScalarFieldEnum = {
   id: 'id',
   psgId: 'psgId',
-  recipientType: 'recipientType',
   bdeId: 'bdeId',
-  adminId: 'adminId',
   role: 'role',
   reason: 'reason',
   incentivePercent: 'incentivePercent',
@@ -372,7 +373,9 @@ export const PSGAIncentiveAllocationScalarFieldEnum = {
   approvedAt: 'approvedAt',
   paidAt: 'paidAt',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  adminId: 'adminId',
+  recipientType: 'recipientType'
 } as const
 
 export type PSGAIncentiveAllocationScalarFieldEnum = (typeof PSGAIncentiveAllocationScalarFieldEnum)[keyof typeof PSGAIncentiveAllocationScalarFieldEnum]
@@ -382,14 +385,14 @@ export const IncentivePayoutScalarFieldEnum = {
   id: 'id',
   bdeId: 'bdeId',
   salaryMonth: 'salaryMonth',
-  totalIncentivePercent: 'totalIncentivePercent',
   status: 'status',
   approvedById: 'approvedById',
   approvedAt: 'approvedAt',
   paidAt: 'paidAt',
   paymentReference: 'paymentReference',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  totalIncentivePercent: 'totalIncentivePercent'
 } as const
 
 export type IncentivePayoutScalarFieldEnum = (typeof IncentivePayoutScalarFieldEnum)[keyof typeof IncentivePayoutScalarFieldEnum]

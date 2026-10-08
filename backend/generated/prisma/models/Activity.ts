@@ -230,9 +230,9 @@ export type ActivityWhereInput = {
   createdById?: Prisma.StringFilter<"Activity"> | string
   createdAt?: Prisma.DateTimeFilter<"Activity"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Activity"> | Date | string
-  lead?: Prisma.XOR<Prisma.LeadNullableScalarRelationFilter, Prisma.LeadWhereInput> | null
   client?: Prisma.XOR<Prisma.ClientNullableScalarRelationFilter, Prisma.ClientWhereInput> | null
   createdBy?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
+  lead?: Prisma.XOR<Prisma.LeadNullableScalarRelationFilter, Prisma.LeadWhereInput> | null
 }
 
 export type ActivityOrderByWithRelationInput = {
@@ -247,9 +247,9 @@ export type ActivityOrderByWithRelationInput = {
   createdById?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
-  lead?: Prisma.LeadOrderByWithRelationInput
   client?: Prisma.ClientOrderByWithRelationInput
   createdBy?: Prisma.UserOrderByWithRelationInput
+  lead?: Prisma.LeadOrderByWithRelationInput
 }
 
 export type ActivityWhereUniqueInput = Prisma.AtLeast<{
@@ -267,9 +267,9 @@ export type ActivityWhereUniqueInput = Prisma.AtLeast<{
   createdById?: Prisma.StringFilter<"Activity"> | string
   createdAt?: Prisma.DateTimeFilter<"Activity"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Activity"> | Date | string
-  lead?: Prisma.XOR<Prisma.LeadNullableScalarRelationFilter, Prisma.LeadWhereInput> | null
   client?: Prisma.XOR<Prisma.ClientNullableScalarRelationFilter, Prisma.ClientWhereInput> | null
   createdBy?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
+  lead?: Prisma.XOR<Prisma.LeadNullableScalarRelationFilter, Prisma.LeadWhereInput> | null
 }, "id">
 
 export type ActivityOrderByWithAggregationInput = {
@@ -315,9 +315,9 @@ export type ActivityCreateInput = {
   status?: $Enums.ActivityStatus
   createdAt?: Date | string
   updatedAt?: Date | string
-  lead?: Prisma.LeadCreateNestedOneWithoutActivitiesInput
   client?: Prisma.ClientCreateNestedOneWithoutActivitiesInput
   createdBy: Prisma.UserCreateNestedOneWithoutActivitiesInput
+  lead?: Prisma.LeadCreateNestedOneWithoutActivitiesInput
 }
 
 export type ActivityUncheckedCreateInput = {
@@ -343,9 +343,9 @@ export type ActivityUpdateInput = {
   status?: Prisma.EnumActivityStatusFieldUpdateOperationsInput | $Enums.ActivityStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  lead?: Prisma.LeadUpdateOneWithoutActivitiesNestedInput
   client?: Prisma.ClientUpdateOneWithoutActivitiesNestedInput
   createdBy?: Prisma.UserUpdateOneRequiredWithoutActivitiesNestedInput
+  lead?: Prisma.LeadUpdateOneWithoutActivitiesNestedInput
 }
 
 export type ActivityUncheckedUpdateInput = {
@@ -596,8 +596,8 @@ export type ActivityCreateWithoutCreatedByInput = {
   status?: $Enums.ActivityStatus
   createdAt?: Date | string
   updatedAt?: Date | string
-  lead?: Prisma.LeadCreateNestedOneWithoutActivitiesInput
   client?: Prisma.ClientCreateNestedOneWithoutActivitiesInput
+  lead?: Prisma.LeadCreateNestedOneWithoutActivitiesInput
 }
 
 export type ActivityUncheckedCreateWithoutCreatedByInput = {
@@ -717,8 +717,8 @@ export type ActivityCreateWithoutClientInput = {
   status?: $Enums.ActivityStatus
   createdAt?: Date | string
   updatedAt?: Date | string
-  lead?: Prisma.LeadCreateNestedOneWithoutActivitiesInput
   createdBy: Prisma.UserCreateNestedOneWithoutActivitiesInput
+  lead?: Prisma.LeadCreateNestedOneWithoutActivitiesInput
 }
 
 export type ActivityUncheckedCreateWithoutClientInput = {
@@ -782,8 +782,8 @@ export type ActivityUpdateWithoutCreatedByInput = {
   status?: Prisma.EnumActivityStatusFieldUpdateOperationsInput | $Enums.ActivityStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  lead?: Prisma.LeadUpdateOneWithoutActivitiesNestedInput
   client?: Prisma.ClientUpdateOneWithoutActivitiesNestedInput
+  lead?: Prisma.LeadUpdateOneWithoutActivitiesNestedInput
 }
 
 export type ActivityUncheckedUpdateWithoutCreatedByInput = {
@@ -886,8 +886,8 @@ export type ActivityUpdateWithoutClientInput = {
   status?: Prisma.EnumActivityStatusFieldUpdateOperationsInput | $Enums.ActivityStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  lead?: Prisma.LeadUpdateOneWithoutActivitiesNestedInput
   createdBy?: Prisma.UserUpdateOneRequiredWithoutActivitiesNestedInput
+  lead?: Prisma.LeadUpdateOneWithoutActivitiesNestedInput
 }
 
 export type ActivityUncheckedUpdateWithoutClientInput = {
@@ -930,9 +930,9 @@ export type ActivitySelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   createdById?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  lead?: boolean | Prisma.Activity$leadArgs<ExtArgs>
   client?: boolean | Prisma.Activity$clientArgs<ExtArgs>
   createdBy?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  lead?: boolean | Prisma.Activity$leadArgs<ExtArgs>
 }, ExtArgs["result"]["activity"]>
 
 export type ActivitySelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -947,9 +947,9 @@ export type ActivitySelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exte
   createdById?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  lead?: boolean | Prisma.Activity$leadArgs<ExtArgs>
   client?: boolean | Prisma.Activity$clientArgs<ExtArgs>
   createdBy?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  lead?: boolean | Prisma.Activity$leadArgs<ExtArgs>
 }, ExtArgs["result"]["activity"]>
 
 export type ActivitySelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -964,9 +964,9 @@ export type ActivitySelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exte
   createdById?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  lead?: boolean | Prisma.Activity$leadArgs<ExtArgs>
   client?: boolean | Prisma.Activity$clientArgs<ExtArgs>
   createdBy?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  lead?: boolean | Prisma.Activity$leadArgs<ExtArgs>
 }, ExtArgs["result"]["activity"]>
 
 export type ActivitySelectScalar = {
@@ -985,27 +985,27 @@ export type ActivitySelectScalar = {
 
 export type ActivityOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "type" | "subject" | "description" | "followUpAt" | "status" | "leadId" | "clientId" | "createdById" | "createdAt" | "updatedAt", ExtArgs["result"]["activity"]>
 export type ActivityInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  lead?: boolean | Prisma.Activity$leadArgs<ExtArgs>
   client?: boolean | Prisma.Activity$clientArgs<ExtArgs>
   createdBy?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  lead?: boolean | Prisma.Activity$leadArgs<ExtArgs>
 }
 export type ActivityIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  lead?: boolean | Prisma.Activity$leadArgs<ExtArgs>
   client?: boolean | Prisma.Activity$clientArgs<ExtArgs>
   createdBy?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  lead?: boolean | Prisma.Activity$leadArgs<ExtArgs>
 }
 export type ActivityIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  lead?: boolean | Prisma.Activity$leadArgs<ExtArgs>
   client?: boolean | Prisma.Activity$clientArgs<ExtArgs>
   createdBy?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  lead?: boolean | Prisma.Activity$leadArgs<ExtArgs>
 }
 
 export type $ActivityPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Activity"
   objects: {
-    lead: Prisma.$LeadPayload<ExtArgs> | null
     client: Prisma.$ClientPayload<ExtArgs> | null
     createdBy: Prisma.$UserPayload<ExtArgs>
+    lead: Prisma.$LeadPayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1413,9 +1413,9 @@ readonly fields: ActivityFieldRefs;
  */
 export interface Prisma__ActivityClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  lead<T extends Prisma.Activity$leadArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Activity$leadArgs<ExtArgs>>): Prisma.Prisma__LeadClient<runtime.Types.Result.GetResult<Prisma.$LeadPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   client<T extends Prisma.Activity$clientArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Activity$clientArgs<ExtArgs>>): Prisma.Prisma__ClientClient<runtime.Types.Result.GetResult<Prisma.$ClientPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   createdBy<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  lead<T extends Prisma.Activity$leadArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Activity$leadArgs<ExtArgs>>): Prisma.Prisma__LeadClient<runtime.Types.Result.GetResult<Prisma.$LeadPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1857,25 +1857,6 @@ export type ActivityDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Inte
 }
 
 /**
- * Activity.lead
- */
-export type Activity$leadArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the Lead
-   */
-  select?: Prisma.LeadSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the Lead
-   */
-  omit?: Prisma.LeadOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.LeadInclude<ExtArgs> | null
-  where?: Prisma.LeadWhereInput
-}
-
-/**
  * Activity.client
  */
 export type Activity$clientArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1892,6 +1873,25 @@ export type Activity$clientArgs<ExtArgs extends runtime.Types.Extensions.Interna
    */
   include?: Prisma.ClientInclude<ExtArgs> | null
   where?: Prisma.ClientWhereInput
+}
+
+/**
+ * Activity.lead
+ */
+export type Activity$leadArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Lead
+   */
+  select?: Prisma.LeadSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Lead
+   */
+  omit?: Prisma.LeadOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.LeadInclude<ExtArgs> | null
+  where?: Prisma.LeadWhereInput
 }
 
 /**

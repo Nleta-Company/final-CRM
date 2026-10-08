@@ -10,6 +10,16 @@ const createUserSchema = z.object({
     mobile: z.string().trim().optional(),
     password: z.string().min(8, "Password must be at least 8 characters"),
 
+    designation: z
+        .string()
+        .trim()
+        .min(2, "Designation is required"),
+
+    region: z
+        .string()
+        .trim()
+        .min(2, "Sales territory is required"),
+
     // Only Admin-created BDE/Sales accounts
     role: z.literal("BDE/Sales"),
 });
@@ -43,6 +53,8 @@ export async function createUser(req, res) {
             email,
             mobile,
             password,
+            designation,
+            region,
             role,
         } = validation.data;
 
@@ -82,18 +94,27 @@ export async function createUser(req, res) {
                 lastName: lastName || null,
                 email: normalizedEmail,
                 mobile: mobile || null,
+
+                // BDE profile fields
+                designation,
+                region,
+
                 passwordHash,
                 status: "ACTIVE",
                 roleId: roleRecord.id,
             },
+
             select: {
                 id: true,
                 firstName: true,
                 lastName: true,
                 email: true,
                 mobile: true,
+                designation: true,
+                region: true,
                 status: true,
                 createdAt: true,
+
                 role: {
                     select: {
                         name: true,
@@ -128,15 +149,19 @@ export async function getUsers(req, res) {
                 lastName: true,
                 email: true,
                 mobile: true,
+                designation: true,
+                region: true,
                 status: true,
                 lastLoginAt: true,
                 createdAt: true,
+
                 role: {
                     select: {
                         name: true,
                     },
                 },
             },
+
             orderBy: {
                 createdAt: "desc",
             },
@@ -165,6 +190,19 @@ const updateUserSchema = z.object({
     lastName: z.string().trim().min(1).optional(),
     email: z.string().trim().email().optional(),
     mobile: z.string().trim().optional(),
+
+    designation: z
+        .string()
+        .trim()
+        .min(2, "Designation is required")
+        .optional(),
+
+    region: z
+        .string()
+        .trim()
+        .min(2, "Sales territory is required")
+        .optional(),
+
     role: z.enum(["BDE/Sales", "Client"]).optional(),
 });
 
@@ -186,6 +224,7 @@ export async function updateUser(req, res) {
             where: {
                 id: userId,
             },
+
             include: {
                 role: true,
             },
@@ -218,6 +257,7 @@ export async function updateUser(req, res) {
             const emailUser = await prisma.user.findFirst({
                 where: {
                     email: normalizedEmail,
+
                     NOT: {
                         id: userId,
                     },
@@ -271,6 +311,15 @@ export async function updateUser(req, res) {
                 mobile: data.mobile,
             }),
 
+            // BDE profile fields
+            ...(data.designation !== undefined && {
+                designation: data.designation,
+            }),
+
+            ...(data.region !== undefined && {
+                region: data.region,
+            }),
+
             ...(roleId && {
                 roleId,
             }),
@@ -280,16 +329,21 @@ export async function updateUser(req, res) {
             where: {
                 id: userId,
             },
+
             data: updateData,
+
             select: {
                 id: true,
                 firstName: true,
                 lastName: true,
                 email: true,
                 mobile: true,
+                designation: true,
+                region: true,
                 status: true,
                 lastLoginAt: true,
                 createdAt: true,
+
                 role: {
                     select: {
                         name: true,
@@ -314,7 +368,6 @@ export async function updateUser(req, res) {
         });
     }
 }
-
 
 const updateUserStatusSchema = z.object({
     status: z.enum([
@@ -363,18 +416,23 @@ export async function updateUserStatus(req, res) {
             where: {
                 id: userId,
             },
+
             data: {
                 status: validation.data.status,
             },
+
             select: {
                 id: true,
                 firstName: true,
                 lastName: true,
                 email: true,
                 mobile: true,
+                designation: true,
+                region: true,
                 status: true,
                 lastLoginAt: true,
                 createdAt: true,
+
                 role: {
                     select: {
                         name: true,
@@ -421,6 +479,7 @@ export async function resetUserPassword(req, res) {
             where: {
                 id: userId,
             },
+
             include: {
                 role: true,
             },
@@ -450,6 +509,7 @@ export async function resetUserPassword(req, res) {
             where: {
                 id: userId,
             },
+
             data: {
                 passwordHash,
             },

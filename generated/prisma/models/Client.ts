@@ -40,6 +40,7 @@ export type ClientMinAggregateOutputType = {
   externalClientId: string | null
   fsoNumber: string | null
   fsoGeneratedAt: Date | null
+  psgaNumber: string | null
   psgaGeneratedAt: Date | null
   processUpdatedAt: Date | null
   createdById: string | null
@@ -64,6 +65,7 @@ export type ClientMaxAggregateOutputType = {
   externalClientId: string | null
   fsoNumber: string | null
   fsoGeneratedAt: Date | null
+  psgaNumber: string | null
   psgaGeneratedAt: Date | null
   processUpdatedAt: Date | null
   createdById: string | null
@@ -88,6 +90,7 @@ export type ClientCountAggregateOutputType = {
   externalClientId: number
   fsoNumber: number
   fsoGeneratedAt: number
+  psgaNumber: number
   psgaGeneratedAt: number
   processUpdatedAt: number
   createdById: number
@@ -114,6 +117,7 @@ export type ClientMinAggregateInputType = {
   externalClientId?: true
   fsoNumber?: true
   fsoGeneratedAt?: true
+  psgaNumber?: true
   psgaGeneratedAt?: true
   processUpdatedAt?: true
   createdById?: true
@@ -138,6 +142,7 @@ export type ClientMaxAggregateInputType = {
   externalClientId?: true
   fsoNumber?: true
   fsoGeneratedAt?: true
+  psgaNumber?: true
   psgaGeneratedAt?: true
   processUpdatedAt?: true
   createdById?: true
@@ -162,6 +167,7 @@ export type ClientCountAggregateInputType = {
   externalClientId?: true
   fsoNumber?: true
   fsoGeneratedAt?: true
+  psgaNumber?: true
   psgaGeneratedAt?: true
   processUpdatedAt?: true
   createdById?: true
@@ -259,6 +265,7 @@ export type ClientGroupByOutputType = {
   externalClientId: string | null
   fsoNumber: string | null
   fsoGeneratedAt: Date | null
+  psgaNumber: string | null
   psgaGeneratedAt: Date | null
   processUpdatedAt: Date | null
   createdById: string
@@ -304,6 +311,7 @@ export type ClientWhereInput = {
   externalClientId?: Prisma.StringNullableFilter<"Client"> | string | null
   fsoNumber?: Prisma.StringNullableFilter<"Client"> | string | null
   fsoGeneratedAt?: Prisma.DateTimeNullableFilter<"Client"> | Date | string | null
+  psgaNumber?: Prisma.StringNullableFilter<"Client"> | string | null
   psgaGeneratedAt?: Prisma.DateTimeNullableFilter<"Client"> | Date | string | null
   processUpdatedAt?: Prisma.DateTimeNullableFilter<"Client"> | Date | string | null
   createdById?: Prisma.StringFilter<"Client"> | string
@@ -335,6 +343,7 @@ export type ClientOrderByWithRelationInput = {
   externalClientId?: Prisma.SortOrderInput | Prisma.SortOrder
   fsoNumber?: Prisma.SortOrderInput | Prisma.SortOrder
   fsoGeneratedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  psgaNumber?: Prisma.SortOrderInput | Prisma.SortOrder
   psgaGeneratedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   processUpdatedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdById?: Prisma.SortOrder
@@ -369,6 +378,7 @@ export type ClientWhereUniqueInput = Prisma.AtLeast<{
   externalClientId?: Prisma.StringNullableFilter<"Client"> | string | null
   fsoNumber?: Prisma.StringNullableFilter<"Client"> | string | null
   fsoGeneratedAt?: Prisma.DateTimeNullableFilter<"Client"> | Date | string | null
+  psgaNumber?: Prisma.StringNullableFilter<"Client"> | string | null
   psgaGeneratedAt?: Prisma.DateTimeNullableFilter<"Client"> | Date | string | null
   processUpdatedAt?: Prisma.DateTimeNullableFilter<"Client"> | Date | string | null
   createdById?: Prisma.StringFilter<"Client"> | string
@@ -400,6 +410,7 @@ export type ClientOrderByWithAggregationInput = {
   externalClientId?: Prisma.SortOrderInput | Prisma.SortOrder
   fsoNumber?: Prisma.SortOrderInput | Prisma.SortOrder
   fsoGeneratedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  psgaNumber?: Prisma.SortOrderInput | Prisma.SortOrder
   psgaGeneratedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   processUpdatedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdById?: Prisma.SortOrder
@@ -430,6 +441,7 @@ export type ClientScalarWhereWithAggregatesInput = {
   externalClientId?: Prisma.StringNullableWithAggregatesFilter<"Client"> | string | null
   fsoNumber?: Prisma.StringNullableWithAggregatesFilter<"Client"> | string | null
   fsoGeneratedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Client"> | Date | string | null
+  psgaNumber?: Prisma.StringNullableWithAggregatesFilter<"Client"> | string | null
   psgaGeneratedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Client"> | Date | string | null
   processUpdatedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Client"> | Date | string | null
   createdById?: Prisma.StringWithAggregatesFilter<"Client"> | string
@@ -454,6 +466,7 @@ export type ClientCreateInput = {
   externalClientId?: string | null
   fsoNumber?: string | null
   fsoGeneratedAt?: Date | string | null
+  psgaNumber?: string | null
   psgaGeneratedAt?: Date | string | null
   processUpdatedAt?: Date | string | null
   createdAt?: Date | string
@@ -483,6 +496,7 @@ export type ClientUncheckedCreateInput = {
   externalClientId?: string | null
   fsoNumber?: string | null
   fsoGeneratedAt?: Date | string | null
+  psgaNumber?: string | null
   psgaGeneratedAt?: Date | string | null
   processUpdatedAt?: Date | string | null
   createdById: string
@@ -512,6 +526,7 @@ export type ClientUpdateInput = {
   externalClientId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fsoNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fsoGeneratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  psgaNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   psgaGeneratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   processUpdatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -541,6 +556,7 @@ export type ClientUncheckedUpdateInput = {
   externalClientId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fsoNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fsoGeneratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  psgaNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   psgaGeneratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   processUpdatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdById?: Prisma.StringFieldUpdateOperationsInput | string
@@ -570,6 +586,7 @@ export type ClientCreateManyInput = {
   externalClientId?: string | null
   fsoNumber?: string | null
   fsoGeneratedAt?: Date | string | null
+  psgaNumber?: string | null
   psgaGeneratedAt?: Date | string | null
   processUpdatedAt?: Date | string | null
   createdById: string
@@ -594,6 +611,7 @@ export type ClientUpdateManyMutationInput = {
   externalClientId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fsoNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fsoGeneratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  psgaNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   psgaGeneratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   processUpdatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -616,6 +634,7 @@ export type ClientUncheckedUpdateManyInput = {
   externalClientId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fsoNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fsoGeneratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  psgaNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   psgaGeneratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   processUpdatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdById?: Prisma.StringFieldUpdateOperationsInput | string
@@ -655,6 +674,7 @@ export type ClientCountOrderByAggregateInput = {
   externalClientId?: Prisma.SortOrder
   fsoNumber?: Prisma.SortOrder
   fsoGeneratedAt?: Prisma.SortOrder
+  psgaNumber?: Prisma.SortOrder
   psgaGeneratedAt?: Prisma.SortOrder
   processUpdatedAt?: Prisma.SortOrder
   createdById?: Prisma.SortOrder
@@ -679,6 +699,7 @@ export type ClientMaxOrderByAggregateInput = {
   externalClientId?: Prisma.SortOrder
   fsoNumber?: Prisma.SortOrder
   fsoGeneratedAt?: Prisma.SortOrder
+  psgaNumber?: Prisma.SortOrder
   psgaGeneratedAt?: Prisma.SortOrder
   processUpdatedAt?: Prisma.SortOrder
   createdById?: Prisma.SortOrder
@@ -703,6 +724,7 @@ export type ClientMinOrderByAggregateInput = {
   externalClientId?: Prisma.SortOrder
   fsoNumber?: Prisma.SortOrder
   fsoGeneratedAt?: Prisma.SortOrder
+  psgaNumber?: Prisma.SortOrder
   psgaGeneratedAt?: Prisma.SortOrder
   processUpdatedAt?: Prisma.SortOrder
   createdById?: Prisma.SortOrder
@@ -898,6 +920,7 @@ export type ClientCreateWithoutCreatedByInput = {
   externalClientId?: string | null
   fsoNumber?: string | null
   fsoGeneratedAt?: Date | string | null
+  psgaNumber?: string | null
   psgaGeneratedAt?: Date | string | null
   processUpdatedAt?: Date | string | null
   createdAt?: Date | string
@@ -926,6 +949,7 @@ export type ClientUncheckedCreateWithoutCreatedByInput = {
   externalClientId?: string | null
   fsoNumber?: string | null
   fsoGeneratedAt?: Date | string | null
+  psgaNumber?: string | null
   psgaGeneratedAt?: Date | string | null
   processUpdatedAt?: Date | string | null
   assignedBdeId?: string | null
@@ -964,6 +988,7 @@ export type ClientCreateWithoutAssignedBdeInput = {
   externalClientId?: string | null
   fsoNumber?: string | null
   fsoGeneratedAt?: Date | string | null
+  psgaNumber?: string | null
   psgaGeneratedAt?: Date | string | null
   processUpdatedAt?: Date | string | null
   createdAt?: Date | string
@@ -992,6 +1017,7 @@ export type ClientUncheckedCreateWithoutAssignedBdeInput = {
   externalClientId?: string | null
   fsoNumber?: string | null
   fsoGeneratedAt?: Date | string | null
+  psgaNumber?: string | null
   psgaGeneratedAt?: Date | string | null
   processUpdatedAt?: Date | string | null
   createdById: string
@@ -1049,6 +1075,7 @@ export type ClientScalarWhereInput = {
   externalClientId?: Prisma.StringNullableFilter<"Client"> | string | null
   fsoNumber?: Prisma.StringNullableFilter<"Client"> | string | null
   fsoGeneratedAt?: Prisma.DateTimeNullableFilter<"Client"> | Date | string | null
+  psgaNumber?: Prisma.StringNullableFilter<"Client"> | string | null
   psgaGeneratedAt?: Prisma.DateTimeNullableFilter<"Client"> | Date | string | null
   processUpdatedAt?: Prisma.DateTimeNullableFilter<"Client"> | Date | string | null
   createdById?: Prisma.StringFilter<"Client"> | string
@@ -1089,6 +1116,7 @@ export type ClientCreateWithoutSourceLeadInput = {
   externalClientId?: string | null
   fsoNumber?: string | null
   fsoGeneratedAt?: Date | string | null
+  psgaNumber?: string | null
   psgaGeneratedAt?: Date | string | null
   processUpdatedAt?: Date | string | null
   createdAt?: Date | string
@@ -1117,6 +1145,7 @@ export type ClientUncheckedCreateWithoutSourceLeadInput = {
   externalClientId?: string | null
   fsoNumber?: string | null
   fsoGeneratedAt?: Date | string | null
+  psgaNumber?: string | null
   psgaGeneratedAt?: Date | string | null
   processUpdatedAt?: Date | string | null
   createdById: string
@@ -1161,6 +1190,7 @@ export type ClientUpdateWithoutSourceLeadInput = {
   externalClientId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fsoNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fsoGeneratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  psgaNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   psgaGeneratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   processUpdatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1189,6 +1219,7 @@ export type ClientUncheckedUpdateWithoutSourceLeadInput = {
   externalClientId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fsoNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fsoGeneratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  psgaNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   psgaGeneratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   processUpdatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdById?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1217,6 +1248,7 @@ export type ClientCreateWithoutActivitiesInput = {
   externalClientId?: string | null
   fsoNumber?: string | null
   fsoGeneratedAt?: Date | string | null
+  psgaNumber?: string | null
   psgaGeneratedAt?: Date | string | null
   processUpdatedAt?: Date | string | null
   createdAt?: Date | string
@@ -1245,6 +1277,7 @@ export type ClientUncheckedCreateWithoutActivitiesInput = {
   externalClientId?: string | null
   fsoNumber?: string | null
   fsoGeneratedAt?: Date | string | null
+  psgaNumber?: string | null
   psgaGeneratedAt?: Date | string | null
   processUpdatedAt?: Date | string | null
   createdById: string
@@ -1289,6 +1322,7 @@ export type ClientUpdateWithoutActivitiesInput = {
   externalClientId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fsoNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fsoGeneratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  psgaNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   psgaGeneratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   processUpdatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1317,6 +1351,7 @@ export type ClientUncheckedUpdateWithoutActivitiesInput = {
   externalClientId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fsoNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fsoGeneratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  psgaNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   psgaGeneratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   processUpdatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdById?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1345,6 +1380,7 @@ export type ClientCreateWithoutServiceSelectionsInput = {
   externalClientId?: string | null
   fsoNumber?: string | null
   fsoGeneratedAt?: Date | string | null
+  psgaNumber?: string | null
   psgaGeneratedAt?: Date | string | null
   processUpdatedAt?: Date | string | null
   createdAt?: Date | string
@@ -1373,6 +1409,7 @@ export type ClientUncheckedCreateWithoutServiceSelectionsInput = {
   externalClientId?: string | null
   fsoNumber?: string | null
   fsoGeneratedAt?: Date | string | null
+  psgaNumber?: string | null
   psgaGeneratedAt?: Date | string | null
   processUpdatedAt?: Date | string | null
   createdById: string
@@ -1417,6 +1454,7 @@ export type ClientUpdateWithoutServiceSelectionsInput = {
   externalClientId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fsoNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fsoGeneratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  psgaNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   psgaGeneratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   processUpdatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1445,6 +1483,7 @@ export type ClientUncheckedUpdateWithoutServiceSelectionsInput = {
   externalClientId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fsoNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fsoGeneratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  psgaNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   psgaGeneratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   processUpdatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdById?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1473,6 +1512,7 @@ export type ClientCreateWithoutPsgasInput = {
   externalClientId?: string | null
   fsoNumber?: string | null
   fsoGeneratedAt?: Date | string | null
+  psgaNumber?: string | null
   psgaGeneratedAt?: Date | string | null
   processUpdatedAt?: Date | string | null
   createdAt?: Date | string
@@ -1501,6 +1541,7 @@ export type ClientUncheckedCreateWithoutPsgasInput = {
   externalClientId?: string | null
   fsoNumber?: string | null
   fsoGeneratedAt?: Date | string | null
+  psgaNumber?: string | null
   psgaGeneratedAt?: Date | string | null
   processUpdatedAt?: Date | string | null
   createdById: string
@@ -1545,6 +1586,7 @@ export type ClientUpdateWithoutPsgasInput = {
   externalClientId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fsoNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fsoGeneratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  psgaNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   psgaGeneratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   processUpdatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1573,6 +1615,7 @@ export type ClientUncheckedUpdateWithoutPsgasInput = {
   externalClientId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fsoNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fsoGeneratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  psgaNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   psgaGeneratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   processUpdatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdById?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1601,6 +1644,7 @@ export type ClientCreateWithoutIncentiveAllocationsInput = {
   externalClientId?: string | null
   fsoNumber?: string | null
   fsoGeneratedAt?: Date | string | null
+  psgaNumber?: string | null
   psgaGeneratedAt?: Date | string | null
   processUpdatedAt?: Date | string | null
   createdAt?: Date | string
@@ -1629,6 +1673,7 @@ export type ClientUncheckedCreateWithoutIncentiveAllocationsInput = {
   externalClientId?: string | null
   fsoNumber?: string | null
   fsoGeneratedAt?: Date | string | null
+  psgaNumber?: string | null
   psgaGeneratedAt?: Date | string | null
   processUpdatedAt?: Date | string | null
   createdById: string
@@ -1673,6 +1718,7 @@ export type ClientUpdateWithoutIncentiveAllocationsInput = {
   externalClientId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fsoNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fsoGeneratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  psgaNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   psgaGeneratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   processUpdatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1701,6 +1747,7 @@ export type ClientUncheckedUpdateWithoutIncentiveAllocationsInput = {
   externalClientId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fsoNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fsoGeneratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  psgaNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   psgaGeneratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   processUpdatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdById?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1729,6 +1776,7 @@ export type ClientCreateManyCreatedByInput = {
   externalClientId?: string | null
   fsoNumber?: string | null
   fsoGeneratedAt?: Date | string | null
+  psgaNumber?: string | null
   psgaGeneratedAt?: Date | string | null
   processUpdatedAt?: Date | string | null
   assignedBdeId?: string | null
@@ -1752,6 +1800,7 @@ export type ClientCreateManyAssignedBdeInput = {
   externalClientId?: string | null
   fsoNumber?: string | null
   fsoGeneratedAt?: Date | string | null
+  psgaNumber?: string | null
   psgaGeneratedAt?: Date | string | null
   processUpdatedAt?: Date | string | null
   createdById: string
@@ -1775,6 +1824,7 @@ export type ClientUpdateWithoutCreatedByInput = {
   externalClientId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fsoNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fsoGeneratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  psgaNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   psgaGeneratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   processUpdatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1803,6 +1853,7 @@ export type ClientUncheckedUpdateWithoutCreatedByInput = {
   externalClientId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fsoNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fsoGeneratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  psgaNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   psgaGeneratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   processUpdatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   assignedBdeId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1831,6 +1882,7 @@ export type ClientUncheckedUpdateManyWithoutCreatedByInput = {
   externalClientId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fsoNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fsoGeneratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  psgaNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   psgaGeneratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   processUpdatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   assignedBdeId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1854,6 +1906,7 @@ export type ClientUpdateWithoutAssignedBdeInput = {
   externalClientId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fsoNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fsoGeneratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  psgaNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   psgaGeneratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   processUpdatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1882,6 +1935,7 @@ export type ClientUncheckedUpdateWithoutAssignedBdeInput = {
   externalClientId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fsoNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fsoGeneratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  psgaNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   psgaGeneratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   processUpdatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdById?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1910,6 +1964,7 @@ export type ClientUncheckedUpdateManyWithoutAssignedBdeInput = {
   externalClientId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fsoNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fsoGeneratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  psgaNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   psgaGeneratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   processUpdatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdById?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1991,6 +2046,7 @@ export type ClientSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   externalClientId?: boolean
   fsoNumber?: boolean
   fsoGeneratedAt?: boolean
+  psgaNumber?: boolean
   psgaGeneratedAt?: boolean
   processUpdatedAt?: boolean
   createdById?: boolean
@@ -2023,6 +2079,7 @@ export type ClientSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extens
   externalClientId?: boolean
   fsoNumber?: boolean
   fsoGeneratedAt?: boolean
+  psgaNumber?: boolean
   psgaGeneratedAt?: boolean
   processUpdatedAt?: boolean
   createdById?: boolean
@@ -2049,6 +2106,7 @@ export type ClientSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extens
   externalClientId?: boolean
   fsoNumber?: boolean
   fsoGeneratedAt?: boolean
+  psgaNumber?: boolean
   psgaGeneratedAt?: boolean
   processUpdatedAt?: boolean
   createdById?: boolean
@@ -2075,6 +2133,7 @@ export type ClientSelectScalar = {
   externalClientId?: boolean
   fsoNumber?: boolean
   fsoGeneratedAt?: boolean
+  psgaNumber?: boolean
   psgaGeneratedAt?: boolean
   processUpdatedAt?: boolean
   createdById?: boolean
@@ -2083,7 +2142,7 @@ export type ClientSelectScalar = {
   updatedAt?: boolean
 }
 
-export type ClientOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "associationName" | "contactName" | "email" | "mobile" | "address" | "city" | "state" | "pincode" | "gstNumber" | "status" | "processStage" | "externalClientId" | "fsoNumber" | "fsoGeneratedAt" | "psgaGeneratedAt" | "processUpdatedAt" | "createdById" | "assignedBdeId" | "createdAt" | "updatedAt", ExtArgs["result"]["client"]>
+export type ClientOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "associationName" | "contactName" | "email" | "mobile" | "address" | "city" | "state" | "pincode" | "gstNumber" | "status" | "processStage" | "externalClientId" | "fsoNumber" | "fsoGeneratedAt" | "psgaNumber" | "psgaGeneratedAt" | "processUpdatedAt" | "createdById" | "assignedBdeId" | "createdAt" | "updatedAt", ExtArgs["result"]["client"]>
 export type ClientInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   createdBy?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   assignedBde?: boolean | Prisma.Client$assignedBdeArgs<ExtArgs>
@@ -2130,6 +2189,7 @@ export type $ClientPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
     externalClientId: string | null
     fsoNumber: string | null
     fsoGeneratedAt: Date | null
+    psgaNumber: string | null
     psgaGeneratedAt: Date | null
     processUpdatedAt: Date | null
     createdById: string
@@ -2581,6 +2641,7 @@ export interface ClientFieldRefs {
   readonly externalClientId: Prisma.FieldRef<"Client", 'String'>
   readonly fsoNumber: Prisma.FieldRef<"Client", 'String'>
   readonly fsoGeneratedAt: Prisma.FieldRef<"Client", 'DateTime'>
+  readonly psgaNumber: Prisma.FieldRef<"Client", 'String'>
   readonly psgaGeneratedAt: Prisma.FieldRef<"Client", 'DateTime'>
   readonly processUpdatedAt: Prisma.FieldRef<"Client", 'DateTime'>
   readonly createdById: Prisma.FieldRef<"Client", 'String'>

@@ -1,4 +1,5 @@
 import { z } from "zod";
+
 import prisma from "../config/prisma.js";
 
 /*
@@ -9,6 +10,7 @@ import prisma from "../config/prisma.js";
 
 const createClientSchema = z.object({
     associationName: z.string().trim().min(2),
+
     contactName: z.string().trim().min(2),
 
     email: z.string().trim().email().optional(),
@@ -92,7 +94,12 @@ const updateClientSchema = z.object({
 |
 | FSO / PSGA are generated in the separate external dashboard.
 |
-| CRM only tracks their current process stage and references.
+| CRM only tracks:
+|
+| CLIENT_CREATED
+| FSO_GENERATED
+| PSGA_GENERATED
+| PSGA_COMPLETED
 |
 */
 
@@ -119,6 +126,11 @@ const updateClientProcessSchema = z.object({
         .datetime()
         .optional(),
 
+    psgaNumber: z
+        .string()
+        .trim()
+        .optional(),
+
     psgaGeneratedAt: z
         .string()
         .datetime()
@@ -142,26 +154,10 @@ const CLIENT_PROCESS_ORDER = {
 |--------------------------------------------------------------------------
 | CLIENT INCLUDE
 |--------------------------------------------------------------------------
-|
-| IMPORTANT:
-|
-| processStage, externalClientId, fsoNumber,
-| fsoGeneratedAt, psgaGeneratedAt and processUpdatedAt
-| are scalar fields.
-|
-| Prisma include() accepts relation fields only.
-|
-|--------------------------------------------------------------------------
 */
 
 function clientInclude() {
     return {
-        /*
-        |--------------------------------------------------------------------------
-        | ASSIGNED BDE
-        |--------------------------------------------------------------------------
-        */
-
         assignedBde: {
             select: {
                 id: true,
@@ -178,12 +174,6 @@ function clientInclude() {
             },
         },
 
-        /*
-        |--------------------------------------------------------------------------
-        | CREATED BY
-        |--------------------------------------------------------------------------
-        */
-
         createdBy: {
             select: {
                 id: true,
@@ -192,12 +182,6 @@ function clientInclude() {
                 email: true,
             },
         },
-
-        /*
-        |--------------------------------------------------------------------------
-        | SOURCE LEAD
-        |--------------------------------------------------------------------------
-        */
 
         sourceLead: {
             select: {
@@ -226,12 +210,6 @@ function clientInclude() {
                 },
             },
         },
-
-        /*
-        |--------------------------------------------------------------------------
-        | SELECTED SERVICES
-        |--------------------------------------------------------------------------
-        */
 
         serviceSelections: {
             orderBy: {
@@ -588,7 +566,8 @@ export async function createCompleteClient(
                             );
 
                         const baseAmount =
-                            quantity * unitRate;
+                            quantity *
+                            unitRate;
 
                         const gstAmount =
                             (baseAmount *
@@ -1111,7 +1090,14 @@ export async function updateClient(
 | PSGA_COMPLETED
 |
 | CRM does NOT generate FSO / PSGA.
-| CRM only records their process status.
+|
+| CRM only records:
+|
+| - FSO number
+| - FSO generated date
+| - PSGA number
+| - PSGA generated date
+| - process stage
 |
 |--------------------------------------------------------------------------
 */
@@ -1172,18 +1158,19 @@ export async function updateClientProcess(
             externalClientId,
             fsoNumber,
             fsoGeneratedAt,
+            psgaNumber,
             psgaGeneratedAt,
         } = validation.data;
+
+        /*
+        |--------------------------------------------------------------------------
+        | STEP 3: CURRENT STAGE
+        |--------------------------------------------------------------------------
+        */
 
         const currentStage =
             existingClient.processStage ||
             "CLIENT_CREATED";
-
-        /*
-        |--------------------------------------------------------------------------
-        | STEP 3: CHECK VALID PROCESS TRANSITION
-        |--------------------------------------------------------------------------
-        */
 
         const currentStageIndex =
             CLIENT_PROCESS_ORDER[
@@ -1211,11 +1198,7 @@ export async function updateClientProcess(
 
         /*
         |--------------------------------------------------------------------------
-        | Same stage is allowed.
-        |
-        | Forward movement is allowed only one step.
-        |
-        | Backward movement / stage skipping is blocked.
+        | STEP 4: BLOCK BACKWARD MOVEMENT
         |--------------------------------------------------------------------------
         */
 
@@ -1231,9 +1214,15 @@ export async function updateClientProcess(
             });
         }
 
+        /*
+        |--------------------------------------------------------------------------
+        | STEP 5: BLOCK STAGE SKIPPING
+        |--------------------------------------------------------------------------
+        */
+
         if (
             requestedStageIndex >
-                currentStageIndex + 1
+            currentStageIndex + 1
         ) {
             return res.status(400).json({
                 success: false,
@@ -1245,7 +1234,7 @@ export async function updateClientProcess(
 
         /*
         |--------------------------------------------------------------------------
-        | STEP 4: RESOLVE EXISTING PROCESS DATA
+        | STEP 6: RESOLVE FSO VALUES
         |--------------------------------------------------------------------------
         */
 
@@ -1255,7 +1244,7 @@ export async function updateClientProcess(
                 : existingClient.fsoNumber ||
                   null;
 
-        const resolvedFsoGeneratedAt =
+        let resolvedFsoGeneratedAt =
             fsoGeneratedAt !== undefined
                 ? fsoGeneratedAt
                     ? new Date(
@@ -1265,7 +1254,19 @@ export async function updateClientProcess(
                 : existingClient.fsoGeneratedAt ||
                   null;
 
-        const resolvedPsgaGeneratedAt =
+        /*
+        |--------------------------------------------------------------------------
+        | STEP 7: RESOLVE PSGA VALUES
+        |--------------------------------------------------------------------------
+        */
+
+        const resolvedPsgaNumber =
+            psgaNumber !== undefined
+                ? psgaNumber.trim() || null
+                : existingClient.psgaNumber ||
+                  null;
+
+        let resolvedPsgaGeneratedAt =
             psgaGeneratedAt !== undefined
                 ? psgaGeneratedAt
                     ? new Date(
@@ -1277,12 +1278,49 @@ export async function updateClientProcess(
 
         /*
         |--------------------------------------------------------------------------
-        | STEP 5: FSO VALIDATION
+        | STEP 8: AUTO DATE FOR FSO
         |--------------------------------------------------------------------------
         |
-        | Once process reaches FSO_GENERATED or later,
-        | CRM must have FSO number and generated date.
+        | If user moves to FSO_GENERATED without explicitly sending a date,
+        | current date/time is used.
+        |
+        */
+
+        if (
+            processStage ===
+                "FSO_GENERATED" &&
+            !resolvedFsoGeneratedAt
+        ) {
+            resolvedFsoGeneratedAt =
+                new Date();
+        }
+
+        /*
         |--------------------------------------------------------------------------
+        | STEP 9: AUTO DATE FOR PSGA
+        |--------------------------------------------------------------------------
+        |
+        | If user moves to PSGA_GENERATED without explicitly sending a date,
+        | current date/time is used.
+        |
+        */
+
+        if (
+            processStage ===
+                "PSGA_GENERATED" &&
+            !resolvedPsgaGeneratedAt
+        ) {
+            resolvedPsgaGeneratedAt =
+                new Date();
+        }
+
+        /*
+        |--------------------------------------------------------------------------
+        | STEP 10: FSO VALIDATION
+        |--------------------------------------------------------------------------
+        |
+        | FSO number + generated date are mandatory from FSO_GENERATED onward.
+        |
         */
 
         const requiresFso =
@@ -1311,12 +1349,11 @@ export async function updateClientProcess(
 
         /*
         |--------------------------------------------------------------------------
-        | STEP 6: PSGA VALIDATION
+        | STEP 11: PSGA VALIDATION
         |--------------------------------------------------------------------------
         |
-        | Once process reaches PSGA_GENERATED or later,
-        | CRM must have PSGA generated date.
-        |--------------------------------------------------------------------------
+        | PSGA number + generated date are mandatory from PSGA_GENERATED onward.
+        |
         */
 
         const requiresPsga =
@@ -1324,6 +1361,15 @@ export async function updateClientProcess(
             CLIENT_PROCESS_ORDER.PSGA_GENERATED;
 
         if (requiresPsga) {
+            if (!resolvedPsgaNumber) {
+                return res.status(400).json({
+                    success: false,
+
+                    message:
+                        "PSGA number is required when client reaches PSGA_GENERATED stage",
+                });
+            }
+
             if (!resolvedPsgaGeneratedAt) {
                 return res.status(400).json({
                     success: false,
@@ -1336,7 +1382,7 @@ export async function updateClientProcess(
 
         /*
         |--------------------------------------------------------------------------
-        | STEP 7: BUILD UPDATE DATA
+        | STEP 12: BUILD UPDATE DATA
         |--------------------------------------------------------------------------
         */
 
@@ -1353,83 +1399,26 @@ export async function updateClientProcess(
                     null,
             }),
 
-            ...(fsoNumber !==
-                undefined && {
+            ...(requiresFso && {
                 fsoNumber:
-                    fsoNumber.trim() ||
-                    null,
-            }),
+                    resolvedFsoNumber,
 
-            ...(fsoGeneratedAt !==
-                undefined && {
                 fsoGeneratedAt:
-                    fsoGeneratedAt
-                        ? new Date(
-                              fsoGeneratedAt
-                          )
-                        : null,
+                    resolvedFsoGeneratedAt,
             }),
 
-            ...(psgaGeneratedAt !==
-                undefined && {
+            ...(requiresPsga && {
+                psgaNumber:
+                    resolvedPsgaNumber,
+
                 psgaGeneratedAt:
-                    psgaGeneratedAt
-                        ? new Date(
-                              psgaGeneratedAt
-                          )
-                        : null,
+                    resolvedPsgaGeneratedAt,
             }),
         };
 
         /*
         |--------------------------------------------------------------------------
-        | STEP 8: AUTO SET FSO DATE
-        |--------------------------------------------------------------------------
-        |
-        | If Admin moves client to FSO_GENERATED and
-        | does not manually provide date, use current time.
-        |--------------------------------------------------------------------------
-        */
-
-        if (
-            processStage ===
-                "FSO_GENERATED" &&
-            fsoGeneratedAt === undefined
-        ) {
-            updateData.fsoGeneratedAt =
-                new Date();
-        }
-
-        /*
-        |--------------------------------------------------------------------------
-        | STEP 9: AUTO SET PSGA DATE
-        |--------------------------------------------------------------------------
-        |
-        | If Admin moves client to PSGA_GENERATED and
-        | does not manually provide date, use current time.
-        |--------------------------------------------------------------------------
-        */
-
-        if (
-            processStage ===
-                "PSGA_GENERATED" &&
-            psgaGeneratedAt === undefined
-        ) {
-            updateData.psgaGeneratedAt =
-                new Date();
-        }
-
-        /*
-        |--------------------------------------------------------------------------
-        | STEP 10: UPDATE CLIENT + PSGA ELIGIBILITY
-        |--------------------------------------------------------------------------
-        |
-        | Important:
-        |
-        | Incentive eligibility is now based on the CRM
-        | client process reaching PSGA_COMPLETED.
-        |
-        | We do NOT calculate incentive percentage or amount here.
+        | STEP 13: UPDATE CLIENT
         |--------------------------------------------------------------------------
         */
 
@@ -1442,7 +1431,8 @@ export async function updateClientProcess(
                                 id,
                             },
 
-                            data: updateData,
+                            data:
+                                updateData,
 
                             include:
                                 clientInclude(),
@@ -1450,16 +1440,18 @@ export async function updateClientProcess(
 
                     /*
                     |--------------------------------------------------------------------------
-                    | PSGA COMPLETED
+                    | STEP 14: PSGA COMPLETED
                     |--------------------------------------------------------------------------
                     |
-                    | Mark all PSGA records belonging to this client
-                    | as incentive eligible.
+                    | Important:
                     |
-                    | We intentionally do not create a new allocation
-                    | because incentive percentage / amount rules are
-                    | not defined yet.
-                    |--------------------------------------------------------------------------
+                    | We do NOT create a fake PSGA record.
+                    |
+                    | If an actual PSGA record already exists in CRM,
+                    | its incentive status is marked eligible.
+                    |
+                    | Client itself is the source of incentive eligibility.
+                    |
                     */
 
                     if (
@@ -1482,13 +1474,19 @@ export async function updateClientProcess(
                 }
             );
 
+        /*
+        |--------------------------------------------------------------------------
+        | STEP 15: RESPONSE
+        |--------------------------------------------------------------------------
+        */
+
         return res.status(200).json({
             success: true,
 
             message:
                 processStage ===
                 "PSGA_COMPLETED"
-                    ? "Client process completed successfully. Linked PSGA incentive eligibility updated."
+                    ? "Client process completed successfully. Client is now incentive eligible."
                     : "Client process updated successfully",
 
             data: {

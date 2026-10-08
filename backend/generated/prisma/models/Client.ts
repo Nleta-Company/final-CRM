@@ -36,16 +36,17 @@ export type ClientMinAggregateOutputType = {
   pincode: string | null
   gstNumber: string | null
   status: $Enums.ClientStatus | null
-  processStage: $Enums.ClientProcessStage | null
-  externalClientId: string | null
-  fsoNumber: string | null
-  fsoGeneratedAt: Date | null
-  psgaGeneratedAt: Date | null
-  processUpdatedAt: Date | null
   createdById: string | null
-  assignedBdeId: string | null
   createdAt: Date | null
   updatedAt: Date | null
+  assignedBdeId: string | null
+  externalClientId: string | null
+  fsoGeneratedAt: Date | null
+  fsoNumber: string | null
+  processStage: $Enums.ClientProcessStage | null
+  processUpdatedAt: Date | null
+  psgaNumber: string | null
+  psgaGeneratedAt: Date | null
 }
 
 export type ClientMaxAggregateOutputType = {
@@ -60,16 +61,17 @@ export type ClientMaxAggregateOutputType = {
   pincode: string | null
   gstNumber: string | null
   status: $Enums.ClientStatus | null
-  processStage: $Enums.ClientProcessStage | null
-  externalClientId: string | null
-  fsoNumber: string | null
-  fsoGeneratedAt: Date | null
-  psgaGeneratedAt: Date | null
-  processUpdatedAt: Date | null
   createdById: string | null
-  assignedBdeId: string | null
   createdAt: Date | null
   updatedAt: Date | null
+  assignedBdeId: string | null
+  externalClientId: string | null
+  fsoGeneratedAt: Date | null
+  fsoNumber: string | null
+  processStage: $Enums.ClientProcessStage | null
+  processUpdatedAt: Date | null
+  psgaNumber: string | null
+  psgaGeneratedAt: Date | null
 }
 
 export type ClientCountAggregateOutputType = {
@@ -84,16 +86,17 @@ export type ClientCountAggregateOutputType = {
   pincode: number
   gstNumber: number
   status: number
-  processStage: number
-  externalClientId: number
-  fsoNumber: number
-  fsoGeneratedAt: number
-  psgaGeneratedAt: number
-  processUpdatedAt: number
   createdById: number
-  assignedBdeId: number
   createdAt: number
   updatedAt: number
+  assignedBdeId: number
+  externalClientId: number
+  fsoGeneratedAt: number
+  fsoNumber: number
+  processStage: number
+  processUpdatedAt: number
+  psgaNumber: number
+  psgaGeneratedAt: number
   _all: number
 }
 
@@ -110,16 +113,17 @@ export type ClientMinAggregateInputType = {
   pincode?: true
   gstNumber?: true
   status?: true
-  processStage?: true
-  externalClientId?: true
-  fsoNumber?: true
-  fsoGeneratedAt?: true
-  psgaGeneratedAt?: true
-  processUpdatedAt?: true
   createdById?: true
-  assignedBdeId?: true
   createdAt?: true
   updatedAt?: true
+  assignedBdeId?: true
+  externalClientId?: true
+  fsoGeneratedAt?: true
+  fsoNumber?: true
+  processStage?: true
+  processUpdatedAt?: true
+  psgaNumber?: true
+  psgaGeneratedAt?: true
 }
 
 export type ClientMaxAggregateInputType = {
@@ -134,16 +138,17 @@ export type ClientMaxAggregateInputType = {
   pincode?: true
   gstNumber?: true
   status?: true
-  processStage?: true
-  externalClientId?: true
-  fsoNumber?: true
-  fsoGeneratedAt?: true
-  psgaGeneratedAt?: true
-  processUpdatedAt?: true
   createdById?: true
-  assignedBdeId?: true
   createdAt?: true
   updatedAt?: true
+  assignedBdeId?: true
+  externalClientId?: true
+  fsoGeneratedAt?: true
+  fsoNumber?: true
+  processStage?: true
+  processUpdatedAt?: true
+  psgaNumber?: true
+  psgaGeneratedAt?: true
 }
 
 export type ClientCountAggregateInputType = {
@@ -158,16 +163,17 @@ export type ClientCountAggregateInputType = {
   pincode?: true
   gstNumber?: true
   status?: true
-  processStage?: true
-  externalClientId?: true
-  fsoNumber?: true
-  fsoGeneratedAt?: true
-  psgaGeneratedAt?: true
-  processUpdatedAt?: true
   createdById?: true
-  assignedBdeId?: true
   createdAt?: true
   updatedAt?: true
+  assignedBdeId?: true
+  externalClientId?: true
+  fsoGeneratedAt?: true
+  fsoNumber?: true
+  processStage?: true
+  processUpdatedAt?: true
+  psgaNumber?: true
+  psgaGeneratedAt?: true
   _all?: true
 }
 
@@ -255,16 +261,17 @@ export type ClientGroupByOutputType = {
   pincode: string | null
   gstNumber: string | null
   status: $Enums.ClientStatus
-  processStage: $Enums.ClientProcessStage
-  externalClientId: string | null
-  fsoNumber: string | null
-  fsoGeneratedAt: Date | null
-  psgaGeneratedAt: Date | null
-  processUpdatedAt: Date | null
   createdById: string
-  assignedBdeId: string | null
   createdAt: Date
   updatedAt: Date
+  assignedBdeId: string | null
+  externalClientId: string | null
+  fsoGeneratedAt: Date | null
+  fsoNumber: string | null
+  processStage: $Enums.ClientProcessStage
+  processUpdatedAt: Date | null
+  psgaNumber: string | null
+  psgaGeneratedAt: Date | null
   _count: ClientCountAggregateOutputType | null
   _min: ClientMinAggregateOutputType | null
   _max: ClientMaxAggregateOutputType | null
@@ -300,21 +307,22 @@ export type ClientWhereInput = {
   pincode?: Prisma.StringNullableFilter<"Client"> | string | null
   gstNumber?: Prisma.StringNullableFilter<"Client"> | string | null
   status?: Prisma.EnumClientStatusFilter<"Client"> | $Enums.ClientStatus
-  processStage?: Prisma.EnumClientProcessStageFilter<"Client"> | $Enums.ClientProcessStage
-  externalClientId?: Prisma.StringNullableFilter<"Client"> | string | null
-  fsoNumber?: Prisma.StringNullableFilter<"Client"> | string | null
-  fsoGeneratedAt?: Prisma.DateTimeNullableFilter<"Client"> | Date | string | null
-  psgaGeneratedAt?: Prisma.DateTimeNullableFilter<"Client"> | Date | string | null
-  processUpdatedAt?: Prisma.DateTimeNullableFilter<"Client"> | Date | string | null
   createdById?: Prisma.StringFilter<"Client"> | string
-  assignedBdeId?: Prisma.StringNullableFilter<"Client"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Client"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Client"> | Date | string
-  createdBy?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
-  assignedBde?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
-  sourceLead?: Prisma.XOR<Prisma.LeadNullableScalarRelationFilter, Prisma.LeadWhereInput> | null
+  assignedBdeId?: Prisma.StringNullableFilter<"Client"> | string | null
+  externalClientId?: Prisma.StringNullableFilter<"Client"> | string | null
+  fsoGeneratedAt?: Prisma.DateTimeNullableFilter<"Client"> | Date | string | null
+  fsoNumber?: Prisma.StringNullableFilter<"Client"> | string | null
+  processStage?: Prisma.EnumClientProcessStageFilter<"Client"> | $Enums.ClientProcessStage
+  processUpdatedAt?: Prisma.DateTimeNullableFilter<"Client"> | Date | string | null
+  psgaNumber?: Prisma.StringNullableFilter<"Client"> | string | null
+  psgaGeneratedAt?: Prisma.DateTimeNullableFilter<"Client"> | Date | string | null
   activities?: Prisma.ActivityListRelationFilter
+  assignedBde?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
+  createdBy?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   serviceSelections?: Prisma.ClientServiceSelectionListRelationFilter
+  sourceLead?: Prisma.XOR<Prisma.LeadNullableScalarRelationFilter, Prisma.LeadWhereInput> | null
   psgas?: Prisma.PSGAListRelationFilter
 }
 
@@ -330,21 +338,22 @@ export type ClientOrderByWithRelationInput = {
   pincode?: Prisma.SortOrderInput | Prisma.SortOrder
   gstNumber?: Prisma.SortOrderInput | Prisma.SortOrder
   status?: Prisma.SortOrder
-  processStage?: Prisma.SortOrder
-  externalClientId?: Prisma.SortOrderInput | Prisma.SortOrder
-  fsoNumber?: Prisma.SortOrderInput | Prisma.SortOrder
-  fsoGeneratedAt?: Prisma.SortOrderInput | Prisma.SortOrder
-  psgaGeneratedAt?: Prisma.SortOrderInput | Prisma.SortOrder
-  processUpdatedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdById?: Prisma.SortOrder
-  assignedBdeId?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
-  createdBy?: Prisma.UserOrderByWithRelationInput
-  assignedBde?: Prisma.UserOrderByWithRelationInput
-  sourceLead?: Prisma.LeadOrderByWithRelationInput
+  assignedBdeId?: Prisma.SortOrderInput | Prisma.SortOrder
+  externalClientId?: Prisma.SortOrderInput | Prisma.SortOrder
+  fsoGeneratedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  fsoNumber?: Prisma.SortOrderInput | Prisma.SortOrder
+  processStage?: Prisma.SortOrder
+  processUpdatedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  psgaNumber?: Prisma.SortOrderInput | Prisma.SortOrder
+  psgaGeneratedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   activities?: Prisma.ActivityOrderByRelationAggregateInput
+  assignedBde?: Prisma.UserOrderByWithRelationInput
+  createdBy?: Prisma.UserOrderByWithRelationInput
   serviceSelections?: Prisma.ClientServiceSelectionOrderByRelationAggregateInput
+  sourceLead?: Prisma.LeadOrderByWithRelationInput
   psgas?: Prisma.PSGAOrderByRelationAggregateInput
 }
 
@@ -363,21 +372,22 @@ export type ClientWhereUniqueInput = Prisma.AtLeast<{
   pincode?: Prisma.StringNullableFilter<"Client"> | string | null
   gstNumber?: Prisma.StringNullableFilter<"Client"> | string | null
   status?: Prisma.EnumClientStatusFilter<"Client"> | $Enums.ClientStatus
-  processStage?: Prisma.EnumClientProcessStageFilter<"Client"> | $Enums.ClientProcessStage
-  externalClientId?: Prisma.StringNullableFilter<"Client"> | string | null
-  fsoNumber?: Prisma.StringNullableFilter<"Client"> | string | null
-  fsoGeneratedAt?: Prisma.DateTimeNullableFilter<"Client"> | Date | string | null
-  psgaGeneratedAt?: Prisma.DateTimeNullableFilter<"Client"> | Date | string | null
-  processUpdatedAt?: Prisma.DateTimeNullableFilter<"Client"> | Date | string | null
   createdById?: Prisma.StringFilter<"Client"> | string
-  assignedBdeId?: Prisma.StringNullableFilter<"Client"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Client"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Client"> | Date | string
-  createdBy?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
-  assignedBde?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
-  sourceLead?: Prisma.XOR<Prisma.LeadNullableScalarRelationFilter, Prisma.LeadWhereInput> | null
+  assignedBdeId?: Prisma.StringNullableFilter<"Client"> | string | null
+  externalClientId?: Prisma.StringNullableFilter<"Client"> | string | null
+  fsoGeneratedAt?: Prisma.DateTimeNullableFilter<"Client"> | Date | string | null
+  fsoNumber?: Prisma.StringNullableFilter<"Client"> | string | null
+  processStage?: Prisma.EnumClientProcessStageFilter<"Client"> | $Enums.ClientProcessStage
+  processUpdatedAt?: Prisma.DateTimeNullableFilter<"Client"> | Date | string | null
+  psgaNumber?: Prisma.StringNullableFilter<"Client"> | string | null
+  psgaGeneratedAt?: Prisma.DateTimeNullableFilter<"Client"> | Date | string | null
   activities?: Prisma.ActivityListRelationFilter
+  assignedBde?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
+  createdBy?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   serviceSelections?: Prisma.ClientServiceSelectionListRelationFilter
+  sourceLead?: Prisma.XOR<Prisma.LeadNullableScalarRelationFilter, Prisma.LeadWhereInput> | null
   psgas?: Prisma.PSGAListRelationFilter
 }, "id">
 
@@ -393,16 +403,17 @@ export type ClientOrderByWithAggregationInput = {
   pincode?: Prisma.SortOrderInput | Prisma.SortOrder
   gstNumber?: Prisma.SortOrderInput | Prisma.SortOrder
   status?: Prisma.SortOrder
-  processStage?: Prisma.SortOrder
-  externalClientId?: Prisma.SortOrderInput | Prisma.SortOrder
-  fsoNumber?: Prisma.SortOrderInput | Prisma.SortOrder
-  fsoGeneratedAt?: Prisma.SortOrderInput | Prisma.SortOrder
-  psgaGeneratedAt?: Prisma.SortOrderInput | Prisma.SortOrder
-  processUpdatedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdById?: Prisma.SortOrder
-  assignedBdeId?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  assignedBdeId?: Prisma.SortOrderInput | Prisma.SortOrder
+  externalClientId?: Prisma.SortOrderInput | Prisma.SortOrder
+  fsoGeneratedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  fsoNumber?: Prisma.SortOrderInput | Prisma.SortOrder
+  processStage?: Prisma.SortOrder
+  processUpdatedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  psgaNumber?: Prisma.SortOrderInput | Prisma.SortOrder
+  psgaGeneratedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.ClientCountOrderByAggregateInput
   _max?: Prisma.ClientMaxOrderByAggregateInput
   _min?: Prisma.ClientMinOrderByAggregateInput
@@ -423,16 +434,17 @@ export type ClientScalarWhereWithAggregatesInput = {
   pincode?: Prisma.StringNullableWithAggregatesFilter<"Client"> | string | null
   gstNumber?: Prisma.StringNullableWithAggregatesFilter<"Client"> | string | null
   status?: Prisma.EnumClientStatusWithAggregatesFilter<"Client"> | $Enums.ClientStatus
-  processStage?: Prisma.EnumClientProcessStageWithAggregatesFilter<"Client"> | $Enums.ClientProcessStage
-  externalClientId?: Prisma.StringNullableWithAggregatesFilter<"Client"> | string | null
-  fsoNumber?: Prisma.StringNullableWithAggregatesFilter<"Client"> | string | null
-  fsoGeneratedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Client"> | Date | string | null
-  psgaGeneratedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Client"> | Date | string | null
-  processUpdatedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Client"> | Date | string | null
   createdById?: Prisma.StringWithAggregatesFilter<"Client"> | string
-  assignedBdeId?: Prisma.StringNullableWithAggregatesFilter<"Client"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Client"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Client"> | Date | string
+  assignedBdeId?: Prisma.StringNullableWithAggregatesFilter<"Client"> | string | null
+  externalClientId?: Prisma.StringNullableWithAggregatesFilter<"Client"> | string | null
+  fsoGeneratedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Client"> | Date | string | null
+  fsoNumber?: Prisma.StringNullableWithAggregatesFilter<"Client"> | string | null
+  processStage?: Prisma.EnumClientProcessStageWithAggregatesFilter<"Client"> | $Enums.ClientProcessStage
+  processUpdatedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Client"> | Date | string | null
+  psgaNumber?: Prisma.StringNullableWithAggregatesFilter<"Client"> | string | null
+  psgaGeneratedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Client"> | Date | string | null
 }
 
 export type ClientCreateInput = {
@@ -447,19 +459,20 @@ export type ClientCreateInput = {
   pincode?: string | null
   gstNumber?: string | null
   status?: $Enums.ClientStatus
-  processStage?: $Enums.ClientProcessStage
-  externalClientId?: string | null
-  fsoNumber?: string | null
-  fsoGeneratedAt?: Date | string | null
-  psgaGeneratedAt?: Date | string | null
-  processUpdatedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  createdBy: Prisma.UserCreateNestedOneWithoutClientsCreatedInput
-  assignedBde?: Prisma.UserCreateNestedOneWithoutAssignedClientsInput
-  sourceLead?: Prisma.LeadCreateNestedOneWithoutClientInput
+  externalClientId?: string | null
+  fsoGeneratedAt?: Date | string | null
+  fsoNumber?: string | null
+  processStage?: $Enums.ClientProcessStage
+  processUpdatedAt?: Date | string | null
+  psgaNumber?: string | null
+  psgaGeneratedAt?: Date | string | null
   activities?: Prisma.ActivityCreateNestedManyWithoutClientInput
+  assignedBde?: Prisma.UserCreateNestedOneWithoutAssignedClientsInput
+  createdBy: Prisma.UserCreateNestedOneWithoutClientsCreatedInput
   serviceSelections?: Prisma.ClientServiceSelectionCreateNestedManyWithoutClientInput
+  sourceLead?: Prisma.LeadCreateNestedOneWithoutClientInput
   psgas?: Prisma.PSGACreateNestedManyWithoutClientInput
 }
 
@@ -475,19 +488,20 @@ export type ClientUncheckedCreateInput = {
   pincode?: string | null
   gstNumber?: string | null
   status?: $Enums.ClientStatus
-  processStage?: $Enums.ClientProcessStage
-  externalClientId?: string | null
-  fsoNumber?: string | null
-  fsoGeneratedAt?: Date | string | null
-  psgaGeneratedAt?: Date | string | null
-  processUpdatedAt?: Date | string | null
   createdById: string
-  assignedBdeId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  sourceLead?: Prisma.LeadUncheckedCreateNestedOneWithoutClientInput
+  assignedBdeId?: string | null
+  externalClientId?: string | null
+  fsoGeneratedAt?: Date | string | null
+  fsoNumber?: string | null
+  processStage?: $Enums.ClientProcessStage
+  processUpdatedAt?: Date | string | null
+  psgaNumber?: string | null
+  psgaGeneratedAt?: Date | string | null
   activities?: Prisma.ActivityUncheckedCreateNestedManyWithoutClientInput
   serviceSelections?: Prisma.ClientServiceSelectionUncheckedCreateNestedManyWithoutClientInput
+  sourceLead?: Prisma.LeadUncheckedCreateNestedOneWithoutClientInput
   psgas?: Prisma.PSGAUncheckedCreateNestedManyWithoutClientInput
 }
 
@@ -503,19 +517,20 @@ export type ClientUpdateInput = {
   pincode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   gstNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumClientStatusFieldUpdateOperationsInput | $Enums.ClientStatus
-  processStage?: Prisma.EnumClientProcessStageFieldUpdateOperationsInput | $Enums.ClientProcessStage
-  externalClientId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  fsoNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  fsoGeneratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  psgaGeneratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  processUpdatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdBy?: Prisma.UserUpdateOneRequiredWithoutClientsCreatedNestedInput
-  assignedBde?: Prisma.UserUpdateOneWithoutAssignedClientsNestedInput
-  sourceLead?: Prisma.LeadUpdateOneWithoutClientNestedInput
+  externalClientId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fsoGeneratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  fsoNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  processStage?: Prisma.EnumClientProcessStageFieldUpdateOperationsInput | $Enums.ClientProcessStage
+  processUpdatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  psgaNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  psgaGeneratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   activities?: Prisma.ActivityUpdateManyWithoutClientNestedInput
+  assignedBde?: Prisma.UserUpdateOneWithoutAssignedClientsNestedInput
+  createdBy?: Prisma.UserUpdateOneRequiredWithoutClientsCreatedNestedInput
   serviceSelections?: Prisma.ClientServiceSelectionUpdateManyWithoutClientNestedInput
+  sourceLead?: Prisma.LeadUpdateOneWithoutClientNestedInput
   psgas?: Prisma.PSGAUpdateManyWithoutClientNestedInput
 }
 
@@ -531,19 +546,20 @@ export type ClientUncheckedUpdateInput = {
   pincode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   gstNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumClientStatusFieldUpdateOperationsInput | $Enums.ClientStatus
-  processStage?: Prisma.EnumClientProcessStageFieldUpdateOperationsInput | $Enums.ClientProcessStage
-  externalClientId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  fsoNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  fsoGeneratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  psgaGeneratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  processUpdatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdById?: Prisma.StringFieldUpdateOperationsInput | string
-  assignedBdeId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  sourceLead?: Prisma.LeadUncheckedUpdateOneWithoutClientNestedInput
+  assignedBdeId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  externalClientId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fsoGeneratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  fsoNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  processStage?: Prisma.EnumClientProcessStageFieldUpdateOperationsInput | $Enums.ClientProcessStage
+  processUpdatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  psgaNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  psgaGeneratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   activities?: Prisma.ActivityUncheckedUpdateManyWithoutClientNestedInput
   serviceSelections?: Prisma.ClientServiceSelectionUncheckedUpdateManyWithoutClientNestedInput
+  sourceLead?: Prisma.LeadUncheckedUpdateOneWithoutClientNestedInput
   psgas?: Prisma.PSGAUncheckedUpdateManyWithoutClientNestedInput
 }
 
@@ -559,16 +575,17 @@ export type ClientCreateManyInput = {
   pincode?: string | null
   gstNumber?: string | null
   status?: $Enums.ClientStatus
-  processStage?: $Enums.ClientProcessStage
-  externalClientId?: string | null
-  fsoNumber?: string | null
-  fsoGeneratedAt?: Date | string | null
-  psgaGeneratedAt?: Date | string | null
-  processUpdatedAt?: Date | string | null
   createdById: string
-  assignedBdeId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  assignedBdeId?: string | null
+  externalClientId?: string | null
+  fsoGeneratedAt?: Date | string | null
+  fsoNumber?: string | null
+  processStage?: $Enums.ClientProcessStage
+  processUpdatedAt?: Date | string | null
+  psgaNumber?: string | null
+  psgaGeneratedAt?: Date | string | null
 }
 
 export type ClientUpdateManyMutationInput = {
@@ -583,14 +600,15 @@ export type ClientUpdateManyMutationInput = {
   pincode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   gstNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumClientStatusFieldUpdateOperationsInput | $Enums.ClientStatus
-  processStage?: Prisma.EnumClientProcessStageFieldUpdateOperationsInput | $Enums.ClientProcessStage
-  externalClientId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  fsoNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  fsoGeneratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  psgaGeneratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  processUpdatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  externalClientId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fsoGeneratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  fsoNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  processStage?: Prisma.EnumClientProcessStageFieldUpdateOperationsInput | $Enums.ClientProcessStage
+  processUpdatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  psgaNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  psgaGeneratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type ClientUncheckedUpdateManyInput = {
@@ -605,16 +623,17 @@ export type ClientUncheckedUpdateManyInput = {
   pincode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   gstNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumClientStatusFieldUpdateOperationsInput | $Enums.ClientStatus
-  processStage?: Prisma.EnumClientProcessStageFieldUpdateOperationsInput | $Enums.ClientProcessStage
-  externalClientId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  fsoNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  fsoGeneratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  psgaGeneratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  processUpdatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdById?: Prisma.StringFieldUpdateOperationsInput | string
-  assignedBdeId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  assignedBdeId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  externalClientId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fsoGeneratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  fsoNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  processStage?: Prisma.EnumClientProcessStageFieldUpdateOperationsInput | $Enums.ClientProcessStage
+  processUpdatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  psgaNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  psgaGeneratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type ClientListRelationFilter = {
@@ -644,16 +663,17 @@ export type ClientCountOrderByAggregateInput = {
   pincode?: Prisma.SortOrder
   gstNumber?: Prisma.SortOrder
   status?: Prisma.SortOrder
-  processStage?: Prisma.SortOrder
-  externalClientId?: Prisma.SortOrder
-  fsoNumber?: Prisma.SortOrder
-  fsoGeneratedAt?: Prisma.SortOrder
-  psgaGeneratedAt?: Prisma.SortOrder
-  processUpdatedAt?: Prisma.SortOrder
   createdById?: Prisma.SortOrder
-  assignedBdeId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  assignedBdeId?: Prisma.SortOrder
+  externalClientId?: Prisma.SortOrder
+  fsoGeneratedAt?: Prisma.SortOrder
+  fsoNumber?: Prisma.SortOrder
+  processStage?: Prisma.SortOrder
+  processUpdatedAt?: Prisma.SortOrder
+  psgaNumber?: Prisma.SortOrder
+  psgaGeneratedAt?: Prisma.SortOrder
 }
 
 export type ClientMaxOrderByAggregateInput = {
@@ -668,16 +688,17 @@ export type ClientMaxOrderByAggregateInput = {
   pincode?: Prisma.SortOrder
   gstNumber?: Prisma.SortOrder
   status?: Prisma.SortOrder
-  processStage?: Prisma.SortOrder
-  externalClientId?: Prisma.SortOrder
-  fsoNumber?: Prisma.SortOrder
-  fsoGeneratedAt?: Prisma.SortOrder
-  psgaGeneratedAt?: Prisma.SortOrder
-  processUpdatedAt?: Prisma.SortOrder
   createdById?: Prisma.SortOrder
-  assignedBdeId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  assignedBdeId?: Prisma.SortOrder
+  externalClientId?: Prisma.SortOrder
+  fsoGeneratedAt?: Prisma.SortOrder
+  fsoNumber?: Prisma.SortOrder
+  processStage?: Prisma.SortOrder
+  processUpdatedAt?: Prisma.SortOrder
+  psgaNumber?: Prisma.SortOrder
+  psgaGeneratedAt?: Prisma.SortOrder
 }
 
 export type ClientMinOrderByAggregateInput = {
@@ -692,28 +713,22 @@ export type ClientMinOrderByAggregateInput = {
   pincode?: Prisma.SortOrder
   gstNumber?: Prisma.SortOrder
   status?: Prisma.SortOrder
-  processStage?: Prisma.SortOrder
-  externalClientId?: Prisma.SortOrder
-  fsoNumber?: Prisma.SortOrder
-  fsoGeneratedAt?: Prisma.SortOrder
-  psgaGeneratedAt?: Prisma.SortOrder
-  processUpdatedAt?: Prisma.SortOrder
   createdById?: Prisma.SortOrder
-  assignedBdeId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  assignedBdeId?: Prisma.SortOrder
+  externalClientId?: Prisma.SortOrder
+  fsoGeneratedAt?: Prisma.SortOrder
+  fsoNumber?: Prisma.SortOrder
+  processStage?: Prisma.SortOrder
+  processUpdatedAt?: Prisma.SortOrder
+  psgaNumber?: Prisma.SortOrder
+  psgaGeneratedAt?: Prisma.SortOrder
 }
 
 export type ClientScalarRelationFilter = {
   is?: Prisma.ClientWhereInput
   isNot?: Prisma.ClientWhereInput
-}
-
-export type ClientCreateNestedManyWithoutCreatedByInput = {
-  create?: Prisma.XOR<Prisma.ClientCreateWithoutCreatedByInput, Prisma.ClientUncheckedCreateWithoutCreatedByInput> | Prisma.ClientCreateWithoutCreatedByInput[] | Prisma.ClientUncheckedCreateWithoutCreatedByInput[]
-  connectOrCreate?: Prisma.ClientCreateOrConnectWithoutCreatedByInput | Prisma.ClientCreateOrConnectWithoutCreatedByInput[]
-  createMany?: Prisma.ClientCreateManyCreatedByInputEnvelope
-  connect?: Prisma.ClientWhereUniqueInput | Prisma.ClientWhereUniqueInput[]
 }
 
 export type ClientCreateNestedManyWithoutAssignedBdeInput = {
@@ -723,7 +738,7 @@ export type ClientCreateNestedManyWithoutAssignedBdeInput = {
   connect?: Prisma.ClientWhereUniqueInput | Prisma.ClientWhereUniqueInput[]
 }
 
-export type ClientUncheckedCreateNestedManyWithoutCreatedByInput = {
+export type ClientCreateNestedManyWithoutCreatedByInput = {
   create?: Prisma.XOR<Prisma.ClientCreateWithoutCreatedByInput, Prisma.ClientUncheckedCreateWithoutCreatedByInput> | Prisma.ClientCreateWithoutCreatedByInput[] | Prisma.ClientUncheckedCreateWithoutCreatedByInput[]
   connectOrCreate?: Prisma.ClientCreateOrConnectWithoutCreatedByInput | Prisma.ClientCreateOrConnectWithoutCreatedByInput[]
   createMany?: Prisma.ClientCreateManyCreatedByInputEnvelope
@@ -737,18 +752,11 @@ export type ClientUncheckedCreateNestedManyWithoutAssignedBdeInput = {
   connect?: Prisma.ClientWhereUniqueInput | Prisma.ClientWhereUniqueInput[]
 }
 
-export type ClientUpdateManyWithoutCreatedByNestedInput = {
+export type ClientUncheckedCreateNestedManyWithoutCreatedByInput = {
   create?: Prisma.XOR<Prisma.ClientCreateWithoutCreatedByInput, Prisma.ClientUncheckedCreateWithoutCreatedByInput> | Prisma.ClientCreateWithoutCreatedByInput[] | Prisma.ClientUncheckedCreateWithoutCreatedByInput[]
   connectOrCreate?: Prisma.ClientCreateOrConnectWithoutCreatedByInput | Prisma.ClientCreateOrConnectWithoutCreatedByInput[]
-  upsert?: Prisma.ClientUpsertWithWhereUniqueWithoutCreatedByInput | Prisma.ClientUpsertWithWhereUniqueWithoutCreatedByInput[]
   createMany?: Prisma.ClientCreateManyCreatedByInputEnvelope
-  set?: Prisma.ClientWhereUniqueInput | Prisma.ClientWhereUniqueInput[]
-  disconnect?: Prisma.ClientWhereUniqueInput | Prisma.ClientWhereUniqueInput[]
-  delete?: Prisma.ClientWhereUniqueInput | Prisma.ClientWhereUniqueInput[]
   connect?: Prisma.ClientWhereUniqueInput | Prisma.ClientWhereUniqueInput[]
-  update?: Prisma.ClientUpdateWithWhereUniqueWithoutCreatedByInput | Prisma.ClientUpdateWithWhereUniqueWithoutCreatedByInput[]
-  updateMany?: Prisma.ClientUpdateManyWithWhereWithoutCreatedByInput | Prisma.ClientUpdateManyWithWhereWithoutCreatedByInput[]
-  deleteMany?: Prisma.ClientScalarWhereInput | Prisma.ClientScalarWhereInput[]
 }
 
 export type ClientUpdateManyWithoutAssignedBdeNestedInput = {
@@ -765,7 +773,7 @@ export type ClientUpdateManyWithoutAssignedBdeNestedInput = {
   deleteMany?: Prisma.ClientScalarWhereInput | Prisma.ClientScalarWhereInput[]
 }
 
-export type ClientUncheckedUpdateManyWithoutCreatedByNestedInput = {
+export type ClientUpdateManyWithoutCreatedByNestedInput = {
   create?: Prisma.XOR<Prisma.ClientCreateWithoutCreatedByInput, Prisma.ClientUncheckedCreateWithoutCreatedByInput> | Prisma.ClientCreateWithoutCreatedByInput[] | Prisma.ClientUncheckedCreateWithoutCreatedByInput[]
   connectOrCreate?: Prisma.ClientCreateOrConnectWithoutCreatedByInput | Prisma.ClientCreateOrConnectWithoutCreatedByInput[]
   upsert?: Prisma.ClientUpsertWithWhereUniqueWithoutCreatedByInput | Prisma.ClientUpsertWithWhereUniqueWithoutCreatedByInput[]
@@ -790,6 +798,20 @@ export type ClientUncheckedUpdateManyWithoutAssignedBdeNestedInput = {
   connect?: Prisma.ClientWhereUniqueInput | Prisma.ClientWhereUniqueInput[]
   update?: Prisma.ClientUpdateWithWhereUniqueWithoutAssignedBdeInput | Prisma.ClientUpdateWithWhereUniqueWithoutAssignedBdeInput[]
   updateMany?: Prisma.ClientUpdateManyWithWhereWithoutAssignedBdeInput | Prisma.ClientUpdateManyWithWhereWithoutAssignedBdeInput[]
+  deleteMany?: Prisma.ClientScalarWhereInput | Prisma.ClientScalarWhereInput[]
+}
+
+export type ClientUncheckedUpdateManyWithoutCreatedByNestedInput = {
+  create?: Prisma.XOR<Prisma.ClientCreateWithoutCreatedByInput, Prisma.ClientUncheckedCreateWithoutCreatedByInput> | Prisma.ClientCreateWithoutCreatedByInput[] | Prisma.ClientUncheckedCreateWithoutCreatedByInput[]
+  connectOrCreate?: Prisma.ClientCreateOrConnectWithoutCreatedByInput | Prisma.ClientCreateOrConnectWithoutCreatedByInput[]
+  upsert?: Prisma.ClientUpsertWithWhereUniqueWithoutCreatedByInput | Prisma.ClientUpsertWithWhereUniqueWithoutCreatedByInput[]
+  createMany?: Prisma.ClientCreateManyCreatedByInputEnvelope
+  set?: Prisma.ClientWhereUniqueInput | Prisma.ClientWhereUniqueInput[]
+  disconnect?: Prisma.ClientWhereUniqueInput | Prisma.ClientWhereUniqueInput[]
+  delete?: Prisma.ClientWhereUniqueInput | Prisma.ClientWhereUniqueInput[]
+  connect?: Prisma.ClientWhereUniqueInput | Prisma.ClientWhereUniqueInput[]
+  update?: Prisma.ClientUpdateWithWhereUniqueWithoutCreatedByInput | Prisma.ClientUpdateWithWhereUniqueWithoutCreatedByInput[]
+  updateMany?: Prisma.ClientUpdateManyWithWhereWithoutCreatedByInput | Prisma.ClientUpdateManyWithWhereWithoutCreatedByInput[]
   deleteMany?: Prisma.ClientScalarWhereInput | Prisma.ClientScalarWhereInput[]
 }
 
@@ -861,70 +883,6 @@ export type ClientUpdateOneRequiredWithoutPsgasNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.ClientUpdateToOneWithWhereWithoutPsgasInput, Prisma.ClientUpdateWithoutPsgasInput>, Prisma.ClientUncheckedUpdateWithoutPsgasInput>
 }
 
-export type ClientCreateWithoutCreatedByInput = {
-  id?: string
-  associationName: string
-  contactName: string
-  email?: string | null
-  mobile?: string | null
-  address?: string | null
-  city?: string | null
-  state?: string | null
-  pincode?: string | null
-  gstNumber?: string | null
-  status?: $Enums.ClientStatus
-  processStage?: $Enums.ClientProcessStage
-  externalClientId?: string | null
-  fsoNumber?: string | null
-  fsoGeneratedAt?: Date | string | null
-  psgaGeneratedAt?: Date | string | null
-  processUpdatedAt?: Date | string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  assignedBde?: Prisma.UserCreateNestedOneWithoutAssignedClientsInput
-  sourceLead?: Prisma.LeadCreateNestedOneWithoutClientInput
-  activities?: Prisma.ActivityCreateNestedManyWithoutClientInput
-  serviceSelections?: Prisma.ClientServiceSelectionCreateNestedManyWithoutClientInput
-  psgas?: Prisma.PSGACreateNestedManyWithoutClientInput
-}
-
-export type ClientUncheckedCreateWithoutCreatedByInput = {
-  id?: string
-  associationName: string
-  contactName: string
-  email?: string | null
-  mobile?: string | null
-  address?: string | null
-  city?: string | null
-  state?: string | null
-  pincode?: string | null
-  gstNumber?: string | null
-  status?: $Enums.ClientStatus
-  processStage?: $Enums.ClientProcessStage
-  externalClientId?: string | null
-  fsoNumber?: string | null
-  fsoGeneratedAt?: Date | string | null
-  psgaGeneratedAt?: Date | string | null
-  processUpdatedAt?: Date | string | null
-  assignedBdeId?: string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  sourceLead?: Prisma.LeadUncheckedCreateNestedOneWithoutClientInput
-  activities?: Prisma.ActivityUncheckedCreateNestedManyWithoutClientInput
-  serviceSelections?: Prisma.ClientServiceSelectionUncheckedCreateNestedManyWithoutClientInput
-  psgas?: Prisma.PSGAUncheckedCreateNestedManyWithoutClientInput
-}
-
-export type ClientCreateOrConnectWithoutCreatedByInput = {
-  where: Prisma.ClientWhereUniqueInput
-  create: Prisma.XOR<Prisma.ClientCreateWithoutCreatedByInput, Prisma.ClientUncheckedCreateWithoutCreatedByInput>
-}
-
-export type ClientCreateManyCreatedByInputEnvelope = {
-  data: Prisma.ClientCreateManyCreatedByInput | Prisma.ClientCreateManyCreatedByInput[]
-  skipDuplicates?: boolean
-}
-
 export type ClientCreateWithoutAssignedBdeInput = {
   id?: string
   associationName: string
@@ -937,18 +895,19 @@ export type ClientCreateWithoutAssignedBdeInput = {
   pincode?: string | null
   gstNumber?: string | null
   status?: $Enums.ClientStatus
-  processStage?: $Enums.ClientProcessStage
-  externalClientId?: string | null
-  fsoNumber?: string | null
-  fsoGeneratedAt?: Date | string | null
-  psgaGeneratedAt?: Date | string | null
-  processUpdatedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  createdBy: Prisma.UserCreateNestedOneWithoutClientsCreatedInput
-  sourceLead?: Prisma.LeadCreateNestedOneWithoutClientInput
+  externalClientId?: string | null
+  fsoGeneratedAt?: Date | string | null
+  fsoNumber?: string | null
+  processStage?: $Enums.ClientProcessStage
+  processUpdatedAt?: Date | string | null
+  psgaNumber?: string | null
+  psgaGeneratedAt?: Date | string | null
   activities?: Prisma.ActivityCreateNestedManyWithoutClientInput
+  createdBy: Prisma.UserCreateNestedOneWithoutClientsCreatedInput
   serviceSelections?: Prisma.ClientServiceSelectionCreateNestedManyWithoutClientInput
+  sourceLead?: Prisma.LeadCreateNestedOneWithoutClientInput
   psgas?: Prisma.PSGACreateNestedManyWithoutClientInput
 }
 
@@ -964,18 +923,19 @@ export type ClientUncheckedCreateWithoutAssignedBdeInput = {
   pincode?: string | null
   gstNumber?: string | null
   status?: $Enums.ClientStatus
-  processStage?: $Enums.ClientProcessStage
-  externalClientId?: string | null
-  fsoNumber?: string | null
-  fsoGeneratedAt?: Date | string | null
-  psgaGeneratedAt?: Date | string | null
-  processUpdatedAt?: Date | string | null
   createdById: string
   createdAt?: Date | string
   updatedAt?: Date | string
-  sourceLead?: Prisma.LeadUncheckedCreateNestedOneWithoutClientInput
+  externalClientId?: string | null
+  fsoGeneratedAt?: Date | string | null
+  fsoNumber?: string | null
+  processStage?: $Enums.ClientProcessStage
+  processUpdatedAt?: Date | string | null
+  psgaNumber?: string | null
+  psgaGeneratedAt?: Date | string | null
   activities?: Prisma.ActivityUncheckedCreateNestedManyWithoutClientInput
   serviceSelections?: Prisma.ClientServiceSelectionUncheckedCreateNestedManyWithoutClientInput
+  sourceLead?: Prisma.LeadUncheckedCreateNestedOneWithoutClientInput
   psgas?: Prisma.PSGAUncheckedCreateNestedManyWithoutClientInput
 }
 
@@ -989,47 +949,70 @@ export type ClientCreateManyAssignedBdeInputEnvelope = {
   skipDuplicates?: boolean
 }
 
-export type ClientUpsertWithWhereUniqueWithoutCreatedByInput = {
+export type ClientCreateWithoutCreatedByInput = {
+  id?: string
+  associationName: string
+  contactName: string
+  email?: string | null
+  mobile?: string | null
+  address?: string | null
+  city?: string | null
+  state?: string | null
+  pincode?: string | null
+  gstNumber?: string | null
+  status?: $Enums.ClientStatus
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  externalClientId?: string | null
+  fsoGeneratedAt?: Date | string | null
+  fsoNumber?: string | null
+  processStage?: $Enums.ClientProcessStage
+  processUpdatedAt?: Date | string | null
+  psgaNumber?: string | null
+  psgaGeneratedAt?: Date | string | null
+  activities?: Prisma.ActivityCreateNestedManyWithoutClientInput
+  assignedBde?: Prisma.UserCreateNestedOneWithoutAssignedClientsInput
+  serviceSelections?: Prisma.ClientServiceSelectionCreateNestedManyWithoutClientInput
+  sourceLead?: Prisma.LeadCreateNestedOneWithoutClientInput
+  psgas?: Prisma.PSGACreateNestedManyWithoutClientInput
+}
+
+export type ClientUncheckedCreateWithoutCreatedByInput = {
+  id?: string
+  associationName: string
+  contactName: string
+  email?: string | null
+  mobile?: string | null
+  address?: string | null
+  city?: string | null
+  state?: string | null
+  pincode?: string | null
+  gstNumber?: string | null
+  status?: $Enums.ClientStatus
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  assignedBdeId?: string | null
+  externalClientId?: string | null
+  fsoGeneratedAt?: Date | string | null
+  fsoNumber?: string | null
+  processStage?: $Enums.ClientProcessStage
+  processUpdatedAt?: Date | string | null
+  psgaNumber?: string | null
+  psgaGeneratedAt?: Date | string | null
+  activities?: Prisma.ActivityUncheckedCreateNestedManyWithoutClientInput
+  serviceSelections?: Prisma.ClientServiceSelectionUncheckedCreateNestedManyWithoutClientInput
+  sourceLead?: Prisma.LeadUncheckedCreateNestedOneWithoutClientInput
+  psgas?: Prisma.PSGAUncheckedCreateNestedManyWithoutClientInput
+}
+
+export type ClientCreateOrConnectWithoutCreatedByInput = {
   where: Prisma.ClientWhereUniqueInput
-  update: Prisma.XOR<Prisma.ClientUpdateWithoutCreatedByInput, Prisma.ClientUncheckedUpdateWithoutCreatedByInput>
   create: Prisma.XOR<Prisma.ClientCreateWithoutCreatedByInput, Prisma.ClientUncheckedCreateWithoutCreatedByInput>
 }
 
-export type ClientUpdateWithWhereUniqueWithoutCreatedByInput = {
-  where: Prisma.ClientWhereUniqueInput
-  data: Prisma.XOR<Prisma.ClientUpdateWithoutCreatedByInput, Prisma.ClientUncheckedUpdateWithoutCreatedByInput>
-}
-
-export type ClientUpdateManyWithWhereWithoutCreatedByInput = {
-  where: Prisma.ClientScalarWhereInput
-  data: Prisma.XOR<Prisma.ClientUpdateManyMutationInput, Prisma.ClientUncheckedUpdateManyWithoutCreatedByInput>
-}
-
-export type ClientScalarWhereInput = {
-  AND?: Prisma.ClientScalarWhereInput | Prisma.ClientScalarWhereInput[]
-  OR?: Prisma.ClientScalarWhereInput[]
-  NOT?: Prisma.ClientScalarWhereInput | Prisma.ClientScalarWhereInput[]
-  id?: Prisma.StringFilter<"Client"> | string
-  associationName?: Prisma.StringFilter<"Client"> | string
-  contactName?: Prisma.StringFilter<"Client"> | string
-  email?: Prisma.StringNullableFilter<"Client"> | string | null
-  mobile?: Prisma.StringNullableFilter<"Client"> | string | null
-  address?: Prisma.StringNullableFilter<"Client"> | string | null
-  city?: Prisma.StringNullableFilter<"Client"> | string | null
-  state?: Prisma.StringNullableFilter<"Client"> | string | null
-  pincode?: Prisma.StringNullableFilter<"Client"> | string | null
-  gstNumber?: Prisma.StringNullableFilter<"Client"> | string | null
-  status?: Prisma.EnumClientStatusFilter<"Client"> | $Enums.ClientStatus
-  processStage?: Prisma.EnumClientProcessStageFilter<"Client"> | $Enums.ClientProcessStage
-  externalClientId?: Prisma.StringNullableFilter<"Client"> | string | null
-  fsoNumber?: Prisma.StringNullableFilter<"Client"> | string | null
-  fsoGeneratedAt?: Prisma.DateTimeNullableFilter<"Client"> | Date | string | null
-  psgaGeneratedAt?: Prisma.DateTimeNullableFilter<"Client"> | Date | string | null
-  processUpdatedAt?: Prisma.DateTimeNullableFilter<"Client"> | Date | string | null
-  createdById?: Prisma.StringFilter<"Client"> | string
-  assignedBdeId?: Prisma.StringNullableFilter<"Client"> | string | null
-  createdAt?: Prisma.DateTimeFilter<"Client"> | Date | string
-  updatedAt?: Prisma.DateTimeFilter<"Client"> | Date | string
+export type ClientCreateManyCreatedByInputEnvelope = {
+  data: Prisma.ClientCreateManyCreatedByInput | Prisma.ClientCreateManyCreatedByInput[]
+  skipDuplicates?: boolean
 }
 
 export type ClientUpsertWithWhereUniqueWithoutAssignedBdeInput = {
@@ -1048,6 +1031,50 @@ export type ClientUpdateManyWithWhereWithoutAssignedBdeInput = {
   data: Prisma.XOR<Prisma.ClientUpdateManyMutationInput, Prisma.ClientUncheckedUpdateManyWithoutAssignedBdeInput>
 }
 
+export type ClientScalarWhereInput = {
+  AND?: Prisma.ClientScalarWhereInput | Prisma.ClientScalarWhereInput[]
+  OR?: Prisma.ClientScalarWhereInput[]
+  NOT?: Prisma.ClientScalarWhereInput | Prisma.ClientScalarWhereInput[]
+  id?: Prisma.StringFilter<"Client"> | string
+  associationName?: Prisma.StringFilter<"Client"> | string
+  contactName?: Prisma.StringFilter<"Client"> | string
+  email?: Prisma.StringNullableFilter<"Client"> | string | null
+  mobile?: Prisma.StringNullableFilter<"Client"> | string | null
+  address?: Prisma.StringNullableFilter<"Client"> | string | null
+  city?: Prisma.StringNullableFilter<"Client"> | string | null
+  state?: Prisma.StringNullableFilter<"Client"> | string | null
+  pincode?: Prisma.StringNullableFilter<"Client"> | string | null
+  gstNumber?: Prisma.StringNullableFilter<"Client"> | string | null
+  status?: Prisma.EnumClientStatusFilter<"Client"> | $Enums.ClientStatus
+  createdById?: Prisma.StringFilter<"Client"> | string
+  createdAt?: Prisma.DateTimeFilter<"Client"> | Date | string
+  updatedAt?: Prisma.DateTimeFilter<"Client"> | Date | string
+  assignedBdeId?: Prisma.StringNullableFilter<"Client"> | string | null
+  externalClientId?: Prisma.StringNullableFilter<"Client"> | string | null
+  fsoGeneratedAt?: Prisma.DateTimeNullableFilter<"Client"> | Date | string | null
+  fsoNumber?: Prisma.StringNullableFilter<"Client"> | string | null
+  processStage?: Prisma.EnumClientProcessStageFilter<"Client"> | $Enums.ClientProcessStage
+  processUpdatedAt?: Prisma.DateTimeNullableFilter<"Client"> | Date | string | null
+  psgaNumber?: Prisma.StringNullableFilter<"Client"> | string | null
+  psgaGeneratedAt?: Prisma.DateTimeNullableFilter<"Client"> | Date | string | null
+}
+
+export type ClientUpsertWithWhereUniqueWithoutCreatedByInput = {
+  where: Prisma.ClientWhereUniqueInput
+  update: Prisma.XOR<Prisma.ClientUpdateWithoutCreatedByInput, Prisma.ClientUncheckedUpdateWithoutCreatedByInput>
+  create: Prisma.XOR<Prisma.ClientCreateWithoutCreatedByInput, Prisma.ClientUncheckedCreateWithoutCreatedByInput>
+}
+
+export type ClientUpdateWithWhereUniqueWithoutCreatedByInput = {
+  where: Prisma.ClientWhereUniqueInput
+  data: Prisma.XOR<Prisma.ClientUpdateWithoutCreatedByInput, Prisma.ClientUncheckedUpdateWithoutCreatedByInput>
+}
+
+export type ClientUpdateManyWithWhereWithoutCreatedByInput = {
+  where: Prisma.ClientScalarWhereInput
+  data: Prisma.XOR<Prisma.ClientUpdateManyMutationInput, Prisma.ClientUncheckedUpdateManyWithoutCreatedByInput>
+}
+
 export type ClientCreateWithoutSourceLeadInput = {
   id?: string
   associationName: string
@@ -1060,17 +1087,18 @@ export type ClientCreateWithoutSourceLeadInput = {
   pincode?: string | null
   gstNumber?: string | null
   status?: $Enums.ClientStatus
-  processStage?: $Enums.ClientProcessStage
-  externalClientId?: string | null
-  fsoNumber?: string | null
-  fsoGeneratedAt?: Date | string | null
-  psgaGeneratedAt?: Date | string | null
-  processUpdatedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  createdBy: Prisma.UserCreateNestedOneWithoutClientsCreatedInput
-  assignedBde?: Prisma.UserCreateNestedOneWithoutAssignedClientsInput
+  externalClientId?: string | null
+  fsoGeneratedAt?: Date | string | null
+  fsoNumber?: string | null
+  processStage?: $Enums.ClientProcessStage
+  processUpdatedAt?: Date | string | null
+  psgaNumber?: string | null
+  psgaGeneratedAt?: Date | string | null
   activities?: Prisma.ActivityCreateNestedManyWithoutClientInput
+  assignedBde?: Prisma.UserCreateNestedOneWithoutAssignedClientsInput
+  createdBy: Prisma.UserCreateNestedOneWithoutClientsCreatedInput
   serviceSelections?: Prisma.ClientServiceSelectionCreateNestedManyWithoutClientInput
   psgas?: Prisma.PSGACreateNestedManyWithoutClientInput
 }
@@ -1087,16 +1115,17 @@ export type ClientUncheckedCreateWithoutSourceLeadInput = {
   pincode?: string | null
   gstNumber?: string | null
   status?: $Enums.ClientStatus
-  processStage?: $Enums.ClientProcessStage
-  externalClientId?: string | null
-  fsoNumber?: string | null
-  fsoGeneratedAt?: Date | string | null
-  psgaGeneratedAt?: Date | string | null
-  processUpdatedAt?: Date | string | null
   createdById: string
-  assignedBdeId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  assignedBdeId?: string | null
+  externalClientId?: string | null
+  fsoGeneratedAt?: Date | string | null
+  fsoNumber?: string | null
+  processStage?: $Enums.ClientProcessStage
+  processUpdatedAt?: Date | string | null
+  psgaNumber?: string | null
+  psgaGeneratedAt?: Date | string | null
   activities?: Prisma.ActivityUncheckedCreateNestedManyWithoutClientInput
   serviceSelections?: Prisma.ClientServiceSelectionUncheckedCreateNestedManyWithoutClientInput
   psgas?: Prisma.PSGAUncheckedCreateNestedManyWithoutClientInput
@@ -1130,17 +1159,18 @@ export type ClientUpdateWithoutSourceLeadInput = {
   pincode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   gstNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumClientStatusFieldUpdateOperationsInput | $Enums.ClientStatus
-  processStage?: Prisma.EnumClientProcessStageFieldUpdateOperationsInput | $Enums.ClientProcessStage
-  externalClientId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  fsoNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  fsoGeneratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  psgaGeneratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  processUpdatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdBy?: Prisma.UserUpdateOneRequiredWithoutClientsCreatedNestedInput
-  assignedBde?: Prisma.UserUpdateOneWithoutAssignedClientsNestedInput
+  externalClientId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fsoGeneratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  fsoNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  processStage?: Prisma.EnumClientProcessStageFieldUpdateOperationsInput | $Enums.ClientProcessStage
+  processUpdatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  psgaNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  psgaGeneratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   activities?: Prisma.ActivityUpdateManyWithoutClientNestedInput
+  assignedBde?: Prisma.UserUpdateOneWithoutAssignedClientsNestedInput
+  createdBy?: Prisma.UserUpdateOneRequiredWithoutClientsCreatedNestedInput
   serviceSelections?: Prisma.ClientServiceSelectionUpdateManyWithoutClientNestedInput
   psgas?: Prisma.PSGAUpdateManyWithoutClientNestedInput
 }
@@ -1157,16 +1187,17 @@ export type ClientUncheckedUpdateWithoutSourceLeadInput = {
   pincode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   gstNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumClientStatusFieldUpdateOperationsInput | $Enums.ClientStatus
-  processStage?: Prisma.EnumClientProcessStageFieldUpdateOperationsInput | $Enums.ClientProcessStage
-  externalClientId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  fsoNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  fsoGeneratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  psgaGeneratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  processUpdatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdById?: Prisma.StringFieldUpdateOperationsInput | string
-  assignedBdeId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  assignedBdeId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  externalClientId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fsoGeneratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  fsoNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  processStage?: Prisma.EnumClientProcessStageFieldUpdateOperationsInput | $Enums.ClientProcessStage
+  processUpdatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  psgaNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  psgaGeneratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   activities?: Prisma.ActivityUncheckedUpdateManyWithoutClientNestedInput
   serviceSelections?: Prisma.ClientServiceSelectionUncheckedUpdateManyWithoutClientNestedInput
   psgas?: Prisma.PSGAUncheckedUpdateManyWithoutClientNestedInput
@@ -1184,18 +1215,19 @@ export type ClientCreateWithoutActivitiesInput = {
   pincode?: string | null
   gstNumber?: string | null
   status?: $Enums.ClientStatus
-  processStage?: $Enums.ClientProcessStage
-  externalClientId?: string | null
-  fsoNumber?: string | null
-  fsoGeneratedAt?: Date | string | null
-  psgaGeneratedAt?: Date | string | null
-  processUpdatedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  createdBy: Prisma.UserCreateNestedOneWithoutClientsCreatedInput
+  externalClientId?: string | null
+  fsoGeneratedAt?: Date | string | null
+  fsoNumber?: string | null
+  processStage?: $Enums.ClientProcessStage
+  processUpdatedAt?: Date | string | null
+  psgaNumber?: string | null
+  psgaGeneratedAt?: Date | string | null
   assignedBde?: Prisma.UserCreateNestedOneWithoutAssignedClientsInput
-  sourceLead?: Prisma.LeadCreateNestedOneWithoutClientInput
+  createdBy: Prisma.UserCreateNestedOneWithoutClientsCreatedInput
   serviceSelections?: Prisma.ClientServiceSelectionCreateNestedManyWithoutClientInput
+  sourceLead?: Prisma.LeadCreateNestedOneWithoutClientInput
   psgas?: Prisma.PSGACreateNestedManyWithoutClientInput
 }
 
@@ -1211,18 +1243,19 @@ export type ClientUncheckedCreateWithoutActivitiesInput = {
   pincode?: string | null
   gstNumber?: string | null
   status?: $Enums.ClientStatus
-  processStage?: $Enums.ClientProcessStage
-  externalClientId?: string | null
-  fsoNumber?: string | null
-  fsoGeneratedAt?: Date | string | null
-  psgaGeneratedAt?: Date | string | null
-  processUpdatedAt?: Date | string | null
   createdById: string
-  assignedBdeId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  sourceLead?: Prisma.LeadUncheckedCreateNestedOneWithoutClientInput
+  assignedBdeId?: string | null
+  externalClientId?: string | null
+  fsoGeneratedAt?: Date | string | null
+  fsoNumber?: string | null
+  processStage?: $Enums.ClientProcessStage
+  processUpdatedAt?: Date | string | null
+  psgaNumber?: string | null
+  psgaGeneratedAt?: Date | string | null
   serviceSelections?: Prisma.ClientServiceSelectionUncheckedCreateNestedManyWithoutClientInput
+  sourceLead?: Prisma.LeadUncheckedCreateNestedOneWithoutClientInput
   psgas?: Prisma.PSGAUncheckedCreateNestedManyWithoutClientInput
 }
 
@@ -1254,18 +1287,19 @@ export type ClientUpdateWithoutActivitiesInput = {
   pincode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   gstNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumClientStatusFieldUpdateOperationsInput | $Enums.ClientStatus
-  processStage?: Prisma.EnumClientProcessStageFieldUpdateOperationsInput | $Enums.ClientProcessStage
-  externalClientId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  fsoNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  fsoGeneratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  psgaGeneratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  processUpdatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdBy?: Prisma.UserUpdateOneRequiredWithoutClientsCreatedNestedInput
+  externalClientId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fsoGeneratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  fsoNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  processStage?: Prisma.EnumClientProcessStageFieldUpdateOperationsInput | $Enums.ClientProcessStage
+  processUpdatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  psgaNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  psgaGeneratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   assignedBde?: Prisma.UserUpdateOneWithoutAssignedClientsNestedInput
-  sourceLead?: Prisma.LeadUpdateOneWithoutClientNestedInput
+  createdBy?: Prisma.UserUpdateOneRequiredWithoutClientsCreatedNestedInput
   serviceSelections?: Prisma.ClientServiceSelectionUpdateManyWithoutClientNestedInput
+  sourceLead?: Prisma.LeadUpdateOneWithoutClientNestedInput
   psgas?: Prisma.PSGAUpdateManyWithoutClientNestedInput
 }
 
@@ -1281,18 +1315,19 @@ export type ClientUncheckedUpdateWithoutActivitiesInput = {
   pincode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   gstNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumClientStatusFieldUpdateOperationsInput | $Enums.ClientStatus
-  processStage?: Prisma.EnumClientProcessStageFieldUpdateOperationsInput | $Enums.ClientProcessStage
-  externalClientId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  fsoNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  fsoGeneratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  psgaGeneratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  processUpdatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdById?: Prisma.StringFieldUpdateOperationsInput | string
-  assignedBdeId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  sourceLead?: Prisma.LeadUncheckedUpdateOneWithoutClientNestedInput
+  assignedBdeId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  externalClientId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fsoGeneratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  fsoNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  processStage?: Prisma.EnumClientProcessStageFieldUpdateOperationsInput | $Enums.ClientProcessStage
+  processUpdatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  psgaNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  psgaGeneratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   serviceSelections?: Prisma.ClientServiceSelectionUncheckedUpdateManyWithoutClientNestedInput
+  sourceLead?: Prisma.LeadUncheckedUpdateOneWithoutClientNestedInput
   psgas?: Prisma.PSGAUncheckedUpdateManyWithoutClientNestedInput
 }
 
@@ -1308,18 +1343,19 @@ export type ClientCreateWithoutServiceSelectionsInput = {
   pincode?: string | null
   gstNumber?: string | null
   status?: $Enums.ClientStatus
-  processStage?: $Enums.ClientProcessStage
-  externalClientId?: string | null
-  fsoNumber?: string | null
-  fsoGeneratedAt?: Date | string | null
-  psgaGeneratedAt?: Date | string | null
-  processUpdatedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  createdBy: Prisma.UserCreateNestedOneWithoutClientsCreatedInput
-  assignedBde?: Prisma.UserCreateNestedOneWithoutAssignedClientsInput
-  sourceLead?: Prisma.LeadCreateNestedOneWithoutClientInput
+  externalClientId?: string | null
+  fsoGeneratedAt?: Date | string | null
+  fsoNumber?: string | null
+  processStage?: $Enums.ClientProcessStage
+  processUpdatedAt?: Date | string | null
+  psgaNumber?: string | null
+  psgaGeneratedAt?: Date | string | null
   activities?: Prisma.ActivityCreateNestedManyWithoutClientInput
+  assignedBde?: Prisma.UserCreateNestedOneWithoutAssignedClientsInput
+  createdBy: Prisma.UserCreateNestedOneWithoutClientsCreatedInput
+  sourceLead?: Prisma.LeadCreateNestedOneWithoutClientInput
   psgas?: Prisma.PSGACreateNestedManyWithoutClientInput
 }
 
@@ -1335,18 +1371,19 @@ export type ClientUncheckedCreateWithoutServiceSelectionsInput = {
   pincode?: string | null
   gstNumber?: string | null
   status?: $Enums.ClientStatus
-  processStage?: $Enums.ClientProcessStage
-  externalClientId?: string | null
-  fsoNumber?: string | null
-  fsoGeneratedAt?: Date | string | null
-  psgaGeneratedAt?: Date | string | null
-  processUpdatedAt?: Date | string | null
   createdById: string
-  assignedBdeId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  sourceLead?: Prisma.LeadUncheckedCreateNestedOneWithoutClientInput
+  assignedBdeId?: string | null
+  externalClientId?: string | null
+  fsoGeneratedAt?: Date | string | null
+  fsoNumber?: string | null
+  processStage?: $Enums.ClientProcessStage
+  processUpdatedAt?: Date | string | null
+  psgaNumber?: string | null
+  psgaGeneratedAt?: Date | string | null
   activities?: Prisma.ActivityUncheckedCreateNestedManyWithoutClientInput
+  sourceLead?: Prisma.LeadUncheckedCreateNestedOneWithoutClientInput
   psgas?: Prisma.PSGAUncheckedCreateNestedManyWithoutClientInput
 }
 
@@ -1378,18 +1415,19 @@ export type ClientUpdateWithoutServiceSelectionsInput = {
   pincode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   gstNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumClientStatusFieldUpdateOperationsInput | $Enums.ClientStatus
-  processStage?: Prisma.EnumClientProcessStageFieldUpdateOperationsInput | $Enums.ClientProcessStage
-  externalClientId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  fsoNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  fsoGeneratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  psgaGeneratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  processUpdatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdBy?: Prisma.UserUpdateOneRequiredWithoutClientsCreatedNestedInput
-  assignedBde?: Prisma.UserUpdateOneWithoutAssignedClientsNestedInput
-  sourceLead?: Prisma.LeadUpdateOneWithoutClientNestedInput
+  externalClientId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fsoGeneratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  fsoNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  processStage?: Prisma.EnumClientProcessStageFieldUpdateOperationsInput | $Enums.ClientProcessStage
+  processUpdatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  psgaNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  psgaGeneratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   activities?: Prisma.ActivityUpdateManyWithoutClientNestedInput
+  assignedBde?: Prisma.UserUpdateOneWithoutAssignedClientsNestedInput
+  createdBy?: Prisma.UserUpdateOneRequiredWithoutClientsCreatedNestedInput
+  sourceLead?: Prisma.LeadUpdateOneWithoutClientNestedInput
   psgas?: Prisma.PSGAUpdateManyWithoutClientNestedInput
 }
 
@@ -1405,18 +1443,19 @@ export type ClientUncheckedUpdateWithoutServiceSelectionsInput = {
   pincode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   gstNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumClientStatusFieldUpdateOperationsInput | $Enums.ClientStatus
-  processStage?: Prisma.EnumClientProcessStageFieldUpdateOperationsInput | $Enums.ClientProcessStage
-  externalClientId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  fsoNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  fsoGeneratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  psgaGeneratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  processUpdatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdById?: Prisma.StringFieldUpdateOperationsInput | string
-  assignedBdeId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  sourceLead?: Prisma.LeadUncheckedUpdateOneWithoutClientNestedInput
+  assignedBdeId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  externalClientId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fsoGeneratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  fsoNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  processStage?: Prisma.EnumClientProcessStageFieldUpdateOperationsInput | $Enums.ClientProcessStage
+  processUpdatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  psgaNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  psgaGeneratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   activities?: Prisma.ActivityUncheckedUpdateManyWithoutClientNestedInput
+  sourceLead?: Prisma.LeadUncheckedUpdateOneWithoutClientNestedInput
   psgas?: Prisma.PSGAUncheckedUpdateManyWithoutClientNestedInput
 }
 
@@ -1432,19 +1471,20 @@ export type ClientCreateWithoutPsgasInput = {
   pincode?: string | null
   gstNumber?: string | null
   status?: $Enums.ClientStatus
-  processStage?: $Enums.ClientProcessStage
-  externalClientId?: string | null
-  fsoNumber?: string | null
-  fsoGeneratedAt?: Date | string | null
-  psgaGeneratedAt?: Date | string | null
-  processUpdatedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  createdBy: Prisma.UserCreateNestedOneWithoutClientsCreatedInput
-  assignedBde?: Prisma.UserCreateNestedOneWithoutAssignedClientsInput
-  sourceLead?: Prisma.LeadCreateNestedOneWithoutClientInput
+  externalClientId?: string | null
+  fsoGeneratedAt?: Date | string | null
+  fsoNumber?: string | null
+  processStage?: $Enums.ClientProcessStage
+  processUpdatedAt?: Date | string | null
+  psgaNumber?: string | null
+  psgaGeneratedAt?: Date | string | null
   activities?: Prisma.ActivityCreateNestedManyWithoutClientInput
+  assignedBde?: Prisma.UserCreateNestedOneWithoutAssignedClientsInput
+  createdBy: Prisma.UserCreateNestedOneWithoutClientsCreatedInput
   serviceSelections?: Prisma.ClientServiceSelectionCreateNestedManyWithoutClientInput
+  sourceLead?: Prisma.LeadCreateNestedOneWithoutClientInput
 }
 
 export type ClientUncheckedCreateWithoutPsgasInput = {
@@ -1459,19 +1499,20 @@ export type ClientUncheckedCreateWithoutPsgasInput = {
   pincode?: string | null
   gstNumber?: string | null
   status?: $Enums.ClientStatus
-  processStage?: $Enums.ClientProcessStage
-  externalClientId?: string | null
-  fsoNumber?: string | null
-  fsoGeneratedAt?: Date | string | null
-  psgaGeneratedAt?: Date | string | null
-  processUpdatedAt?: Date | string | null
   createdById: string
-  assignedBdeId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  sourceLead?: Prisma.LeadUncheckedCreateNestedOneWithoutClientInput
+  assignedBdeId?: string | null
+  externalClientId?: string | null
+  fsoGeneratedAt?: Date | string | null
+  fsoNumber?: string | null
+  processStage?: $Enums.ClientProcessStage
+  processUpdatedAt?: Date | string | null
+  psgaNumber?: string | null
+  psgaGeneratedAt?: Date | string | null
   activities?: Prisma.ActivityUncheckedCreateNestedManyWithoutClientInput
   serviceSelections?: Prisma.ClientServiceSelectionUncheckedCreateNestedManyWithoutClientInput
+  sourceLead?: Prisma.LeadUncheckedCreateNestedOneWithoutClientInput
 }
 
 export type ClientCreateOrConnectWithoutPsgasInput = {
@@ -1502,19 +1543,20 @@ export type ClientUpdateWithoutPsgasInput = {
   pincode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   gstNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumClientStatusFieldUpdateOperationsInput | $Enums.ClientStatus
-  processStage?: Prisma.EnumClientProcessStageFieldUpdateOperationsInput | $Enums.ClientProcessStage
-  externalClientId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  fsoNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  fsoGeneratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  psgaGeneratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  processUpdatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdBy?: Prisma.UserUpdateOneRequiredWithoutClientsCreatedNestedInput
-  assignedBde?: Prisma.UserUpdateOneWithoutAssignedClientsNestedInput
-  sourceLead?: Prisma.LeadUpdateOneWithoutClientNestedInput
+  externalClientId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fsoGeneratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  fsoNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  processStage?: Prisma.EnumClientProcessStageFieldUpdateOperationsInput | $Enums.ClientProcessStage
+  processUpdatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  psgaNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  psgaGeneratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   activities?: Prisma.ActivityUpdateManyWithoutClientNestedInput
+  assignedBde?: Prisma.UserUpdateOneWithoutAssignedClientsNestedInput
+  createdBy?: Prisma.UserUpdateOneRequiredWithoutClientsCreatedNestedInput
   serviceSelections?: Prisma.ClientServiceSelectionUpdateManyWithoutClientNestedInput
+  sourceLead?: Prisma.LeadUpdateOneWithoutClientNestedInput
 }
 
 export type ClientUncheckedUpdateWithoutPsgasInput = {
@@ -1529,42 +1571,20 @@ export type ClientUncheckedUpdateWithoutPsgasInput = {
   pincode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   gstNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumClientStatusFieldUpdateOperationsInput | $Enums.ClientStatus
-  processStage?: Prisma.EnumClientProcessStageFieldUpdateOperationsInput | $Enums.ClientProcessStage
-  externalClientId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  fsoNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  fsoGeneratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  psgaGeneratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  processUpdatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdById?: Prisma.StringFieldUpdateOperationsInput | string
-  assignedBdeId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  sourceLead?: Prisma.LeadUncheckedUpdateOneWithoutClientNestedInput
+  assignedBdeId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  externalClientId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fsoGeneratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  fsoNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  processStage?: Prisma.EnumClientProcessStageFieldUpdateOperationsInput | $Enums.ClientProcessStage
+  processUpdatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  psgaNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  psgaGeneratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   activities?: Prisma.ActivityUncheckedUpdateManyWithoutClientNestedInput
   serviceSelections?: Prisma.ClientServiceSelectionUncheckedUpdateManyWithoutClientNestedInput
-}
-
-export type ClientCreateManyCreatedByInput = {
-  id?: string
-  associationName: string
-  contactName: string
-  email?: string | null
-  mobile?: string | null
-  address?: string | null
-  city?: string | null
-  state?: string | null
-  pincode?: string | null
-  gstNumber?: string | null
-  status?: $Enums.ClientStatus
-  processStage?: $Enums.ClientProcessStage
-  externalClientId?: string | null
-  fsoNumber?: string | null
-  fsoGeneratedAt?: Date | string | null
-  psgaGeneratedAt?: Date | string | null
-  processUpdatedAt?: Date | string | null
-  assignedBdeId?: string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
+  sourceLead?: Prisma.LeadUncheckedUpdateOneWithoutClientNestedInput
 }
 
 export type ClientCreateManyAssignedBdeInput = {
@@ -1579,92 +1599,40 @@ export type ClientCreateManyAssignedBdeInput = {
   pincode?: string | null
   gstNumber?: string | null
   status?: $Enums.ClientStatus
-  processStage?: $Enums.ClientProcessStage
-  externalClientId?: string | null
-  fsoNumber?: string | null
-  fsoGeneratedAt?: Date | string | null
-  psgaGeneratedAt?: Date | string | null
-  processUpdatedAt?: Date | string | null
   createdById: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  externalClientId?: string | null
+  fsoGeneratedAt?: Date | string | null
+  fsoNumber?: string | null
+  processStage?: $Enums.ClientProcessStage
+  processUpdatedAt?: Date | string | null
+  psgaNumber?: string | null
+  psgaGeneratedAt?: Date | string | null
 }
 
-export type ClientUpdateWithoutCreatedByInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  associationName?: Prisma.StringFieldUpdateOperationsInput | string
-  contactName?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  mobile?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  pincode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  gstNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  status?: Prisma.EnumClientStatusFieldUpdateOperationsInput | $Enums.ClientStatus
-  processStage?: Prisma.EnumClientProcessStageFieldUpdateOperationsInput | $Enums.ClientProcessStage
-  externalClientId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  fsoNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  fsoGeneratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  psgaGeneratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  processUpdatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  assignedBde?: Prisma.UserUpdateOneWithoutAssignedClientsNestedInput
-  sourceLead?: Prisma.LeadUpdateOneWithoutClientNestedInput
-  activities?: Prisma.ActivityUpdateManyWithoutClientNestedInput
-  serviceSelections?: Prisma.ClientServiceSelectionUpdateManyWithoutClientNestedInput
-  psgas?: Prisma.PSGAUpdateManyWithoutClientNestedInput
-}
-
-export type ClientUncheckedUpdateWithoutCreatedByInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  associationName?: Prisma.StringFieldUpdateOperationsInput | string
-  contactName?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  mobile?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  pincode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  gstNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  status?: Prisma.EnumClientStatusFieldUpdateOperationsInput | $Enums.ClientStatus
-  processStage?: Prisma.EnumClientProcessStageFieldUpdateOperationsInput | $Enums.ClientProcessStage
-  externalClientId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  fsoNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  fsoGeneratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  psgaGeneratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  processUpdatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  assignedBdeId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  sourceLead?: Prisma.LeadUncheckedUpdateOneWithoutClientNestedInput
-  activities?: Prisma.ActivityUncheckedUpdateManyWithoutClientNestedInput
-  serviceSelections?: Prisma.ClientServiceSelectionUncheckedUpdateManyWithoutClientNestedInput
-  psgas?: Prisma.PSGAUncheckedUpdateManyWithoutClientNestedInput
-}
-
-export type ClientUncheckedUpdateManyWithoutCreatedByInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  associationName?: Prisma.StringFieldUpdateOperationsInput | string
-  contactName?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  mobile?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  pincode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  gstNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  status?: Prisma.EnumClientStatusFieldUpdateOperationsInput | $Enums.ClientStatus
-  processStage?: Prisma.EnumClientProcessStageFieldUpdateOperationsInput | $Enums.ClientProcessStage
-  externalClientId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  fsoNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  fsoGeneratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  psgaGeneratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  processUpdatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  assignedBdeId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+export type ClientCreateManyCreatedByInput = {
+  id?: string
+  associationName: string
+  contactName: string
+  email?: string | null
+  mobile?: string | null
+  address?: string | null
+  city?: string | null
+  state?: string | null
+  pincode?: string | null
+  gstNumber?: string | null
+  status?: $Enums.ClientStatus
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  assignedBdeId?: string | null
+  externalClientId?: string | null
+  fsoGeneratedAt?: Date | string | null
+  fsoNumber?: string | null
+  processStage?: $Enums.ClientProcessStage
+  processUpdatedAt?: Date | string | null
+  psgaNumber?: string | null
+  psgaGeneratedAt?: Date | string | null
 }
 
 export type ClientUpdateWithoutAssignedBdeInput = {
@@ -1679,18 +1647,19 @@ export type ClientUpdateWithoutAssignedBdeInput = {
   pincode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   gstNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumClientStatusFieldUpdateOperationsInput | $Enums.ClientStatus
-  processStage?: Prisma.EnumClientProcessStageFieldUpdateOperationsInput | $Enums.ClientProcessStage
-  externalClientId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  fsoNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  fsoGeneratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  psgaGeneratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  processUpdatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdBy?: Prisma.UserUpdateOneRequiredWithoutClientsCreatedNestedInput
-  sourceLead?: Prisma.LeadUpdateOneWithoutClientNestedInput
+  externalClientId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fsoGeneratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  fsoNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  processStage?: Prisma.EnumClientProcessStageFieldUpdateOperationsInput | $Enums.ClientProcessStage
+  processUpdatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  psgaNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  psgaGeneratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   activities?: Prisma.ActivityUpdateManyWithoutClientNestedInput
+  createdBy?: Prisma.UserUpdateOneRequiredWithoutClientsCreatedNestedInput
   serviceSelections?: Prisma.ClientServiceSelectionUpdateManyWithoutClientNestedInput
+  sourceLead?: Prisma.LeadUpdateOneWithoutClientNestedInput
   psgas?: Prisma.PSGAUpdateManyWithoutClientNestedInput
 }
 
@@ -1706,18 +1675,19 @@ export type ClientUncheckedUpdateWithoutAssignedBdeInput = {
   pincode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   gstNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumClientStatusFieldUpdateOperationsInput | $Enums.ClientStatus
-  processStage?: Prisma.EnumClientProcessStageFieldUpdateOperationsInput | $Enums.ClientProcessStage
-  externalClientId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  fsoNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  fsoGeneratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  psgaGeneratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  processUpdatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdById?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  sourceLead?: Prisma.LeadUncheckedUpdateOneWithoutClientNestedInput
+  externalClientId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fsoGeneratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  fsoNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  processStage?: Prisma.EnumClientProcessStageFieldUpdateOperationsInput | $Enums.ClientProcessStage
+  processUpdatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  psgaNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  psgaGeneratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   activities?: Prisma.ActivityUncheckedUpdateManyWithoutClientNestedInput
   serviceSelections?: Prisma.ClientServiceSelectionUncheckedUpdateManyWithoutClientNestedInput
+  sourceLead?: Prisma.LeadUncheckedUpdateOneWithoutClientNestedInput
   psgas?: Prisma.PSGAUncheckedUpdateManyWithoutClientNestedInput
 }
 
@@ -1733,15 +1703,96 @@ export type ClientUncheckedUpdateManyWithoutAssignedBdeInput = {
   pincode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   gstNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumClientStatusFieldUpdateOperationsInput | $Enums.ClientStatus
-  processStage?: Prisma.EnumClientProcessStageFieldUpdateOperationsInput | $Enums.ClientProcessStage
-  externalClientId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  fsoNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  fsoGeneratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  psgaGeneratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  processUpdatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdById?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  externalClientId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fsoGeneratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  fsoNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  processStage?: Prisma.EnumClientProcessStageFieldUpdateOperationsInput | $Enums.ClientProcessStage
+  processUpdatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  psgaNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  psgaGeneratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+}
+
+export type ClientUpdateWithoutCreatedByInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  associationName?: Prisma.StringFieldUpdateOperationsInput | string
+  contactName?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  mobile?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pincode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gstNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumClientStatusFieldUpdateOperationsInput | $Enums.ClientStatus
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  externalClientId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fsoGeneratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  fsoNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  processStage?: Prisma.EnumClientProcessStageFieldUpdateOperationsInput | $Enums.ClientProcessStage
+  processUpdatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  psgaNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  psgaGeneratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  activities?: Prisma.ActivityUpdateManyWithoutClientNestedInput
+  assignedBde?: Prisma.UserUpdateOneWithoutAssignedClientsNestedInput
+  serviceSelections?: Prisma.ClientServiceSelectionUpdateManyWithoutClientNestedInput
+  sourceLead?: Prisma.LeadUpdateOneWithoutClientNestedInput
+  psgas?: Prisma.PSGAUpdateManyWithoutClientNestedInput
+}
+
+export type ClientUncheckedUpdateWithoutCreatedByInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  associationName?: Prisma.StringFieldUpdateOperationsInput | string
+  contactName?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  mobile?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pincode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gstNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumClientStatusFieldUpdateOperationsInput | $Enums.ClientStatus
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  assignedBdeId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  externalClientId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fsoGeneratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  fsoNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  processStage?: Prisma.EnumClientProcessStageFieldUpdateOperationsInput | $Enums.ClientProcessStage
+  processUpdatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  psgaNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  psgaGeneratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  activities?: Prisma.ActivityUncheckedUpdateManyWithoutClientNestedInput
+  serviceSelections?: Prisma.ClientServiceSelectionUncheckedUpdateManyWithoutClientNestedInput
+  sourceLead?: Prisma.LeadUncheckedUpdateOneWithoutClientNestedInput
+  psgas?: Prisma.PSGAUncheckedUpdateManyWithoutClientNestedInput
+}
+
+export type ClientUncheckedUpdateManyWithoutCreatedByInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  associationName?: Prisma.StringFieldUpdateOperationsInput | string
+  contactName?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  mobile?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pincode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gstNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumClientStatusFieldUpdateOperationsInput | $Enums.ClientStatus
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  assignedBdeId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  externalClientId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fsoGeneratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  fsoNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  processStage?: Prisma.EnumClientProcessStageFieldUpdateOperationsInput | $Enums.ClientProcessStage
+  processUpdatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  psgaNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  psgaGeneratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 
@@ -1805,21 +1856,22 @@ export type ClientSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   pincode?: boolean
   gstNumber?: boolean
   status?: boolean
-  processStage?: boolean
-  externalClientId?: boolean
-  fsoNumber?: boolean
-  fsoGeneratedAt?: boolean
-  psgaGeneratedAt?: boolean
-  processUpdatedAt?: boolean
   createdById?: boolean
-  assignedBdeId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  createdBy?: boolean | Prisma.UserDefaultArgs<ExtArgs>
-  assignedBde?: boolean | Prisma.Client$assignedBdeArgs<ExtArgs>
-  sourceLead?: boolean | Prisma.Client$sourceLeadArgs<ExtArgs>
+  assignedBdeId?: boolean
+  externalClientId?: boolean
+  fsoGeneratedAt?: boolean
+  fsoNumber?: boolean
+  processStage?: boolean
+  processUpdatedAt?: boolean
+  psgaNumber?: boolean
+  psgaGeneratedAt?: boolean
   activities?: boolean | Prisma.Client$activitiesArgs<ExtArgs>
+  assignedBde?: boolean | Prisma.Client$assignedBdeArgs<ExtArgs>
+  createdBy?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   serviceSelections?: boolean | Prisma.Client$serviceSelectionsArgs<ExtArgs>
+  sourceLead?: boolean | Prisma.Client$sourceLeadArgs<ExtArgs>
   psgas?: boolean | Prisma.Client$psgasArgs<ExtArgs>
   _count?: boolean | Prisma.ClientCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["client"]>
@@ -1836,18 +1888,19 @@ export type ClientSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extens
   pincode?: boolean
   gstNumber?: boolean
   status?: boolean
-  processStage?: boolean
-  externalClientId?: boolean
-  fsoNumber?: boolean
-  fsoGeneratedAt?: boolean
-  psgaGeneratedAt?: boolean
-  processUpdatedAt?: boolean
   createdById?: boolean
-  assignedBdeId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  createdBy?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  assignedBdeId?: boolean
+  externalClientId?: boolean
+  fsoGeneratedAt?: boolean
+  fsoNumber?: boolean
+  processStage?: boolean
+  processUpdatedAt?: boolean
+  psgaNumber?: boolean
+  psgaGeneratedAt?: boolean
   assignedBde?: boolean | Prisma.Client$assignedBdeArgs<ExtArgs>
+  createdBy?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["client"]>
 
 export type ClientSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -1862,18 +1915,19 @@ export type ClientSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extens
   pincode?: boolean
   gstNumber?: boolean
   status?: boolean
-  processStage?: boolean
-  externalClientId?: boolean
-  fsoNumber?: boolean
-  fsoGeneratedAt?: boolean
-  psgaGeneratedAt?: boolean
-  processUpdatedAt?: boolean
   createdById?: boolean
-  assignedBdeId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  createdBy?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  assignedBdeId?: boolean
+  externalClientId?: boolean
+  fsoGeneratedAt?: boolean
+  fsoNumber?: boolean
+  processStage?: boolean
+  processUpdatedAt?: boolean
+  psgaNumber?: boolean
+  psgaGeneratedAt?: boolean
   assignedBde?: boolean | Prisma.Client$assignedBdeArgs<ExtArgs>
+  createdBy?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["client"]>
 
 export type ClientSelectScalar = {
@@ -1888,45 +1942,46 @@ export type ClientSelectScalar = {
   pincode?: boolean
   gstNumber?: boolean
   status?: boolean
-  processStage?: boolean
-  externalClientId?: boolean
-  fsoNumber?: boolean
-  fsoGeneratedAt?: boolean
-  psgaGeneratedAt?: boolean
-  processUpdatedAt?: boolean
   createdById?: boolean
-  assignedBdeId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  assignedBdeId?: boolean
+  externalClientId?: boolean
+  fsoGeneratedAt?: boolean
+  fsoNumber?: boolean
+  processStage?: boolean
+  processUpdatedAt?: boolean
+  psgaNumber?: boolean
+  psgaGeneratedAt?: boolean
 }
 
-export type ClientOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "associationName" | "contactName" | "email" | "mobile" | "address" | "city" | "state" | "pincode" | "gstNumber" | "status" | "processStage" | "externalClientId" | "fsoNumber" | "fsoGeneratedAt" | "psgaGeneratedAt" | "processUpdatedAt" | "createdById" | "assignedBdeId" | "createdAt" | "updatedAt", ExtArgs["result"]["client"]>
+export type ClientOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "associationName" | "contactName" | "email" | "mobile" | "address" | "city" | "state" | "pincode" | "gstNumber" | "status" | "createdById" | "createdAt" | "updatedAt" | "assignedBdeId" | "externalClientId" | "fsoGeneratedAt" | "fsoNumber" | "processStage" | "processUpdatedAt" | "psgaNumber" | "psgaGeneratedAt", ExtArgs["result"]["client"]>
 export type ClientInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  createdBy?: boolean | Prisma.UserDefaultArgs<ExtArgs>
-  assignedBde?: boolean | Prisma.Client$assignedBdeArgs<ExtArgs>
-  sourceLead?: boolean | Prisma.Client$sourceLeadArgs<ExtArgs>
   activities?: boolean | Prisma.Client$activitiesArgs<ExtArgs>
+  assignedBde?: boolean | Prisma.Client$assignedBdeArgs<ExtArgs>
+  createdBy?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   serviceSelections?: boolean | Prisma.Client$serviceSelectionsArgs<ExtArgs>
+  sourceLead?: boolean | Prisma.Client$sourceLeadArgs<ExtArgs>
   psgas?: boolean | Prisma.Client$psgasArgs<ExtArgs>
   _count?: boolean | Prisma.ClientCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type ClientIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  createdBy?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   assignedBde?: boolean | Prisma.Client$assignedBdeArgs<ExtArgs>
+  createdBy?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }
 export type ClientIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  createdBy?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   assignedBde?: boolean | Prisma.Client$assignedBdeArgs<ExtArgs>
+  createdBy?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }
 
 export type $ClientPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Client"
   objects: {
-    createdBy: Prisma.$UserPayload<ExtArgs>
-    assignedBde: Prisma.$UserPayload<ExtArgs> | null
-    sourceLead: Prisma.$LeadPayload<ExtArgs> | null
     activities: Prisma.$ActivityPayload<ExtArgs>[]
+    assignedBde: Prisma.$UserPayload<ExtArgs> | null
+    createdBy: Prisma.$UserPayload<ExtArgs>
     serviceSelections: Prisma.$ClientServiceSelectionPayload<ExtArgs>[]
+    sourceLead: Prisma.$LeadPayload<ExtArgs> | null
     psgas: Prisma.$PSGAPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
@@ -1941,16 +1996,17 @@ export type $ClientPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
     pincode: string | null
     gstNumber: string | null
     status: $Enums.ClientStatus
-    processStage: $Enums.ClientProcessStage
-    externalClientId: string | null
-    fsoNumber: string | null
-    fsoGeneratedAt: Date | null
-    psgaGeneratedAt: Date | null
-    processUpdatedAt: Date | null
     createdById: string
-    assignedBdeId: string | null
     createdAt: Date
     updatedAt: Date
+    assignedBdeId: string | null
+    externalClientId: string | null
+    fsoGeneratedAt: Date | null
+    fsoNumber: string | null
+    processStage: $Enums.ClientProcessStage
+    processUpdatedAt: Date | null
+    psgaNumber: string | null
+    psgaGeneratedAt: Date | null
   }, ExtArgs["result"]["client"]>
   composites: {}
 }
@@ -2345,11 +2401,11 @@ readonly fields: ClientFieldRefs;
  */
 export interface Prisma__ClientClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  createdBy<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-  assignedBde<T extends Prisma.Client$assignedBdeArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Client$assignedBdeArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-  sourceLead<T extends Prisma.Client$sourceLeadArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Client$sourceLeadArgs<ExtArgs>>): Prisma.Prisma__LeadClient<runtime.Types.Result.GetResult<Prisma.$LeadPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   activities<T extends Prisma.Client$activitiesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Client$activitiesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ActivityPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  assignedBde<T extends Prisma.Client$assignedBdeArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Client$assignedBdeArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  createdBy<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   serviceSelections<T extends Prisma.Client$serviceSelectionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Client$serviceSelectionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ClientServiceSelectionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  sourceLead<T extends Prisma.Client$sourceLeadArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Client$sourceLeadArgs<ExtArgs>>): Prisma.Prisma__LeadClient<runtime.Types.Result.GetResult<Prisma.$LeadPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   psgas<T extends Prisma.Client$psgasArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Client$psgasArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PSGAPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -2391,16 +2447,17 @@ export interface ClientFieldRefs {
   readonly pincode: Prisma.FieldRef<"Client", 'String'>
   readonly gstNumber: Prisma.FieldRef<"Client", 'String'>
   readonly status: Prisma.FieldRef<"Client", 'ClientStatus'>
-  readonly processStage: Prisma.FieldRef<"Client", 'ClientProcessStage'>
-  readonly externalClientId: Prisma.FieldRef<"Client", 'String'>
-  readonly fsoNumber: Prisma.FieldRef<"Client", 'String'>
-  readonly fsoGeneratedAt: Prisma.FieldRef<"Client", 'DateTime'>
-  readonly psgaGeneratedAt: Prisma.FieldRef<"Client", 'DateTime'>
-  readonly processUpdatedAt: Prisma.FieldRef<"Client", 'DateTime'>
   readonly createdById: Prisma.FieldRef<"Client", 'String'>
-  readonly assignedBdeId: Prisma.FieldRef<"Client", 'String'>
   readonly createdAt: Prisma.FieldRef<"Client", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Client", 'DateTime'>
+  readonly assignedBdeId: Prisma.FieldRef<"Client", 'String'>
+  readonly externalClientId: Prisma.FieldRef<"Client", 'String'>
+  readonly fsoGeneratedAt: Prisma.FieldRef<"Client", 'DateTime'>
+  readonly fsoNumber: Prisma.FieldRef<"Client", 'String'>
+  readonly processStage: Prisma.FieldRef<"Client", 'ClientProcessStage'>
+  readonly processUpdatedAt: Prisma.FieldRef<"Client", 'DateTime'>
+  readonly psgaNumber: Prisma.FieldRef<"Client", 'String'>
+  readonly psgaGeneratedAt: Prisma.FieldRef<"Client", 'DateTime'>
 }
     
 
@@ -2802,44 +2859,6 @@ export type ClientDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Intern
 }
 
 /**
- * Client.assignedBde
- */
-export type Client$assignedBdeArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the User
-   */
-  select?: Prisma.UserSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the User
-   */
-  omit?: Prisma.UserOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.UserInclude<ExtArgs> | null
-  where?: Prisma.UserWhereInput
-}
-
-/**
- * Client.sourceLead
- */
-export type Client$sourceLeadArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the Lead
-   */
-  select?: Prisma.LeadSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the Lead
-   */
-  omit?: Prisma.LeadOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.LeadInclude<ExtArgs> | null
-  where?: Prisma.LeadWhereInput
-}
-
-/**
  * Client.activities
  */
 export type Client$activitiesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -2864,6 +2883,25 @@ export type Client$activitiesArgs<ExtArgs extends runtime.Types.Extensions.Inter
 }
 
 /**
+ * Client.assignedBde
+ */
+export type Client$assignedBdeArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the User
+   */
+  select?: Prisma.UserSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the User
+   */
+  omit?: Prisma.UserOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserInclude<ExtArgs> | null
+  where?: Prisma.UserWhereInput
+}
+
+/**
  * Client.serviceSelections
  */
 export type Client$serviceSelectionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -2885,6 +2923,25 @@ export type Client$serviceSelectionsArgs<ExtArgs extends runtime.Types.Extension
   take?: number
   skip?: number
   distinct?: Prisma.ClientServiceSelectionScalarFieldEnum | Prisma.ClientServiceSelectionScalarFieldEnum[]
+}
+
+/**
+ * Client.sourceLead
+ */
+export type Client$sourceLeadArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Lead
+   */
+  select?: Prisma.LeadSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Lead
+   */
+  omit?: Prisma.LeadOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.LeadInclude<ExtArgs> | null
+  where?: Prisma.LeadWhereInput
 }
 
 /**

@@ -26,172 +26,172 @@ export type AggregateLead = {
 
 export type LeadMinAggregateOutputType = {
   id: string | null
-  associationName: string | null
   contactName: string | null
   email: string | null
   mobile: string | null
-  customerType: string | null
-  address: string | null
-  city: string | null
-  state: string | null
-  pincode: string | null
   source: string | null
   notes: string | null
-  nextFollowUpAt: Date | null
-  followUpRemarks: string | null
-  nextAction: string | null
-  siteName: string | null
-  siteAddress: string | null
-  siteCity: string | null
-  siteState: string | null
   status: $Enums.LeadStatus | null
   assignedToId: string | null
   createdById: string | null
-  clientId: string | null
   createdAt: Date | null
   updatedAt: Date | null
+  associationName: string | null
+  clientId: string | null
+  address: string | null
+  city: string | null
+  customerType: string | null
+  followUpRemarks: string | null
+  nextAction: string | null
+  nextFollowUpAt: Date | null
+  pincode: string | null
+  siteAddress: string | null
+  siteCity: string | null
+  siteName: string | null
+  siteState: string | null
+  state: string | null
 }
 
 export type LeadMaxAggregateOutputType = {
   id: string | null
-  associationName: string | null
   contactName: string | null
   email: string | null
   mobile: string | null
-  customerType: string | null
-  address: string | null
-  city: string | null
-  state: string | null
-  pincode: string | null
   source: string | null
   notes: string | null
-  nextFollowUpAt: Date | null
-  followUpRemarks: string | null
-  nextAction: string | null
-  siteName: string | null
-  siteAddress: string | null
-  siteCity: string | null
-  siteState: string | null
   status: $Enums.LeadStatus | null
   assignedToId: string | null
   createdById: string | null
-  clientId: string | null
   createdAt: Date | null
   updatedAt: Date | null
+  associationName: string | null
+  clientId: string | null
+  address: string | null
+  city: string | null
+  customerType: string | null
+  followUpRemarks: string | null
+  nextAction: string | null
+  nextFollowUpAt: Date | null
+  pincode: string | null
+  siteAddress: string | null
+  siteCity: string | null
+  siteName: string | null
+  siteState: string | null
+  state: string | null
 }
 
 export type LeadCountAggregateOutputType = {
   id: number
-  associationName: number
   contactName: number
   email: number
   mobile: number
-  customerType: number
-  address: number
-  city: number
-  state: number
-  pincode: number
   source: number
   notes: number
-  nextFollowUpAt: number
-  followUpRemarks: number
-  nextAction: number
-  siteName: number
-  siteAddress: number
-  siteCity: number
-  siteState: number
   status: number
   assignedToId: number
   createdById: number
-  clientId: number
   createdAt: number
   updatedAt: number
+  associationName: number
+  clientId: number
+  address: number
+  city: number
+  customerType: number
+  followUpRemarks: number
+  nextAction: number
+  nextFollowUpAt: number
+  pincode: number
+  siteAddress: number
+  siteCity: number
+  siteName: number
+  siteState: number
+  state: number
   _all: number
 }
 
 
 export type LeadMinAggregateInputType = {
   id?: true
-  associationName?: true
   contactName?: true
   email?: true
   mobile?: true
-  customerType?: true
-  address?: true
-  city?: true
-  state?: true
-  pincode?: true
   source?: true
   notes?: true
-  nextFollowUpAt?: true
-  followUpRemarks?: true
-  nextAction?: true
-  siteName?: true
-  siteAddress?: true
-  siteCity?: true
-  siteState?: true
   status?: true
   assignedToId?: true
   createdById?: true
-  clientId?: true
   createdAt?: true
   updatedAt?: true
+  associationName?: true
+  clientId?: true
+  address?: true
+  city?: true
+  customerType?: true
+  followUpRemarks?: true
+  nextAction?: true
+  nextFollowUpAt?: true
+  pincode?: true
+  siteAddress?: true
+  siteCity?: true
+  siteName?: true
+  siteState?: true
+  state?: true
 }
 
 export type LeadMaxAggregateInputType = {
   id?: true
-  associationName?: true
   contactName?: true
   email?: true
   mobile?: true
-  customerType?: true
-  address?: true
-  city?: true
-  state?: true
-  pincode?: true
   source?: true
   notes?: true
-  nextFollowUpAt?: true
-  followUpRemarks?: true
-  nextAction?: true
-  siteName?: true
-  siteAddress?: true
-  siteCity?: true
-  siteState?: true
   status?: true
   assignedToId?: true
   createdById?: true
-  clientId?: true
   createdAt?: true
   updatedAt?: true
+  associationName?: true
+  clientId?: true
+  address?: true
+  city?: true
+  customerType?: true
+  followUpRemarks?: true
+  nextAction?: true
+  nextFollowUpAt?: true
+  pincode?: true
+  siteAddress?: true
+  siteCity?: true
+  siteName?: true
+  siteState?: true
+  state?: true
 }
 
 export type LeadCountAggregateInputType = {
   id?: true
-  associationName?: true
   contactName?: true
   email?: true
   mobile?: true
-  customerType?: true
-  address?: true
-  city?: true
-  state?: true
-  pincode?: true
   source?: true
   notes?: true
-  nextFollowUpAt?: true
-  followUpRemarks?: true
-  nextAction?: true
-  siteName?: true
-  siteAddress?: true
-  siteCity?: true
-  siteState?: true
   status?: true
   assignedToId?: true
   createdById?: true
-  clientId?: true
   createdAt?: true
   updatedAt?: true
+  associationName?: true
+  clientId?: true
+  address?: true
+  city?: true
+  customerType?: true
+  followUpRemarks?: true
+  nextAction?: true
+  nextFollowUpAt?: true
+  pincode?: true
+  siteAddress?: true
+  siteCity?: true
+  siteName?: true
+  siteState?: true
+  state?: true
   _all?: true
 }
 
@@ -269,30 +269,30 @@ export type LeadGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalArg
 
 export type LeadGroupByOutputType = {
   id: string
-  associationName: string
   contactName: string
   email: string | null
   mobile: string | null
-  customerType: string | null
-  address: string | null
-  city: string | null
-  state: string | null
-  pincode: string | null
   source: string | null
   notes: string | null
-  nextFollowUpAt: Date | null
-  followUpRemarks: string | null
-  nextAction: string | null
-  siteName: string | null
-  siteAddress: string | null
-  siteCity: string | null
-  siteState: string | null
   status: $Enums.LeadStatus
   assignedToId: string | null
   createdById: string
-  clientId: string | null
   createdAt: Date
   updatedAt: Date
+  associationName: string
+  clientId: string | null
+  address: string | null
+  city: string | null
+  customerType: string | null
+  followUpRemarks: string | null
+  nextAction: string | null
+  nextFollowUpAt: Date | null
+  pincode: string | null
+  siteAddress: string | null
+  siteCity: string | null
+  siteName: string | null
+  siteState: string | null
+  state: string | null
   _count: LeadCountAggregateOutputType | null
   _min: LeadMinAggregateOutputType | null
   _max: LeadMaxAggregateOutputType | null
@@ -318,71 +318,71 @@ export type LeadWhereInput = {
   OR?: Prisma.LeadWhereInput[]
   NOT?: Prisma.LeadWhereInput | Prisma.LeadWhereInput[]
   id?: Prisma.StringFilter<"Lead"> | string
-  associationName?: Prisma.StringFilter<"Lead"> | string
   contactName?: Prisma.StringFilter<"Lead"> | string
   email?: Prisma.StringNullableFilter<"Lead"> | string | null
   mobile?: Prisma.StringNullableFilter<"Lead"> | string | null
-  customerType?: Prisma.StringNullableFilter<"Lead"> | string | null
-  address?: Prisma.StringNullableFilter<"Lead"> | string | null
-  city?: Prisma.StringNullableFilter<"Lead"> | string | null
-  state?: Prisma.StringNullableFilter<"Lead"> | string | null
-  pincode?: Prisma.StringNullableFilter<"Lead"> | string | null
   source?: Prisma.StringNullableFilter<"Lead"> | string | null
   notes?: Prisma.StringNullableFilter<"Lead"> | string | null
-  nextFollowUpAt?: Prisma.DateTimeNullableFilter<"Lead"> | Date | string | null
-  followUpRemarks?: Prisma.StringNullableFilter<"Lead"> | string | null
-  nextAction?: Prisma.StringNullableFilter<"Lead"> | string | null
-  siteName?: Prisma.StringNullableFilter<"Lead"> | string | null
-  siteAddress?: Prisma.StringNullableFilter<"Lead"> | string | null
-  siteCity?: Prisma.StringNullableFilter<"Lead"> | string | null
-  siteState?: Prisma.StringNullableFilter<"Lead"> | string | null
   status?: Prisma.EnumLeadStatusFilter<"Lead"> | $Enums.LeadStatus
   assignedToId?: Prisma.StringNullableFilter<"Lead"> | string | null
   createdById?: Prisma.StringFilter<"Lead"> | string
-  clientId?: Prisma.StringNullableFilter<"Lead"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Lead"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Lead"> | Date | string
-  assignedTo?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
-  createdBy?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
-  client?: Prisma.XOR<Prisma.ClientNullableScalarRelationFilter, Prisma.ClientWhereInput> | null
+  associationName?: Prisma.StringFilter<"Lead"> | string
+  clientId?: Prisma.StringNullableFilter<"Lead"> | string | null
+  address?: Prisma.StringNullableFilter<"Lead"> | string | null
+  city?: Prisma.StringNullableFilter<"Lead"> | string | null
+  customerType?: Prisma.StringNullableFilter<"Lead"> | string | null
+  followUpRemarks?: Prisma.StringNullableFilter<"Lead"> | string | null
+  nextAction?: Prisma.StringNullableFilter<"Lead"> | string | null
+  nextFollowUpAt?: Prisma.DateTimeNullableFilter<"Lead"> | Date | string | null
+  pincode?: Prisma.StringNullableFilter<"Lead"> | string | null
+  siteAddress?: Prisma.StringNullableFilter<"Lead"> | string | null
+  siteCity?: Prisma.StringNullableFilter<"Lead"> | string | null
+  siteName?: Prisma.StringNullableFilter<"Lead"> | string | null
+  siteState?: Prisma.StringNullableFilter<"Lead"> | string | null
+  state?: Prisma.StringNullableFilter<"Lead"> | string | null
   activities?: Prisma.ActivityListRelationFilter
-  serviceSelections?: Prisma.LeadServiceSelectionListRelationFilter
+  assignedTo?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
+  client?: Prisma.XOR<Prisma.ClientNullableScalarRelationFilter, Prisma.ClientWhereInput> | null
+  createdBy?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   assets?: Prisma.LeadAssetListRelationFilter
+  serviceSelections?: Prisma.LeadServiceSelectionListRelationFilter
   psgas?: Prisma.PSGAListRelationFilter
 }
 
 export type LeadOrderByWithRelationInput = {
   id?: Prisma.SortOrder
-  associationName?: Prisma.SortOrder
   contactName?: Prisma.SortOrder
   email?: Prisma.SortOrderInput | Prisma.SortOrder
   mobile?: Prisma.SortOrderInput | Prisma.SortOrder
-  customerType?: Prisma.SortOrderInput | Prisma.SortOrder
-  address?: Prisma.SortOrderInput | Prisma.SortOrder
-  city?: Prisma.SortOrderInput | Prisma.SortOrder
-  state?: Prisma.SortOrderInput | Prisma.SortOrder
-  pincode?: Prisma.SortOrderInput | Prisma.SortOrder
   source?: Prisma.SortOrderInput | Prisma.SortOrder
   notes?: Prisma.SortOrderInput | Prisma.SortOrder
-  nextFollowUpAt?: Prisma.SortOrderInput | Prisma.SortOrder
-  followUpRemarks?: Prisma.SortOrderInput | Prisma.SortOrder
-  nextAction?: Prisma.SortOrderInput | Prisma.SortOrder
-  siteName?: Prisma.SortOrderInput | Prisma.SortOrder
-  siteAddress?: Prisma.SortOrderInput | Prisma.SortOrder
-  siteCity?: Prisma.SortOrderInput | Prisma.SortOrder
-  siteState?: Prisma.SortOrderInput | Prisma.SortOrder
   status?: Prisma.SortOrder
   assignedToId?: Prisma.SortOrderInput | Prisma.SortOrder
   createdById?: Prisma.SortOrder
-  clientId?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
-  assignedTo?: Prisma.UserOrderByWithRelationInput
-  createdBy?: Prisma.UserOrderByWithRelationInput
-  client?: Prisma.ClientOrderByWithRelationInput
+  associationName?: Prisma.SortOrder
+  clientId?: Prisma.SortOrderInput | Prisma.SortOrder
+  address?: Prisma.SortOrderInput | Prisma.SortOrder
+  city?: Prisma.SortOrderInput | Prisma.SortOrder
+  customerType?: Prisma.SortOrderInput | Prisma.SortOrder
+  followUpRemarks?: Prisma.SortOrderInput | Prisma.SortOrder
+  nextAction?: Prisma.SortOrderInput | Prisma.SortOrder
+  nextFollowUpAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  pincode?: Prisma.SortOrderInput | Prisma.SortOrder
+  siteAddress?: Prisma.SortOrderInput | Prisma.SortOrder
+  siteCity?: Prisma.SortOrderInput | Prisma.SortOrder
+  siteName?: Prisma.SortOrderInput | Prisma.SortOrder
+  siteState?: Prisma.SortOrderInput | Prisma.SortOrder
+  state?: Prisma.SortOrderInput | Prisma.SortOrder
   activities?: Prisma.ActivityOrderByRelationAggregateInput
-  serviceSelections?: Prisma.LeadServiceSelectionOrderByRelationAggregateInput
+  assignedTo?: Prisma.UserOrderByWithRelationInput
+  client?: Prisma.ClientOrderByWithRelationInput
+  createdBy?: Prisma.UserOrderByWithRelationInput
   assets?: Prisma.LeadAssetOrderByRelationAggregateInput
+  serviceSelections?: Prisma.LeadServiceSelectionOrderByRelationAggregateInput
   psgas?: Prisma.PSGAOrderByRelationAggregateInput
 }
 
@@ -392,64 +392,64 @@ export type LeadWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.LeadWhereInput | Prisma.LeadWhereInput[]
   OR?: Prisma.LeadWhereInput[]
   NOT?: Prisma.LeadWhereInput | Prisma.LeadWhereInput[]
-  associationName?: Prisma.StringFilter<"Lead"> | string
   contactName?: Prisma.StringFilter<"Lead"> | string
   email?: Prisma.StringNullableFilter<"Lead"> | string | null
   mobile?: Prisma.StringNullableFilter<"Lead"> | string | null
-  customerType?: Prisma.StringNullableFilter<"Lead"> | string | null
-  address?: Prisma.StringNullableFilter<"Lead"> | string | null
-  city?: Prisma.StringNullableFilter<"Lead"> | string | null
-  state?: Prisma.StringNullableFilter<"Lead"> | string | null
-  pincode?: Prisma.StringNullableFilter<"Lead"> | string | null
   source?: Prisma.StringNullableFilter<"Lead"> | string | null
   notes?: Prisma.StringNullableFilter<"Lead"> | string | null
-  nextFollowUpAt?: Prisma.DateTimeNullableFilter<"Lead"> | Date | string | null
-  followUpRemarks?: Prisma.StringNullableFilter<"Lead"> | string | null
-  nextAction?: Prisma.StringNullableFilter<"Lead"> | string | null
-  siteName?: Prisma.StringNullableFilter<"Lead"> | string | null
-  siteAddress?: Prisma.StringNullableFilter<"Lead"> | string | null
-  siteCity?: Prisma.StringNullableFilter<"Lead"> | string | null
-  siteState?: Prisma.StringNullableFilter<"Lead"> | string | null
   status?: Prisma.EnumLeadStatusFilter<"Lead"> | $Enums.LeadStatus
   assignedToId?: Prisma.StringNullableFilter<"Lead"> | string | null
   createdById?: Prisma.StringFilter<"Lead"> | string
   createdAt?: Prisma.DateTimeFilter<"Lead"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Lead"> | Date | string
-  assignedTo?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
-  createdBy?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
-  client?: Prisma.XOR<Prisma.ClientNullableScalarRelationFilter, Prisma.ClientWhereInput> | null
+  associationName?: Prisma.StringFilter<"Lead"> | string
+  address?: Prisma.StringNullableFilter<"Lead"> | string | null
+  city?: Prisma.StringNullableFilter<"Lead"> | string | null
+  customerType?: Prisma.StringNullableFilter<"Lead"> | string | null
+  followUpRemarks?: Prisma.StringNullableFilter<"Lead"> | string | null
+  nextAction?: Prisma.StringNullableFilter<"Lead"> | string | null
+  nextFollowUpAt?: Prisma.DateTimeNullableFilter<"Lead"> | Date | string | null
+  pincode?: Prisma.StringNullableFilter<"Lead"> | string | null
+  siteAddress?: Prisma.StringNullableFilter<"Lead"> | string | null
+  siteCity?: Prisma.StringNullableFilter<"Lead"> | string | null
+  siteName?: Prisma.StringNullableFilter<"Lead"> | string | null
+  siteState?: Prisma.StringNullableFilter<"Lead"> | string | null
+  state?: Prisma.StringNullableFilter<"Lead"> | string | null
   activities?: Prisma.ActivityListRelationFilter
-  serviceSelections?: Prisma.LeadServiceSelectionListRelationFilter
+  assignedTo?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
+  client?: Prisma.XOR<Prisma.ClientNullableScalarRelationFilter, Prisma.ClientWhereInput> | null
+  createdBy?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   assets?: Prisma.LeadAssetListRelationFilter
+  serviceSelections?: Prisma.LeadServiceSelectionListRelationFilter
   psgas?: Prisma.PSGAListRelationFilter
 }, "id" | "clientId">
 
 export type LeadOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
-  associationName?: Prisma.SortOrder
   contactName?: Prisma.SortOrder
   email?: Prisma.SortOrderInput | Prisma.SortOrder
   mobile?: Prisma.SortOrderInput | Prisma.SortOrder
-  customerType?: Prisma.SortOrderInput | Prisma.SortOrder
-  address?: Prisma.SortOrderInput | Prisma.SortOrder
-  city?: Prisma.SortOrderInput | Prisma.SortOrder
-  state?: Prisma.SortOrderInput | Prisma.SortOrder
-  pincode?: Prisma.SortOrderInput | Prisma.SortOrder
   source?: Prisma.SortOrderInput | Prisma.SortOrder
   notes?: Prisma.SortOrderInput | Prisma.SortOrder
-  nextFollowUpAt?: Prisma.SortOrderInput | Prisma.SortOrder
-  followUpRemarks?: Prisma.SortOrderInput | Prisma.SortOrder
-  nextAction?: Prisma.SortOrderInput | Prisma.SortOrder
-  siteName?: Prisma.SortOrderInput | Prisma.SortOrder
-  siteAddress?: Prisma.SortOrderInput | Prisma.SortOrder
-  siteCity?: Prisma.SortOrderInput | Prisma.SortOrder
-  siteState?: Prisma.SortOrderInput | Prisma.SortOrder
   status?: Prisma.SortOrder
   assignedToId?: Prisma.SortOrderInput | Prisma.SortOrder
   createdById?: Prisma.SortOrder
-  clientId?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  associationName?: Prisma.SortOrder
+  clientId?: Prisma.SortOrderInput | Prisma.SortOrder
+  address?: Prisma.SortOrderInput | Prisma.SortOrder
+  city?: Prisma.SortOrderInput | Prisma.SortOrder
+  customerType?: Prisma.SortOrderInput | Prisma.SortOrder
+  followUpRemarks?: Prisma.SortOrderInput | Prisma.SortOrder
+  nextAction?: Prisma.SortOrderInput | Prisma.SortOrder
+  nextFollowUpAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  pincode?: Prisma.SortOrderInput | Prisma.SortOrder
+  siteAddress?: Prisma.SortOrderInput | Prisma.SortOrder
+  siteCity?: Prisma.SortOrderInput | Prisma.SortOrder
+  siteName?: Prisma.SortOrderInput | Prisma.SortOrder
+  siteState?: Prisma.SortOrderInput | Prisma.SortOrder
+  state?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.LeadCountOrderByAggregateInput
   _max?: Prisma.LeadMaxOrderByAggregateInput
   _min?: Prisma.LeadMinOrderByAggregateInput
@@ -460,239 +460,239 @@ export type LeadScalarWhereWithAggregatesInput = {
   OR?: Prisma.LeadScalarWhereWithAggregatesInput[]
   NOT?: Prisma.LeadScalarWhereWithAggregatesInput | Prisma.LeadScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"Lead"> | string
-  associationName?: Prisma.StringWithAggregatesFilter<"Lead"> | string
   contactName?: Prisma.StringWithAggregatesFilter<"Lead"> | string
   email?: Prisma.StringNullableWithAggregatesFilter<"Lead"> | string | null
   mobile?: Prisma.StringNullableWithAggregatesFilter<"Lead"> | string | null
-  customerType?: Prisma.StringNullableWithAggregatesFilter<"Lead"> | string | null
-  address?: Prisma.StringNullableWithAggregatesFilter<"Lead"> | string | null
-  city?: Prisma.StringNullableWithAggregatesFilter<"Lead"> | string | null
-  state?: Prisma.StringNullableWithAggregatesFilter<"Lead"> | string | null
-  pincode?: Prisma.StringNullableWithAggregatesFilter<"Lead"> | string | null
   source?: Prisma.StringNullableWithAggregatesFilter<"Lead"> | string | null
   notes?: Prisma.StringNullableWithAggregatesFilter<"Lead"> | string | null
-  nextFollowUpAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Lead"> | Date | string | null
-  followUpRemarks?: Prisma.StringNullableWithAggregatesFilter<"Lead"> | string | null
-  nextAction?: Prisma.StringNullableWithAggregatesFilter<"Lead"> | string | null
-  siteName?: Prisma.StringNullableWithAggregatesFilter<"Lead"> | string | null
-  siteAddress?: Prisma.StringNullableWithAggregatesFilter<"Lead"> | string | null
-  siteCity?: Prisma.StringNullableWithAggregatesFilter<"Lead"> | string | null
-  siteState?: Prisma.StringNullableWithAggregatesFilter<"Lead"> | string | null
   status?: Prisma.EnumLeadStatusWithAggregatesFilter<"Lead"> | $Enums.LeadStatus
   assignedToId?: Prisma.StringNullableWithAggregatesFilter<"Lead"> | string | null
   createdById?: Prisma.StringWithAggregatesFilter<"Lead"> | string
-  clientId?: Prisma.StringNullableWithAggregatesFilter<"Lead"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Lead"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Lead"> | Date | string
+  associationName?: Prisma.StringWithAggregatesFilter<"Lead"> | string
+  clientId?: Prisma.StringNullableWithAggregatesFilter<"Lead"> | string | null
+  address?: Prisma.StringNullableWithAggregatesFilter<"Lead"> | string | null
+  city?: Prisma.StringNullableWithAggregatesFilter<"Lead"> | string | null
+  customerType?: Prisma.StringNullableWithAggregatesFilter<"Lead"> | string | null
+  followUpRemarks?: Prisma.StringNullableWithAggregatesFilter<"Lead"> | string | null
+  nextAction?: Prisma.StringNullableWithAggregatesFilter<"Lead"> | string | null
+  nextFollowUpAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Lead"> | Date | string | null
+  pincode?: Prisma.StringNullableWithAggregatesFilter<"Lead"> | string | null
+  siteAddress?: Prisma.StringNullableWithAggregatesFilter<"Lead"> | string | null
+  siteCity?: Prisma.StringNullableWithAggregatesFilter<"Lead"> | string | null
+  siteName?: Prisma.StringNullableWithAggregatesFilter<"Lead"> | string | null
+  siteState?: Prisma.StringNullableWithAggregatesFilter<"Lead"> | string | null
+  state?: Prisma.StringNullableWithAggregatesFilter<"Lead"> | string | null
 }
 
 export type LeadCreateInput = {
   id?: string
-  associationName: string
   contactName: string
   email?: string | null
   mobile?: string | null
-  customerType?: string | null
-  address?: string | null
-  city?: string | null
-  state?: string | null
-  pincode?: string | null
   source?: string | null
   notes?: string | null
-  nextFollowUpAt?: Date | string | null
-  followUpRemarks?: string | null
-  nextAction?: string | null
-  siteName?: string | null
-  siteAddress?: string | null
-  siteCity?: string | null
-  siteState?: string | null
   status?: $Enums.LeadStatus
   createdAt?: Date | string
   updatedAt?: Date | string
-  assignedTo?: Prisma.UserCreateNestedOneWithoutAssignedLeadsInput
-  createdBy: Prisma.UserCreateNestedOneWithoutCreatedLeadsInput
-  client?: Prisma.ClientCreateNestedOneWithoutSourceLeadInput
+  associationName: string
+  address?: string | null
+  city?: string | null
+  customerType?: string | null
+  followUpRemarks?: string | null
+  nextAction?: string | null
+  nextFollowUpAt?: Date | string | null
+  pincode?: string | null
+  siteAddress?: string | null
+  siteCity?: string | null
+  siteName?: string | null
+  siteState?: string | null
+  state?: string | null
   activities?: Prisma.ActivityCreateNestedManyWithoutLeadInput
-  serviceSelections?: Prisma.LeadServiceSelectionCreateNestedManyWithoutLeadInput
+  assignedTo?: Prisma.UserCreateNestedOneWithoutAssignedLeadsInput
+  client?: Prisma.ClientCreateNestedOneWithoutSourceLeadInput
+  createdBy: Prisma.UserCreateNestedOneWithoutCreatedLeadsInput
   assets?: Prisma.LeadAssetCreateNestedManyWithoutLeadInput
+  serviceSelections?: Prisma.LeadServiceSelectionCreateNestedManyWithoutLeadInput
   psgas?: Prisma.PSGACreateNestedManyWithoutLeadInput
 }
 
 export type LeadUncheckedCreateInput = {
   id?: string
-  associationName: string
   contactName: string
   email?: string | null
   mobile?: string | null
-  customerType?: string | null
-  address?: string | null
-  city?: string | null
-  state?: string | null
-  pincode?: string | null
   source?: string | null
   notes?: string | null
-  nextFollowUpAt?: Date | string | null
-  followUpRemarks?: string | null
-  nextAction?: string | null
-  siteName?: string | null
-  siteAddress?: string | null
-  siteCity?: string | null
-  siteState?: string | null
   status?: $Enums.LeadStatus
   assignedToId?: string | null
   createdById: string
-  clientId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  associationName: string
+  clientId?: string | null
+  address?: string | null
+  city?: string | null
+  customerType?: string | null
+  followUpRemarks?: string | null
+  nextAction?: string | null
+  nextFollowUpAt?: Date | string | null
+  pincode?: string | null
+  siteAddress?: string | null
+  siteCity?: string | null
+  siteName?: string | null
+  siteState?: string | null
+  state?: string | null
   activities?: Prisma.ActivityUncheckedCreateNestedManyWithoutLeadInput
-  serviceSelections?: Prisma.LeadServiceSelectionUncheckedCreateNestedManyWithoutLeadInput
   assets?: Prisma.LeadAssetUncheckedCreateNestedManyWithoutLeadInput
+  serviceSelections?: Prisma.LeadServiceSelectionUncheckedCreateNestedManyWithoutLeadInput
   psgas?: Prisma.PSGAUncheckedCreateNestedManyWithoutLeadInput
 }
 
 export type LeadUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  associationName?: Prisma.StringFieldUpdateOperationsInput | string
   contactName?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mobile?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  customerType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  pincode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   source?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  nextFollowUpAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  followUpRemarks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  nextAction?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  siteName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  siteAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  siteCity?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  siteState?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumLeadStatusFieldUpdateOperationsInput | $Enums.LeadStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  assignedTo?: Prisma.UserUpdateOneWithoutAssignedLeadsNestedInput
-  createdBy?: Prisma.UserUpdateOneRequiredWithoutCreatedLeadsNestedInput
-  client?: Prisma.ClientUpdateOneWithoutSourceLeadNestedInput
+  associationName?: Prisma.StringFieldUpdateOperationsInput | string
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  customerType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  followUpRemarks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nextAction?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nextFollowUpAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  pincode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  siteAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  siteCity?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  siteName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  siteState?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   activities?: Prisma.ActivityUpdateManyWithoutLeadNestedInput
-  serviceSelections?: Prisma.LeadServiceSelectionUpdateManyWithoutLeadNestedInput
+  assignedTo?: Prisma.UserUpdateOneWithoutAssignedLeadsNestedInput
+  client?: Prisma.ClientUpdateOneWithoutSourceLeadNestedInput
+  createdBy?: Prisma.UserUpdateOneRequiredWithoutCreatedLeadsNestedInput
   assets?: Prisma.LeadAssetUpdateManyWithoutLeadNestedInput
+  serviceSelections?: Prisma.LeadServiceSelectionUpdateManyWithoutLeadNestedInput
   psgas?: Prisma.PSGAUpdateManyWithoutLeadNestedInput
 }
 
 export type LeadUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  associationName?: Prisma.StringFieldUpdateOperationsInput | string
   contactName?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mobile?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  customerType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  pincode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   source?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  nextFollowUpAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  followUpRemarks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  nextAction?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  siteName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  siteAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  siteCity?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  siteState?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumLeadStatusFieldUpdateOperationsInput | $Enums.LeadStatus
   assignedToId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdById?: Prisma.StringFieldUpdateOperationsInput | string
-  clientId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  associationName?: Prisma.StringFieldUpdateOperationsInput | string
+  clientId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  customerType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  followUpRemarks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nextAction?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nextFollowUpAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  pincode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  siteAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  siteCity?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  siteName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  siteState?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   activities?: Prisma.ActivityUncheckedUpdateManyWithoutLeadNestedInput
-  serviceSelections?: Prisma.LeadServiceSelectionUncheckedUpdateManyWithoutLeadNestedInput
   assets?: Prisma.LeadAssetUncheckedUpdateManyWithoutLeadNestedInput
+  serviceSelections?: Prisma.LeadServiceSelectionUncheckedUpdateManyWithoutLeadNestedInput
   psgas?: Prisma.PSGAUncheckedUpdateManyWithoutLeadNestedInput
 }
 
 export type LeadCreateManyInput = {
   id?: string
-  associationName: string
   contactName: string
   email?: string | null
   mobile?: string | null
-  customerType?: string | null
-  address?: string | null
-  city?: string | null
-  state?: string | null
-  pincode?: string | null
   source?: string | null
   notes?: string | null
-  nextFollowUpAt?: Date | string | null
-  followUpRemarks?: string | null
-  nextAction?: string | null
-  siteName?: string | null
-  siteAddress?: string | null
-  siteCity?: string | null
-  siteState?: string | null
   status?: $Enums.LeadStatus
   assignedToId?: string | null
   createdById: string
-  clientId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  associationName: string
+  clientId?: string | null
+  address?: string | null
+  city?: string | null
+  customerType?: string | null
+  followUpRemarks?: string | null
+  nextAction?: string | null
+  nextFollowUpAt?: Date | string | null
+  pincode?: string | null
+  siteAddress?: string | null
+  siteCity?: string | null
+  siteName?: string | null
+  siteState?: string | null
+  state?: string | null
 }
 
 export type LeadUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  associationName?: Prisma.StringFieldUpdateOperationsInput | string
   contactName?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mobile?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  customerType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  pincode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   source?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  nextFollowUpAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  followUpRemarks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  nextAction?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  siteName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  siteAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  siteCity?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  siteState?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumLeadStatusFieldUpdateOperationsInput | $Enums.LeadStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  associationName?: Prisma.StringFieldUpdateOperationsInput | string
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  customerType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  followUpRemarks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nextAction?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nextFollowUpAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  pincode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  siteAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  siteCity?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  siteName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  siteState?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type LeadUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  associationName?: Prisma.StringFieldUpdateOperationsInput | string
   contactName?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mobile?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  customerType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  pincode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   source?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  nextFollowUpAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  followUpRemarks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  nextAction?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  siteName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  siteAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  siteCity?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  siteState?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumLeadStatusFieldUpdateOperationsInput | $Enums.LeadStatus
   assignedToId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdById?: Prisma.StringFieldUpdateOperationsInput | string
-  clientId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  associationName?: Prisma.StringFieldUpdateOperationsInput | string
+  clientId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  customerType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  followUpRemarks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nextAction?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nextFollowUpAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  pincode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  siteAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  siteCity?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  siteName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  siteState?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type LeadListRelationFilter = {
@@ -707,86 +707,86 @@ export type LeadOrderByRelationAggregateInput = {
 
 export type LeadCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  associationName?: Prisma.SortOrder
   contactName?: Prisma.SortOrder
   email?: Prisma.SortOrder
   mobile?: Prisma.SortOrder
-  customerType?: Prisma.SortOrder
-  address?: Prisma.SortOrder
-  city?: Prisma.SortOrder
-  state?: Prisma.SortOrder
-  pincode?: Prisma.SortOrder
   source?: Prisma.SortOrder
   notes?: Prisma.SortOrder
-  nextFollowUpAt?: Prisma.SortOrder
-  followUpRemarks?: Prisma.SortOrder
-  nextAction?: Prisma.SortOrder
-  siteName?: Prisma.SortOrder
-  siteAddress?: Prisma.SortOrder
-  siteCity?: Prisma.SortOrder
-  siteState?: Prisma.SortOrder
   status?: Prisma.SortOrder
   assignedToId?: Prisma.SortOrder
   createdById?: Prisma.SortOrder
-  clientId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  associationName?: Prisma.SortOrder
+  clientId?: Prisma.SortOrder
+  address?: Prisma.SortOrder
+  city?: Prisma.SortOrder
+  customerType?: Prisma.SortOrder
+  followUpRemarks?: Prisma.SortOrder
+  nextAction?: Prisma.SortOrder
+  nextFollowUpAt?: Prisma.SortOrder
+  pincode?: Prisma.SortOrder
+  siteAddress?: Prisma.SortOrder
+  siteCity?: Prisma.SortOrder
+  siteName?: Prisma.SortOrder
+  siteState?: Prisma.SortOrder
+  state?: Prisma.SortOrder
 }
 
 export type LeadMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  associationName?: Prisma.SortOrder
   contactName?: Prisma.SortOrder
   email?: Prisma.SortOrder
   mobile?: Prisma.SortOrder
-  customerType?: Prisma.SortOrder
-  address?: Prisma.SortOrder
-  city?: Prisma.SortOrder
-  state?: Prisma.SortOrder
-  pincode?: Prisma.SortOrder
   source?: Prisma.SortOrder
   notes?: Prisma.SortOrder
-  nextFollowUpAt?: Prisma.SortOrder
-  followUpRemarks?: Prisma.SortOrder
-  nextAction?: Prisma.SortOrder
-  siteName?: Prisma.SortOrder
-  siteAddress?: Prisma.SortOrder
-  siteCity?: Prisma.SortOrder
-  siteState?: Prisma.SortOrder
   status?: Prisma.SortOrder
   assignedToId?: Prisma.SortOrder
   createdById?: Prisma.SortOrder
-  clientId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  associationName?: Prisma.SortOrder
+  clientId?: Prisma.SortOrder
+  address?: Prisma.SortOrder
+  city?: Prisma.SortOrder
+  customerType?: Prisma.SortOrder
+  followUpRemarks?: Prisma.SortOrder
+  nextAction?: Prisma.SortOrder
+  nextFollowUpAt?: Prisma.SortOrder
+  pincode?: Prisma.SortOrder
+  siteAddress?: Prisma.SortOrder
+  siteCity?: Prisma.SortOrder
+  siteName?: Prisma.SortOrder
+  siteState?: Prisma.SortOrder
+  state?: Prisma.SortOrder
 }
 
 export type LeadMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  associationName?: Prisma.SortOrder
   contactName?: Prisma.SortOrder
   email?: Prisma.SortOrder
   mobile?: Prisma.SortOrder
-  customerType?: Prisma.SortOrder
-  address?: Prisma.SortOrder
-  city?: Prisma.SortOrder
-  state?: Prisma.SortOrder
-  pincode?: Prisma.SortOrder
   source?: Prisma.SortOrder
   notes?: Prisma.SortOrder
-  nextFollowUpAt?: Prisma.SortOrder
-  followUpRemarks?: Prisma.SortOrder
-  nextAction?: Prisma.SortOrder
-  siteName?: Prisma.SortOrder
-  siteAddress?: Prisma.SortOrder
-  siteCity?: Prisma.SortOrder
-  siteState?: Prisma.SortOrder
   status?: Prisma.SortOrder
   assignedToId?: Prisma.SortOrder
   createdById?: Prisma.SortOrder
-  clientId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  associationName?: Prisma.SortOrder
+  clientId?: Prisma.SortOrder
+  address?: Prisma.SortOrder
+  city?: Prisma.SortOrder
+  customerType?: Prisma.SortOrder
+  followUpRemarks?: Prisma.SortOrder
+  nextAction?: Prisma.SortOrder
+  nextFollowUpAt?: Prisma.SortOrder
+  pincode?: Prisma.SortOrder
+  siteAddress?: Prisma.SortOrder
+  siteCity?: Prisma.SortOrder
+  siteName?: Prisma.SortOrder
+  siteState?: Prisma.SortOrder
+  state?: Prisma.SortOrder
 }
 
 export type LeadScalarRelationFilter = {
@@ -981,63 +981,63 @@ export type LeadUpdateOneWithoutPsgasNestedInput = {
 
 export type LeadCreateWithoutAssignedToInput = {
   id?: string
-  associationName: string
   contactName: string
   email?: string | null
   mobile?: string | null
-  customerType?: string | null
-  address?: string | null
-  city?: string | null
-  state?: string | null
-  pincode?: string | null
   source?: string | null
   notes?: string | null
-  nextFollowUpAt?: Date | string | null
-  followUpRemarks?: string | null
-  nextAction?: string | null
-  siteName?: string | null
-  siteAddress?: string | null
-  siteCity?: string | null
-  siteState?: string | null
   status?: $Enums.LeadStatus
   createdAt?: Date | string
   updatedAt?: Date | string
-  createdBy: Prisma.UserCreateNestedOneWithoutCreatedLeadsInput
-  client?: Prisma.ClientCreateNestedOneWithoutSourceLeadInput
+  associationName: string
+  address?: string | null
+  city?: string | null
+  customerType?: string | null
+  followUpRemarks?: string | null
+  nextAction?: string | null
+  nextFollowUpAt?: Date | string | null
+  pincode?: string | null
+  siteAddress?: string | null
+  siteCity?: string | null
+  siteName?: string | null
+  siteState?: string | null
+  state?: string | null
   activities?: Prisma.ActivityCreateNestedManyWithoutLeadInput
-  serviceSelections?: Prisma.LeadServiceSelectionCreateNestedManyWithoutLeadInput
+  client?: Prisma.ClientCreateNestedOneWithoutSourceLeadInput
+  createdBy: Prisma.UserCreateNestedOneWithoutCreatedLeadsInput
   assets?: Prisma.LeadAssetCreateNestedManyWithoutLeadInput
+  serviceSelections?: Prisma.LeadServiceSelectionCreateNestedManyWithoutLeadInput
   psgas?: Prisma.PSGACreateNestedManyWithoutLeadInput
 }
 
 export type LeadUncheckedCreateWithoutAssignedToInput = {
   id?: string
-  associationName: string
   contactName: string
   email?: string | null
   mobile?: string | null
-  customerType?: string | null
-  address?: string | null
-  city?: string | null
-  state?: string | null
-  pincode?: string | null
   source?: string | null
   notes?: string | null
-  nextFollowUpAt?: Date | string | null
-  followUpRemarks?: string | null
-  nextAction?: string | null
-  siteName?: string | null
-  siteAddress?: string | null
-  siteCity?: string | null
-  siteState?: string | null
   status?: $Enums.LeadStatus
   createdById: string
-  clientId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  associationName: string
+  clientId?: string | null
+  address?: string | null
+  city?: string | null
+  customerType?: string | null
+  followUpRemarks?: string | null
+  nextAction?: string | null
+  nextFollowUpAt?: Date | string | null
+  pincode?: string | null
+  siteAddress?: string | null
+  siteCity?: string | null
+  siteName?: string | null
+  siteState?: string | null
+  state?: string | null
   activities?: Prisma.ActivityUncheckedCreateNestedManyWithoutLeadInput
-  serviceSelections?: Prisma.LeadServiceSelectionUncheckedCreateNestedManyWithoutLeadInput
   assets?: Prisma.LeadAssetUncheckedCreateNestedManyWithoutLeadInput
+  serviceSelections?: Prisma.LeadServiceSelectionUncheckedCreateNestedManyWithoutLeadInput
   psgas?: Prisma.PSGAUncheckedCreateNestedManyWithoutLeadInput
 }
 
@@ -1053,63 +1053,63 @@ export type LeadCreateManyAssignedToInputEnvelope = {
 
 export type LeadCreateWithoutCreatedByInput = {
   id?: string
-  associationName: string
   contactName: string
   email?: string | null
   mobile?: string | null
-  customerType?: string | null
-  address?: string | null
-  city?: string | null
-  state?: string | null
-  pincode?: string | null
   source?: string | null
   notes?: string | null
-  nextFollowUpAt?: Date | string | null
-  followUpRemarks?: string | null
-  nextAction?: string | null
-  siteName?: string | null
-  siteAddress?: string | null
-  siteCity?: string | null
-  siteState?: string | null
   status?: $Enums.LeadStatus
   createdAt?: Date | string
   updatedAt?: Date | string
+  associationName: string
+  address?: string | null
+  city?: string | null
+  customerType?: string | null
+  followUpRemarks?: string | null
+  nextAction?: string | null
+  nextFollowUpAt?: Date | string | null
+  pincode?: string | null
+  siteAddress?: string | null
+  siteCity?: string | null
+  siteName?: string | null
+  siteState?: string | null
+  state?: string | null
+  activities?: Prisma.ActivityCreateNestedManyWithoutLeadInput
   assignedTo?: Prisma.UserCreateNestedOneWithoutAssignedLeadsInput
   client?: Prisma.ClientCreateNestedOneWithoutSourceLeadInput
-  activities?: Prisma.ActivityCreateNestedManyWithoutLeadInput
-  serviceSelections?: Prisma.LeadServiceSelectionCreateNestedManyWithoutLeadInput
   assets?: Prisma.LeadAssetCreateNestedManyWithoutLeadInput
+  serviceSelections?: Prisma.LeadServiceSelectionCreateNestedManyWithoutLeadInput
   psgas?: Prisma.PSGACreateNestedManyWithoutLeadInput
 }
 
 export type LeadUncheckedCreateWithoutCreatedByInput = {
   id?: string
-  associationName: string
   contactName: string
   email?: string | null
   mobile?: string | null
-  customerType?: string | null
-  address?: string | null
-  city?: string | null
-  state?: string | null
-  pincode?: string | null
   source?: string | null
   notes?: string | null
-  nextFollowUpAt?: Date | string | null
-  followUpRemarks?: string | null
-  nextAction?: string | null
-  siteName?: string | null
-  siteAddress?: string | null
-  siteCity?: string | null
-  siteState?: string | null
   status?: $Enums.LeadStatus
   assignedToId?: string | null
-  clientId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  associationName: string
+  clientId?: string | null
+  address?: string | null
+  city?: string | null
+  customerType?: string | null
+  followUpRemarks?: string | null
+  nextAction?: string | null
+  nextFollowUpAt?: Date | string | null
+  pincode?: string | null
+  siteAddress?: string | null
+  siteCity?: string | null
+  siteName?: string | null
+  siteState?: string | null
+  state?: string | null
   activities?: Prisma.ActivityUncheckedCreateNestedManyWithoutLeadInput
-  serviceSelections?: Prisma.LeadServiceSelectionUncheckedCreateNestedManyWithoutLeadInput
   assets?: Prisma.LeadAssetUncheckedCreateNestedManyWithoutLeadInput
+  serviceSelections?: Prisma.LeadServiceSelectionUncheckedCreateNestedManyWithoutLeadInput
   psgas?: Prisma.PSGAUncheckedCreateNestedManyWithoutLeadInput
 }
 
@@ -1144,30 +1144,30 @@ export type LeadScalarWhereInput = {
   OR?: Prisma.LeadScalarWhereInput[]
   NOT?: Prisma.LeadScalarWhereInput | Prisma.LeadScalarWhereInput[]
   id?: Prisma.StringFilter<"Lead"> | string
-  associationName?: Prisma.StringFilter<"Lead"> | string
   contactName?: Prisma.StringFilter<"Lead"> | string
   email?: Prisma.StringNullableFilter<"Lead"> | string | null
   mobile?: Prisma.StringNullableFilter<"Lead"> | string | null
-  customerType?: Prisma.StringNullableFilter<"Lead"> | string | null
-  address?: Prisma.StringNullableFilter<"Lead"> | string | null
-  city?: Prisma.StringNullableFilter<"Lead"> | string | null
-  state?: Prisma.StringNullableFilter<"Lead"> | string | null
-  pincode?: Prisma.StringNullableFilter<"Lead"> | string | null
   source?: Prisma.StringNullableFilter<"Lead"> | string | null
   notes?: Prisma.StringNullableFilter<"Lead"> | string | null
-  nextFollowUpAt?: Prisma.DateTimeNullableFilter<"Lead"> | Date | string | null
-  followUpRemarks?: Prisma.StringNullableFilter<"Lead"> | string | null
-  nextAction?: Prisma.StringNullableFilter<"Lead"> | string | null
-  siteName?: Prisma.StringNullableFilter<"Lead"> | string | null
-  siteAddress?: Prisma.StringNullableFilter<"Lead"> | string | null
-  siteCity?: Prisma.StringNullableFilter<"Lead"> | string | null
-  siteState?: Prisma.StringNullableFilter<"Lead"> | string | null
   status?: Prisma.EnumLeadStatusFilter<"Lead"> | $Enums.LeadStatus
   assignedToId?: Prisma.StringNullableFilter<"Lead"> | string | null
   createdById?: Prisma.StringFilter<"Lead"> | string
-  clientId?: Prisma.StringNullableFilter<"Lead"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Lead"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Lead"> | Date | string
+  associationName?: Prisma.StringFilter<"Lead"> | string
+  clientId?: Prisma.StringNullableFilter<"Lead"> | string | null
+  address?: Prisma.StringNullableFilter<"Lead"> | string | null
+  city?: Prisma.StringNullableFilter<"Lead"> | string | null
+  customerType?: Prisma.StringNullableFilter<"Lead"> | string | null
+  followUpRemarks?: Prisma.StringNullableFilter<"Lead"> | string | null
+  nextAction?: Prisma.StringNullableFilter<"Lead"> | string | null
+  nextFollowUpAt?: Prisma.DateTimeNullableFilter<"Lead"> | Date | string | null
+  pincode?: Prisma.StringNullableFilter<"Lead"> | string | null
+  siteAddress?: Prisma.StringNullableFilter<"Lead"> | string | null
+  siteCity?: Prisma.StringNullableFilter<"Lead"> | string | null
+  siteName?: Prisma.StringNullableFilter<"Lead"> | string | null
+  siteState?: Prisma.StringNullableFilter<"Lead"> | string | null
+  state?: Prisma.StringNullableFilter<"Lead"> | string | null
 }
 
 export type LeadUpsertWithWhereUniqueWithoutCreatedByInput = {
@@ -1188,61 +1188,61 @@ export type LeadUpdateManyWithWhereWithoutCreatedByInput = {
 
 export type LeadCreateWithoutAssetsInput = {
   id?: string
-  associationName: string
   contactName: string
   email?: string | null
   mobile?: string | null
-  customerType?: string | null
-  address?: string | null
-  city?: string | null
-  state?: string | null
-  pincode?: string | null
   source?: string | null
   notes?: string | null
-  nextFollowUpAt?: Date | string | null
-  followUpRemarks?: string | null
-  nextAction?: string | null
-  siteName?: string | null
-  siteAddress?: string | null
-  siteCity?: string | null
-  siteState?: string | null
   status?: $Enums.LeadStatus
   createdAt?: Date | string
   updatedAt?: Date | string
-  assignedTo?: Prisma.UserCreateNestedOneWithoutAssignedLeadsInput
-  createdBy: Prisma.UserCreateNestedOneWithoutCreatedLeadsInput
-  client?: Prisma.ClientCreateNestedOneWithoutSourceLeadInput
+  associationName: string
+  address?: string | null
+  city?: string | null
+  customerType?: string | null
+  followUpRemarks?: string | null
+  nextAction?: string | null
+  nextFollowUpAt?: Date | string | null
+  pincode?: string | null
+  siteAddress?: string | null
+  siteCity?: string | null
+  siteName?: string | null
+  siteState?: string | null
+  state?: string | null
   activities?: Prisma.ActivityCreateNestedManyWithoutLeadInput
+  assignedTo?: Prisma.UserCreateNestedOneWithoutAssignedLeadsInput
+  client?: Prisma.ClientCreateNestedOneWithoutSourceLeadInput
+  createdBy: Prisma.UserCreateNestedOneWithoutCreatedLeadsInput
   serviceSelections?: Prisma.LeadServiceSelectionCreateNestedManyWithoutLeadInput
   psgas?: Prisma.PSGACreateNestedManyWithoutLeadInput
 }
 
 export type LeadUncheckedCreateWithoutAssetsInput = {
   id?: string
-  associationName: string
   contactName: string
   email?: string | null
   mobile?: string | null
-  customerType?: string | null
-  address?: string | null
-  city?: string | null
-  state?: string | null
-  pincode?: string | null
   source?: string | null
   notes?: string | null
-  nextFollowUpAt?: Date | string | null
-  followUpRemarks?: string | null
-  nextAction?: string | null
-  siteName?: string | null
-  siteAddress?: string | null
-  siteCity?: string | null
-  siteState?: string | null
   status?: $Enums.LeadStatus
   assignedToId?: string | null
   createdById: string
-  clientId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  associationName: string
+  clientId?: string | null
+  address?: string | null
+  city?: string | null
+  customerType?: string | null
+  followUpRemarks?: string | null
+  nextAction?: string | null
+  nextFollowUpAt?: Date | string | null
+  pincode?: string | null
+  siteAddress?: string | null
+  siteCity?: string | null
+  siteName?: string | null
+  siteState?: string | null
+  state?: string | null
   activities?: Prisma.ActivityUncheckedCreateNestedManyWithoutLeadInput
   serviceSelections?: Prisma.LeadServiceSelectionUncheckedCreateNestedManyWithoutLeadInput
   psgas?: Prisma.PSGAUncheckedCreateNestedManyWithoutLeadInput
@@ -1266,61 +1266,61 @@ export type LeadUpdateToOneWithWhereWithoutAssetsInput = {
 
 export type LeadUpdateWithoutAssetsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  associationName?: Prisma.StringFieldUpdateOperationsInput | string
   contactName?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mobile?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  customerType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  pincode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   source?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  nextFollowUpAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  followUpRemarks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  nextAction?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  siteName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  siteAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  siteCity?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  siteState?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumLeadStatusFieldUpdateOperationsInput | $Enums.LeadStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  assignedTo?: Prisma.UserUpdateOneWithoutAssignedLeadsNestedInput
-  createdBy?: Prisma.UserUpdateOneRequiredWithoutCreatedLeadsNestedInput
-  client?: Prisma.ClientUpdateOneWithoutSourceLeadNestedInput
+  associationName?: Prisma.StringFieldUpdateOperationsInput | string
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  customerType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  followUpRemarks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nextAction?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nextFollowUpAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  pincode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  siteAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  siteCity?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  siteName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  siteState?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   activities?: Prisma.ActivityUpdateManyWithoutLeadNestedInput
+  assignedTo?: Prisma.UserUpdateOneWithoutAssignedLeadsNestedInput
+  client?: Prisma.ClientUpdateOneWithoutSourceLeadNestedInput
+  createdBy?: Prisma.UserUpdateOneRequiredWithoutCreatedLeadsNestedInput
   serviceSelections?: Prisma.LeadServiceSelectionUpdateManyWithoutLeadNestedInput
   psgas?: Prisma.PSGAUpdateManyWithoutLeadNestedInput
 }
 
 export type LeadUncheckedUpdateWithoutAssetsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  associationName?: Prisma.StringFieldUpdateOperationsInput | string
   contactName?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mobile?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  customerType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  pincode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   source?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  nextFollowUpAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  followUpRemarks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  nextAction?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  siteName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  siteAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  siteCity?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  siteState?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumLeadStatusFieldUpdateOperationsInput | $Enums.LeadStatus
   assignedToId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdById?: Prisma.StringFieldUpdateOperationsInput | string
-  clientId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  associationName?: Prisma.StringFieldUpdateOperationsInput | string
+  clientId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  customerType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  followUpRemarks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nextAction?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nextFollowUpAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  pincode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  siteAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  siteCity?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  siteName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  siteState?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   activities?: Prisma.ActivityUncheckedUpdateManyWithoutLeadNestedInput
   serviceSelections?: Prisma.LeadServiceSelectionUncheckedUpdateManyWithoutLeadNestedInput
   psgas?: Prisma.PSGAUncheckedUpdateManyWithoutLeadNestedInput
@@ -1328,63 +1328,63 @@ export type LeadUncheckedUpdateWithoutAssetsInput = {
 
 export type LeadCreateWithoutClientInput = {
   id?: string
-  associationName: string
   contactName: string
   email?: string | null
   mobile?: string | null
-  customerType?: string | null
-  address?: string | null
-  city?: string | null
-  state?: string | null
-  pincode?: string | null
   source?: string | null
   notes?: string | null
-  nextFollowUpAt?: Date | string | null
-  followUpRemarks?: string | null
-  nextAction?: string | null
-  siteName?: string | null
-  siteAddress?: string | null
-  siteCity?: string | null
-  siteState?: string | null
   status?: $Enums.LeadStatus
   createdAt?: Date | string
   updatedAt?: Date | string
+  associationName: string
+  address?: string | null
+  city?: string | null
+  customerType?: string | null
+  followUpRemarks?: string | null
+  nextAction?: string | null
+  nextFollowUpAt?: Date | string | null
+  pincode?: string | null
+  siteAddress?: string | null
+  siteCity?: string | null
+  siteName?: string | null
+  siteState?: string | null
+  state?: string | null
+  activities?: Prisma.ActivityCreateNestedManyWithoutLeadInput
   assignedTo?: Prisma.UserCreateNestedOneWithoutAssignedLeadsInput
   createdBy: Prisma.UserCreateNestedOneWithoutCreatedLeadsInput
-  activities?: Prisma.ActivityCreateNestedManyWithoutLeadInput
-  serviceSelections?: Prisma.LeadServiceSelectionCreateNestedManyWithoutLeadInput
   assets?: Prisma.LeadAssetCreateNestedManyWithoutLeadInput
+  serviceSelections?: Prisma.LeadServiceSelectionCreateNestedManyWithoutLeadInput
   psgas?: Prisma.PSGACreateNestedManyWithoutLeadInput
 }
 
 export type LeadUncheckedCreateWithoutClientInput = {
   id?: string
-  associationName: string
   contactName: string
   email?: string | null
   mobile?: string | null
-  customerType?: string | null
-  address?: string | null
-  city?: string | null
-  state?: string | null
-  pincode?: string | null
   source?: string | null
   notes?: string | null
-  nextFollowUpAt?: Date | string | null
-  followUpRemarks?: string | null
-  nextAction?: string | null
-  siteName?: string | null
-  siteAddress?: string | null
-  siteCity?: string | null
-  siteState?: string | null
   status?: $Enums.LeadStatus
   assignedToId?: string | null
   createdById: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  associationName: string
+  address?: string | null
+  city?: string | null
+  customerType?: string | null
+  followUpRemarks?: string | null
+  nextAction?: string | null
+  nextFollowUpAt?: Date | string | null
+  pincode?: string | null
+  siteAddress?: string | null
+  siteCity?: string | null
+  siteName?: string | null
+  siteState?: string | null
+  state?: string | null
   activities?: Prisma.ActivityUncheckedCreateNestedManyWithoutLeadInput
-  serviceSelections?: Prisma.LeadServiceSelectionUncheckedCreateNestedManyWithoutLeadInput
   assets?: Prisma.LeadAssetUncheckedCreateNestedManyWithoutLeadInput
+  serviceSelections?: Prisma.LeadServiceSelectionUncheckedCreateNestedManyWithoutLeadInput
   psgas?: Prisma.PSGAUncheckedCreateNestedManyWithoutLeadInput
 }
 
@@ -1406,125 +1406,125 @@ export type LeadUpdateToOneWithWhereWithoutClientInput = {
 
 export type LeadUpdateWithoutClientInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  associationName?: Prisma.StringFieldUpdateOperationsInput | string
   contactName?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mobile?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  customerType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  pincode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   source?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  nextFollowUpAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  followUpRemarks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  nextAction?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  siteName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  siteAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  siteCity?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  siteState?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumLeadStatusFieldUpdateOperationsInput | $Enums.LeadStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  associationName?: Prisma.StringFieldUpdateOperationsInput | string
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  customerType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  followUpRemarks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nextAction?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nextFollowUpAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  pincode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  siteAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  siteCity?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  siteName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  siteState?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  activities?: Prisma.ActivityUpdateManyWithoutLeadNestedInput
   assignedTo?: Prisma.UserUpdateOneWithoutAssignedLeadsNestedInput
   createdBy?: Prisma.UserUpdateOneRequiredWithoutCreatedLeadsNestedInput
-  activities?: Prisma.ActivityUpdateManyWithoutLeadNestedInput
-  serviceSelections?: Prisma.LeadServiceSelectionUpdateManyWithoutLeadNestedInput
   assets?: Prisma.LeadAssetUpdateManyWithoutLeadNestedInput
+  serviceSelections?: Prisma.LeadServiceSelectionUpdateManyWithoutLeadNestedInput
   psgas?: Prisma.PSGAUpdateManyWithoutLeadNestedInput
 }
 
 export type LeadUncheckedUpdateWithoutClientInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  associationName?: Prisma.StringFieldUpdateOperationsInput | string
   contactName?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mobile?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  customerType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  pincode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   source?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  nextFollowUpAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  followUpRemarks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  nextAction?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  siteName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  siteAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  siteCity?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  siteState?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumLeadStatusFieldUpdateOperationsInput | $Enums.LeadStatus
   assignedToId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdById?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  associationName?: Prisma.StringFieldUpdateOperationsInput | string
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  customerType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  followUpRemarks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nextAction?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nextFollowUpAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  pincode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  siteAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  siteCity?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  siteName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  siteState?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   activities?: Prisma.ActivityUncheckedUpdateManyWithoutLeadNestedInput
-  serviceSelections?: Prisma.LeadServiceSelectionUncheckedUpdateManyWithoutLeadNestedInput
   assets?: Prisma.LeadAssetUncheckedUpdateManyWithoutLeadNestedInput
+  serviceSelections?: Prisma.LeadServiceSelectionUncheckedUpdateManyWithoutLeadNestedInput
   psgas?: Prisma.PSGAUncheckedUpdateManyWithoutLeadNestedInput
 }
 
 export type LeadCreateWithoutActivitiesInput = {
   id?: string
-  associationName: string
   contactName: string
   email?: string | null
   mobile?: string | null
-  customerType?: string | null
-  address?: string | null
-  city?: string | null
-  state?: string | null
-  pincode?: string | null
   source?: string | null
   notes?: string | null
-  nextFollowUpAt?: Date | string | null
-  followUpRemarks?: string | null
-  nextAction?: string | null
-  siteName?: string | null
-  siteAddress?: string | null
-  siteCity?: string | null
-  siteState?: string | null
   status?: $Enums.LeadStatus
   createdAt?: Date | string
   updatedAt?: Date | string
+  associationName: string
+  address?: string | null
+  city?: string | null
+  customerType?: string | null
+  followUpRemarks?: string | null
+  nextAction?: string | null
+  nextFollowUpAt?: Date | string | null
+  pincode?: string | null
+  siteAddress?: string | null
+  siteCity?: string | null
+  siteName?: string | null
+  siteState?: string | null
+  state?: string | null
   assignedTo?: Prisma.UserCreateNestedOneWithoutAssignedLeadsInput
-  createdBy: Prisma.UserCreateNestedOneWithoutCreatedLeadsInput
   client?: Prisma.ClientCreateNestedOneWithoutSourceLeadInput
-  serviceSelections?: Prisma.LeadServiceSelectionCreateNestedManyWithoutLeadInput
+  createdBy: Prisma.UserCreateNestedOneWithoutCreatedLeadsInput
   assets?: Prisma.LeadAssetCreateNestedManyWithoutLeadInput
+  serviceSelections?: Prisma.LeadServiceSelectionCreateNestedManyWithoutLeadInput
   psgas?: Prisma.PSGACreateNestedManyWithoutLeadInput
 }
 
 export type LeadUncheckedCreateWithoutActivitiesInput = {
   id?: string
-  associationName: string
   contactName: string
   email?: string | null
   mobile?: string | null
-  customerType?: string | null
-  address?: string | null
-  city?: string | null
-  state?: string | null
-  pincode?: string | null
   source?: string | null
   notes?: string | null
-  nextFollowUpAt?: Date | string | null
-  followUpRemarks?: string | null
-  nextAction?: string | null
-  siteName?: string | null
-  siteAddress?: string | null
-  siteCity?: string | null
-  siteState?: string | null
   status?: $Enums.LeadStatus
   assignedToId?: string | null
   createdById: string
-  clientId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  serviceSelections?: Prisma.LeadServiceSelectionUncheckedCreateNestedManyWithoutLeadInput
+  associationName: string
+  clientId?: string | null
+  address?: string | null
+  city?: string | null
+  customerType?: string | null
+  followUpRemarks?: string | null
+  nextAction?: string | null
+  nextFollowUpAt?: Date | string | null
+  pincode?: string | null
+  siteAddress?: string | null
+  siteCity?: string | null
+  siteName?: string | null
+  siteState?: string | null
+  state?: string | null
   assets?: Prisma.LeadAssetUncheckedCreateNestedManyWithoutLeadInput
+  serviceSelections?: Prisma.LeadServiceSelectionUncheckedCreateNestedManyWithoutLeadInput
   psgas?: Prisma.PSGAUncheckedCreateNestedManyWithoutLeadInput
 }
 
@@ -1546,123 +1546,123 @@ export type LeadUpdateToOneWithWhereWithoutActivitiesInput = {
 
 export type LeadUpdateWithoutActivitiesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  associationName?: Prisma.StringFieldUpdateOperationsInput | string
   contactName?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mobile?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  customerType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  pincode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   source?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  nextFollowUpAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  followUpRemarks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  nextAction?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  siteName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  siteAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  siteCity?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  siteState?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumLeadStatusFieldUpdateOperationsInput | $Enums.LeadStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  associationName?: Prisma.StringFieldUpdateOperationsInput | string
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  customerType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  followUpRemarks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nextAction?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nextFollowUpAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  pincode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  siteAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  siteCity?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  siteName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  siteState?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   assignedTo?: Prisma.UserUpdateOneWithoutAssignedLeadsNestedInput
-  createdBy?: Prisma.UserUpdateOneRequiredWithoutCreatedLeadsNestedInput
   client?: Prisma.ClientUpdateOneWithoutSourceLeadNestedInput
-  serviceSelections?: Prisma.LeadServiceSelectionUpdateManyWithoutLeadNestedInput
+  createdBy?: Prisma.UserUpdateOneRequiredWithoutCreatedLeadsNestedInput
   assets?: Prisma.LeadAssetUpdateManyWithoutLeadNestedInput
+  serviceSelections?: Prisma.LeadServiceSelectionUpdateManyWithoutLeadNestedInput
   psgas?: Prisma.PSGAUpdateManyWithoutLeadNestedInput
 }
 
 export type LeadUncheckedUpdateWithoutActivitiesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  associationName?: Prisma.StringFieldUpdateOperationsInput | string
   contactName?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mobile?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  customerType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  pincode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   source?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  nextFollowUpAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  followUpRemarks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  nextAction?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  siteName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  siteAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  siteCity?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  siteState?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumLeadStatusFieldUpdateOperationsInput | $Enums.LeadStatus
   assignedToId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdById?: Prisma.StringFieldUpdateOperationsInput | string
-  clientId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  serviceSelections?: Prisma.LeadServiceSelectionUncheckedUpdateManyWithoutLeadNestedInput
+  associationName?: Prisma.StringFieldUpdateOperationsInput | string
+  clientId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  customerType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  followUpRemarks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nextAction?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nextFollowUpAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  pincode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  siteAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  siteCity?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  siteName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  siteState?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   assets?: Prisma.LeadAssetUncheckedUpdateManyWithoutLeadNestedInput
+  serviceSelections?: Prisma.LeadServiceSelectionUncheckedUpdateManyWithoutLeadNestedInput
   psgas?: Prisma.PSGAUncheckedUpdateManyWithoutLeadNestedInput
 }
 
 export type LeadCreateWithoutServiceSelectionsInput = {
   id?: string
-  associationName: string
   contactName: string
   email?: string | null
   mobile?: string | null
-  customerType?: string | null
-  address?: string | null
-  city?: string | null
-  state?: string | null
-  pincode?: string | null
   source?: string | null
   notes?: string | null
-  nextFollowUpAt?: Date | string | null
-  followUpRemarks?: string | null
-  nextAction?: string | null
-  siteName?: string | null
-  siteAddress?: string | null
-  siteCity?: string | null
-  siteState?: string | null
   status?: $Enums.LeadStatus
   createdAt?: Date | string
   updatedAt?: Date | string
-  assignedTo?: Prisma.UserCreateNestedOneWithoutAssignedLeadsInput
-  createdBy: Prisma.UserCreateNestedOneWithoutCreatedLeadsInput
-  client?: Prisma.ClientCreateNestedOneWithoutSourceLeadInput
+  associationName: string
+  address?: string | null
+  city?: string | null
+  customerType?: string | null
+  followUpRemarks?: string | null
+  nextAction?: string | null
+  nextFollowUpAt?: Date | string | null
+  pincode?: string | null
+  siteAddress?: string | null
+  siteCity?: string | null
+  siteName?: string | null
+  siteState?: string | null
+  state?: string | null
   activities?: Prisma.ActivityCreateNestedManyWithoutLeadInput
+  assignedTo?: Prisma.UserCreateNestedOneWithoutAssignedLeadsInput
+  client?: Prisma.ClientCreateNestedOneWithoutSourceLeadInput
+  createdBy: Prisma.UserCreateNestedOneWithoutCreatedLeadsInput
   assets?: Prisma.LeadAssetCreateNestedManyWithoutLeadInput
   psgas?: Prisma.PSGACreateNestedManyWithoutLeadInput
 }
 
 export type LeadUncheckedCreateWithoutServiceSelectionsInput = {
   id?: string
-  associationName: string
   contactName: string
   email?: string | null
   mobile?: string | null
-  customerType?: string | null
-  address?: string | null
-  city?: string | null
-  state?: string | null
-  pincode?: string | null
   source?: string | null
   notes?: string | null
-  nextFollowUpAt?: Date | string | null
-  followUpRemarks?: string | null
-  nextAction?: string | null
-  siteName?: string | null
-  siteAddress?: string | null
-  siteCity?: string | null
-  siteState?: string | null
   status?: $Enums.LeadStatus
   assignedToId?: string | null
   createdById: string
-  clientId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  associationName: string
+  clientId?: string | null
+  address?: string | null
+  city?: string | null
+  customerType?: string | null
+  followUpRemarks?: string | null
+  nextAction?: string | null
+  nextFollowUpAt?: Date | string | null
+  pincode?: string | null
+  siteAddress?: string | null
+  siteCity?: string | null
+  siteName?: string | null
+  siteState?: string | null
+  state?: string | null
   activities?: Prisma.ActivityUncheckedCreateNestedManyWithoutLeadInput
   assets?: Prisma.LeadAssetUncheckedCreateNestedManyWithoutLeadInput
   psgas?: Prisma.PSGAUncheckedCreateNestedManyWithoutLeadInput
@@ -1686,61 +1686,61 @@ export type LeadUpdateToOneWithWhereWithoutServiceSelectionsInput = {
 
 export type LeadUpdateWithoutServiceSelectionsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  associationName?: Prisma.StringFieldUpdateOperationsInput | string
   contactName?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mobile?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  customerType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  pincode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   source?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  nextFollowUpAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  followUpRemarks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  nextAction?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  siteName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  siteAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  siteCity?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  siteState?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumLeadStatusFieldUpdateOperationsInput | $Enums.LeadStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  assignedTo?: Prisma.UserUpdateOneWithoutAssignedLeadsNestedInput
-  createdBy?: Prisma.UserUpdateOneRequiredWithoutCreatedLeadsNestedInput
-  client?: Prisma.ClientUpdateOneWithoutSourceLeadNestedInput
+  associationName?: Prisma.StringFieldUpdateOperationsInput | string
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  customerType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  followUpRemarks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nextAction?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nextFollowUpAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  pincode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  siteAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  siteCity?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  siteName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  siteState?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   activities?: Prisma.ActivityUpdateManyWithoutLeadNestedInput
+  assignedTo?: Prisma.UserUpdateOneWithoutAssignedLeadsNestedInput
+  client?: Prisma.ClientUpdateOneWithoutSourceLeadNestedInput
+  createdBy?: Prisma.UserUpdateOneRequiredWithoutCreatedLeadsNestedInput
   assets?: Prisma.LeadAssetUpdateManyWithoutLeadNestedInput
   psgas?: Prisma.PSGAUpdateManyWithoutLeadNestedInput
 }
 
 export type LeadUncheckedUpdateWithoutServiceSelectionsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  associationName?: Prisma.StringFieldUpdateOperationsInput | string
   contactName?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mobile?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  customerType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  pincode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   source?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  nextFollowUpAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  followUpRemarks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  nextAction?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  siteName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  siteAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  siteCity?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  siteState?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumLeadStatusFieldUpdateOperationsInput | $Enums.LeadStatus
   assignedToId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdById?: Prisma.StringFieldUpdateOperationsInput | string
-  clientId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  associationName?: Prisma.StringFieldUpdateOperationsInput | string
+  clientId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  customerType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  followUpRemarks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nextAction?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nextFollowUpAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  pincode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  siteAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  siteCity?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  siteName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  siteState?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   activities?: Prisma.ActivityUncheckedUpdateManyWithoutLeadNestedInput
   assets?: Prisma.LeadAssetUncheckedUpdateManyWithoutLeadNestedInput
   psgas?: Prisma.PSGAUncheckedUpdateManyWithoutLeadNestedInput
@@ -1748,64 +1748,64 @@ export type LeadUncheckedUpdateWithoutServiceSelectionsInput = {
 
 export type LeadCreateWithoutPsgasInput = {
   id?: string
-  associationName: string
   contactName: string
   email?: string | null
   mobile?: string | null
-  customerType?: string | null
-  address?: string | null
-  city?: string | null
-  state?: string | null
-  pincode?: string | null
   source?: string | null
   notes?: string | null
-  nextFollowUpAt?: Date | string | null
-  followUpRemarks?: string | null
-  nextAction?: string | null
-  siteName?: string | null
-  siteAddress?: string | null
-  siteCity?: string | null
-  siteState?: string | null
   status?: $Enums.LeadStatus
   createdAt?: Date | string
   updatedAt?: Date | string
-  assignedTo?: Prisma.UserCreateNestedOneWithoutAssignedLeadsInput
-  createdBy: Prisma.UserCreateNestedOneWithoutCreatedLeadsInput
-  client?: Prisma.ClientCreateNestedOneWithoutSourceLeadInput
+  associationName: string
+  address?: string | null
+  city?: string | null
+  customerType?: string | null
+  followUpRemarks?: string | null
+  nextAction?: string | null
+  nextFollowUpAt?: Date | string | null
+  pincode?: string | null
+  siteAddress?: string | null
+  siteCity?: string | null
+  siteName?: string | null
+  siteState?: string | null
+  state?: string | null
   activities?: Prisma.ActivityCreateNestedManyWithoutLeadInput
-  serviceSelections?: Prisma.LeadServiceSelectionCreateNestedManyWithoutLeadInput
+  assignedTo?: Prisma.UserCreateNestedOneWithoutAssignedLeadsInput
+  client?: Prisma.ClientCreateNestedOneWithoutSourceLeadInput
+  createdBy: Prisma.UserCreateNestedOneWithoutCreatedLeadsInput
   assets?: Prisma.LeadAssetCreateNestedManyWithoutLeadInput
+  serviceSelections?: Prisma.LeadServiceSelectionCreateNestedManyWithoutLeadInput
 }
 
 export type LeadUncheckedCreateWithoutPsgasInput = {
   id?: string
-  associationName: string
   contactName: string
   email?: string | null
   mobile?: string | null
-  customerType?: string | null
-  address?: string | null
-  city?: string | null
-  state?: string | null
-  pincode?: string | null
   source?: string | null
   notes?: string | null
-  nextFollowUpAt?: Date | string | null
-  followUpRemarks?: string | null
-  nextAction?: string | null
-  siteName?: string | null
-  siteAddress?: string | null
-  siteCity?: string | null
-  siteState?: string | null
   status?: $Enums.LeadStatus
   assignedToId?: string | null
   createdById: string
-  clientId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  associationName: string
+  clientId?: string | null
+  address?: string | null
+  city?: string | null
+  customerType?: string | null
+  followUpRemarks?: string | null
+  nextAction?: string | null
+  nextFollowUpAt?: Date | string | null
+  pincode?: string | null
+  siteAddress?: string | null
+  siteCity?: string | null
+  siteName?: string | null
+  siteState?: string | null
+  state?: string | null
   activities?: Prisma.ActivityUncheckedCreateNestedManyWithoutLeadInput
-  serviceSelections?: Prisma.LeadServiceSelectionUncheckedCreateNestedManyWithoutLeadInput
   assets?: Prisma.LeadAssetUncheckedCreateNestedManyWithoutLeadInput
+  serviceSelections?: Prisma.LeadServiceSelectionUncheckedCreateNestedManyWithoutLeadInput
 }
 
 export type LeadCreateOrConnectWithoutPsgasInput = {
@@ -1826,296 +1826,296 @@ export type LeadUpdateToOneWithWhereWithoutPsgasInput = {
 
 export type LeadUpdateWithoutPsgasInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  associationName?: Prisma.StringFieldUpdateOperationsInput | string
   contactName?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mobile?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  customerType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  pincode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   source?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  nextFollowUpAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  followUpRemarks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  nextAction?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  siteName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  siteAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  siteCity?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  siteState?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumLeadStatusFieldUpdateOperationsInput | $Enums.LeadStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  assignedTo?: Prisma.UserUpdateOneWithoutAssignedLeadsNestedInput
-  createdBy?: Prisma.UserUpdateOneRequiredWithoutCreatedLeadsNestedInput
-  client?: Prisma.ClientUpdateOneWithoutSourceLeadNestedInput
+  associationName?: Prisma.StringFieldUpdateOperationsInput | string
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  customerType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  followUpRemarks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nextAction?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nextFollowUpAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  pincode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  siteAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  siteCity?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  siteName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  siteState?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   activities?: Prisma.ActivityUpdateManyWithoutLeadNestedInput
-  serviceSelections?: Prisma.LeadServiceSelectionUpdateManyWithoutLeadNestedInput
+  assignedTo?: Prisma.UserUpdateOneWithoutAssignedLeadsNestedInput
+  client?: Prisma.ClientUpdateOneWithoutSourceLeadNestedInput
+  createdBy?: Prisma.UserUpdateOneRequiredWithoutCreatedLeadsNestedInput
   assets?: Prisma.LeadAssetUpdateManyWithoutLeadNestedInput
+  serviceSelections?: Prisma.LeadServiceSelectionUpdateManyWithoutLeadNestedInput
 }
 
 export type LeadUncheckedUpdateWithoutPsgasInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  associationName?: Prisma.StringFieldUpdateOperationsInput | string
   contactName?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mobile?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  customerType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  pincode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   source?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  nextFollowUpAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  followUpRemarks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  nextAction?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  siteName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  siteAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  siteCity?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  siteState?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumLeadStatusFieldUpdateOperationsInput | $Enums.LeadStatus
   assignedToId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdById?: Prisma.StringFieldUpdateOperationsInput | string
-  clientId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  associationName?: Prisma.StringFieldUpdateOperationsInput | string
+  clientId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  customerType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  followUpRemarks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nextAction?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nextFollowUpAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  pincode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  siteAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  siteCity?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  siteName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  siteState?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   activities?: Prisma.ActivityUncheckedUpdateManyWithoutLeadNestedInput
-  serviceSelections?: Prisma.LeadServiceSelectionUncheckedUpdateManyWithoutLeadNestedInput
   assets?: Prisma.LeadAssetUncheckedUpdateManyWithoutLeadNestedInput
+  serviceSelections?: Prisma.LeadServiceSelectionUncheckedUpdateManyWithoutLeadNestedInput
 }
 
 export type LeadCreateManyAssignedToInput = {
   id?: string
-  associationName: string
   contactName: string
   email?: string | null
   mobile?: string | null
-  customerType?: string | null
-  address?: string | null
-  city?: string | null
-  state?: string | null
-  pincode?: string | null
   source?: string | null
   notes?: string | null
-  nextFollowUpAt?: Date | string | null
-  followUpRemarks?: string | null
-  nextAction?: string | null
-  siteName?: string | null
-  siteAddress?: string | null
-  siteCity?: string | null
-  siteState?: string | null
   status?: $Enums.LeadStatus
   createdById: string
-  clientId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  associationName: string
+  clientId?: string | null
+  address?: string | null
+  city?: string | null
+  customerType?: string | null
+  followUpRemarks?: string | null
+  nextAction?: string | null
+  nextFollowUpAt?: Date | string | null
+  pincode?: string | null
+  siteAddress?: string | null
+  siteCity?: string | null
+  siteName?: string | null
+  siteState?: string | null
+  state?: string | null
 }
 
 export type LeadCreateManyCreatedByInput = {
   id?: string
-  associationName: string
   contactName: string
   email?: string | null
   mobile?: string | null
-  customerType?: string | null
-  address?: string | null
-  city?: string | null
-  state?: string | null
-  pincode?: string | null
   source?: string | null
   notes?: string | null
-  nextFollowUpAt?: Date | string | null
-  followUpRemarks?: string | null
-  nextAction?: string | null
-  siteName?: string | null
-  siteAddress?: string | null
-  siteCity?: string | null
-  siteState?: string | null
   status?: $Enums.LeadStatus
   assignedToId?: string | null
-  clientId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  associationName: string
+  clientId?: string | null
+  address?: string | null
+  city?: string | null
+  customerType?: string | null
+  followUpRemarks?: string | null
+  nextAction?: string | null
+  nextFollowUpAt?: Date | string | null
+  pincode?: string | null
+  siteAddress?: string | null
+  siteCity?: string | null
+  siteName?: string | null
+  siteState?: string | null
+  state?: string | null
 }
 
 export type LeadUpdateWithoutAssignedToInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  associationName?: Prisma.StringFieldUpdateOperationsInput | string
   contactName?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mobile?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  customerType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  pincode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   source?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  nextFollowUpAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  followUpRemarks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  nextAction?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  siteName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  siteAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  siteCity?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  siteState?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumLeadStatusFieldUpdateOperationsInput | $Enums.LeadStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdBy?: Prisma.UserUpdateOneRequiredWithoutCreatedLeadsNestedInput
-  client?: Prisma.ClientUpdateOneWithoutSourceLeadNestedInput
+  associationName?: Prisma.StringFieldUpdateOperationsInput | string
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  customerType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  followUpRemarks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nextAction?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nextFollowUpAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  pincode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  siteAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  siteCity?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  siteName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  siteState?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   activities?: Prisma.ActivityUpdateManyWithoutLeadNestedInput
-  serviceSelections?: Prisma.LeadServiceSelectionUpdateManyWithoutLeadNestedInput
+  client?: Prisma.ClientUpdateOneWithoutSourceLeadNestedInput
+  createdBy?: Prisma.UserUpdateOneRequiredWithoutCreatedLeadsNestedInput
   assets?: Prisma.LeadAssetUpdateManyWithoutLeadNestedInput
+  serviceSelections?: Prisma.LeadServiceSelectionUpdateManyWithoutLeadNestedInput
   psgas?: Prisma.PSGAUpdateManyWithoutLeadNestedInput
 }
 
 export type LeadUncheckedUpdateWithoutAssignedToInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  associationName?: Prisma.StringFieldUpdateOperationsInput | string
   contactName?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mobile?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  customerType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  pincode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   source?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  nextFollowUpAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  followUpRemarks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  nextAction?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  siteName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  siteAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  siteCity?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  siteState?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumLeadStatusFieldUpdateOperationsInput | $Enums.LeadStatus
   createdById?: Prisma.StringFieldUpdateOperationsInput | string
-  clientId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  associationName?: Prisma.StringFieldUpdateOperationsInput | string
+  clientId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  customerType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  followUpRemarks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nextAction?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nextFollowUpAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  pincode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  siteAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  siteCity?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  siteName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  siteState?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   activities?: Prisma.ActivityUncheckedUpdateManyWithoutLeadNestedInput
-  serviceSelections?: Prisma.LeadServiceSelectionUncheckedUpdateManyWithoutLeadNestedInput
   assets?: Prisma.LeadAssetUncheckedUpdateManyWithoutLeadNestedInput
+  serviceSelections?: Prisma.LeadServiceSelectionUncheckedUpdateManyWithoutLeadNestedInput
   psgas?: Prisma.PSGAUncheckedUpdateManyWithoutLeadNestedInput
 }
 
 export type LeadUncheckedUpdateManyWithoutAssignedToInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  associationName?: Prisma.StringFieldUpdateOperationsInput | string
   contactName?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mobile?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  customerType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  pincode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   source?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  nextFollowUpAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  followUpRemarks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  nextAction?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  siteName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  siteAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  siteCity?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  siteState?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumLeadStatusFieldUpdateOperationsInput | $Enums.LeadStatus
   createdById?: Prisma.StringFieldUpdateOperationsInput | string
-  clientId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  associationName?: Prisma.StringFieldUpdateOperationsInput | string
+  clientId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  customerType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  followUpRemarks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nextAction?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nextFollowUpAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  pincode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  siteAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  siteCity?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  siteName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  siteState?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type LeadUpdateWithoutCreatedByInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  associationName?: Prisma.StringFieldUpdateOperationsInput | string
   contactName?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mobile?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  customerType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  pincode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   source?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  nextFollowUpAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  followUpRemarks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  nextAction?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  siteName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  siteAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  siteCity?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  siteState?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumLeadStatusFieldUpdateOperationsInput | $Enums.LeadStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  associationName?: Prisma.StringFieldUpdateOperationsInput | string
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  customerType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  followUpRemarks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nextAction?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nextFollowUpAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  pincode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  siteAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  siteCity?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  siteName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  siteState?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  activities?: Prisma.ActivityUpdateManyWithoutLeadNestedInput
   assignedTo?: Prisma.UserUpdateOneWithoutAssignedLeadsNestedInput
   client?: Prisma.ClientUpdateOneWithoutSourceLeadNestedInput
-  activities?: Prisma.ActivityUpdateManyWithoutLeadNestedInput
-  serviceSelections?: Prisma.LeadServiceSelectionUpdateManyWithoutLeadNestedInput
   assets?: Prisma.LeadAssetUpdateManyWithoutLeadNestedInput
+  serviceSelections?: Prisma.LeadServiceSelectionUpdateManyWithoutLeadNestedInput
   psgas?: Prisma.PSGAUpdateManyWithoutLeadNestedInput
 }
 
 export type LeadUncheckedUpdateWithoutCreatedByInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  associationName?: Prisma.StringFieldUpdateOperationsInput | string
   contactName?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mobile?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  customerType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  pincode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   source?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  nextFollowUpAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  followUpRemarks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  nextAction?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  siteName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  siteAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  siteCity?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  siteState?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumLeadStatusFieldUpdateOperationsInput | $Enums.LeadStatus
   assignedToId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  clientId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  associationName?: Prisma.StringFieldUpdateOperationsInput | string
+  clientId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  customerType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  followUpRemarks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nextAction?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nextFollowUpAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  pincode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  siteAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  siteCity?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  siteName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  siteState?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   activities?: Prisma.ActivityUncheckedUpdateManyWithoutLeadNestedInput
-  serviceSelections?: Prisma.LeadServiceSelectionUncheckedUpdateManyWithoutLeadNestedInput
   assets?: Prisma.LeadAssetUncheckedUpdateManyWithoutLeadNestedInput
+  serviceSelections?: Prisma.LeadServiceSelectionUncheckedUpdateManyWithoutLeadNestedInput
   psgas?: Prisma.PSGAUncheckedUpdateManyWithoutLeadNestedInput
 }
 
 export type LeadUncheckedUpdateManyWithoutCreatedByInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  associationName?: Prisma.StringFieldUpdateOperationsInput | string
   contactName?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mobile?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  customerType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  pincode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   source?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  nextFollowUpAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  followUpRemarks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  nextAction?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  siteName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  siteAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  siteCity?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  siteState?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumLeadStatusFieldUpdateOperationsInput | $Enums.LeadStatus
   assignedToId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  clientId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  associationName?: Prisma.StringFieldUpdateOperationsInput | string
+  clientId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  customerType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  followUpRemarks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nextAction?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nextFollowUpAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  pincode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  siteAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  siteCity?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  siteName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  siteState?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 
@@ -2125,15 +2125,15 @@ export type LeadUncheckedUpdateManyWithoutCreatedByInput = {
 
 export type LeadCountOutputType = {
   activities: number
-  serviceSelections: number
   assets: number
+  serviceSelections: number
   psgas: number
 }
 
 export type LeadCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   activities?: boolean | LeadCountOutputTypeCountActivitiesArgs
-  serviceSelections?: boolean | LeadCountOutputTypeCountServiceSelectionsArgs
   assets?: boolean | LeadCountOutputTypeCountAssetsArgs
+  serviceSelections?: boolean | LeadCountOutputTypeCountServiceSelectionsArgs
   psgas?: boolean | LeadCountOutputTypeCountPsgasArgs
 }
 
@@ -2157,15 +2157,15 @@ export type LeadCountOutputTypeCountActivitiesArgs<ExtArgs extends runtime.Types
 /**
  * LeadCountOutputType without action
  */
-export type LeadCountOutputTypeCountServiceSelectionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.LeadServiceSelectionWhereInput
+export type LeadCountOutputTypeCountAssetsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.LeadAssetWhereInput
 }
 
 /**
  * LeadCountOutputType without action
  */
-export type LeadCountOutputTypeCountAssetsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.LeadAssetWhereInput
+export type LeadCountOutputTypeCountServiceSelectionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.LeadServiceSelectionWhereInput
 }
 
 /**
@@ -2178,189 +2178,189 @@ export type LeadCountOutputTypeCountPsgasArgs<ExtArgs extends runtime.Types.Exte
 
 export type LeadSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  associationName?: boolean
   contactName?: boolean
   email?: boolean
   mobile?: boolean
-  customerType?: boolean
-  address?: boolean
-  city?: boolean
-  state?: boolean
-  pincode?: boolean
   source?: boolean
   notes?: boolean
-  nextFollowUpAt?: boolean
-  followUpRemarks?: boolean
-  nextAction?: boolean
-  siteName?: boolean
-  siteAddress?: boolean
-  siteCity?: boolean
-  siteState?: boolean
   status?: boolean
   assignedToId?: boolean
   createdById?: boolean
-  clientId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  assignedTo?: boolean | Prisma.Lead$assignedToArgs<ExtArgs>
-  createdBy?: boolean | Prisma.UserDefaultArgs<ExtArgs>
-  client?: boolean | Prisma.Lead$clientArgs<ExtArgs>
+  associationName?: boolean
+  clientId?: boolean
+  address?: boolean
+  city?: boolean
+  customerType?: boolean
+  followUpRemarks?: boolean
+  nextAction?: boolean
+  nextFollowUpAt?: boolean
+  pincode?: boolean
+  siteAddress?: boolean
+  siteCity?: boolean
+  siteName?: boolean
+  siteState?: boolean
+  state?: boolean
   activities?: boolean | Prisma.Lead$activitiesArgs<ExtArgs>
-  serviceSelections?: boolean | Prisma.Lead$serviceSelectionsArgs<ExtArgs>
+  assignedTo?: boolean | Prisma.Lead$assignedToArgs<ExtArgs>
+  client?: boolean | Prisma.Lead$clientArgs<ExtArgs>
+  createdBy?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   assets?: boolean | Prisma.Lead$assetsArgs<ExtArgs>
+  serviceSelections?: boolean | Prisma.Lead$serviceSelectionsArgs<ExtArgs>
   psgas?: boolean | Prisma.Lead$psgasArgs<ExtArgs>
   _count?: boolean | Prisma.LeadCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["lead"]>
 
 export type LeadSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  associationName?: boolean
   contactName?: boolean
   email?: boolean
   mobile?: boolean
-  customerType?: boolean
-  address?: boolean
-  city?: boolean
-  state?: boolean
-  pincode?: boolean
   source?: boolean
   notes?: boolean
-  nextFollowUpAt?: boolean
-  followUpRemarks?: boolean
-  nextAction?: boolean
-  siteName?: boolean
-  siteAddress?: boolean
-  siteCity?: boolean
-  siteState?: boolean
   status?: boolean
   assignedToId?: boolean
   createdById?: boolean
-  clientId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  associationName?: boolean
+  clientId?: boolean
+  address?: boolean
+  city?: boolean
+  customerType?: boolean
+  followUpRemarks?: boolean
+  nextAction?: boolean
+  nextFollowUpAt?: boolean
+  pincode?: boolean
+  siteAddress?: boolean
+  siteCity?: boolean
+  siteName?: boolean
+  siteState?: boolean
+  state?: boolean
   assignedTo?: boolean | Prisma.Lead$assignedToArgs<ExtArgs>
-  createdBy?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   client?: boolean | Prisma.Lead$clientArgs<ExtArgs>
+  createdBy?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["lead"]>
 
 export type LeadSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  associationName?: boolean
   contactName?: boolean
   email?: boolean
   mobile?: boolean
-  customerType?: boolean
-  address?: boolean
-  city?: boolean
-  state?: boolean
-  pincode?: boolean
   source?: boolean
   notes?: boolean
-  nextFollowUpAt?: boolean
-  followUpRemarks?: boolean
-  nextAction?: boolean
-  siteName?: boolean
-  siteAddress?: boolean
-  siteCity?: boolean
-  siteState?: boolean
   status?: boolean
   assignedToId?: boolean
   createdById?: boolean
-  clientId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  associationName?: boolean
+  clientId?: boolean
+  address?: boolean
+  city?: boolean
+  customerType?: boolean
+  followUpRemarks?: boolean
+  nextAction?: boolean
+  nextFollowUpAt?: boolean
+  pincode?: boolean
+  siteAddress?: boolean
+  siteCity?: boolean
+  siteName?: boolean
+  siteState?: boolean
+  state?: boolean
   assignedTo?: boolean | Prisma.Lead$assignedToArgs<ExtArgs>
-  createdBy?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   client?: boolean | Prisma.Lead$clientArgs<ExtArgs>
+  createdBy?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["lead"]>
 
 export type LeadSelectScalar = {
   id?: boolean
-  associationName?: boolean
   contactName?: boolean
   email?: boolean
   mobile?: boolean
-  customerType?: boolean
-  address?: boolean
-  city?: boolean
-  state?: boolean
-  pincode?: boolean
   source?: boolean
   notes?: boolean
-  nextFollowUpAt?: boolean
-  followUpRemarks?: boolean
-  nextAction?: boolean
-  siteName?: boolean
-  siteAddress?: boolean
-  siteCity?: boolean
-  siteState?: boolean
   status?: boolean
   assignedToId?: boolean
   createdById?: boolean
-  clientId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  associationName?: boolean
+  clientId?: boolean
+  address?: boolean
+  city?: boolean
+  customerType?: boolean
+  followUpRemarks?: boolean
+  nextAction?: boolean
+  nextFollowUpAt?: boolean
+  pincode?: boolean
+  siteAddress?: boolean
+  siteCity?: boolean
+  siteName?: boolean
+  siteState?: boolean
+  state?: boolean
 }
 
-export type LeadOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "associationName" | "contactName" | "email" | "mobile" | "customerType" | "address" | "city" | "state" | "pincode" | "source" | "notes" | "nextFollowUpAt" | "followUpRemarks" | "nextAction" | "siteName" | "siteAddress" | "siteCity" | "siteState" | "status" | "assignedToId" | "createdById" | "clientId" | "createdAt" | "updatedAt", ExtArgs["result"]["lead"]>
+export type LeadOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "contactName" | "email" | "mobile" | "source" | "notes" | "status" | "assignedToId" | "createdById" | "createdAt" | "updatedAt" | "associationName" | "clientId" | "address" | "city" | "customerType" | "followUpRemarks" | "nextAction" | "nextFollowUpAt" | "pincode" | "siteAddress" | "siteCity" | "siteName" | "siteState" | "state", ExtArgs["result"]["lead"]>
 export type LeadInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  assignedTo?: boolean | Prisma.Lead$assignedToArgs<ExtArgs>
-  createdBy?: boolean | Prisma.UserDefaultArgs<ExtArgs>
-  client?: boolean | Prisma.Lead$clientArgs<ExtArgs>
   activities?: boolean | Prisma.Lead$activitiesArgs<ExtArgs>
-  serviceSelections?: boolean | Prisma.Lead$serviceSelectionsArgs<ExtArgs>
+  assignedTo?: boolean | Prisma.Lead$assignedToArgs<ExtArgs>
+  client?: boolean | Prisma.Lead$clientArgs<ExtArgs>
+  createdBy?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   assets?: boolean | Prisma.Lead$assetsArgs<ExtArgs>
+  serviceSelections?: boolean | Prisma.Lead$serviceSelectionsArgs<ExtArgs>
   psgas?: boolean | Prisma.Lead$psgasArgs<ExtArgs>
   _count?: boolean | Prisma.LeadCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type LeadIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   assignedTo?: boolean | Prisma.Lead$assignedToArgs<ExtArgs>
-  createdBy?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   client?: boolean | Prisma.Lead$clientArgs<ExtArgs>
+  createdBy?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }
 export type LeadIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   assignedTo?: boolean | Prisma.Lead$assignedToArgs<ExtArgs>
-  createdBy?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   client?: boolean | Prisma.Lead$clientArgs<ExtArgs>
+  createdBy?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }
 
 export type $LeadPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Lead"
   objects: {
-    assignedTo: Prisma.$UserPayload<ExtArgs> | null
-    createdBy: Prisma.$UserPayload<ExtArgs>
-    client: Prisma.$ClientPayload<ExtArgs> | null
     activities: Prisma.$ActivityPayload<ExtArgs>[]
-    serviceSelections: Prisma.$LeadServiceSelectionPayload<ExtArgs>[]
+    assignedTo: Prisma.$UserPayload<ExtArgs> | null
+    client: Prisma.$ClientPayload<ExtArgs> | null
+    createdBy: Prisma.$UserPayload<ExtArgs>
     assets: Prisma.$LeadAssetPayload<ExtArgs>[]
+    serviceSelections: Prisma.$LeadServiceSelectionPayload<ExtArgs>[]
     psgas: Prisma.$PSGAPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
-    associationName: string
     contactName: string
     email: string | null
     mobile: string | null
-    customerType: string | null
-    address: string | null
-    city: string | null
-    state: string | null
-    pincode: string | null
     source: string | null
     notes: string | null
-    nextFollowUpAt: Date | null
-    followUpRemarks: string | null
-    nextAction: string | null
-    siteName: string | null
-    siteAddress: string | null
-    siteCity: string | null
-    siteState: string | null
     status: $Enums.LeadStatus
     assignedToId: string | null
     createdById: string
-    clientId: string | null
     createdAt: Date
     updatedAt: Date
+    associationName: string
+    clientId: string | null
+    address: string | null
+    city: string | null
+    customerType: string | null
+    followUpRemarks: string | null
+    nextAction: string | null
+    nextFollowUpAt: Date | null
+    pincode: string | null
+    siteAddress: string | null
+    siteCity: string | null
+    siteName: string | null
+    siteState: string | null
+    state: string | null
   }, ExtArgs["result"]["lead"]>
   composites: {}
 }
@@ -2755,12 +2755,12 @@ readonly fields: LeadFieldRefs;
  */
 export interface Prisma__LeadClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  assignedTo<T extends Prisma.Lead$assignedToArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Lead$assignedToArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-  createdBy<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-  client<T extends Prisma.Lead$clientArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Lead$clientArgs<ExtArgs>>): Prisma.Prisma__ClientClient<runtime.Types.Result.GetResult<Prisma.$ClientPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   activities<T extends Prisma.Lead$activitiesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Lead$activitiesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ActivityPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  serviceSelections<T extends Prisma.Lead$serviceSelectionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Lead$serviceSelectionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LeadServiceSelectionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  assignedTo<T extends Prisma.Lead$assignedToArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Lead$assignedToArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  client<T extends Prisma.Lead$clientArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Lead$clientArgs<ExtArgs>>): Prisma.Prisma__ClientClient<runtime.Types.Result.GetResult<Prisma.$ClientPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  createdBy<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   assets<T extends Prisma.Lead$assetsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Lead$assetsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LeadAssetPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  serviceSelections<T extends Prisma.Lead$serviceSelectionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Lead$serviceSelectionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LeadServiceSelectionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   psgas<T extends Prisma.Lead$psgasArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Lead$psgasArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PSGAPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -2792,30 +2792,30 @@ export interface Prisma__LeadClient<T, Null = never, ExtArgs extends runtime.Typ
  */
 export interface LeadFieldRefs {
   readonly id: Prisma.FieldRef<"Lead", 'String'>
-  readonly associationName: Prisma.FieldRef<"Lead", 'String'>
   readonly contactName: Prisma.FieldRef<"Lead", 'String'>
   readonly email: Prisma.FieldRef<"Lead", 'String'>
   readonly mobile: Prisma.FieldRef<"Lead", 'String'>
-  readonly customerType: Prisma.FieldRef<"Lead", 'String'>
-  readonly address: Prisma.FieldRef<"Lead", 'String'>
-  readonly city: Prisma.FieldRef<"Lead", 'String'>
-  readonly state: Prisma.FieldRef<"Lead", 'String'>
-  readonly pincode: Prisma.FieldRef<"Lead", 'String'>
   readonly source: Prisma.FieldRef<"Lead", 'String'>
   readonly notes: Prisma.FieldRef<"Lead", 'String'>
-  readonly nextFollowUpAt: Prisma.FieldRef<"Lead", 'DateTime'>
-  readonly followUpRemarks: Prisma.FieldRef<"Lead", 'String'>
-  readonly nextAction: Prisma.FieldRef<"Lead", 'String'>
-  readonly siteName: Prisma.FieldRef<"Lead", 'String'>
-  readonly siteAddress: Prisma.FieldRef<"Lead", 'String'>
-  readonly siteCity: Prisma.FieldRef<"Lead", 'String'>
-  readonly siteState: Prisma.FieldRef<"Lead", 'String'>
   readonly status: Prisma.FieldRef<"Lead", 'LeadStatus'>
   readonly assignedToId: Prisma.FieldRef<"Lead", 'String'>
   readonly createdById: Prisma.FieldRef<"Lead", 'String'>
-  readonly clientId: Prisma.FieldRef<"Lead", 'String'>
   readonly createdAt: Prisma.FieldRef<"Lead", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Lead", 'DateTime'>
+  readonly associationName: Prisma.FieldRef<"Lead", 'String'>
+  readonly clientId: Prisma.FieldRef<"Lead", 'String'>
+  readonly address: Prisma.FieldRef<"Lead", 'String'>
+  readonly city: Prisma.FieldRef<"Lead", 'String'>
+  readonly customerType: Prisma.FieldRef<"Lead", 'String'>
+  readonly followUpRemarks: Prisma.FieldRef<"Lead", 'String'>
+  readonly nextAction: Prisma.FieldRef<"Lead", 'String'>
+  readonly nextFollowUpAt: Prisma.FieldRef<"Lead", 'DateTime'>
+  readonly pincode: Prisma.FieldRef<"Lead", 'String'>
+  readonly siteAddress: Prisma.FieldRef<"Lead", 'String'>
+  readonly siteCity: Prisma.FieldRef<"Lead", 'String'>
+  readonly siteName: Prisma.FieldRef<"Lead", 'String'>
+  readonly siteState: Prisma.FieldRef<"Lead", 'String'>
+  readonly state: Prisma.FieldRef<"Lead", 'String'>
 }
     
 
@@ -3217,6 +3217,30 @@ export type LeadDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Internal
 }
 
 /**
+ * Lead.activities
+ */
+export type Lead$activitiesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Activity
+   */
+  select?: Prisma.ActivitySelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Activity
+   */
+  omit?: Prisma.ActivityOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ActivityInclude<ExtArgs> | null
+  where?: Prisma.ActivityWhereInput
+  orderBy?: Prisma.ActivityOrderByWithRelationInput | Prisma.ActivityOrderByWithRelationInput[]
+  cursor?: Prisma.ActivityWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ActivityScalarFieldEnum | Prisma.ActivityScalarFieldEnum[]
+}
+
+/**
  * Lead.assignedTo
  */
 export type Lead$assignedToArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -3255,27 +3279,27 @@ export type Lead$clientArgs<ExtArgs extends runtime.Types.Extensions.InternalArg
 }
 
 /**
- * Lead.activities
+ * Lead.assets
  */
-export type Lead$activitiesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type Lead$assetsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Select specific fields to fetch from the Activity
+   * Select specific fields to fetch from the LeadAsset
    */
-  select?: Prisma.ActivitySelect<ExtArgs> | null
+  select?: Prisma.LeadAssetSelect<ExtArgs> | null
   /**
-   * Omit specific fields from the Activity
+   * Omit specific fields from the LeadAsset
    */
-  omit?: Prisma.ActivityOmit<ExtArgs> | null
+  omit?: Prisma.LeadAssetOmit<ExtArgs> | null
   /**
    * Choose, which related nodes to fetch as well
    */
-  include?: Prisma.ActivityInclude<ExtArgs> | null
-  where?: Prisma.ActivityWhereInput
-  orderBy?: Prisma.ActivityOrderByWithRelationInput | Prisma.ActivityOrderByWithRelationInput[]
-  cursor?: Prisma.ActivityWhereUniqueInput
+  include?: Prisma.LeadAssetInclude<ExtArgs> | null
+  where?: Prisma.LeadAssetWhereInput
+  orderBy?: Prisma.LeadAssetOrderByWithRelationInput | Prisma.LeadAssetOrderByWithRelationInput[]
+  cursor?: Prisma.LeadAssetWhereUniqueInput
   take?: number
   skip?: number
-  distinct?: Prisma.ActivityScalarFieldEnum | Prisma.ActivityScalarFieldEnum[]
+  distinct?: Prisma.LeadAssetScalarFieldEnum | Prisma.LeadAssetScalarFieldEnum[]
 }
 
 /**
@@ -3300,30 +3324,6 @@ export type Lead$serviceSelectionsArgs<ExtArgs extends runtime.Types.Extensions.
   take?: number
   skip?: number
   distinct?: Prisma.LeadServiceSelectionScalarFieldEnum | Prisma.LeadServiceSelectionScalarFieldEnum[]
-}
-
-/**
- * Lead.assets
- */
-export type Lead$assetsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the LeadAsset
-   */
-  select?: Prisma.LeadAssetSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the LeadAsset
-   */
-  omit?: Prisma.LeadAssetOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.LeadAssetInclude<ExtArgs> | null
-  where?: Prisma.LeadAssetWhereInput
-  orderBy?: Prisma.LeadAssetOrderByWithRelationInput | Prisma.LeadAssetOrderByWithRelationInput[]
-  cursor?: Prisma.LeadAssetWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.LeadAssetScalarFieldEnum | Prisma.LeadAssetScalarFieldEnum[]
 }
 
 /**

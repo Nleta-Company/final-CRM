@@ -1,5 +1,4 @@
 import { z } from "zod";
-
 import prisma from "../config/prisma.js";
 
 // ============================================================
@@ -103,26 +102,42 @@ function calculateAmounts({
 }
 
 // ============================================================
-// VALIDATE PRICING RULE
+// VALIDATE QUANTITY AGAINST PRICING RULE
 // ============================================================
 
 function validateQuantityAgainstRule(
     quantity,
     pricingRule
 ) {
+    const numericQuantity = Number(quantity);
+
+    // Quantity must always be a valid positive number.
     if (
-        pricingRule.minQuantity !== null &&
-        quantity < pricingRule.minQuantity
+        !Number.isFinite(numericQuantity) ||
+        numericQuantity <= 0
     ) {
         return false;
     }
 
+    // Minimum quantity is respected.
     if (
-        pricingRule.maxQuantity !== null &&
-        quantity > pricingRule.maxQuantity
+        pricingRule.minQuantity !== null &&
+        numericQuantity <
+            Number(pricingRule.minQuantity)
     ) {
         return false;
     }
+
+    // IMPORTANT:
+    // maxQuantity is intentionally NOT checked.
+    //
+    // This allows requirement-driven quantities such as:
+    // 1, 2, 5, 10, 50, 100, etc.
+    //
+    // Example:
+    // pricingRule.maxQuantity = 1
+    // quantity = 10
+    // => VALID
 
     return true;
 }
@@ -231,7 +246,7 @@ export async function addLeadServiceSelection(
         }
 
         // --------------------------------------------------------
-        // Service
+        // SERVICE
         // --------------------------------------------------------
 
         const service =
@@ -258,7 +273,7 @@ export async function addLeadServiceSelection(
         }
 
         // --------------------------------------------------------
-        // Pricing Rule
+        // PRICING RULE
         // --------------------------------------------------------
 
         const pricingRule =
@@ -279,7 +294,7 @@ export async function addLeadServiceSelection(
         }
 
         // --------------------------------------------------------
-        // Quantity Validation
+        // QUANTITY VALIDATION
         // --------------------------------------------------------
 
         if (
@@ -291,26 +306,25 @@ export async function addLeadServiceSelection(
             return res.status(400).json({
                 success: false,
                 message:
-                    `Quantity must be between ${
-                        pricingRule.minQuantity ??
-                        "minimum"
-                    } and ${
-                        pricingRule.maxQuantity ??
-                        "maximum"
+                    `Quantity must be at least ${
+                        pricingRule.minQuantity ?? 1
                     } for the selected pricing rule`,
             });
         }
 
         // --------------------------------------------------------
-        // IMPORTANT:
-        // Duplicate service check has intentionally been removed.
+        // DUPLICATE SERVICE CHECK
+        // --------------------------------------------------------
         //
-        // Same service can now be selected multiple times
+        // Intentionally removed.
+        //
+        // Same service can be selected multiple times
         // for the same lead.
+        //
         // --------------------------------------------------------
 
         // --------------------------------------------------------
-        // Calculate Amounts
+        // CALCULATE AMOUNTS
         // --------------------------------------------------------
 
         const amounts =
@@ -326,7 +340,7 @@ export async function addLeadServiceSelection(
             });
 
         // --------------------------------------------------------
-        // Create Selection Snapshot
+        // CREATE SELECTION SNAPSHOT
         // --------------------------------------------------------
 
         const selection =
@@ -449,6 +463,10 @@ export async function updateLeadServiceSelection(
             });
         }
 
+        // --------------------------------------------------------
+        // EXISTING SELECTION
+        // --------------------------------------------------------
+
         const existingSelection =
             await prisma.leadServiceSelection.findFirst({
                 where: {
@@ -466,7 +484,7 @@ export async function updateLeadServiceSelection(
         }
 
         // --------------------------------------------------------
-        // Pricing Rule
+        // PRICING RULE
         // --------------------------------------------------------
 
         const pricingRule =
@@ -490,7 +508,7 @@ export async function updateLeadServiceSelection(
         }
 
         // --------------------------------------------------------
-        // Quantity Validation
+        // QUANTITY VALIDATION
         // --------------------------------------------------------
 
         if (
@@ -502,18 +520,14 @@ export async function updateLeadServiceSelection(
             return res.status(400).json({
                 success: false,
                 message:
-                    `Quantity must be between ${
-                        pricingRule.minQuantity ??
-                        "minimum"
-                    } and ${
-                        pricingRule.maxQuantity ??
-                        "maximum"
+                    `Quantity must be at least ${
+                        pricingRule.minQuantity ?? 1
                     } for the selected pricing rule`,
             });
         }
 
         // --------------------------------------------------------
-        // Calculate
+        // CALCULATE
         // --------------------------------------------------------
 
         const amounts =
@@ -529,7 +543,7 @@ export async function updateLeadServiceSelection(
             });
 
         // --------------------------------------------------------
-        // Update Selection
+        // UPDATE SELECTION
         // --------------------------------------------------------
 
         const selection =
@@ -661,7 +675,7 @@ export async function deleteLeadServiceSelection(
         return res.status(500).json({
             success: false,
             message:
-                "Unable to remove service from lead",
+                "Unable to remove lead service selection",
         });
     }
 }

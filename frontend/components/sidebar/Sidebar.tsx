@@ -263,11 +263,7 @@ export default function Sidebar({
             </svg>
           ),
           children: [
-            {
-              id: "bde-dashboard",
-              label: "Sales Dashboard",
-              href: "/bde/dashboard",
-            },
+           
             {
               id: "bde-view",
               label: "Sales Reps Directory",

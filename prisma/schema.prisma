@@ -289,11 +289,15 @@ model Client {
   // EXTERNAL SYSTEM REFERENCES
   // ==========================================================
 
+  processStage ClientProcessStage @default(CLIENT_CREATED)
+
   externalClientId String?
 
   fsoNumber String?
 
   fsoGeneratedAt DateTime?
+
+  psgaNumber String?
 
   psgaGeneratedAt DateTime?
 

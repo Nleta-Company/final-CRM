@@ -24,12 +24,12 @@ export default function EditBdePage({
     async function fetchBde() {
       try {
         setLoading(true);
+        setNotFound(false);
 
         const data = await bdeService.getBdeById(bdeId);
 
         if (data) {
           setBde(data);
-          setNotFound(false);
         } else {
           setNotFound(true);
         }
@@ -41,7 +41,7 @@ export default function EditBdePage({
       }
     }
 
-    fetchBde();
+    void fetchBde();
   }, [bdeId]);
 
   if (loading) {
@@ -93,9 +93,7 @@ export default function EditBdePage({
 
           <div className="mt-6 flex justify-center">
             <Link href="/bde">
-              <Button variant="primary">
-                Return to BDE Team
-              </Button>
+              <Button variant="primary">Return to BDE Team</Button>
             </Link>
           </div>
         </div>
@@ -129,7 +127,7 @@ export default function EditBdePage({
         }
       />
 
-      <BdeForm isEdit />
+      <BdeForm isEdit initialData={bde} />
     </div>
   );
 }

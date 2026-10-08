@@ -7,200 +7,120 @@ datasource db {
   provider = "postgresql"
 }
 
-// ============================================================
-// USER / RBAC
-// ============================================================
-
-enum UserStatus {
-  ACTIVE
-  INACTIVE
-  SUSPENDED
-}
-
 model Role {
-  id          String  @id @default(cuid())
-  name        String  @unique
+  id          String           @id @default(cuid())
+  name        String           @unique
   description String?
-
-  users       User[]
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt
   permissions RolePermission[]
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  users       User[]
 }
 
 model Permission {
-  id          String  @id @default(cuid())
-  name        String  @unique
+  id          String           @id @default(cuid())
+  name        String           @unique
   description String?
-
-  roles RolePermission[]
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt
+  roles       RolePermission[]
 }
 
 model RolePermission {
-  id           String @id @default(cuid())
+  id           String     @id @default(cuid())
   roleId       String
   permissionId String
-
-  role       Role       @relation(fields: [roleId], references: [id], onDelete: Cascade)
-  permission Permission @relation(fields: [permissionId], references: [id], onDelete: Cascade)
-
-  createdAt DateTime @default(now())
+  createdAt    DateTime   @default(now())
+  permission   Permission @relation(fields: [permissionId], references: [id], onDelete: Cascade)
+  role         Role       @relation(fields: [roleId], references: [id], onDelete: Cascade)
 
   @@unique([roleId, permissionId])
 }
 
 model User {
-  id String @id @default(cuid())
+  id                        String                    @id @default(cuid())
+  firstName                 String
+  lastName                  String?
+  email                     String                    @unique
+  passwordHash              String
 
-  firstName String
-  lastName  String?
-
-  email        String @unique
-  passwordHash String
-
-  mobile String?
-
-  status UserStatus @default(ACTIVE)
-
-  roleId String
-  role   Role   @relation(fields: [roleId], references: [id])
-
-  clientsCreated  Client[] @relation("ClientCreatedBy")
-  assignedClients Client[] @relation("ClientAssignedBDE")
-
-  assignedLeads Lead[]
-  createdLeads  Lead[] @relation("LeadCreatedBy")
-
-  activities    Activity[]
-  notifications Notification[]
-
-  // Lead / Client selected service records
-  leadServiceSelections   LeadServiceSelection[]
-  clientServiceSelections ClientServiceSelection[]
-
-  // ==========================================================
-  // PSGA / INCENTIVE RELATIONS
-  // ==========================================================
-
-  // Original / primary BDE responsible for the PSGA
-  psgasAsBde PSGA[] @relation("PSGABDE")
-
-  // BDE receiving an incentive allocation
-  incentiveAllocations PSGAIncentiveAllocation[] @relation("IncentiveBDE")
-
-  // Admin receiving an incentive allocation
+  designation               String?
+  region                    String?
+  mobile                    String?
+  status                    UserStatus                @default(ACTIVE)
+  roleId                    String
+  lastLoginAt               DateTime?
+  createdAt                 DateTime                  @default(now())
+  updatedAt                 DateTime                  @updatedAt
+  activities                Activity[]
+  sessions                  AuthSession[]
+  assignedClients           Client[]                  @relation("ClientAssignedBDE")
+  clientsCreated            Client[]                  @relation("ClientCreatedBy")
+  clientServiceSelections   ClientServiceSelection[]
+  approvedIncentivePayouts  IncentivePayout[]         @relation("IncentivePayoutApprovedBy")
+  incentivePayouts          IncentivePayout[]         @relation("IncentivePayoutBDE")
+  assignedLeads             Lead[]
+  createdLeads              Lead[]                    @relation("LeadCreatedBy")
+  leadServiceSelections     LeadServiceSelection[]
+  notifications             Notification[]
+  psgasAsBde                PSGA[]                    @relation("PSGABDE")
   adminIncentiveAllocations PSGAIncentiveAllocation[] @relation("IncentiveAdmin")
-
-  // Admin who approves an incentive allocation
-  approvedIncentives PSGAIncentiveAllocation[] @relation("IncentiveApprovedBy")
-
-  // Monthly incentive payout records for salary processing
-  incentivePayouts IncentivePayout[] @relation("IncentivePayoutBDE")
-
-  // Admin who approves monthly incentive payouts
-  approvedIncentivePayouts IncentivePayout[] @relation("IncentivePayoutApprovedBy")
-
-  lastLoginAt DateTime?
-
-  sessions AuthSession[]
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  approvedIncentives        PSGAIncentiveAllocation[] @relation("IncentiveApprovedBy")
+  incentiveAllocations      PSGAIncentiveAllocation[] @relation("IncentiveBDE")
+  role                      Role                      @relation(fields: [roleId], references: [id])
 
   @@index([roleId])
   @@index([status])
 }
 
-// ============================================================
-// AUTH SESSIONS
-// ============================================================
-
 model AuthSession {
-  id String @id @default(cuid())
-
-  userId String
-  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  // Unique identifier stored inside JWT as "jti"
-  tokenId String @unique
-
+  id        String    @id @default(cuid())
+  userId    String
+  tokenId   String    @unique
   expiresAt DateTime
   revokedAt DateTime?
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([userId])
   @@index([expiresAt])
   @@index([revokedAt])
 }
 
-// ============================================================
-// LEADS
-// ============================================================
-
-enum LeadStatus {
-  NEW
-  CONTACTED
-  QUALIFIED
-  PROPOSAL_SENT
-  NEGOTIATION
-  WON
-  LOST
-}
-
 model Lead {
-  id String @id @default(cuid())
-
-  associationName String
-  contactName     String
-  email           String?
-  mobile          String?
-
-  customerType String?
-
-  address String?
-  city    String?
-  state   String?
-  pincode String?
-
-  source String?
-  notes  String?
-
-  nextFollowUpAt  DateTime?
-  followUpRemarks String?
-  nextAction      String?
-
-  siteName    String?
-  siteAddress String?
-  siteCity    String?
-  siteState   String?
-
-  status LeadStatus @default(NEW)
-
-  assignedToId String?
-  assignedTo   User?   @relation(fields: [assignedToId], references: [id])
-
-  createdById String
-  createdBy   User   @relation("LeadCreatedBy", fields: [createdById], references: [id])
-
-  clientId String? @unique
-  client   Client? @relation("LeadClient", fields: [clientId], references: [id])
-
-  activities Activity[]
-
+  id                String                 @id @default(cuid())
+  contactName       String
+  email             String?
+  mobile            String?
+  source            String?
+  notes             String?
+  status            LeadStatus             @default(NEW)
+  assignedToId      String?
+  createdById       String
+  createdAt         DateTime               @default(now())
+  updatedAt         DateTime               @updatedAt
+  associationName   String
+  clientId          String?                @unique
+  address           String?
+  city              String?
+  customerType      String?
+  followUpRemarks   String?
+  nextAction        String?
+  nextFollowUpAt    DateTime?
+  pincode           String?
+  siteAddress       String?
+  siteCity          String?
+  siteName          String?
+  siteState         String?
+  state             String?
+  activities        Activity[]
+  assignedTo        User?                  @relation(fields: [assignedToId], references: [id])
+  client            Client?                @relation("LeadClient", fields: [clientId], references: [id])
+  createdBy         User                   @relation("LeadCreatedBy", fields: [createdById], references: [id])
+  assets            LeadAsset[]
   serviceSelections LeadServiceSelection[]
-
-  assets LeadAsset[]
-
-  psgas PSGA[]
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  psgas             PSGA[]
 
   @@index([status])
   @@index([assignedToId])
@@ -214,11 +134,8 @@ model Lead {
 }
 
 model LeadAsset {
-  id String @id @default(cuid())
-
-  leadId String
-  lead   Lead   @relation(fields: [leadId], references: [id], onDelete: Cascade)
-
+  id                     String   @id @default(cuid())
+  leadId                 String
   assetName              String?
   assetReference         String?
   installationLocation   String?
@@ -227,113 +144,43 @@ model LeadAsset {
   installationYear       Int?
   existingAmc            String?
   currentServiceProvider String?
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt              DateTime @default(now())
+  updatedAt              DateTime @updatedAt
+  lead                   Lead     @relation(fields: [leadId], references: [id], onDelete: Cascade)
 
   @@index([leadId])
   @@index([assetReference])
 }
 
-// ============================================================
-// CLIENT PROCESS TRACKING
-// ============================================================
-//
-// CRM does NOT generate FSO or PSGA.
-//
-// FSO / PSGA are generated in the separate external dashboard.
-//
-// CRM only stores the current process stage and external
-// references so that Admin/BDE can see how far the client
-// process has reached.
-// ============================================================
-
-enum ClientProcessStage {
-  CLIENT_CREATED
-  FSO_GENERATED
-  PSGA_GENERATED
-  PSGA_COMPLETED
-}
-
-// ============================================================
-// CLIENTS
-// ============================================================
-
 model Client {
-  id String @id @default(cuid())
-
-  associationName String
-  contactName     String
-  email           String?
-  mobile          String?
-
-  address String?
-  city    String?
-  state   String?
-  pincode String?
-
-  gstNumber String?
-
-  status ClientStatus @default(ACTIVE)
-
-  // ==========================================================
-  // PROCESS TRACKING
-  // ==========================================================
-
-  // Current stage of the external FSO / PSGA process.
-  //
-  // CLIENT_CREATED
-  // FSO_GENERATED
-  // PSGA_GENERATED
-  // PSGA_COMPLETED
-  processStage ClientProcessStage @default(CLIENT_CREATED)
-
-  // ==========================================================
-  // EXTERNAL SYSTEM REFERENCES
-  // ==========================================================
-
-  // ID / reference of this client in the separate
-  // FSO / PSGA dashboard.
-  externalClientId String?
-
-  // FSO number/reference generated by the external system.
-  fsoNumber String?
-
-  // Timestamp when external FSO was generated.
-  fsoGeneratedAt DateTime?
-
-  // Timestamp when external PSGA was generated.
-  psgaGeneratedAt DateTime?
-
-  // Timestamp when the CRM process stage was last updated.
-  processUpdatedAt DateTime?
-
-  // ==========================================================
-  // CRM OWNERSHIP / ATTRIBUTION
-  // ==========================================================
-
-  createdById String
-  createdBy   User   @relation("ClientCreatedBy", fields: [createdById], references: [id])
-
-  assignedBdeId String?
-  assignedBde   User?   @relation("ClientAssignedBDE", fields: [assignedBdeId], references: [id])
-
-  // ==========================================================
-  // SOURCE LEAD
-  // ==========================================================
-
-  sourceLead Lead? @relation("LeadClient")
-
-  activities Activity[]
-
-  // Selected services + pricing
+  id                String                   @id @default(cuid())
+  associationName   String
+  contactName       String
+  email             String?
+  mobile            String?
+  address           String?
+  city              String?
+  state             String?
+  pincode           String?
+  gstNumber         String?
+  status            ClientStatus             @default(ACTIVE)
+  createdById       String
+  createdAt         DateTime                 @default(now())
+  updatedAt         DateTime                 @updatedAt
+  assignedBdeId     String?
+  externalClientId  String?
+  fsoGeneratedAt    DateTime?
+  fsoNumber         String?
+  processStage      ClientProcessStage       @default(CLIENT_CREATED)
+  processUpdatedAt  DateTime?
+  psgaNumber        String?
+  psgaGeneratedAt   DateTime?
+  activities        Activity[]
+  assignedBde       User?                    @relation("ClientAssignedBDE", fields: [assignedBdeId], references: [id])
+  createdBy         User                     @relation("ClientCreatedBy", fields: [createdById], references: [id])
   serviceSelections ClientServiceSelection[]
-
-  // PSGA records associated with this client
-  psgas PSGA[]
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  sourceLead        Lead?                    @relation("LeadClient")
+  psgas             PSGA[]
 
   @@index([associationName])
   @@index([email])
@@ -344,16 +191,251 @@ model Client {
   @@index([processStage])
   @@index([externalClientId])
   @@index([fsoNumber])
+  @@index([psgaNumber])
+}
+
+model Activity {
+  id          String         @id @default(cuid())
+  type        ActivityType
+  subject     String
+  description String?
+  followUpAt  DateTime?
+  status      ActivityStatus @default(PENDING)
+  leadId      String?
+  clientId    String?
+  createdById String
+  createdAt   DateTime       @default(now())
+  updatedAt   DateTime       @updatedAt
+  client      Client?        @relation(fields: [clientId], references: [id], onDelete: Cascade)
+  createdBy   User           @relation(fields: [createdById], references: [id])
+  lead        Lead?          @relation(fields: [leadId], references: [id], onDelete: Cascade)
+
+  @@index([type])
+  @@index([status])
+  @@index([followUpAt])
+  @@index([leadId])
+  @@index([clientId])
+  @@index([createdById])
+}
+
+model Notification {
+  id              String           @id @default(cuid())
+  type            NotificationType
+  title           String
+  message         String
+  isRead          Boolean          @default(false)
+  recipientId     String
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
+  notificationKey String?
+  referenceId     String?
+  referenceType   String?
+  recipient       User             @relation(fields: [recipientId], references: [id], onDelete: Cascade)
+
+  @@unique([recipientId, notificationKey])
+  @@index([recipientId])
+  @@index([isRead])
+  @@index([createdAt])
+  @@index([referenceId])
+  @@index([referenceType])
+}
+
+model ServiceCatalog {
+  id               String                   @id @default(cuid())
+  code             String                   @unique
+  name             String
+  description      String?
+  isActive         Boolean                  @default(true)
+  createdAt        DateTime                 @default(now())
+  updatedAt        DateTime                 @updatedAt
+  clientSelections ClientServiceSelection[]
+  leadSelections   LeadServiceSelection[]
+  pricingRules     ServicePricingRule[]
+
+  @@index([isActive])
+}
+
+model ServicePricingRule {
+  id            String         @id @default(cuid())
+  serviceId     String
+  pricingBasis  PricingBasis
+  pricingLabel  String?
+  assetCategory String?
+  minQuantity   Int?
+  maxQuantity   Int?
+  unitRate      Decimal        @db.Decimal(12, 2)
+  gstPercent    Decimal        @default(18) @db.Decimal(5, 2)
+  isActive      Boolean        @default(true)
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+  service       ServiceCatalog @relation(fields: [serviceId], references: [id], onDelete: Cascade)
+
+  @@index([serviceId])
+  @@index([pricingBasis])
+  @@index([isActive])
+}
+
+model LeadServiceSelection {
+  id            String         @id @default(cuid())
+  leadId        String
+  serviceId     String
+  serviceCode   String
+  serviceName   String
+  pricingBasis  PricingBasis
+  pricingLabel  String?
+  assetCategory String?
+  quantity      Decimal        @default(1) @db.Decimal(12, 2)
+  unitRate      Decimal        @db.Decimal(12, 2)
+  baseAmount    Decimal        @db.Decimal(14, 2)
+  gstPercent    Decimal        @default(18) @db.Decimal(5, 2)
+  gstAmount     Decimal        @default(0) @db.Decimal(14, 2)
+  totalAmount   Decimal        @db.Decimal(14, 2)
+  notes         String?
+  createdById   String
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+  createdBy     User           @relation(fields: [createdById], references: [id])
+  lead          Lead           @relation(fields: [leadId], references: [id], onDelete: Cascade)
+  service       ServiceCatalog @relation(fields: [serviceId], references: [id])
+
+  @@index([leadId])
+  @@index([serviceId])
+  @@index([createdById])
+}
+
+model ClientServiceSelection {
+  id            String         @id @default(cuid())
+  clientId      String
+  serviceId     String
+  serviceCode   String
+  serviceName   String
+  pricingBasis  PricingBasis
+  pricingLabel  String?
+  assetCategory String?
+  quantity      Decimal        @default(1) @db.Decimal(12, 2)
+  unitRate      Decimal        @db.Decimal(12, 2)
+  baseAmount    Decimal        @db.Decimal(14, 2)
+  gstPercent    Decimal        @default(18) @db.Decimal(5, 2)
+  gstAmount     Decimal        @default(0) @db.Decimal(14, 2)
+  totalAmount   Decimal        @db.Decimal(14, 2)
+  notes         String?
+  createdById   String
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+  client        Client         @relation(fields: [clientId], references: [id], onDelete: Cascade)
+  createdBy     User           @relation(fields: [createdById], references: [id])
+  service       ServiceCatalog @relation(fields: [serviceId], references: [id])
+
+  @@index([clientId])
+  @@index([serviceId])
+  @@index([createdById])
+}
+
+model PSGA {
+  id                   String                    @id @default(cuid())
+  psgNumber            String                    @unique
+  status               PSGAStatus                @default(GENERATED)
+  generatedAt          DateTime                  @default(now())
+  sentAt               DateTime?
+  acceptedAt           DateTime?
+  rejectedAt           DateTime?
+  clientId             String
+  leadId               String?
+  bdeId                String?
+  incentiveStatus      IncentiveStatus           @default(NOT_ELIGIBLE)
+  incentiveApprovedAt  DateTime?
+  incentivePaidAt      DateTime?
+  createdAt            DateTime                  @default(now())
+  updatedAt            DateTime                  @updatedAt
+  bde                  User?                     @relation("PSGABDE", fields: [bdeId], references: [id])
+  client               Client                    @relation(fields: [clientId], references: [id])
+  lead                 Lead?                     @relation(fields: [leadId], references: [id])
+  incentiveAllocations PSGAIncentiveAllocation[]
+
+  @@index([clientId])
+  @@index([leadId])
+  @@index([bdeId])
+  @@index([status])
+  @@index([incentiveStatus])
+}
+
+model PSGAIncentiveAllocation {
+  id               String                 @id @default(cuid())
+  psgId            String
+  bdeId            String?
+  role             IncentiveRole
+  reason           String?
+  incentivePercent Decimal                @db.Decimal(5, 2)
+  status           IncentiveStatus        @default(NOT_ELIGIBLE)
+  approvedById     String?
+  approvedAt       DateTime?
+  paidAt           DateTime?
+  createdAt        DateTime               @default(now())
+  updatedAt        DateTime               @updatedAt
+  adminId          String?
+  recipientType    IncentiveRecipientType @default(BDE)
+  admin            User?                  @relation("IncentiveAdmin", fields: [adminId], references: [id])
+  approvedBy       User?                  @relation("IncentiveApprovedBy", fields: [approvedById], references: [id])
+  bde              User?                  @relation("IncentiveBDE", fields: [bdeId], references: [id])
+  psg              PSGA                   @relation(fields: [psgId], references: [id], onDelete: Cascade)
+
+  @@index([psgId])
+  @@index([bdeId])
+  @@index([adminId])
+  @@index([approvedById])
+  @@index([status])
+  @@index([role])
+  @@index([recipientType])
+}
+
+model IncentivePayout {
+  id                    String                @id @default(cuid())
+  bdeId                 String
+  salaryMonth           DateTime
+  status                IncentivePayoutStatus @default(PENDING)
+  approvedById          String?
+  approvedAt            DateTime?
+  paidAt                DateTime?
+  paymentReference      String?
+  createdAt             DateTime              @default(now())
+  updatedAt             DateTime              @updatedAt
+  totalIncentivePercent Decimal               @db.Decimal(7, 2)
+  approvedBy            User?                 @relation("IncentivePayoutApprovedBy", fields: [approvedById], references: [id])
+  bde                   User                  @relation("IncentivePayoutBDE", fields: [bdeId], references: [id])
+
+  @@unique([bdeId, salaryMonth])
+  @@index([bdeId])
+  @@index([salaryMonth])
+  @@index([status])
+}
+
+enum UserStatus {
+  ACTIVE
+  INACTIVE
+  SUSPENDED
+}
+
+enum LeadStatus {
+  NEW
+  CONTACTED
+  QUALIFIED
+  PROPOSAL_SENT
+  NEGOTIATION
+  WON
+  LOST
+}
+
+enum ClientProcessStage {
+  CLIENT_CREATED
+  FSO_GENERATED
+  PSGA_GENERATED
+  PSGA_COMPLETED
 }
 
 enum ClientStatus {
   ACTIVE
   INACTIVE
 }
-
-// ============================================================
-// ACTIVITIES
-// ============================================================
 
 enum ActivityType {
   CALL
@@ -369,85 +451,15 @@ enum ActivityStatus {
   CANCELLED
 }
 
-model Activity {
-  id          String       @id @default(cuid())
-  type        ActivityType
-  subject     String
-  description String?
-
-  followUpAt DateTime?
-  status     ActivityStatus @default(PENDING)
-
-  leadId String?
-  lead   Lead?   @relation(fields: [leadId], references: [id], onDelete: Cascade)
-
-  clientId String?
-  client   Client? @relation(fields: [clientId], references: [id], onDelete: Cascade)
-
-  createdById String
-  createdBy   User   @relation(fields: [createdById], references: [id])
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  @@index([type])
-  @@index([status])
-  @@index([followUpAt])
-  @@index([leadId])
-  @@index([clientId])
-  @@index([createdById])
-}
-
-// ============================================================
-// NOTIFICATIONS
-// ============================================================
-
 enum NotificationType {
   LEAD_ASSIGNED
-  FOLLOW_UP_REMINDER
   FOLLOW_UP_DUE
   FOLLOW_UP_OVERDUE
   LEAD_CONVERTED
   ACTIVITY_CREATED
   GENERAL
+  FOLLOW_UP_REMINDER
 }
-
-model Notification {
-  id String @id @default(cuid())
-
-  type    NotificationType
-  title   String
-  message String
-
-  isRead Boolean @default(false)
-
-  // ==========================================================
-  // OPTIONAL REFERENCE
-  // ==========================================================
-
-  referenceId   String?
-  referenceType String?
-
-  // Prevent duplicate scheduler-generated notifications
-  notificationKey String?
-
-  recipientId String
-  recipient   User   @relation(fields: [recipientId], references: [id], onDelete: Cascade)
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  @@unique([recipientId, notificationKey])
-  @@index([recipientId])
-  @@index([isRead])
-  @@index([createdAt])
-  @@index([referenceId])
-  @@index([referenceType])
-}
-
-// ============================================================
-// SERVICE CATALOG
-// ============================================================
 
 enum PricingBasis {
   SERVICE_RATE
@@ -455,156 +467,6 @@ enum PricingBasis {
   LIFT_COUNT
   CUSTOM
 }
-
-model ServiceCatalog {
-  id          String  @id @default(cuid())
-  code        String  @unique
-  name        String
-  description String?
-
-  isActive Boolean @default(true)
-
-  pricingRules ServicePricingRule[]
-
-  leadSelections   LeadServiceSelection[]
-  clientSelections ClientServiceSelection[]
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  @@index([isActive])
-}
-
-// ============================================================
-// SERVICE PRICING RULE
-// ============================================================
-
-model ServicePricingRule {
-  id String @id @default(cuid())
-
-  serviceId String
-  service   ServiceCatalog @relation(fields: [serviceId], references: [id], onDelete: Cascade)
-
-  pricingBasis PricingBasis
-
-  pricingLabel String?
-
-  assetCategory String?
-
-  minQuantity Int?
-  maxQuantity Int?
-
-  unitRate Decimal @db.Decimal(12, 2)
-
-  gstPercent Decimal @default(18) @db.Decimal(5, 2)
-
-  isActive Boolean @default(true)
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  @@index([serviceId])
-  @@index([pricingBasis])
-  @@index([isActive])
-}
-
-// ============================================================
-// LEAD SELECTED SERVICES + PRICING
-// ============================================================
-
-model LeadServiceSelection {
-  id String @id @default(cuid())
-
-  leadId String
-  lead   Lead   @relation(fields: [leadId], references: [id], onDelete: Cascade)
-
-  serviceId String
-  service   ServiceCatalog @relation(fields: [serviceId], references: [id])
-
-  // Snapshot of service information
-  serviceCode String
-  serviceName String
-
-  pricingBasis PricingBasis
-
-  pricingLabel  String?
-  assetCategory String?
-
-  quantity Decimal @default(1) @db.Decimal(12, 2)
-
-  unitRate Decimal @db.Decimal(12, 2)
-
-  baseAmount Decimal @db.Decimal(14, 2)
-
-  gstPercent Decimal @default(18) @db.Decimal(5, 2)
-
-  gstAmount Decimal @default(0) @db.Decimal(14, 2)
-
-  totalAmount Decimal @db.Decimal(14, 2)
-
-  notes String?
-
-  createdById String
-  createdBy   User   @relation(fields: [createdById], references: [id])
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  @@index([leadId])
-  @@index([serviceId])
-  @@index([createdById])
-}
-
-// ============================================================
-// CLIENT SELECTED SERVICES + PRICING
-// ============================================================
-
-model ClientServiceSelection {
-  id String @id @default(cuid())
-
-  clientId String
-  client   Client @relation(fields: [clientId], references: [id], onDelete: Cascade)
-
-  serviceId String
-  service   ServiceCatalog @relation(fields: [serviceId], references: [id])
-
-  // Snapshot of service information
-  serviceCode String
-  serviceName String
-
-  pricingBasis PricingBasis
-
-  pricingLabel  String?
-  assetCategory String?
-
-  quantity Decimal @default(1) @db.Decimal(12, 2)
-
-  unitRate Decimal @db.Decimal(12, 2)
-
-  baseAmount Decimal @db.Decimal(14, 2)
-
-  gstPercent Decimal @default(18) @db.Decimal(5, 2)
-
-  gstAmount Decimal @default(0) @db.Decimal(14, 2)
-
-  totalAmount Decimal @db.Decimal(14, 2)
-
-  notes String?
-
-  createdById String
-  createdBy   User   @relation(fields: [createdById], references: [id])
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  @@index([clientId])
-  @@index([serviceId])
-  @@index([createdById])
-}
-
-// ============================================================
-// PSGA TRACKING + INCENTIVE MANAGEMENT
-// ============================================================
 
 enum PSGAStatus {
   GENERATED
@@ -631,225 +493,8 @@ enum IncentiveRecipientType {
   ADMIN
 }
 
-// ============================================================
-// PSGA
-// ============================================================
-
-model PSGA {
-  id String @id @default(cuid())
-
-  // ==========================================================
-  // PSGA NUMBER
-  // ==========================================================
-
-  // Generated by the existing Technical Dashboard.
-  // CRM only stores and tracks it.
-  psgNumber String @unique
-
-  status PSGAStatus @default(GENERATED)
-
-  generatedAt DateTime  @default(now())
-  sentAt      DateTime?
-  acceptedAt  DateTime?
-  rejectedAt  DateTime?
-
-  // ==========================================================
-  // CLIENT
-  // ==========================================================
-
-  clientId String
-  client   Client @relation(fields: [clientId], references: [id])
-
-  // ==========================================================
-  // ORIGINAL CRM LEAD
-  // ==========================================================
-
-  leadId String?
-  lead   Lead?   @relation(fields: [leadId], references: [id])
-
-  // ==========================================================
-  // PRIMARY / ORIGINAL BDE
-  // ==========================================================
-
-  // This is the BDE who originally owns the lead.
-  bdeId String?
-  bde   User?   @relation("PSGABDE", fields: [bdeId], references: [id])
-
-  // ==========================================================
-  // OVERALL INCENTIVE STATUS
-  // ==========================================================
-
-  incentiveStatus IncentiveStatus @default(NOT_ELIGIBLE)
-
-  incentiveApprovedAt DateTime?
-  incentivePaidAt     DateTime?
-
-  // ==========================================================
-  // INCENTIVE ALLOCATIONS
-  // ==========================================================
-
-  incentiveAllocations PSGAIncentiveAllocation[]
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  @@index([clientId])
-  @@index([leadId])
-  @@index([bdeId])
-  @@index([status])
-  @@index([incentiveStatus])
-}
-
-// ============================================================
-// PSGA INCENTIVE ALLOCATION
-// ============================================================
-
-model PSGAIncentiveAllocation {
-  id String @id @default(cuid())
-
-  // ==========================================================
-  // PSGA
-  // ==========================================================
-
-  psgId String
-  psg   PSGA   @relation(fields: [psgId], references: [id], onDelete: Cascade)
-
-  // ==========================================================
-  // RECIPIENT TYPE
-  // ==========================================================
-
-  // BDE:
-  // Incentive goes to the original/supporting BDE.
-  //
-  // ADMIN:
-  // Incentive goes to the Admin who directly created
-  // the Client.
-
-  recipientType IncentiveRecipientType @default(BDE)
-
-  // ==========================================================
-  // BDE RECEIVING THE INCENTIVE
-  // ==========================================================
-
-  bdeId String?
-
-  bde User? @relation("IncentiveBDE", fields: [bdeId], references: [id])
-
-  // ==========================================================
-  // ADMIN RECEIVING THE INCENTIVE
-  // ==========================================================
-
-  adminId String?
-
-  admin User? @relation("IncentiveAdmin", fields: [adminId], references: [id])
-
-  // ==========================================================
-  // INCENTIVE ROLE
-  // ==========================================================
-
-  role IncentiveRole
-
-  // ==========================================================
-  // SUPPORTING BDE REASON
-  // ==========================================================
-
-  reason String?
-
-  // ==========================================================
-  // INCENTIVE PERCENTAGE
-  // ==========================================================
-
-  incentivePercent Decimal @db.Decimal(5, 2)
-
-  // ==========================================================
-  // INCENTIVE STATUS
-  // ==========================================================
-
-  status IncentiveStatus @default(NOT_ELIGIBLE)
-
-  // ==========================================================
-  // ADMIN APPROVAL
-  // ==========================================================
-
-  approvedById String?
-
-  approvedBy User?     @relation("IncentiveApprovedBy", fields: [approvedById], references: [id])
-  approvedAt DateTime?
-  paidAt     DateTime?
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  @@index([psgId])
-  @@index([bdeId])
-  @@index([adminId])
-  @@index([approvedById])
-  @@index([status])
-  @@index([role])
-  @@index([recipientType])
-}
-
-// ============================================================
-// MONTHLY INCENTIVE PAYOUT
-// ============================================================
-
 enum IncentivePayoutStatus {
   PENDING
   APPROVED
   PAID
-}
-
-model IncentivePayout {
-  id String @id @default(cuid())
-
-  // ==========================================================
-  // BDE
-  // ==========================================================
-
-  bdeId String
-  bde   User   @relation("IncentivePayoutBDE", fields: [bdeId], references: [id])
-
-  // ==========================================================
-  // SALARY MONTH
-  // ==========================================================
-
-  salaryMonth DateTime
-
-  // ==========================================================
-  // TOTAL INCENTIVE PERCENTAGE
-  // ==========================================================
-
-  totalIncentivePercent Decimal @db.Decimal(7, 2)
-
-  // ==========================================================
-  // PAYOUT STATUS
-  // ==========================================================
-
-  status IncentivePayoutStatus @default(PENDING)
-
-  // ==========================================================
-  // ADMIN APPROVAL
-  // ==========================================================
-
-  approvedById String?
-
-  approvedBy User? @relation("IncentivePayoutApprovedBy", fields: [approvedById], references: [id])
-
-  approvedAt DateTime?
-
-  // ==========================================================
-  // SALARY PAYMENT
-  // ==========================================================
-
-  paidAt           DateTime?
-  paymentReference String?
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  // One monthly payout record per BDE per salary month
-  @@unique([bdeId, salaryMonth])
-  @@index([bdeId])
-  @@index([salaryMonth])
-  @@index([status])
 }

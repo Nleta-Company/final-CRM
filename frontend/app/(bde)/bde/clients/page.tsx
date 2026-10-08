@@ -1,34 +1,20 @@
 "use client";
 
-import React, {
-  useCallback,
-  useEffect,
-  useMemo,
-  useState,
-} from "react";
-
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 
 import Breadcrumb from "@/components/breadcrumb/Breadcrumb";
 import Button from "@/components/ui/Button";
-import DynamicTable, {
-  Column,
-} from "@/components/tables/DynamicTable";
-
+import DynamicTable, { Column } from "@/components/tables/DynamicTable";
 import { clientService } from "@/services/clientService";
 
-import type {
-  ClientItem,
-  ClientContractStatus,
-} from "@/types/client";
+import type { ClientItem, ClientContractStatus } from "@/types/client";
 
 // ============================================================
 // CONTRACT STATUSES
 // ============================================================
 
-const contractStatuses: Array<
-  ClientContractStatus | "ALL"
-> = [
+const contractStatuses: Array<ClientContractStatus | "ALL"> = [
   "ALL",
   "Active Agreement",
   "Pending Renewal",
@@ -38,32 +24,56 @@ const contractStatuses: Array<
 ];
 
 // ============================================================
-// DATE FORMAT
+// PROCESS STAGE LABEL
 // ============================================================
 
-function formatDate(value?: string) {
-  if (!value) return "—";
+function getProcessStageLabel(stage?: string | null) {
+  switch (stage) {
+    case "CLIENT_CREATED":
+      return "Client Created";
 
-  const date = new Date(value);
+    case "FSO_GENERATED":
+      return "FSO Generated";
 
-  if (Number.isNaN(date.getTime())) {
-    return value;
+    case "PSGA_GENERATED":
+      return "PSGA Generated";
+
+    case "PSGA_COMPLETED":
+      return "PSGA Completed";
+
+    default:
+      return "Not Started";
   }
-
-  return date.toLocaleDateString("en-IN", {
-    day: "2-digit",
-    month: "short",
-    year: "numeric",
-  });
 }
 
 // ============================================================
-// STATUS CLASS
+// PROCESS STAGE CLASS
 // ============================================================
 
-function statusClass(
-  status: ClientContractStatus
-) {
+function processStageClass(stage?: string | null) {
+  switch (stage) {
+    case "CLIENT_CREATED":
+      return "bg-gray-100 text-gray-700 border-gray-200 dark:bg-gray-800 dark:text-gray-300 dark:border-gray-700";
+
+    case "FSO_GENERATED":
+      return "bg-blue-50 text-blue-700 border-blue-200 dark:bg-blue-500/10 dark:text-blue-400 dark:border-blue-500/20";
+
+    case "PSGA_GENERATED":
+      return "bg-warning-50 text-warning-700 border-warning-200 dark:bg-warning-500/10 dark:text-warning-400 dark:border-warning-500/20";
+
+    case "PSGA_COMPLETED":
+      return "bg-success-50 text-success-700 border-success-200 dark:bg-success-500/10 dark:text-success-400 dark:border-success-500/20";
+
+    default:
+      return "bg-gray-100 text-gray-600 border-gray-200 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-700";
+  }
+}
+
+// ============================================================
+// CONTRACT STATUS CLASS
+// ============================================================
+
+function statusClass(status: ClientContractStatus) {
   switch (status) {
     case "Active Agreement":
       return "bg-success-50 text-success-700 border-success-200 dark:bg-success-500/10 dark:text-success-400 dark:border-success-500/20";
@@ -86,70 +96,61 @@ function statusClass(
 }
 
 // ============================================================
+// DATE FORMAT
+// ============================================================
+
+function formatDate(value?: string | null) {
+  if (!value) return "—";
+
+  const date = new Date(value);
+
+  if (Number.isNaN(date.getTime())) {
+    return value;
+  }
+
+  return date.toLocaleDateString("en-IN", {
+    day: "2-digit",
+    month: "short",
+    year: "numeric",
+  });
+}
+
+// ============================================================
 // PAGE
 // ============================================================
 
 export default function BdeClientsPage() {
-  const [clients, setClients] =
-    useState<ClientItem[]>([]);
-
-  const [loading, setLoading] =
-    useState(true);
-
-  const [error, setError] =
-    useState("");
-
-  const [search, setSearch] =
-    useState("");
-
+  const [clients, setClients] = useState<ClientItem[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+  const [search, setSearch] = useState("");
   const [contractStatus, setContractStatus] =
-    useState<ClientContractStatus | "ALL">(
-      "ALL"
-    );
+    useState<ClientContractStatus | "ALL">("ALL");
 
   // ==========================================================
   // LOAD CLIENTS
   // ==========================================================
 
-  const loadClients = useCallback(
-    async () => {
-      try {
-        setLoading(true);
-        setError("");
+  const loadClients = useCallback(async () => {
+    try {
+      setLoading(true);
+      setError("");
 
-        /*
-         * Backend decides which clients are accessible
-         * to the logged-in BDE.
-         *
-         * We intentionally do NOT filter by BDE id
-         * on the frontend.
-         */
+      const data = await clientService.getAllClients();
 
-        const data =
-          await clientService.getAllClients();
+      setClients(Array.isArray(data) ? data : []);
+    } catch (err: unknown) {
+      console.error("FAILED TO LOAD BDE CLIENTS:", err);
 
-        setClients(
-          Array.isArray(data)
-            ? data
-            : []
-        );
-      } catch (err: unknown) {
-        console.error(
-          "FAILED TO LOAD BDE CLIENTS:",
-          err
-        );
-
-        setError(
-          err instanceof Error
-            ? err.message
-            : "Unable to load your clients."
-        );
-      } finally {
-        setLoading(false);
-      }
-    },
-    []
-  );
+      setError(
+        err instanceof Error
+          ? err.message
+          : "Unable to load your clients."
+      );
+    } finally {
+      setLoading(false);
+    }
+  }, []);
 
   // ==========================================================
   // INITIAL LOAD + CLIENT CHANGE SUBSCRIPTION
@@ -158,12 +159,9 @@ export default function BdeClientsPage() {
   useEffect(() => {
     loadClients();
 
-    const unsubscribe =
-      clientService.subscribe(
-        () => {
-          void loadClients();
-        }
-      );
+    const unsubscribe = clientService.subscribe(() => {
+      void loadClients();
+    });
 
     return unsubscribe;
   }, [loadClients]);
@@ -173,110 +171,57 @@ export default function BdeClientsPage() {
   // ==========================================================
 
   const filteredClients = useMemo(() => {
-    const query =
-      search.trim().toLowerCase();
+    const query = search.trim().toLowerCase();
 
     return clients.filter((client) => {
-      // ------------------------------------------------------
-      // SEARCH
-      // ------------------------------------------------------
-
       if (query) {
         const matches =
-          client.companyName
-            .toLowerCase()
-            .includes(query) ||
-
-          client.contactPerson
-            .toLowerCase()
-            .includes(query) ||
-
-          client.contactEmail
-            .toLowerCase()
-            .includes(query) ||
-
-          client.contactPhone
-            .toLowerCase()
-            .includes(query) ||
-
-          client.city
-            .toLowerCase()
-            .includes(query) ||
-
-          client.state
-            .toLowerCase()
-            .includes(query);
+          client.companyName.toLowerCase().includes(query) ||
+          client.contactPerson.toLowerCase().includes(query) ||
+          client.contactEmail.toLowerCase().includes(query) ||
+          client.contactPhone.toLowerCase().includes(query) ||
+          client.city.toLowerCase().includes(query) ||
+          client.state.toLowerCase().includes(query);
 
         if (!matches) {
           return false;
         }
       }
 
-      // ------------------------------------------------------
-      // CONTRACT STATUS
-      // ------------------------------------------------------
-
       if (
         contractStatus !== "ALL" &&
-        client.contractStatus !==
-          contractStatus
+        client.contractStatus !== contractStatus
       ) {
         return false;
       }
 
       return true;
     });
-  }, [
-    clients,
-    search,
-    contractStatus,
-  ]);
+  }, [clients, search, contractStatus]);
 
   // ==========================================================
   // STATS
   // ==========================================================
 
   const stats = useMemo(() => {
-    const total =
-      clients.length;
+    const total = clients.length;
 
-    const active =
-      clients.filter(
-        (client) =>
-          client.contractStatus ===
-          "Active Agreement"
-      ).length;
+    const active = clients.filter(
+      (client) => client.contractStatus === "Active Agreement"
+    ).length;
 
-    const pendingRenewal =
-      clients.filter(
-        (client) =>
-          client.contractStatus ===
-          "Pending Renewal"
-      ).length;
+    const pendingRenewal = clients.filter(
+      (client) => client.contractStatus === "Pending Renewal"
+    ).length;
 
-    const onboarding =
-      clients.filter(
-        (client) =>
-          client.contractStatus ===
-          "Onboarding"
-      ).length;
+    const onboarding = clients.filter(
+      (client) => client.contractStatus === "Onboarding"
+    ).length;
 
-    /*
-     * Internally the backend field is still
-     * totalAssetsCount.
-     *
-     * In the UI we display this as Units.
-     */
-
-    const units =
-      clients.reduce(
-        (sum, client) =>
-          sum +
-          Number(
-            client.totalAssetsCount || 0
-          ),
-        0
-      );
+    const units = clients.reduce(
+      (sum, client) => sum + Number(client.totalAssetsCount || 0),
+      0
+    );
 
     return {
       total,
@@ -301,15 +246,10 @@ export default function BdeClientsPage() {
   // ==========================================================
 
   const columns: Column<ClientItem>[] = [
-    // --------------------------------------------------------
-    // CLIENT ID
-    // --------------------------------------------------------
-
     {
       key: "id",
       header: "Client ID",
       sortable: true,
-
       render: (row) => (
         <span className="font-mono text-xs font-semibold text-brand-600 dark:text-brand-400">
           {row.id}
@@ -317,15 +257,10 @@ export default function BdeClientsPage() {
       ),
     },
 
-    // --------------------------------------------------------
-    // CLIENT
-    // --------------------------------------------------------
-
     {
       key: "companyName",
       header: "Client",
       sortable: true,
-
       render: (row) => (
         <div className="min-w-[210px]">
           <span className="block font-semibold text-gray-900 dark:text-white">
@@ -339,15 +274,10 @@ export default function BdeClientsPage() {
       ),
     },
 
-    // --------------------------------------------------------
-    // CONTACT
-    // --------------------------------------------------------
-
     {
       key: "contactPerson",
       header: "Contact",
       sortable: true,
-
       render: (row) => (
         <div className="min-w-[180px]">
           <span className="block text-sm font-medium text-gray-800 dark:text-gray-200">
@@ -369,15 +299,10 @@ export default function BdeClientsPage() {
       ),
     },
 
-    // --------------------------------------------------------
-    // LOCATION
-    // --------------------------------------------------------
-
     {
       key: "city",
       header: "Location",
       sortable: true,
-
       render: (row) => (
         <div>
           <span className="block text-sm text-gray-700 dark:text-gray-300">
@@ -393,35 +318,43 @@ export default function BdeClientsPage() {
       ),
     },
 
-    // --------------------------------------------------------
-    // UNITS
-    // --------------------------------------------------------
-
     {
       key: "totalAssetsCount",
       header: "Units",
       sortable: true,
       align: "center",
-
       render: (row) => (
         <span className="text-sm font-semibold text-gray-800 dark:text-gray-200">
-          {Number(
-            row.totalAssetsCount || 0
-          )}
+          {Number(row.totalAssetsCount || 0)}
         </span>
       ),
     },
 
-    // --------------------------------------------------------
-    // CONTRACT
-    // --------------------------------------------------------
+    // ========================================================
+    // PROCESS STAGE
+    // ========================================================
+
+    {
+      key: "processStage",
+      header: "Process Stage",
+      sortable: true,
+      align: "center",
+      render: (row) => (
+        <span
+          className={`inline-flex whitespace-nowrap rounded-full border px-2.5 py-1 text-xs font-semibold ${processStageClass(
+            row.processStage
+          )}`}
+        >
+          {getProcessStageLabel(row.processStage)}
+        </span>
+      ),
+    },
 
     {
       key: "contractStatus",
       header: "Contract",
       sortable: true,
       align: "center",
-
       render: (row) => (
         <span
           className={`inline-flex whitespace-nowrap rounded-full border px-2.5 py-1 text-xs font-semibold ${statusClass(
@@ -433,33 +366,21 @@ export default function BdeClientsPage() {
       ),
     },
 
-    // --------------------------------------------------------
-    // JOINED
-    // --------------------------------------------------------
-
     {
       key: "joinedDate",
       header: "Joined",
       sortable: true,
-
       render: (row) => (
         <span className="whitespace-nowrap text-xs text-gray-600 dark:text-gray-400">
-          {formatDate(
-            row.joinedDate
-          )}
+          {formatDate(row.joinedDate)}
         </span>
       ),
     },
-
-    // --------------------------------------------------------
-    // ACTION
-    // --------------------------------------------------------
 
     {
       key: "actions",
       header: "Action",
       align: "center",
-
       render: (row) => (
         <div className="flex items-center justify-center gap-3">
           <Link
@@ -519,10 +440,6 @@ export default function BdeClientsPage() {
 
   return (
     <div className="space-y-6">
-      {/* ======================================================
-          BREADCRUMB
-      ====================================================== */}
-
       <Breadcrumb
         pageTitle="My Clients"
         items={[
@@ -536,19 +453,12 @@ export default function BdeClientsPage() {
         ]}
         actions={
           <Link href="/bde/clients/create">
-            <Button
-              variant="primary"
-              size="md"
-            >
+            <Button variant="primary" size="md">
               + Add Client
             </Button>
           </Link>
         }
       />
-
-      {/* ======================================================
-          ERROR
-      ====================================================== */}
 
       {error && (
         <div className="rounded-xl border border-error-200 bg-error-50 p-4 dark:border-error-500/20 dark:bg-error-500/10">
@@ -576,28 +486,17 @@ export default function BdeClientsPage() {
         </div>
       )}
 
-      {/* ======================================================
-          PAGE HEADING
-      ====================================================== */}
-
       <div>
         <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
           My Clients
         </h1>
 
         <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
-          Manage clients accessible to your
-          BDE account.
+          Manage clients accessible to your BDE account.
         </p>
       </div>
 
-      {/* ======================================================
-          STATS
-      ====================================================== */}
-
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        {/* TOTAL CLIENTS */}
-
         <div className="rounded-2xl border border-gray-200 bg-white p-5 shadow-theme-xs dark:border-gray-800 dark:bg-gray-900">
           <p className="text-xs font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400">
             Total Clients
@@ -611,8 +510,6 @@ export default function BdeClientsPage() {
             Accessible accounts
           </p>
         </div>
-
-        {/* ACTIVE AGREEMENTS */}
 
         <div className="rounded-2xl border border-success-100 bg-success-50/40 p-5 shadow-theme-xs dark:border-success-500/20 dark:bg-success-500/5">
           <p className="text-xs font-semibold uppercase tracking-wide text-success-700 dark:text-success-400">
@@ -628,8 +525,6 @@ export default function BdeClientsPage() {
           </p>
         </div>
 
-        {/* PENDING RENEWAL */}
-
         <div className="rounded-2xl border border-warning-100 bg-warning-50/40 p-5 shadow-theme-xs dark:border-warning-500/20 dark:bg-warning-500/5">
           <p className="text-xs font-semibold uppercase tracking-wide text-warning-700 dark:text-warning-400">
             Pending Renewal
@@ -643,8 +538,6 @@ export default function BdeClientsPage() {
             Requires follow-up
           </p>
         </div>
-
-        {/* UNITS MANAGED */}
 
         <div className="rounded-2xl border border-brand-100 bg-brand-50/40 p-5 shadow-theme-xs dark:border-brand-500/20 dark:bg-brand-500/5">
           <p className="text-xs font-semibold uppercase tracking-wide text-brand-700 dark:text-brand-400">
@@ -661,14 +554,8 @@ export default function BdeClientsPage() {
         </div>
       </div>
 
-      {/* ======================================================
-          FILTERS
-      ====================================================== */}
-
       <div className="rounded-2xl border border-gray-200 bg-white p-4 shadow-theme-xs dark:border-gray-800 dark:bg-gray-900">
         <div className="grid grid-cols-1 gap-4 md:grid-cols-[1fr_240px_auto]">
-          {/* SEARCH */}
-
           <div>
             <label
               htmlFor="client-search"
@@ -694,18 +581,12 @@ export default function BdeClientsPage() {
                 id="client-search"
                 type="text"
                 value={search}
-                onChange={(e) =>
-                  setSearch(
-                    e.target.value
-                  )
-                }
+                onChange={(e) => setSearch(e.target.value)}
                 placeholder="Search company, contact, city..."
                 className="h-10 w-full rounded-lg border border-gray-200 bg-white pl-9 pr-3 text-sm text-gray-800 outline-none transition focus:border-brand-400 focus:ring-3 focus:ring-brand-500/10 dark:border-gray-700 dark:bg-gray-800 dark:text-white"
               />
             </div>
           </div>
-
-          {/* STATUS */}
 
           <div>
             <label
@@ -720,29 +601,18 @@ export default function BdeClientsPage() {
               value={contractStatus}
               onChange={(e) =>
                 setContractStatus(
-                  e.target.value as
-                    | ClientContractStatus
-                    | "ALL"
+                  e.target.value as ClientContractStatus | "ALL"
                 )
               }
               className="h-10 w-full rounded-lg border border-gray-200 bg-white px-3 text-sm text-gray-800 outline-none focus:border-brand-400 focus:ring-3 focus:ring-brand-500/10 dark:border-gray-700 dark:bg-gray-800 dark:text-white"
             >
-              {contractStatuses.map(
-                (status) => (
-                  <option
-                    key={status}
-                    value={status}
-                  >
-                    {status === "ALL"
-                      ? "All Statuses"
-                      : status}
-                  </option>
-                )
-              )}
+              {contractStatuses.map((status) => (
+                <option key={status} value={status}>
+                  {status === "ALL" ? "All Statuses" : status}
+                </option>
+              ))}
             </select>
           </div>
-
-          {/* CLEAR */}
 
           <div className="flex items-end">
             <button
@@ -755,10 +625,6 @@ export default function BdeClientsPage() {
           </div>
         </div>
       </div>
-
-      {/* ======================================================
-          RESULTS SUMMARY
-      ====================================================== */}
 
       <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
         <p className="text-sm text-gray-500 dark:text-gray-400">
@@ -773,9 +639,7 @@ export default function BdeClientsPage() {
           clients
         </p>
 
-        {(search ||
-          contractStatus !==
-            "ALL") && (
+        {(search || contractStatus !== "ALL") && (
           <button
             type="button"
             onClick={clearFilters}
@@ -785,10 +649,6 @@ export default function BdeClientsPage() {
           </button>
         )}
       </div>
-
-      {/* ======================================================
-          EMPTY STATE
-      ====================================================== */}
 
       {filteredClients.length === 0 ? (
         <div className="rounded-2xl border border-dashed border-gray-300 bg-white px-6 py-16 text-center dark:border-gray-700 dark:bg-gray-900">
@@ -815,9 +675,7 @@ export default function BdeClientsPage() {
           </div>
 
           <h3 className="mt-4 text-base font-semibold text-gray-900 dark:text-white">
-            {clients.length === 0
-              ? "No clients yet"
-              : "No clients found"}
+            {clients.length === 0 ? "No clients yet" : "No clients found"}
           </h3>
 
           <p className="mx-auto mt-1 max-w-md text-sm text-gray-500 dark:text-gray-400">
@@ -827,14 +685,8 @@ export default function BdeClientsPage() {
           </p>
 
           {clients.length === 0 ? (
-            <Link
-              href="/bde/clients/create"
-              className="mt-5 inline-flex"
-            >
-              <Button
-                variant="primary"
-                size="md"
-              >
+            <Link href="/bde/clients/create" className="mt-5 inline-flex">
+              <Button variant="primary" size="md">
                 + Add Client
               </Button>
             </Link>
@@ -849,25 +701,13 @@ export default function BdeClientsPage() {
           )}
         </div>
       ) : (
-        /* ====================================================
-           CLIENT TABLE
-        ==================================================== */
-
         <DynamicTable<ClientItem>
           title="Client Accounts"
           description="Clients assigned to or created through your BDE workspace."
           columns={columns}
           data={filteredClients}
-          /*
-           * Search is handled by the search field above.
-           */
           initialPageSize={10}
-          pageSizeOptions={[
-            5,
-            10,
-            20,
-            50,
-          ]}
+          pageSizeOptions={[5, 10, 20, 50]}
         />
       )}
     </div>

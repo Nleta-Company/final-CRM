@@ -13,12 +13,19 @@ export type ClientContractStatus =
   | "Expired"
   | "Onboarding";
 
-// Client process tracking
+// ============================================================
+// CLIENT PROCESS TRACKING
+// ============================================================
+
 export type ClientProcessStage =
   | "CLIENT_CREATED"
   | "FSO_GENERATED"
   | "PSGA_GENERATED"
   | "PSGA_COMPLETED";
+
+// ============================================================
+// CLIENT
+// ============================================================
 
 export interface ClientItem {
   id: string;
@@ -35,7 +42,7 @@ export interface ClientItem {
   city: string;
   state: string;
 
-  // Added
+  // Pincode
   pincode?: string;
 
   totalAssetsCount: number;
@@ -59,19 +66,30 @@ export interface ClientItem {
 
   notes?: string;
 
-  // Client Process Tracking
+  // ==========================================================
+  // CLIENT PROCESS TRACKING
+  // ==========================================================
+
   processStage?: ClientProcessStage;
 
+  // External client reference
   externalClientId?: string;
 
+  // FSO tracking
   fsoNumber?: string;
-
   fsoGeneratedAt?: string;
 
+  // PSGA tracking
+  psgaNumber?: string;
   psgaGeneratedAt?: string;
 
+  // Last process update
   processUpdatedAt?: string;
 }
+
+// ============================================================
+// CREATE CLIENT
+// ============================================================
 
 export type CreateClientInput =
   Omit<
@@ -81,10 +99,18 @@ export type CreateClientInput =
     joinedDate?: string;
   };
 
+// ============================================================
+// UPDATE CLIENT
+// ============================================================
+
 export type UpdateClientInput =
   Partial<
     Omit<ClientItem, "id">
   >;
+
+// ============================================================
+// CLIENT STATS
+// ============================================================
 
 export interface ClientStats {
   totalClients: number;
@@ -104,7 +130,10 @@ export interface ClientStats {
     number
   >;
 
-  // Client Process Tracking Stats
+  // ==========================================================
+  // CLIENT PROCESS TRACKING STATS
+  // ==========================================================
+
   process?: {
     clientCreated: number;
     fsoGenerated: number;
@@ -112,6 +141,10 @@ export interface ClientStats {
     psgaCompleted: number;
   };
 }
+
+// ============================================================
+// CLIENT FILTER OPTIONS
+// ============================================================
 
 export interface ClientFilterOptions {
   search?: string;

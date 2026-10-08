@@ -1678,6 +1678,21 @@ export default function ClientForm({
   function normalizeAsset(
     asset: AssetSelectionDraft
   ) {
+    // IMPORTANT:
+    // Existing BDE selections already contain the exact
+    // assetCategory that was saved with the service selection.
+    // Do NOT recalculate that category from floors/rise here.
+    //
+    // This was causing "Heavy Duty" escalators to become the
+    // first normal escalator category when Admin opened Edit,
+    // because Heavy Duty has no numeric rise range and the old
+    // loader defaulted its measurement to 1.
+    //
+    // Only calculate a category when one is actually missing.
+    if (String(asset.assetCategory || "").trim()) {
+      return asset;
+    }
+
     const category =
       findCategoryForAssetMeasurement(
         services,
@@ -1687,7 +1702,6 @@ export default function ClientForm({
 
     return {
       ...asset,
-
       assetCategory:
         category ||
         asset.assetCategory,
@@ -1932,13 +1946,6 @@ export default function ClientForm({
                   rule.minQuantity
                 );
 
-          const max =
-            rule.maxQuantity == null
-              ? Infinity
-              : safeNumber(
-                  rule.maxQuantity
-                );
-
           if (
             asset.quantity <
             min
@@ -1946,56 +1953,10 @@ export default function ClientForm({
             return `Quantity must be at least ${min} for ${rule.pricingLabel}.`;
           }
 
-          if (
-            max !== Infinity &&
-            asset.quantity >
-              max
-          ) {
-            const alternative =
-              service.pricingRules.find(
-                (candidate) => {
-                  if (
-                    String(
-                      candidate.assetCategory ||
-                        ""
-                    ) !==
-                    String(
-                      asset.assetCategory ||
-                        ""
-                    )
-                  ) {
-                    return false;
-                  }
-
-                  const candidateMin =
-                    candidate.minQuantity ==
-                    null
-                      ? 0
-                      : safeNumber(
-                          candidate.minQuantity
-                        );
-
-                  const candidateMax =
-                    candidate.maxQuantity ==
-                    null
-                      ? Infinity
-                      : safeNumber(
-                          candidate.maxQuantity
-                        );
-
-                  return (
-                    asset.quantity >=
-                      candidateMin &&
-                    asset.quantity <=
-                      candidateMax
-                  );
-                }
-              );
-
-            if (!alternative) {
-              return `No pricing slab is available for quantity ${asset.quantity}.`;
-            }
-          }
+          // maxQuantity is intentionally NOT enforced here.
+          // The CRM allows quantities such as 1, 2, 5, 10, 50,
+          // 100 even when an old pricing rule contains maxQuantity.
+          // The backend pricing controller follows the same rule.
         }
       }
     }

@@ -262,9 +262,9 @@ export type PSGAWhereInput = {
   incentivePaidAt?: Prisma.DateTimeNullableFilter<"PSGA"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"PSGA"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"PSGA"> | Date | string
+  bde?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   client?: Prisma.XOR<Prisma.ClientScalarRelationFilter, Prisma.ClientWhereInput>
   lead?: Prisma.XOR<Prisma.LeadNullableScalarRelationFilter, Prisma.LeadWhereInput> | null
-  bde?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   incentiveAllocations?: Prisma.PSGAIncentiveAllocationListRelationFilter
 }
 
@@ -284,9 +284,9 @@ export type PSGAOrderByWithRelationInput = {
   incentivePaidAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  bde?: Prisma.UserOrderByWithRelationInput
   client?: Prisma.ClientOrderByWithRelationInput
   lead?: Prisma.LeadOrderByWithRelationInput
-  bde?: Prisma.UserOrderByWithRelationInput
   incentiveAllocations?: Prisma.PSGAIncentiveAllocationOrderByRelationAggregateInput
 }
 
@@ -309,9 +309,9 @@ export type PSGAWhereUniqueInput = Prisma.AtLeast<{
   incentivePaidAt?: Prisma.DateTimeNullableFilter<"PSGA"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"PSGA"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"PSGA"> | Date | string
+  bde?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   client?: Prisma.XOR<Prisma.ClientScalarRelationFilter, Prisma.ClientWhereInput>
   lead?: Prisma.XOR<Prisma.LeadNullableScalarRelationFilter, Prisma.LeadWhereInput> | null
-  bde?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   incentiveAllocations?: Prisma.PSGAIncentiveAllocationListRelationFilter
 }, "id" | "psgNumber">
 
@@ -370,9 +370,9 @@ export type PSGACreateInput = {
   incentivePaidAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  bde?: Prisma.UserCreateNestedOneWithoutPsgasAsBdeInput
   client: Prisma.ClientCreateNestedOneWithoutPsgasInput
   lead?: Prisma.LeadCreateNestedOneWithoutPsgasInput
-  bde?: Prisma.UserCreateNestedOneWithoutPsgasAsBdeInput
   incentiveAllocations?: Prisma.PSGAIncentiveAllocationCreateNestedManyWithoutPsgInput
 }
 
@@ -408,9 +408,9 @@ export type PSGAUpdateInput = {
   incentivePaidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  bde?: Prisma.UserUpdateOneWithoutPsgasAsBdeNestedInput
   client?: Prisma.ClientUpdateOneRequiredWithoutPsgasNestedInput
   lead?: Prisma.LeadUpdateOneWithoutPsgasNestedInput
-  bde?: Prisma.UserUpdateOneWithoutPsgasAsBdeNestedInput
   incentiveAllocations?: Prisma.PSGAIncentiveAllocationUpdateManyWithoutPsgNestedInput
 }
 
@@ -797,8 +797,8 @@ export type PSGACreateWithoutLeadInput = {
   incentivePaidAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  client: Prisma.ClientCreateNestedOneWithoutPsgasInput
   bde?: Prisma.UserCreateNestedOneWithoutPsgasAsBdeInput
+  client: Prisma.ClientCreateNestedOneWithoutPsgasInput
   incentiveAllocations?: Prisma.PSGAIncentiveAllocationCreateNestedManyWithoutPsgInput
 }
 
@@ -859,8 +859,8 @@ export type PSGACreateWithoutClientInput = {
   incentivePaidAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  lead?: Prisma.LeadCreateNestedOneWithoutPsgasInput
   bde?: Prisma.UserCreateNestedOneWithoutPsgasAsBdeInput
+  lead?: Prisma.LeadCreateNestedOneWithoutPsgasInput
   incentiveAllocations?: Prisma.PSGAIncentiveAllocationCreateNestedManyWithoutPsgInput
 }
 
@@ -921,9 +921,9 @@ export type PSGACreateWithoutIncentiveAllocationsInput = {
   incentivePaidAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  bde?: Prisma.UserCreateNestedOneWithoutPsgasAsBdeInput
   client: Prisma.ClientCreateNestedOneWithoutPsgasInput
   lead?: Prisma.LeadCreateNestedOneWithoutPsgasInput
-  bde?: Prisma.UserCreateNestedOneWithoutPsgasAsBdeInput
 }
 
 export type PSGAUncheckedCreateWithoutIncentiveAllocationsInput = {
@@ -973,9 +973,9 @@ export type PSGAUpdateWithoutIncentiveAllocationsInput = {
   incentivePaidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  bde?: Prisma.UserUpdateOneWithoutPsgasAsBdeNestedInput
   client?: Prisma.ClientUpdateOneRequiredWithoutPsgasNestedInput
   lead?: Prisma.LeadUpdateOneWithoutPsgasNestedInput
-  bde?: Prisma.UserUpdateOneWithoutPsgasAsBdeNestedInput
 }
 
 export type PSGAUncheckedUpdateWithoutIncentiveAllocationsInput = {
@@ -1096,8 +1096,8 @@ export type PSGAUpdateWithoutLeadInput = {
   incentivePaidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  client?: Prisma.ClientUpdateOneRequiredWithoutPsgasNestedInput
   bde?: Prisma.UserUpdateOneWithoutPsgasAsBdeNestedInput
+  client?: Prisma.ClientUpdateOneRequiredWithoutPsgasNestedInput
   incentiveAllocations?: Prisma.PSGAIncentiveAllocationUpdateManyWithoutPsgNestedInput
 }
 
@@ -1166,8 +1166,8 @@ export type PSGAUpdateWithoutClientInput = {
   incentivePaidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  lead?: Prisma.LeadUpdateOneWithoutPsgasNestedInput
   bde?: Prisma.UserUpdateOneWithoutPsgasAsBdeNestedInput
+  lead?: Prisma.LeadUpdateOneWithoutPsgasNestedInput
   incentiveAllocations?: Prisma.PSGAIncentiveAllocationUpdateManyWithoutPsgNestedInput
 }
 
@@ -1253,9 +1253,9 @@ export type PSGASelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   incentivePaidAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  bde?: boolean | Prisma.PSGA$bdeArgs<ExtArgs>
   client?: boolean | Prisma.ClientDefaultArgs<ExtArgs>
   lead?: boolean | Prisma.PSGA$leadArgs<ExtArgs>
-  bde?: boolean | Prisma.PSGA$bdeArgs<ExtArgs>
   incentiveAllocations?: boolean | Prisma.PSGA$incentiveAllocationsArgs<ExtArgs>
   _count?: boolean | Prisma.PSGACountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["pSGA"]>
@@ -1276,9 +1276,9 @@ export type PSGASelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   incentivePaidAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  bde?: boolean | Prisma.PSGA$bdeArgs<ExtArgs>
   client?: boolean | Prisma.ClientDefaultArgs<ExtArgs>
   lead?: boolean | Prisma.PSGA$leadArgs<ExtArgs>
-  bde?: boolean | Prisma.PSGA$bdeArgs<ExtArgs>
 }, ExtArgs["result"]["pSGA"]>
 
 export type PSGASelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -1297,9 +1297,9 @@ export type PSGASelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   incentivePaidAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  bde?: boolean | Prisma.PSGA$bdeArgs<ExtArgs>
   client?: boolean | Prisma.ClientDefaultArgs<ExtArgs>
   lead?: boolean | Prisma.PSGA$leadArgs<ExtArgs>
-  bde?: boolean | Prisma.PSGA$bdeArgs<ExtArgs>
 }, ExtArgs["result"]["pSGA"]>
 
 export type PSGASelectScalar = {
@@ -1322,29 +1322,29 @@ export type PSGASelectScalar = {
 
 export type PSGAOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "psgNumber" | "status" | "generatedAt" | "sentAt" | "acceptedAt" | "rejectedAt" | "clientId" | "leadId" | "bdeId" | "incentiveStatus" | "incentiveApprovedAt" | "incentivePaidAt" | "createdAt" | "updatedAt", ExtArgs["result"]["pSGA"]>
 export type PSGAInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  bde?: boolean | Prisma.PSGA$bdeArgs<ExtArgs>
   client?: boolean | Prisma.ClientDefaultArgs<ExtArgs>
   lead?: boolean | Prisma.PSGA$leadArgs<ExtArgs>
-  bde?: boolean | Prisma.PSGA$bdeArgs<ExtArgs>
   incentiveAllocations?: boolean | Prisma.PSGA$incentiveAllocationsArgs<ExtArgs>
   _count?: boolean | Prisma.PSGACountOutputTypeDefaultArgs<ExtArgs>
 }
 export type PSGAIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  bde?: boolean | Prisma.PSGA$bdeArgs<ExtArgs>
   client?: boolean | Prisma.ClientDefaultArgs<ExtArgs>
   lead?: boolean | Prisma.PSGA$leadArgs<ExtArgs>
-  bde?: boolean | Prisma.PSGA$bdeArgs<ExtArgs>
 }
 export type PSGAIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  bde?: boolean | Prisma.PSGA$bdeArgs<ExtArgs>
   client?: boolean | Prisma.ClientDefaultArgs<ExtArgs>
   lead?: boolean | Prisma.PSGA$leadArgs<ExtArgs>
-  bde?: boolean | Prisma.PSGA$bdeArgs<ExtArgs>
 }
 
 export type $PSGAPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "PSGA"
   objects: {
+    bde: Prisma.$UserPayload<ExtArgs> | null
     client: Prisma.$ClientPayload<ExtArgs>
     lead: Prisma.$LeadPayload<ExtArgs> | null
-    bde: Prisma.$UserPayload<ExtArgs> | null
     incentiveAllocations: Prisma.$PSGAIncentiveAllocationPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
@@ -1757,9 +1757,9 @@ readonly fields: PSGAFieldRefs;
  */
 export interface Prisma__PSGAClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
+  bde<T extends Prisma.PSGA$bdeArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.PSGA$bdeArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   client<T extends Prisma.ClientDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ClientDefaultArgs<ExtArgs>>): Prisma.Prisma__ClientClient<runtime.Types.Result.GetResult<Prisma.$ClientPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   lead<T extends Prisma.PSGA$leadArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.PSGA$leadArgs<ExtArgs>>): Prisma.Prisma__LeadClient<runtime.Types.Result.GetResult<Prisma.$LeadPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-  bde<T extends Prisma.PSGA$bdeArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.PSGA$bdeArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   incentiveAllocations<T extends Prisma.PSGA$incentiveAllocationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.PSGA$incentiveAllocationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PSGAIncentiveAllocationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -2206,25 +2206,6 @@ export type PSGADeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Internal
 }
 
 /**
- * PSGA.lead
- */
-export type PSGA$leadArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the Lead
-   */
-  select?: Prisma.LeadSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the Lead
-   */
-  omit?: Prisma.LeadOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.LeadInclude<ExtArgs> | null
-  where?: Prisma.LeadWhereInput
-}
-
-/**
  * PSGA.bde
  */
 export type PSGA$bdeArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -2241,6 +2222,25 @@ export type PSGA$bdeArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs =
    */
   include?: Prisma.UserInclude<ExtArgs> | null
   where?: Prisma.UserWhereInput
+}
+
+/**
+ * PSGA.lead
+ */
+export type PSGA$leadArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Lead
+   */
+  select?: Prisma.LeadSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Lead
+   */
+  omit?: Prisma.LeadOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.LeadInclude<ExtArgs> | null
+  where?: Prisma.LeadWhereInput
 }
 
 /**

@@ -23,9 +23,14 @@ interface BackendUser {
   lastName?: string | null;
   email: string;
   mobile?: string | null;
+
+  designation?: string | null;
+  region?: string | null;
+
   status: "ACTIVE" | "INACTIVE" | "SUSPENDED";
   lastLoginAt?: string | null;
   createdAt: string;
+
   role?: {
     name: string;
   } | null;
@@ -83,7 +88,7 @@ function ensureAuth() {
 }
 
 /**
- * Backend User status -> existing CRM BDE status
+ * Backend User status -> CRM BDE status
  */
 function mapUserStatus(
   status: BackendUser["status"]
@@ -102,11 +107,10 @@ function mapUserStatus(
 }
 
 /**
- * Backend User -> existing BdeItem
+ * Backend User -> BdeItem
  *
- * Backend currently provides only account information.
- * Sales-specific fields are not present in /users response,
- * so those values remain defaults until a BDE profile API exists.
+ * designation and region come directly from database.
+ * No hardcoded/default fake values are used.
  */
 function mapUserToBde(user: BackendUser): BdeItem {
   const fullName = `${user.firstName} ${
@@ -124,9 +128,9 @@ function mapUserToBde(user: BackendUser): BdeItem {
 
     phone: user.mobile || "",
 
-    designation: "Business Development Associate",
+    designation: user.designation || "",
 
-    region: "Delhi NCR",
+    region: user.region || "",
 
     status: mapUserStatus(user.status),
 
@@ -158,7 +162,6 @@ class BdeService {
    * GET ALL BDE
    * --------------------------------------------------
    */
-
   public async getAllBdes(): Promise<BdeItem[]> {
     ensureAuth();
 
@@ -204,12 +207,9 @@ class BdeService {
    * GET BDE BY ID
    * --------------------------------------------------
    *
-   * Backend currently does not have:
-   * GET /users/:id
-   *
-   * So we use GET /users and find the user.
+   * Backend does not currently have GET /users/:id.
+   * So fetch all users and find selected BDE.
    */
-
   public async getBdeById(
     id: string
   ): Promise<BdeItem | null> {
@@ -228,21 +228,10 @@ class BdeService {
    * CREATE BDE
    * --------------------------------------------------
    *
-   * IMPORTANT:
-   *
-   * Current CreateBdeInput is a BDE profile type.
-   * It does NOT contain password.
-   *
-   * But backend POST /users requires password.
-   *
-   * Therefore actual BDE account creation should
-   * continue through BdeForm -> POST /users until
-   * CreateBdeInput is redesigned.
-   *
-   * This method intentionally does not fake-create
-   * a localStorage BDE anymore.
+   * Actual account creation is handled by
+   * BdeForm -> POST /users because password
+   * is required by backend.
    */
-
   public async createBde(
     _input: CreateBdeInput
   ): Promise<BdeItem> {
@@ -255,16 +244,7 @@ class BdeService {
    * --------------------------------------------------
    * UPDATE BDE
    * --------------------------------------------------
-   *
-   * Existing BdeItem uses:
-   * phone
-   *
-   * Backend User uses:
-   * mobile
-   *
-   * So phone -> mobile mapping happens here.
    */
-
   public async updateBde(
     id: string,
     input: UpdateBdeInput
@@ -276,14 +256,15 @@ class BdeService {
       lastName?: string;
       email?: string;
       mobile?: string;
+      designation?: string;
+      region?: string;
       role?: "BDE/Sales";
     } = {};
 
     /**
-     * BdeItem has fullName, not firstName/lastName.
+     * BdeItem uses fullName.
      *
-     * If fullName is supplied, split it into:
-     * firstName + lastName
+     * Convert fullName -> firstName + lastName.
      */
     if (
       input.fullName !== undefined
@@ -302,11 +283,16 @@ class BdeService {
           .join(" ");
     }
 
+    /**
+     * Email
+     */
     if (
       input.email !== undefined
     ) {
       payload.email =
-        input.email.trim().toLowerCase();
+        input.email
+          .trim()
+          .toLowerCase();
     }
 
     /**
@@ -320,12 +306,32 @@ class BdeService {
     }
 
     /**
-     * Keep the account as BDE/Sales.
+     * Designation
+     */
+    if (
+      input.designation !== undefined
+    ) {
+      payload.designation =
+        input.designation.trim();
+    }
+
+    /**
+     * Sales Territory / Region
+     */
+    if (
+      input.region !== undefined
+    ) {
+      payload.region =
+        input.region.trim();
+    }
+
+    /**
+     * Keep account as BDE/Sales.
      */
     payload.role = "BDE/Sales";
 
     const response = await fetch(
-      `${API_BASE_URL}/users/${id}`,
+      `${API_BASE_URL}/users/${encodeURIComponent(id)}`,
       {
         method: "PUT",
         headers: getHeaders(),
@@ -371,11 +377,9 @@ class BdeService {
    * DELETE BDE
    * --------------------------------------------------
    *
-   * Backend currently has no DELETE /users/:id.
-   *
-   * So we deactivate the account instead.
+   * Backend has no DELETE /users/:id.
+   * Deactivate account instead.
    */
-
   public async deleteBde(
     id: string
   ): Promise<boolean> {
@@ -392,7 +396,6 @@ class BdeService {
    * UPDATE STATUS
    * --------------------------------------------------
    */
-
   public async updateBdeStatus(
     id: string,
     status:
@@ -403,7 +406,7 @@ class BdeService {
     ensureAuth();
 
     const response = await fetch(
-      `${API_BASE_URL}/users/${id}/status`,
+      `${API_BASE_URL}/users/${encodeURIComponent(id)}/status`,
       {
         method: "PATCH",
         headers: getHeaders(),
@@ -451,7 +454,6 @@ class BdeService {
    * STATS
    * --------------------------------------------------
    */
-
   public async getBdeStats(): Promise<BdeStats> {
     const bdes =
       await this.getAllBdes();
@@ -497,16 +499,24 @@ class BdeService {
         : 0;
 
     return {
-      totalExecutives: bdes.length,
+      totalExecutives:
+        bdes.length,
+
       activeExecutives:
         statusBreakdown.Active || 0,
+
       totalTarget,
+
       totalAchieved,
+
       formattedTotalRevenue:
         formatINR(totalAchieved),
+
       formattedTotalTarget:
         formatINR(totalTarget),
+
       averageConversionRate,
+
       statusBreakdown,
     };
   }
@@ -516,7 +526,6 @@ class BdeService {
    * SUBSCRIBE
    * --------------------------------------------------
    */
-
   public subscribe(
     listener: () => void
   ): () => void {
@@ -544,7 +553,6 @@ class BdeService {
    * NOTIFY
    * --------------------------------------------------
    */
-
   public notifyChange(): void {
     if (
       typeof window === "undefined"
