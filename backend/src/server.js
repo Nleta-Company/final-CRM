@@ -1,3 +1,4 @@
+
 import "dotenv/config";
 
 import express from "express";
@@ -17,17 +18,18 @@ import notificationRoutes from "./routes/notification.routes.js";
 import psgaRoutes from "./routes/psga.routes.js";
 import incentiveRoutes from "./routes/incentive.routes.js";
 import incentivePayoutRoutes from "./routes/incentivePayout.routes.js";
-import { startFollowUpNotificationJob } from "./jobs/followUpNotification.job.js";
 import serviceCatalogRoutes from "./routes/serviceCatalog.routes.js";
 import leadServiceSelectionRoutes from "./routes/leadServiceSelection.routes.js";
 import clientServiceSelectionRoutes from "./routes/clientServiceSelection.routes.js";
 
+import { startFollowUpNotificationJob } from "./jobs/followUpNotification.job.js";
 import prisma from "./config/prisma.js";
 
 const app = express();
 
 const PORT = process.env.PORT || 5000;
 const NODE_ENV = process.env.NODE_ENV || "development";
+
 const FRONTEND_URL =
   process.env.FRONTEND_URL || "http://localhost:3000";
 
@@ -67,18 +69,42 @@ app.use(morgan(NODE_ENV === "production" ? "combined" : "dev"));
 // API RATE LIMITING
 // ==========================================
 
+// General API limiter.
+// Login has a separate limiter below, so login attempts
+// do not consume the general API request limit.
+
 const apiLimiter = rateLimit({
   windowMs: 15 * 60 * 1000,
   max: NODE_ENV === "production" ? 100 : 1000,
   standardHeaders: true,
   legacyHeaders: false,
+
+  skip: (req) => req.path === "/auth/login",
+
   message: {
     success: false,
     message: "Too many requests. Please try again later.",
   },
 });
 
+// Dedicated login limiter to help prevent brute-force attempts.
+// Allows 10 login requests per IP in 15 minutes.
+
+const loginLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  limit: 10,
+  standardHeaders: true,
+  legacyHeaders: false,
+
+  message: {
+    success: false,
+    message: "Too many login attempts. Please try again later.",
+  },
+});
+
+// Apply limiters before registering API routes.
 app.use("/api", apiLimiter);
+app.use("/api/auth/login", loginLimiter);
 
 // ==========================================
 // API ROUTES
@@ -96,20 +122,16 @@ app.use("/api/psga", psgaRoutes);
 app.use("/api/incentives", incentiveRoutes);
 app.use("/api/incentive-payouts", incentivePayoutRoutes);
 app.use("/api/services", serviceCatalogRoutes);
-app.use(
-  "/api/lead-services",
-  leadServiceSelectionRoutes
-);
-app.use(
-  "/api/client-services",
-  clientServiceSelectionRoutes
-);
+
+app.use("/api/lead-services", leadServiceSelectionRoutes);
+app.use("/api/client-services", clientServiceSelectionRoutes);
+
 // ==========================================
 // BASIC API HEALTH CHECK
 // ==========================================
 
 app.get("/api/health", (req, res) => {
-  res.status(200).json({
+  return res.status(200).json({
     success: true,
     message: "NLETA CRM API is running",
     timestamp: new Date().toISOString(),
@@ -152,7 +174,7 @@ app.get("/api/health/db", async (req, res) => {
 // ==========================================
 
 app.get("/", (req, res) => {
-  res.status(200).json({
+  return res.status(200).json({
     success: true,
     message: "NLETA CRM Backend API",
   });
@@ -163,7 +185,7 @@ app.get("/", (req, res) => {
 // ==========================================
 
 app.use((req, res) => {
-  res.status(404).json({
+  return res.status(404).json({
     success: false,
     message: "Route not found",
   });
@@ -176,14 +198,18 @@ app.use((req, res) => {
 app.use((err, req, res, next) => {
   console.error("Unhandled server error:", err);
 
-  res.status(500).json({
+  return res.status(500).json({
     success: false,
     message: "Internal server error",
   });
 });
 
+// ==========================================
+// FOLLOW-UP NOTIFICATION JOB
+// ==========================================
 
 startFollowUpNotificationJob();
+
 // ==========================================
 // START SERVER
 // ==========================================
