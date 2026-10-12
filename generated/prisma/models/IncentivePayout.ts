@@ -36,11 +36,8 @@ export type IncentivePayoutSumAggregateOutputType = {
 
 export type IncentivePayoutMinAggregateOutputType = {
   id: string | null
-  recipientType: $Enums.IncentiveRecipientType | null
   bdeId: string | null
-  adminId: string | null
   salaryMonth: Date | null
-  totalIncentivePercent: runtime.Decimal | null
   status: $Enums.IncentivePayoutStatus | null
   approvedById: string | null
   approvedAt: Date | null
@@ -48,15 +45,15 @@ export type IncentivePayoutMinAggregateOutputType = {
   paymentReference: string | null
   createdAt: Date | null
   updatedAt: Date | null
+  totalIncentivePercent: runtime.Decimal | null
+  adminId: string | null
+  recipientType: $Enums.IncentiveRecipientType | null
 }
 
 export type IncentivePayoutMaxAggregateOutputType = {
   id: string | null
-  recipientType: $Enums.IncentiveRecipientType | null
   bdeId: string | null
-  adminId: string | null
   salaryMonth: Date | null
-  totalIncentivePercent: runtime.Decimal | null
   status: $Enums.IncentivePayoutStatus | null
   approvedById: string | null
   approvedAt: Date | null
@@ -64,15 +61,15 @@ export type IncentivePayoutMaxAggregateOutputType = {
   paymentReference: string | null
   createdAt: Date | null
   updatedAt: Date | null
+  totalIncentivePercent: runtime.Decimal | null
+  adminId: string | null
+  recipientType: $Enums.IncentiveRecipientType | null
 }
 
 export type IncentivePayoutCountAggregateOutputType = {
   id: number
-  recipientType: number
   bdeId: number
-  adminId: number
   salaryMonth: number
-  totalIncentivePercent: number
   status: number
   approvedById: number
   approvedAt: number
@@ -80,6 +77,9 @@ export type IncentivePayoutCountAggregateOutputType = {
   paymentReference: number
   createdAt: number
   updatedAt: number
+  totalIncentivePercent: number
+  adminId: number
+  recipientType: number
   _all: number
 }
 
@@ -94,11 +94,8 @@ export type IncentivePayoutSumAggregateInputType = {
 
 export type IncentivePayoutMinAggregateInputType = {
   id?: true
-  recipientType?: true
   bdeId?: true
-  adminId?: true
   salaryMonth?: true
-  totalIncentivePercent?: true
   status?: true
   approvedById?: true
   approvedAt?: true
@@ -106,15 +103,15 @@ export type IncentivePayoutMinAggregateInputType = {
   paymentReference?: true
   createdAt?: true
   updatedAt?: true
+  totalIncentivePercent?: true
+  adminId?: true
+  recipientType?: true
 }
 
 export type IncentivePayoutMaxAggregateInputType = {
   id?: true
-  recipientType?: true
   bdeId?: true
-  adminId?: true
   salaryMonth?: true
-  totalIncentivePercent?: true
   status?: true
   approvedById?: true
   approvedAt?: true
@@ -122,15 +119,15 @@ export type IncentivePayoutMaxAggregateInputType = {
   paymentReference?: true
   createdAt?: true
   updatedAt?: true
+  totalIncentivePercent?: true
+  adminId?: true
+  recipientType?: true
 }
 
 export type IncentivePayoutCountAggregateInputType = {
   id?: true
-  recipientType?: true
   bdeId?: true
-  adminId?: true
   salaryMonth?: true
-  totalIncentivePercent?: true
   status?: true
   approvedById?: true
   approvedAt?: true
@@ -138,6 +135,9 @@ export type IncentivePayoutCountAggregateInputType = {
   paymentReference?: true
   createdAt?: true
   updatedAt?: true
+  totalIncentivePercent?: true
+  adminId?: true
+  recipientType?: true
   _all?: true
 }
 
@@ -229,11 +229,8 @@ export type IncentivePayoutGroupByArgs<ExtArgs extends runtime.Types.Extensions.
 
 export type IncentivePayoutGroupByOutputType = {
   id: string
-  recipientType: $Enums.IncentiveRecipientType
   bdeId: string | null
-  adminId: string | null
   salaryMonth: Date
-  totalIncentivePercent: runtime.Decimal
   status: $Enums.IncentivePayoutStatus
   approvedById: string | null
   approvedAt: Date | null
@@ -241,6 +238,9 @@ export type IncentivePayoutGroupByOutputType = {
   paymentReference: string | null
   createdAt: Date
   updatedAt: Date
+  totalIncentivePercent: runtime.Decimal
+  adminId: string | null
+  recipientType: $Enums.IncentiveRecipientType
   _count: IncentivePayoutCountAggregateOutputType | null
   _avg: IncentivePayoutAvgAggregateOutputType | null
   _sum: IncentivePayoutSumAggregateOutputType | null
@@ -268,11 +268,8 @@ export type IncentivePayoutWhereInput = {
   OR?: Prisma.IncentivePayoutWhereInput[]
   NOT?: Prisma.IncentivePayoutWhereInput | Prisma.IncentivePayoutWhereInput[]
   id?: Prisma.StringFilter<"IncentivePayout"> | string
-  recipientType?: Prisma.EnumIncentiveRecipientTypeFilter<"IncentivePayout"> | $Enums.IncentiveRecipientType
   bdeId?: Prisma.StringNullableFilter<"IncentivePayout"> | string | null
-  adminId?: Prisma.StringNullableFilter<"IncentivePayout"> | string | null
   salaryMonth?: Prisma.DateTimeFilter<"IncentivePayout"> | Date | string
-  totalIncentivePercent?: Prisma.DecimalFilter<"IncentivePayout"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: Prisma.EnumIncentivePayoutStatusFilter<"IncentivePayout"> | $Enums.IncentivePayoutStatus
   approvedById?: Prisma.StringNullableFilter<"IncentivePayout"> | string | null
   approvedAt?: Prisma.DateTimeNullableFilter<"IncentivePayout"> | Date | string | null
@@ -280,18 +277,18 @@ export type IncentivePayoutWhereInput = {
   paymentReference?: Prisma.StringNullableFilter<"IncentivePayout"> | string | null
   createdAt?: Prisma.DateTimeFilter<"IncentivePayout"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"IncentivePayout"> | Date | string
-  bde?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
+  totalIncentivePercent?: Prisma.DecimalFilter<"IncentivePayout"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  adminId?: Prisma.StringNullableFilter<"IncentivePayout"> | string | null
+  recipientType?: Prisma.EnumIncentiveRecipientTypeFilter<"IncentivePayout"> | $Enums.IncentiveRecipientType
   admin?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   approvedBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
+  bde?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
 }
 
 export type IncentivePayoutOrderByWithRelationInput = {
   id?: Prisma.SortOrder
-  recipientType?: Prisma.SortOrder
   bdeId?: Prisma.SortOrderInput | Prisma.SortOrder
-  adminId?: Prisma.SortOrderInput | Prisma.SortOrder
   salaryMonth?: Prisma.SortOrder
-  totalIncentivePercent?: Prisma.SortOrder
   status?: Prisma.SortOrder
   approvedById?: Prisma.SortOrderInput | Prisma.SortOrder
   approvedAt?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -299,9 +296,12 @@ export type IncentivePayoutOrderByWithRelationInput = {
   paymentReference?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
-  bde?: Prisma.UserOrderByWithRelationInput
+  totalIncentivePercent?: Prisma.SortOrder
+  adminId?: Prisma.SortOrderInput | Prisma.SortOrder
+  recipientType?: Prisma.SortOrder
   admin?: Prisma.UserOrderByWithRelationInput
   approvedBy?: Prisma.UserOrderByWithRelationInput
+  bde?: Prisma.UserOrderByWithRelationInput
 }
 
 export type IncentivePayoutWhereUniqueInput = Prisma.AtLeast<{
@@ -310,11 +310,8 @@ export type IncentivePayoutWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.IncentivePayoutWhereInput | Prisma.IncentivePayoutWhereInput[]
   OR?: Prisma.IncentivePayoutWhereInput[]
   NOT?: Prisma.IncentivePayoutWhereInput | Prisma.IncentivePayoutWhereInput[]
-  recipientType?: Prisma.EnumIncentiveRecipientTypeFilter<"IncentivePayout"> | $Enums.IncentiveRecipientType
   bdeId?: Prisma.StringNullableFilter<"IncentivePayout"> | string | null
-  adminId?: Prisma.StringNullableFilter<"IncentivePayout"> | string | null
   salaryMonth?: Prisma.DateTimeFilter<"IncentivePayout"> | Date | string
-  totalIncentivePercent?: Prisma.DecimalFilter<"IncentivePayout"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: Prisma.EnumIncentivePayoutStatusFilter<"IncentivePayout"> | $Enums.IncentivePayoutStatus
   approvedById?: Prisma.StringNullableFilter<"IncentivePayout"> | string | null
   approvedAt?: Prisma.DateTimeNullableFilter<"IncentivePayout"> | Date | string | null
@@ -322,18 +319,18 @@ export type IncentivePayoutWhereUniqueInput = Prisma.AtLeast<{
   paymentReference?: Prisma.StringNullableFilter<"IncentivePayout"> | string | null
   createdAt?: Prisma.DateTimeFilter<"IncentivePayout"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"IncentivePayout"> | Date | string
-  bde?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
+  totalIncentivePercent?: Prisma.DecimalFilter<"IncentivePayout"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  adminId?: Prisma.StringNullableFilter<"IncentivePayout"> | string | null
+  recipientType?: Prisma.EnumIncentiveRecipientTypeFilter<"IncentivePayout"> | $Enums.IncentiveRecipientType
   admin?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   approvedBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
+  bde?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
 }, "id" | "recipientType_bdeId_adminId_salaryMonth">
 
 export type IncentivePayoutOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
-  recipientType?: Prisma.SortOrder
   bdeId?: Prisma.SortOrderInput | Prisma.SortOrder
-  adminId?: Prisma.SortOrderInput | Prisma.SortOrder
   salaryMonth?: Prisma.SortOrder
-  totalIncentivePercent?: Prisma.SortOrder
   status?: Prisma.SortOrder
   approvedById?: Prisma.SortOrderInput | Prisma.SortOrder
   approvedAt?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -341,6 +338,9 @@ export type IncentivePayoutOrderByWithAggregationInput = {
   paymentReference?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  totalIncentivePercent?: Prisma.SortOrder
+  adminId?: Prisma.SortOrderInput | Prisma.SortOrder
+  recipientType?: Prisma.SortOrder
   _count?: Prisma.IncentivePayoutCountOrderByAggregateInput
   _avg?: Prisma.IncentivePayoutAvgOrderByAggregateInput
   _max?: Prisma.IncentivePayoutMaxOrderByAggregateInput
@@ -353,11 +353,8 @@ export type IncentivePayoutScalarWhereWithAggregatesInput = {
   OR?: Prisma.IncentivePayoutScalarWhereWithAggregatesInput[]
   NOT?: Prisma.IncentivePayoutScalarWhereWithAggregatesInput | Prisma.IncentivePayoutScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"IncentivePayout"> | string
-  recipientType?: Prisma.EnumIncentiveRecipientTypeWithAggregatesFilter<"IncentivePayout"> | $Enums.IncentiveRecipientType
   bdeId?: Prisma.StringNullableWithAggregatesFilter<"IncentivePayout"> | string | null
-  adminId?: Prisma.StringNullableWithAggregatesFilter<"IncentivePayout"> | string | null
   salaryMonth?: Prisma.DateTimeWithAggregatesFilter<"IncentivePayout"> | Date | string
-  totalIncentivePercent?: Prisma.DecimalWithAggregatesFilter<"IncentivePayout"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: Prisma.EnumIncentivePayoutStatusWithAggregatesFilter<"IncentivePayout"> | $Enums.IncentivePayoutStatus
   approvedById?: Prisma.StringNullableWithAggregatesFilter<"IncentivePayout"> | string | null
   approvedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"IncentivePayout"> | Date | string | null
@@ -365,31 +362,31 @@ export type IncentivePayoutScalarWhereWithAggregatesInput = {
   paymentReference?: Prisma.StringNullableWithAggregatesFilter<"IncentivePayout"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"IncentivePayout"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"IncentivePayout"> | Date | string
+  totalIncentivePercent?: Prisma.DecimalWithAggregatesFilter<"IncentivePayout"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  adminId?: Prisma.StringNullableWithAggregatesFilter<"IncentivePayout"> | string | null
+  recipientType?: Prisma.EnumIncentiveRecipientTypeWithAggregatesFilter<"IncentivePayout"> | $Enums.IncentiveRecipientType
 }
 
 export type IncentivePayoutCreateInput = {
   id?: string
-  recipientType?: $Enums.IncentiveRecipientType
   salaryMonth: Date | string
-  totalIncentivePercent: runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: $Enums.IncentivePayoutStatus
   approvedAt?: Date | string | null
   paidAt?: Date | string | null
   paymentReference?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  bde?: Prisma.UserCreateNestedOneWithoutIncentivePayoutsInput
+  totalIncentivePercent: runtime.Decimal | runtime.DecimalJsLike | number | string
+  recipientType?: $Enums.IncentiveRecipientType
   admin?: Prisma.UserCreateNestedOneWithoutAdminIncentivePayoutsInput
   approvedBy?: Prisma.UserCreateNestedOneWithoutApprovedIncentivePayoutsInput
+  bde?: Prisma.UserCreateNestedOneWithoutIncentivePayoutsInput
 }
 
 export type IncentivePayoutUncheckedCreateInput = {
   id?: string
-  recipientType?: $Enums.IncentiveRecipientType
   bdeId?: string | null
-  adminId?: string | null
   salaryMonth: Date | string
-  totalIncentivePercent: runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: $Enums.IncentivePayoutStatus
   approvedById?: string | null
   approvedAt?: Date | string | null
@@ -397,31 +394,31 @@ export type IncentivePayoutUncheckedCreateInput = {
   paymentReference?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  totalIncentivePercent: runtime.Decimal | runtime.DecimalJsLike | number | string
+  adminId?: string | null
+  recipientType?: $Enums.IncentiveRecipientType
 }
 
 export type IncentivePayoutUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  recipientType?: Prisma.EnumIncentiveRecipientTypeFieldUpdateOperationsInput | $Enums.IncentiveRecipientType
   salaryMonth?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  totalIncentivePercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: Prisma.EnumIncentivePayoutStatusFieldUpdateOperationsInput | $Enums.IncentivePayoutStatus
   approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   paymentReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  bde?: Prisma.UserUpdateOneWithoutIncentivePayoutsNestedInput
+  totalIncentivePercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  recipientType?: Prisma.EnumIncentiveRecipientTypeFieldUpdateOperationsInput | $Enums.IncentiveRecipientType
   admin?: Prisma.UserUpdateOneWithoutAdminIncentivePayoutsNestedInput
   approvedBy?: Prisma.UserUpdateOneWithoutApprovedIncentivePayoutsNestedInput
+  bde?: Prisma.UserUpdateOneWithoutIncentivePayoutsNestedInput
 }
 
 export type IncentivePayoutUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  recipientType?: Prisma.EnumIncentiveRecipientTypeFieldUpdateOperationsInput | $Enums.IncentiveRecipientType
   bdeId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  adminId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   salaryMonth?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  totalIncentivePercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: Prisma.EnumIncentivePayoutStatusFieldUpdateOperationsInput | $Enums.IncentivePayoutStatus
   approvedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -429,15 +426,15 @@ export type IncentivePayoutUncheckedUpdateInput = {
   paymentReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  totalIncentivePercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  adminId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  recipientType?: Prisma.EnumIncentiveRecipientTypeFieldUpdateOperationsInput | $Enums.IncentiveRecipientType
 }
 
 export type IncentivePayoutCreateManyInput = {
   id?: string
-  recipientType?: $Enums.IncentiveRecipientType
   bdeId?: string | null
-  adminId?: string | null
   salaryMonth: Date | string
-  totalIncentivePercent: runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: $Enums.IncentivePayoutStatus
   approvedById?: string | null
   approvedAt?: Date | string | null
@@ -445,28 +442,28 @@ export type IncentivePayoutCreateManyInput = {
   paymentReference?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  totalIncentivePercent: runtime.Decimal | runtime.DecimalJsLike | number | string
+  adminId?: string | null
+  recipientType?: $Enums.IncentiveRecipientType
 }
 
 export type IncentivePayoutUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  recipientType?: Prisma.EnumIncentiveRecipientTypeFieldUpdateOperationsInput | $Enums.IncentiveRecipientType
   salaryMonth?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  totalIncentivePercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: Prisma.EnumIncentivePayoutStatusFieldUpdateOperationsInput | $Enums.IncentivePayoutStatus
   approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   paymentReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  totalIncentivePercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  recipientType?: Prisma.EnumIncentiveRecipientTypeFieldUpdateOperationsInput | $Enums.IncentiveRecipientType
 }
 
 export type IncentivePayoutUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  recipientType?: Prisma.EnumIncentiveRecipientTypeFieldUpdateOperationsInput | $Enums.IncentiveRecipientType
   bdeId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  adminId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   salaryMonth?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  totalIncentivePercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: Prisma.EnumIncentivePayoutStatusFieldUpdateOperationsInput | $Enums.IncentivePayoutStatus
   approvedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -474,6 +471,9 @@ export type IncentivePayoutUncheckedUpdateManyInput = {
   paymentReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  totalIncentivePercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  adminId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  recipientType?: Prisma.EnumIncentiveRecipientTypeFieldUpdateOperationsInput | $Enums.IncentiveRecipientType
 }
 
 export type IncentivePayoutListRelationFilter = {
@@ -495,11 +495,8 @@ export type IncentivePayoutRecipientTypeBdeIdAdminIdSalaryMonthCompoundUniqueInp
 
 export type IncentivePayoutCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  recipientType?: Prisma.SortOrder
   bdeId?: Prisma.SortOrder
-  adminId?: Prisma.SortOrder
   salaryMonth?: Prisma.SortOrder
-  totalIncentivePercent?: Prisma.SortOrder
   status?: Prisma.SortOrder
   approvedById?: Prisma.SortOrder
   approvedAt?: Prisma.SortOrder
@@ -507,6 +504,9 @@ export type IncentivePayoutCountOrderByAggregateInput = {
   paymentReference?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  totalIncentivePercent?: Prisma.SortOrder
+  adminId?: Prisma.SortOrder
+  recipientType?: Prisma.SortOrder
 }
 
 export type IncentivePayoutAvgOrderByAggregateInput = {
@@ -515,11 +515,8 @@ export type IncentivePayoutAvgOrderByAggregateInput = {
 
 export type IncentivePayoutMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  recipientType?: Prisma.SortOrder
   bdeId?: Prisma.SortOrder
-  adminId?: Prisma.SortOrder
   salaryMonth?: Prisma.SortOrder
-  totalIncentivePercent?: Prisma.SortOrder
   status?: Prisma.SortOrder
   approvedById?: Prisma.SortOrder
   approvedAt?: Prisma.SortOrder
@@ -527,15 +524,15 @@ export type IncentivePayoutMaxOrderByAggregateInput = {
   paymentReference?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  totalIncentivePercent?: Prisma.SortOrder
+  adminId?: Prisma.SortOrder
+  recipientType?: Prisma.SortOrder
 }
 
 export type IncentivePayoutMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  recipientType?: Prisma.SortOrder
   bdeId?: Prisma.SortOrder
-  adminId?: Prisma.SortOrder
   salaryMonth?: Prisma.SortOrder
-  totalIncentivePercent?: Prisma.SortOrder
   status?: Prisma.SortOrder
   approvedById?: Prisma.SortOrder
   approvedAt?: Prisma.SortOrder
@@ -543,17 +540,13 @@ export type IncentivePayoutMinOrderByAggregateInput = {
   paymentReference?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  totalIncentivePercent?: Prisma.SortOrder
+  adminId?: Prisma.SortOrder
+  recipientType?: Prisma.SortOrder
 }
 
 export type IncentivePayoutSumOrderByAggregateInput = {
   totalIncentivePercent?: Prisma.SortOrder
-}
-
-export type IncentivePayoutCreateNestedManyWithoutBdeInput = {
-  create?: Prisma.XOR<Prisma.IncentivePayoutCreateWithoutBdeInput, Prisma.IncentivePayoutUncheckedCreateWithoutBdeInput> | Prisma.IncentivePayoutCreateWithoutBdeInput[] | Prisma.IncentivePayoutUncheckedCreateWithoutBdeInput[]
-  connectOrCreate?: Prisma.IncentivePayoutCreateOrConnectWithoutBdeInput | Prisma.IncentivePayoutCreateOrConnectWithoutBdeInput[]
-  createMany?: Prisma.IncentivePayoutCreateManyBdeInputEnvelope
-  connect?: Prisma.IncentivePayoutWhereUniqueInput | Prisma.IncentivePayoutWhereUniqueInput[]
 }
 
 export type IncentivePayoutCreateNestedManyWithoutAdminInput = {
@@ -570,7 +563,7 @@ export type IncentivePayoutCreateNestedManyWithoutApprovedByInput = {
   connect?: Prisma.IncentivePayoutWhereUniqueInput | Prisma.IncentivePayoutWhereUniqueInput[]
 }
 
-export type IncentivePayoutUncheckedCreateNestedManyWithoutBdeInput = {
+export type IncentivePayoutCreateNestedManyWithoutBdeInput = {
   create?: Prisma.XOR<Prisma.IncentivePayoutCreateWithoutBdeInput, Prisma.IncentivePayoutUncheckedCreateWithoutBdeInput> | Prisma.IncentivePayoutCreateWithoutBdeInput[] | Prisma.IncentivePayoutUncheckedCreateWithoutBdeInput[]
   connectOrCreate?: Prisma.IncentivePayoutCreateOrConnectWithoutBdeInput | Prisma.IncentivePayoutCreateOrConnectWithoutBdeInput[]
   createMany?: Prisma.IncentivePayoutCreateManyBdeInputEnvelope
@@ -591,18 +584,11 @@ export type IncentivePayoutUncheckedCreateNestedManyWithoutApprovedByInput = {
   connect?: Prisma.IncentivePayoutWhereUniqueInput | Prisma.IncentivePayoutWhereUniqueInput[]
 }
 
-export type IncentivePayoutUpdateManyWithoutBdeNestedInput = {
+export type IncentivePayoutUncheckedCreateNestedManyWithoutBdeInput = {
   create?: Prisma.XOR<Prisma.IncentivePayoutCreateWithoutBdeInput, Prisma.IncentivePayoutUncheckedCreateWithoutBdeInput> | Prisma.IncentivePayoutCreateWithoutBdeInput[] | Prisma.IncentivePayoutUncheckedCreateWithoutBdeInput[]
   connectOrCreate?: Prisma.IncentivePayoutCreateOrConnectWithoutBdeInput | Prisma.IncentivePayoutCreateOrConnectWithoutBdeInput[]
-  upsert?: Prisma.IncentivePayoutUpsertWithWhereUniqueWithoutBdeInput | Prisma.IncentivePayoutUpsertWithWhereUniqueWithoutBdeInput[]
   createMany?: Prisma.IncentivePayoutCreateManyBdeInputEnvelope
-  set?: Prisma.IncentivePayoutWhereUniqueInput | Prisma.IncentivePayoutWhereUniqueInput[]
-  disconnect?: Prisma.IncentivePayoutWhereUniqueInput | Prisma.IncentivePayoutWhereUniqueInput[]
-  delete?: Prisma.IncentivePayoutWhereUniqueInput | Prisma.IncentivePayoutWhereUniqueInput[]
   connect?: Prisma.IncentivePayoutWhereUniqueInput | Prisma.IncentivePayoutWhereUniqueInput[]
-  update?: Prisma.IncentivePayoutUpdateWithWhereUniqueWithoutBdeInput | Prisma.IncentivePayoutUpdateWithWhereUniqueWithoutBdeInput[]
-  updateMany?: Prisma.IncentivePayoutUpdateManyWithWhereWithoutBdeInput | Prisma.IncentivePayoutUpdateManyWithWhereWithoutBdeInput[]
-  deleteMany?: Prisma.IncentivePayoutScalarWhereInput | Prisma.IncentivePayoutScalarWhereInput[]
 }
 
 export type IncentivePayoutUpdateManyWithoutAdminNestedInput = {
@@ -633,7 +619,7 @@ export type IncentivePayoutUpdateManyWithoutApprovedByNestedInput = {
   deleteMany?: Prisma.IncentivePayoutScalarWhereInput | Prisma.IncentivePayoutScalarWhereInput[]
 }
 
-export type IncentivePayoutUncheckedUpdateManyWithoutBdeNestedInput = {
+export type IncentivePayoutUpdateManyWithoutBdeNestedInput = {
   create?: Prisma.XOR<Prisma.IncentivePayoutCreateWithoutBdeInput, Prisma.IncentivePayoutUncheckedCreateWithoutBdeInput> | Prisma.IncentivePayoutCreateWithoutBdeInput[] | Prisma.IncentivePayoutUncheckedCreateWithoutBdeInput[]
   connectOrCreate?: Prisma.IncentivePayoutCreateOrConnectWithoutBdeInput | Prisma.IncentivePayoutCreateOrConnectWithoutBdeInput[]
   upsert?: Prisma.IncentivePayoutUpsertWithWhereUniqueWithoutBdeInput | Prisma.IncentivePayoutUpsertWithWhereUniqueWithoutBdeInput[]
@@ -675,71 +661,43 @@ export type IncentivePayoutUncheckedUpdateManyWithoutApprovedByNestedInput = {
   deleteMany?: Prisma.IncentivePayoutScalarWhereInput | Prisma.IncentivePayoutScalarWhereInput[]
 }
 
+export type IncentivePayoutUncheckedUpdateManyWithoutBdeNestedInput = {
+  create?: Prisma.XOR<Prisma.IncentivePayoutCreateWithoutBdeInput, Prisma.IncentivePayoutUncheckedCreateWithoutBdeInput> | Prisma.IncentivePayoutCreateWithoutBdeInput[] | Prisma.IncentivePayoutUncheckedCreateWithoutBdeInput[]
+  connectOrCreate?: Prisma.IncentivePayoutCreateOrConnectWithoutBdeInput | Prisma.IncentivePayoutCreateOrConnectWithoutBdeInput[]
+  upsert?: Prisma.IncentivePayoutUpsertWithWhereUniqueWithoutBdeInput | Prisma.IncentivePayoutUpsertWithWhereUniqueWithoutBdeInput[]
+  createMany?: Prisma.IncentivePayoutCreateManyBdeInputEnvelope
+  set?: Prisma.IncentivePayoutWhereUniqueInput | Prisma.IncentivePayoutWhereUniqueInput[]
+  disconnect?: Prisma.IncentivePayoutWhereUniqueInput | Prisma.IncentivePayoutWhereUniqueInput[]
+  delete?: Prisma.IncentivePayoutWhereUniqueInput | Prisma.IncentivePayoutWhereUniqueInput[]
+  connect?: Prisma.IncentivePayoutWhereUniqueInput | Prisma.IncentivePayoutWhereUniqueInput[]
+  update?: Prisma.IncentivePayoutUpdateWithWhereUniqueWithoutBdeInput | Prisma.IncentivePayoutUpdateWithWhereUniqueWithoutBdeInput[]
+  updateMany?: Prisma.IncentivePayoutUpdateManyWithWhereWithoutBdeInput | Prisma.IncentivePayoutUpdateManyWithWhereWithoutBdeInput[]
+  deleteMany?: Prisma.IncentivePayoutScalarWhereInput | Prisma.IncentivePayoutScalarWhereInput[]
+}
+
 export type EnumIncentivePayoutStatusFieldUpdateOperationsInput = {
   set?: $Enums.IncentivePayoutStatus
 }
 
-export type IncentivePayoutCreateWithoutBdeInput = {
-  id?: string
-  recipientType?: $Enums.IncentiveRecipientType
-  salaryMonth: Date | string
-  totalIncentivePercent: runtime.Decimal | runtime.DecimalJsLike | number | string
-  status?: $Enums.IncentivePayoutStatus
-  approvedAt?: Date | string | null
-  paidAt?: Date | string | null
-  paymentReference?: string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  admin?: Prisma.UserCreateNestedOneWithoutAdminIncentivePayoutsInput
-  approvedBy?: Prisma.UserCreateNestedOneWithoutApprovedIncentivePayoutsInput
-}
-
-export type IncentivePayoutUncheckedCreateWithoutBdeInput = {
-  id?: string
-  recipientType?: $Enums.IncentiveRecipientType
-  adminId?: string | null
-  salaryMonth: Date | string
-  totalIncentivePercent: runtime.Decimal | runtime.DecimalJsLike | number | string
-  status?: $Enums.IncentivePayoutStatus
-  approvedById?: string | null
-  approvedAt?: Date | string | null
-  paidAt?: Date | string | null
-  paymentReference?: string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-}
-
-export type IncentivePayoutCreateOrConnectWithoutBdeInput = {
-  where: Prisma.IncentivePayoutWhereUniqueInput
-  create: Prisma.XOR<Prisma.IncentivePayoutCreateWithoutBdeInput, Prisma.IncentivePayoutUncheckedCreateWithoutBdeInput>
-}
-
-export type IncentivePayoutCreateManyBdeInputEnvelope = {
-  data: Prisma.IncentivePayoutCreateManyBdeInput | Prisma.IncentivePayoutCreateManyBdeInput[]
-  skipDuplicates?: boolean
-}
-
 export type IncentivePayoutCreateWithoutAdminInput = {
   id?: string
-  recipientType?: $Enums.IncentiveRecipientType
   salaryMonth: Date | string
-  totalIncentivePercent: runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: $Enums.IncentivePayoutStatus
   approvedAt?: Date | string | null
   paidAt?: Date | string | null
   paymentReference?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  bde?: Prisma.UserCreateNestedOneWithoutIncentivePayoutsInput
+  totalIncentivePercent: runtime.Decimal | runtime.DecimalJsLike | number | string
+  recipientType?: $Enums.IncentiveRecipientType
   approvedBy?: Prisma.UserCreateNestedOneWithoutApprovedIncentivePayoutsInput
+  bde?: Prisma.UserCreateNestedOneWithoutIncentivePayoutsInput
 }
 
 export type IncentivePayoutUncheckedCreateWithoutAdminInput = {
   id?: string
-  recipientType?: $Enums.IncentiveRecipientType
   bdeId?: string | null
   salaryMonth: Date | string
-  totalIncentivePercent: runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: $Enums.IncentivePayoutStatus
   approvedById?: string | null
   approvedAt?: Date | string | null
@@ -747,6 +705,8 @@ export type IncentivePayoutUncheckedCreateWithoutAdminInput = {
   paymentReference?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  totalIncentivePercent: runtime.Decimal | runtime.DecimalJsLike | number | string
+  recipientType?: $Enums.IncentiveRecipientType
 }
 
 export type IncentivePayoutCreateOrConnectWithoutAdminInput = {
@@ -761,32 +721,32 @@ export type IncentivePayoutCreateManyAdminInputEnvelope = {
 
 export type IncentivePayoutCreateWithoutApprovedByInput = {
   id?: string
-  recipientType?: $Enums.IncentiveRecipientType
   salaryMonth: Date | string
-  totalIncentivePercent: runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: $Enums.IncentivePayoutStatus
   approvedAt?: Date | string | null
   paidAt?: Date | string | null
   paymentReference?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  bde?: Prisma.UserCreateNestedOneWithoutIncentivePayoutsInput
+  totalIncentivePercent: runtime.Decimal | runtime.DecimalJsLike | number | string
+  recipientType?: $Enums.IncentiveRecipientType
   admin?: Prisma.UserCreateNestedOneWithoutAdminIncentivePayoutsInput
+  bde?: Prisma.UserCreateNestedOneWithoutIncentivePayoutsInput
 }
 
 export type IncentivePayoutUncheckedCreateWithoutApprovedByInput = {
   id?: string
-  recipientType?: $Enums.IncentiveRecipientType
   bdeId?: string | null
-  adminId?: string | null
   salaryMonth: Date | string
-  totalIncentivePercent: runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: $Enums.IncentivePayoutStatus
   approvedAt?: Date | string | null
   paidAt?: Date | string | null
   paymentReference?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  totalIncentivePercent: runtime.Decimal | runtime.DecimalJsLike | number | string
+  adminId?: string | null
+  recipientType?: $Enums.IncentiveRecipientType
 }
 
 export type IncentivePayoutCreateOrConnectWithoutApprovedByInput = {
@@ -799,39 +759,44 @@ export type IncentivePayoutCreateManyApprovedByInputEnvelope = {
   skipDuplicates?: boolean
 }
 
-export type IncentivePayoutUpsertWithWhereUniqueWithoutBdeInput = {
+export type IncentivePayoutCreateWithoutBdeInput = {
+  id?: string
+  salaryMonth: Date | string
+  status?: $Enums.IncentivePayoutStatus
+  approvedAt?: Date | string | null
+  paidAt?: Date | string | null
+  paymentReference?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  totalIncentivePercent: runtime.Decimal | runtime.DecimalJsLike | number | string
+  recipientType?: $Enums.IncentiveRecipientType
+  admin?: Prisma.UserCreateNestedOneWithoutAdminIncentivePayoutsInput
+  approvedBy?: Prisma.UserCreateNestedOneWithoutApprovedIncentivePayoutsInput
+}
+
+export type IncentivePayoutUncheckedCreateWithoutBdeInput = {
+  id?: string
+  salaryMonth: Date | string
+  status?: $Enums.IncentivePayoutStatus
+  approvedById?: string | null
+  approvedAt?: Date | string | null
+  paidAt?: Date | string | null
+  paymentReference?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  totalIncentivePercent: runtime.Decimal | runtime.DecimalJsLike | number | string
+  adminId?: string | null
+  recipientType?: $Enums.IncentiveRecipientType
+}
+
+export type IncentivePayoutCreateOrConnectWithoutBdeInput = {
   where: Prisma.IncentivePayoutWhereUniqueInput
-  update: Prisma.XOR<Prisma.IncentivePayoutUpdateWithoutBdeInput, Prisma.IncentivePayoutUncheckedUpdateWithoutBdeInput>
   create: Prisma.XOR<Prisma.IncentivePayoutCreateWithoutBdeInput, Prisma.IncentivePayoutUncheckedCreateWithoutBdeInput>
 }
 
-export type IncentivePayoutUpdateWithWhereUniqueWithoutBdeInput = {
-  where: Prisma.IncentivePayoutWhereUniqueInput
-  data: Prisma.XOR<Prisma.IncentivePayoutUpdateWithoutBdeInput, Prisma.IncentivePayoutUncheckedUpdateWithoutBdeInput>
-}
-
-export type IncentivePayoutUpdateManyWithWhereWithoutBdeInput = {
-  where: Prisma.IncentivePayoutScalarWhereInput
-  data: Prisma.XOR<Prisma.IncentivePayoutUpdateManyMutationInput, Prisma.IncentivePayoutUncheckedUpdateManyWithoutBdeInput>
-}
-
-export type IncentivePayoutScalarWhereInput = {
-  AND?: Prisma.IncentivePayoutScalarWhereInput | Prisma.IncentivePayoutScalarWhereInput[]
-  OR?: Prisma.IncentivePayoutScalarWhereInput[]
-  NOT?: Prisma.IncentivePayoutScalarWhereInput | Prisma.IncentivePayoutScalarWhereInput[]
-  id?: Prisma.StringFilter<"IncentivePayout"> | string
-  recipientType?: Prisma.EnumIncentiveRecipientTypeFilter<"IncentivePayout"> | $Enums.IncentiveRecipientType
-  bdeId?: Prisma.StringNullableFilter<"IncentivePayout"> | string | null
-  adminId?: Prisma.StringNullableFilter<"IncentivePayout"> | string | null
-  salaryMonth?: Prisma.DateTimeFilter<"IncentivePayout"> | Date | string
-  totalIncentivePercent?: Prisma.DecimalFilter<"IncentivePayout"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  status?: Prisma.EnumIncentivePayoutStatusFilter<"IncentivePayout"> | $Enums.IncentivePayoutStatus
-  approvedById?: Prisma.StringNullableFilter<"IncentivePayout"> | string | null
-  approvedAt?: Prisma.DateTimeNullableFilter<"IncentivePayout"> | Date | string | null
-  paidAt?: Prisma.DateTimeNullableFilter<"IncentivePayout"> | Date | string | null
-  paymentReference?: Prisma.StringNullableFilter<"IncentivePayout"> | string | null
-  createdAt?: Prisma.DateTimeFilter<"IncentivePayout"> | Date | string
-  updatedAt?: Prisma.DateTimeFilter<"IncentivePayout"> | Date | string
+export type IncentivePayoutCreateManyBdeInputEnvelope = {
+  data: Prisma.IncentivePayoutCreateManyBdeInput | Prisma.IncentivePayoutCreateManyBdeInput[]
+  skipDuplicates?: boolean
 }
 
 export type IncentivePayoutUpsertWithWhereUniqueWithoutAdminInput = {
@@ -850,6 +815,25 @@ export type IncentivePayoutUpdateManyWithWhereWithoutAdminInput = {
   data: Prisma.XOR<Prisma.IncentivePayoutUpdateManyMutationInput, Prisma.IncentivePayoutUncheckedUpdateManyWithoutAdminInput>
 }
 
+export type IncentivePayoutScalarWhereInput = {
+  AND?: Prisma.IncentivePayoutScalarWhereInput | Prisma.IncentivePayoutScalarWhereInput[]
+  OR?: Prisma.IncentivePayoutScalarWhereInput[]
+  NOT?: Prisma.IncentivePayoutScalarWhereInput | Prisma.IncentivePayoutScalarWhereInput[]
+  id?: Prisma.StringFilter<"IncentivePayout"> | string
+  bdeId?: Prisma.StringNullableFilter<"IncentivePayout"> | string | null
+  salaryMonth?: Prisma.DateTimeFilter<"IncentivePayout"> | Date | string
+  status?: Prisma.EnumIncentivePayoutStatusFilter<"IncentivePayout"> | $Enums.IncentivePayoutStatus
+  approvedById?: Prisma.StringNullableFilter<"IncentivePayout"> | string | null
+  approvedAt?: Prisma.DateTimeNullableFilter<"IncentivePayout"> | Date | string | null
+  paidAt?: Prisma.DateTimeNullableFilter<"IncentivePayout"> | Date | string | null
+  paymentReference?: Prisma.StringNullableFilter<"IncentivePayout"> | string | null
+  createdAt?: Prisma.DateTimeFilter<"IncentivePayout"> | Date | string
+  updatedAt?: Prisma.DateTimeFilter<"IncentivePayout"> | Date | string
+  totalIncentivePercent?: Prisma.DecimalFilter<"IncentivePayout"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  adminId?: Prisma.StringNullableFilter<"IncentivePayout"> | string | null
+  recipientType?: Prisma.EnumIncentiveRecipientTypeFilter<"IncentivePayout"> | $Enums.IncentiveRecipientType
+}
+
 export type IncentivePayoutUpsertWithWhereUniqueWithoutApprovedByInput = {
   where: Prisma.IncentivePayoutWhereUniqueInput
   update: Prisma.XOR<Prisma.IncentivePayoutUpdateWithoutApprovedByInput, Prisma.IncentivePayoutUncheckedUpdateWithoutApprovedByInput>
@@ -866,27 +850,26 @@ export type IncentivePayoutUpdateManyWithWhereWithoutApprovedByInput = {
   data: Prisma.XOR<Prisma.IncentivePayoutUpdateManyMutationInput, Prisma.IncentivePayoutUncheckedUpdateManyWithoutApprovedByInput>
 }
 
-export type IncentivePayoutCreateManyBdeInput = {
-  id?: string
-  recipientType?: $Enums.IncentiveRecipientType
-  adminId?: string | null
-  salaryMonth: Date | string
-  totalIncentivePercent: runtime.Decimal | runtime.DecimalJsLike | number | string
-  status?: $Enums.IncentivePayoutStatus
-  approvedById?: string | null
-  approvedAt?: Date | string | null
-  paidAt?: Date | string | null
-  paymentReference?: string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
+export type IncentivePayoutUpsertWithWhereUniqueWithoutBdeInput = {
+  where: Prisma.IncentivePayoutWhereUniqueInput
+  update: Prisma.XOR<Prisma.IncentivePayoutUpdateWithoutBdeInput, Prisma.IncentivePayoutUncheckedUpdateWithoutBdeInput>
+  create: Prisma.XOR<Prisma.IncentivePayoutCreateWithoutBdeInput, Prisma.IncentivePayoutUncheckedCreateWithoutBdeInput>
+}
+
+export type IncentivePayoutUpdateWithWhereUniqueWithoutBdeInput = {
+  where: Prisma.IncentivePayoutWhereUniqueInput
+  data: Prisma.XOR<Prisma.IncentivePayoutUpdateWithoutBdeInput, Prisma.IncentivePayoutUncheckedUpdateWithoutBdeInput>
+}
+
+export type IncentivePayoutUpdateManyWithWhereWithoutBdeInput = {
+  where: Prisma.IncentivePayoutScalarWhereInput
+  data: Prisma.XOR<Prisma.IncentivePayoutUpdateManyMutationInput, Prisma.IncentivePayoutUncheckedUpdateManyWithoutBdeInput>
 }
 
 export type IncentivePayoutCreateManyAdminInput = {
   id?: string
-  recipientType?: $Enums.IncentiveRecipientType
   bdeId?: string | null
   salaryMonth: Date | string
-  totalIncentivePercent: runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: $Enums.IncentivePayoutStatus
   approvedById?: string | null
   approvedAt?: Date | string | null
@@ -894,44 +877,148 @@ export type IncentivePayoutCreateManyAdminInput = {
   paymentReference?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  totalIncentivePercent: runtime.Decimal | runtime.DecimalJsLike | number | string
+  recipientType?: $Enums.IncentiveRecipientType
 }
 
 export type IncentivePayoutCreateManyApprovedByInput = {
   id?: string
-  recipientType?: $Enums.IncentiveRecipientType
   bdeId?: string | null
-  adminId?: string | null
   salaryMonth: Date | string
-  totalIncentivePercent: runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: $Enums.IncentivePayoutStatus
   approvedAt?: Date | string | null
   paidAt?: Date | string | null
   paymentReference?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  totalIncentivePercent: runtime.Decimal | runtime.DecimalJsLike | number | string
+  adminId?: string | null
+  recipientType?: $Enums.IncentiveRecipientType
 }
 
-export type IncentivePayoutUpdateWithoutBdeInput = {
+export type IncentivePayoutCreateManyBdeInput = {
+  id?: string
+  salaryMonth: Date | string
+  status?: $Enums.IncentivePayoutStatus
+  approvedById?: string | null
+  approvedAt?: Date | string | null
+  paidAt?: Date | string | null
+  paymentReference?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  totalIncentivePercent: runtime.Decimal | runtime.DecimalJsLike | number | string
+  adminId?: string | null
+  recipientType?: $Enums.IncentiveRecipientType
+}
+
+export type IncentivePayoutUpdateWithoutAdminInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  recipientType?: Prisma.EnumIncentiveRecipientTypeFieldUpdateOperationsInput | $Enums.IncentiveRecipientType
   salaryMonth?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  totalIncentivePercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: Prisma.EnumIncentivePayoutStatusFieldUpdateOperationsInput | $Enums.IncentivePayoutStatus
   approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   paymentReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  totalIncentivePercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  recipientType?: Prisma.EnumIncentiveRecipientTypeFieldUpdateOperationsInput | $Enums.IncentiveRecipientType
+  approvedBy?: Prisma.UserUpdateOneWithoutApprovedIncentivePayoutsNestedInput
+  bde?: Prisma.UserUpdateOneWithoutIncentivePayoutsNestedInput
+}
+
+export type IncentivePayoutUncheckedUpdateWithoutAdminInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  bdeId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  salaryMonth?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  status?: Prisma.EnumIncentivePayoutStatusFieldUpdateOperationsInput | $Enums.IncentivePayoutStatus
+  approvedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  paymentReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  totalIncentivePercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  recipientType?: Prisma.EnumIncentiveRecipientTypeFieldUpdateOperationsInput | $Enums.IncentiveRecipientType
+}
+
+export type IncentivePayoutUncheckedUpdateManyWithoutAdminInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  bdeId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  salaryMonth?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  status?: Prisma.EnumIncentivePayoutStatusFieldUpdateOperationsInput | $Enums.IncentivePayoutStatus
+  approvedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  paymentReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  totalIncentivePercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  recipientType?: Prisma.EnumIncentiveRecipientTypeFieldUpdateOperationsInput | $Enums.IncentiveRecipientType
+}
+
+export type IncentivePayoutUpdateWithoutApprovedByInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  salaryMonth?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  status?: Prisma.EnumIncentivePayoutStatusFieldUpdateOperationsInput | $Enums.IncentivePayoutStatus
+  approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  paymentReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  totalIncentivePercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  recipientType?: Prisma.EnumIncentiveRecipientTypeFieldUpdateOperationsInput | $Enums.IncentiveRecipientType
+  admin?: Prisma.UserUpdateOneWithoutAdminIncentivePayoutsNestedInput
+  bde?: Prisma.UserUpdateOneWithoutIncentivePayoutsNestedInput
+}
+
+export type IncentivePayoutUncheckedUpdateWithoutApprovedByInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  bdeId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  salaryMonth?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  status?: Prisma.EnumIncentivePayoutStatusFieldUpdateOperationsInput | $Enums.IncentivePayoutStatus
+  approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  paymentReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  totalIncentivePercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  adminId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  recipientType?: Prisma.EnumIncentiveRecipientTypeFieldUpdateOperationsInput | $Enums.IncentiveRecipientType
+}
+
+export type IncentivePayoutUncheckedUpdateManyWithoutApprovedByInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  bdeId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  salaryMonth?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  status?: Prisma.EnumIncentivePayoutStatusFieldUpdateOperationsInput | $Enums.IncentivePayoutStatus
+  approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  paymentReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  totalIncentivePercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  adminId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  recipientType?: Prisma.EnumIncentiveRecipientTypeFieldUpdateOperationsInput | $Enums.IncentiveRecipientType
+}
+
+export type IncentivePayoutUpdateWithoutBdeInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  salaryMonth?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  status?: Prisma.EnumIncentivePayoutStatusFieldUpdateOperationsInput | $Enums.IncentivePayoutStatus
+  approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  paymentReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  totalIncentivePercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  recipientType?: Prisma.EnumIncentiveRecipientTypeFieldUpdateOperationsInput | $Enums.IncentiveRecipientType
   admin?: Prisma.UserUpdateOneWithoutAdminIncentivePayoutsNestedInput
   approvedBy?: Prisma.UserUpdateOneWithoutApprovedIncentivePayoutsNestedInput
 }
 
 export type IncentivePayoutUncheckedUpdateWithoutBdeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  recipientType?: Prisma.EnumIncentiveRecipientTypeFieldUpdateOperationsInput | $Enums.IncentiveRecipientType
-  adminId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   salaryMonth?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  totalIncentivePercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: Prisma.EnumIncentivePayoutStatusFieldUpdateOperationsInput | $Enums.IncentivePayoutStatus
   approvedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -939,14 +1026,14 @@ export type IncentivePayoutUncheckedUpdateWithoutBdeInput = {
   paymentReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  totalIncentivePercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  adminId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  recipientType?: Prisma.EnumIncentiveRecipientTypeFieldUpdateOperationsInput | $Enums.IncentiveRecipientType
 }
 
 export type IncentivePayoutUncheckedUpdateManyWithoutBdeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  recipientType?: Prisma.EnumIncentiveRecipientTypeFieldUpdateOperationsInput | $Enums.IncentiveRecipientType
-  adminId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   salaryMonth?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  totalIncentivePercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: Prisma.EnumIncentivePayoutStatusFieldUpdateOperationsInput | $Enums.IncentivePayoutStatus
   approvedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -954,107 +1041,17 @@ export type IncentivePayoutUncheckedUpdateManyWithoutBdeInput = {
   paymentReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-}
-
-export type IncentivePayoutUpdateWithoutAdminInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  recipientType?: Prisma.EnumIncentiveRecipientTypeFieldUpdateOperationsInput | $Enums.IncentiveRecipientType
-  salaryMonth?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   totalIncentivePercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  status?: Prisma.EnumIncentivePayoutStatusFieldUpdateOperationsInput | $Enums.IncentivePayoutStatus
-  approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  paymentReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  bde?: Prisma.UserUpdateOneWithoutIncentivePayoutsNestedInput
-  approvedBy?: Prisma.UserUpdateOneWithoutApprovedIncentivePayoutsNestedInput
-}
-
-export type IncentivePayoutUncheckedUpdateWithoutAdminInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  recipientType?: Prisma.EnumIncentiveRecipientTypeFieldUpdateOperationsInput | $Enums.IncentiveRecipientType
-  bdeId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  salaryMonth?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  totalIncentivePercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  status?: Prisma.EnumIncentivePayoutStatusFieldUpdateOperationsInput | $Enums.IncentivePayoutStatus
-  approvedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  paymentReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-}
-
-export type IncentivePayoutUncheckedUpdateManyWithoutAdminInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  recipientType?: Prisma.EnumIncentiveRecipientTypeFieldUpdateOperationsInput | $Enums.IncentiveRecipientType
-  bdeId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  salaryMonth?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  totalIncentivePercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  status?: Prisma.EnumIncentivePayoutStatusFieldUpdateOperationsInput | $Enums.IncentivePayoutStatus
-  approvedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  paymentReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-}
-
-export type IncentivePayoutUpdateWithoutApprovedByInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  recipientType?: Prisma.EnumIncentiveRecipientTypeFieldUpdateOperationsInput | $Enums.IncentiveRecipientType
-  salaryMonth?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  totalIncentivePercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  status?: Prisma.EnumIncentivePayoutStatusFieldUpdateOperationsInput | $Enums.IncentivePayoutStatus
-  approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  paymentReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  bde?: Prisma.UserUpdateOneWithoutIncentivePayoutsNestedInput
-  admin?: Prisma.UserUpdateOneWithoutAdminIncentivePayoutsNestedInput
-}
-
-export type IncentivePayoutUncheckedUpdateWithoutApprovedByInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  recipientType?: Prisma.EnumIncentiveRecipientTypeFieldUpdateOperationsInput | $Enums.IncentiveRecipientType
-  bdeId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   adminId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  salaryMonth?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  totalIncentivePercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  status?: Prisma.EnumIncentivePayoutStatusFieldUpdateOperationsInput | $Enums.IncentivePayoutStatus
-  approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  paymentReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-}
-
-export type IncentivePayoutUncheckedUpdateManyWithoutApprovedByInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
   recipientType?: Prisma.EnumIncentiveRecipientTypeFieldUpdateOperationsInput | $Enums.IncentiveRecipientType
-  bdeId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  adminId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  salaryMonth?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  totalIncentivePercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  status?: Prisma.EnumIncentivePayoutStatusFieldUpdateOperationsInput | $Enums.IncentivePayoutStatus
-  approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  paymentReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 
 
 export type IncentivePayoutSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  recipientType?: boolean
   bdeId?: boolean
-  adminId?: boolean
   salaryMonth?: boolean
-  totalIncentivePercent?: boolean
   status?: boolean
   approvedById?: boolean
   approvedAt?: boolean
@@ -1062,18 +1059,18 @@ export type IncentivePayoutSelect<ExtArgs extends runtime.Types.Extensions.Inter
   paymentReference?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  bde?: boolean | Prisma.IncentivePayout$bdeArgs<ExtArgs>
+  totalIncentivePercent?: boolean
+  adminId?: boolean
+  recipientType?: boolean
   admin?: boolean | Prisma.IncentivePayout$adminArgs<ExtArgs>
   approvedBy?: boolean | Prisma.IncentivePayout$approvedByArgs<ExtArgs>
+  bde?: boolean | Prisma.IncentivePayout$bdeArgs<ExtArgs>
 }, ExtArgs["result"]["incentivePayout"]>
 
 export type IncentivePayoutSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  recipientType?: boolean
   bdeId?: boolean
-  adminId?: boolean
   salaryMonth?: boolean
-  totalIncentivePercent?: boolean
   status?: boolean
   approvedById?: boolean
   approvedAt?: boolean
@@ -1081,18 +1078,18 @@ export type IncentivePayoutSelectCreateManyAndReturn<ExtArgs extends runtime.Typ
   paymentReference?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  bde?: boolean | Prisma.IncentivePayout$bdeArgs<ExtArgs>
+  totalIncentivePercent?: boolean
+  adminId?: boolean
+  recipientType?: boolean
   admin?: boolean | Prisma.IncentivePayout$adminArgs<ExtArgs>
   approvedBy?: boolean | Prisma.IncentivePayout$approvedByArgs<ExtArgs>
+  bde?: boolean | Prisma.IncentivePayout$bdeArgs<ExtArgs>
 }, ExtArgs["result"]["incentivePayout"]>
 
 export type IncentivePayoutSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  recipientType?: boolean
   bdeId?: boolean
-  adminId?: boolean
   salaryMonth?: boolean
-  totalIncentivePercent?: boolean
   status?: boolean
   approvedById?: boolean
   approvedAt?: boolean
@@ -1100,18 +1097,18 @@ export type IncentivePayoutSelectUpdateManyAndReturn<ExtArgs extends runtime.Typ
   paymentReference?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  bde?: boolean | Prisma.IncentivePayout$bdeArgs<ExtArgs>
+  totalIncentivePercent?: boolean
+  adminId?: boolean
+  recipientType?: boolean
   admin?: boolean | Prisma.IncentivePayout$adminArgs<ExtArgs>
   approvedBy?: boolean | Prisma.IncentivePayout$approvedByArgs<ExtArgs>
+  bde?: boolean | Prisma.IncentivePayout$bdeArgs<ExtArgs>
 }, ExtArgs["result"]["incentivePayout"]>
 
 export type IncentivePayoutSelectScalar = {
   id?: boolean
-  recipientType?: boolean
   bdeId?: boolean
-  adminId?: boolean
   salaryMonth?: boolean
-  totalIncentivePercent?: boolean
   status?: boolean
   approvedById?: boolean
   approvedAt?: boolean
@@ -1119,39 +1116,39 @@ export type IncentivePayoutSelectScalar = {
   paymentReference?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  totalIncentivePercent?: boolean
+  adminId?: boolean
+  recipientType?: boolean
 }
 
-export type IncentivePayoutOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "recipientType" | "bdeId" | "adminId" | "salaryMonth" | "totalIncentivePercent" | "status" | "approvedById" | "approvedAt" | "paidAt" | "paymentReference" | "createdAt" | "updatedAt", ExtArgs["result"]["incentivePayout"]>
+export type IncentivePayoutOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "bdeId" | "salaryMonth" | "status" | "approvedById" | "approvedAt" | "paidAt" | "paymentReference" | "createdAt" | "updatedAt" | "totalIncentivePercent" | "adminId" | "recipientType", ExtArgs["result"]["incentivePayout"]>
 export type IncentivePayoutInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  bde?: boolean | Prisma.IncentivePayout$bdeArgs<ExtArgs>
   admin?: boolean | Prisma.IncentivePayout$adminArgs<ExtArgs>
   approvedBy?: boolean | Prisma.IncentivePayout$approvedByArgs<ExtArgs>
+  bde?: boolean | Prisma.IncentivePayout$bdeArgs<ExtArgs>
 }
 export type IncentivePayoutIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  bde?: boolean | Prisma.IncentivePayout$bdeArgs<ExtArgs>
   admin?: boolean | Prisma.IncentivePayout$adminArgs<ExtArgs>
   approvedBy?: boolean | Prisma.IncentivePayout$approvedByArgs<ExtArgs>
+  bde?: boolean | Prisma.IncentivePayout$bdeArgs<ExtArgs>
 }
 export type IncentivePayoutIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  bde?: boolean | Prisma.IncentivePayout$bdeArgs<ExtArgs>
   admin?: boolean | Prisma.IncentivePayout$adminArgs<ExtArgs>
   approvedBy?: boolean | Prisma.IncentivePayout$approvedByArgs<ExtArgs>
+  bde?: boolean | Prisma.IncentivePayout$bdeArgs<ExtArgs>
 }
 
 export type $IncentivePayoutPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "IncentivePayout"
   objects: {
-    bde: Prisma.$UserPayload<ExtArgs> | null
     admin: Prisma.$UserPayload<ExtArgs> | null
     approvedBy: Prisma.$UserPayload<ExtArgs> | null
+    bde: Prisma.$UserPayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
-    recipientType: $Enums.IncentiveRecipientType
     bdeId: string | null
-    adminId: string | null
     salaryMonth: Date
-    totalIncentivePercent: runtime.Decimal
     status: $Enums.IncentivePayoutStatus
     approvedById: string | null
     approvedAt: Date | null
@@ -1159,6 +1156,9 @@ export type $IncentivePayoutPayload<ExtArgs extends runtime.Types.Extensions.Int
     paymentReference: string | null
     createdAt: Date
     updatedAt: Date
+    totalIncentivePercent: runtime.Decimal
+    adminId: string | null
+    recipientType: $Enums.IncentiveRecipientType
   }, ExtArgs["result"]["incentivePayout"]>
   composites: {}
 }
@@ -1553,9 +1553,9 @@ readonly fields: IncentivePayoutFieldRefs;
  */
 export interface Prisma__IncentivePayoutClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  bde<T extends Prisma.IncentivePayout$bdeArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.IncentivePayout$bdeArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   admin<T extends Prisma.IncentivePayout$adminArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.IncentivePayout$adminArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   approvedBy<T extends Prisma.IncentivePayout$approvedByArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.IncentivePayout$approvedByArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  bde<T extends Prisma.IncentivePayout$bdeArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.IncentivePayout$bdeArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1586,11 +1586,8 @@ export interface Prisma__IncentivePayoutClient<T, Null = never, ExtArgs extends 
  */
 export interface IncentivePayoutFieldRefs {
   readonly id: Prisma.FieldRef<"IncentivePayout", 'String'>
-  readonly recipientType: Prisma.FieldRef<"IncentivePayout", 'IncentiveRecipientType'>
   readonly bdeId: Prisma.FieldRef<"IncentivePayout", 'String'>
-  readonly adminId: Prisma.FieldRef<"IncentivePayout", 'String'>
   readonly salaryMonth: Prisma.FieldRef<"IncentivePayout", 'DateTime'>
-  readonly totalIncentivePercent: Prisma.FieldRef<"IncentivePayout", 'Decimal'>
   readonly status: Prisma.FieldRef<"IncentivePayout", 'IncentivePayoutStatus'>
   readonly approvedById: Prisma.FieldRef<"IncentivePayout", 'String'>
   readonly approvedAt: Prisma.FieldRef<"IncentivePayout", 'DateTime'>
@@ -1598,6 +1595,9 @@ export interface IncentivePayoutFieldRefs {
   readonly paymentReference: Prisma.FieldRef<"IncentivePayout", 'String'>
   readonly createdAt: Prisma.FieldRef<"IncentivePayout", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"IncentivePayout", 'DateTime'>
+  readonly totalIncentivePercent: Prisma.FieldRef<"IncentivePayout", 'Decimal'>
+  readonly adminId: Prisma.FieldRef<"IncentivePayout", 'String'>
+  readonly recipientType: Prisma.FieldRef<"IncentivePayout", 'IncentiveRecipientType'>
 }
     
 
@@ -1999,25 +1999,6 @@ export type IncentivePayoutDeleteManyArgs<ExtArgs extends runtime.Types.Extensio
 }
 
 /**
- * IncentivePayout.bde
- */
-export type IncentivePayout$bdeArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the User
-   */
-  select?: Prisma.UserSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the User
-   */
-  omit?: Prisma.UserOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.UserInclude<ExtArgs> | null
-  where?: Prisma.UserWhereInput
-}
-
-/**
  * IncentivePayout.admin
  */
 export type IncentivePayout$adminArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -2040,6 +2021,25 @@ export type IncentivePayout$adminArgs<ExtArgs extends runtime.Types.Extensions.I
  * IncentivePayout.approvedBy
  */
 export type IncentivePayout$approvedByArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the User
+   */
+  select?: Prisma.UserSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the User
+   */
+  omit?: Prisma.UserOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserInclude<ExtArgs> | null
+  where?: Prisma.UserWhereInput
+}
+
+/**
+ * IncentivePayout.bde
+ */
+export type IncentivePayout$bdeArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
    * Select specific fields to fetch from the User
    */

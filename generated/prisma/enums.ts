@@ -71,12 +71,12 @@ export type ActivityStatus = (typeof ActivityStatus)[keyof typeof ActivityStatus
 
 export const NotificationType = {
   LEAD_ASSIGNED: 'LEAD_ASSIGNED',
-  FOLLOW_UP_REMINDER: 'FOLLOW_UP_REMINDER',
   FOLLOW_UP_DUE: 'FOLLOW_UP_DUE',
   FOLLOW_UP_OVERDUE: 'FOLLOW_UP_OVERDUE',
   LEAD_CONVERTED: 'LEAD_CONVERTED',
   ACTIVITY_CREATED: 'ACTIVITY_CREATED',
-  GENERAL: 'GENERAL'
+  GENERAL: 'GENERAL',
+  FOLLOW_UP_REMINDER: 'FOLLOW_UP_REMINDER'
 } as const
 
 export type NotificationType = (typeof NotificationType)[keyof typeof NotificationType]

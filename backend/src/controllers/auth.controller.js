@@ -1,4 +1,3 @@
-
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { z } from "zod";
@@ -21,16 +20,6 @@ function getCookieOptions() {
     path: "/",
     maxAge: 24 * 60 * 60 * 1000,
   };
-}
-
-function logPrismaError(context, error) {
-  console.error(`${context}:`, {
-    name: error?.name,
-    code: error?.code,
-    meta: error?.meta,
-    message: error?.message,
-    stack: error?.stack,
-  });
 }
 
 export async function login(req, res) {
@@ -128,6 +117,18 @@ export async function login(req, res) {
       },
     });
 
+    /*
+     * --------------------------------------------------
+     * HTTP-ONLY AUTH COOKIE
+     * --------------------------------------------------
+     *
+     * The JWT is also returned in the response because
+     * the existing frontend API services currently use
+     * localStorage.
+     *
+     * The cookie is additionally used by Next.js
+     * middleware for direct URL protection.
+     */
     res.cookie(
       "nleta_token",
       token,
@@ -151,7 +152,7 @@ export async function login(req, res) {
       },
     });
   } catch (error) {
-    logPrismaError("LOGIN ERROR DETAILS", error);
+    console.error("LOGIN ERROR:", error);
 
     return res.status(500).json({
       success: false,
@@ -214,7 +215,10 @@ export async function getCurrentUser(req, res) {
       },
     });
   } catch (error) {
-    logPrismaError("GET CURRENT USER ERROR DETAILS", error);
+    console.error(
+      "GET CURRENT USER ERROR:",
+      error
+    );
 
     return res.status(500).json({
       success: false,
@@ -225,19 +229,26 @@ export async function getCurrentUser(req, res) {
 
 export async function logout(req, res) {
   try {
-    res.clearCookie("nleta_token", {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "lax",
-      path: "/",
-    });
+    /*
+     * Clear the HTTP-only authentication cookie.
+     */
+    res.clearCookie(
+      "nleta_token",
+      {
+        httpOnly: true,
+        secure:
+          process.env.NODE_ENV === "production",
+        sameSite: "lax",
+        path: "/",
+      }
+    );
 
     return res.status(200).json({
       success: true,
       message: "Logged out successfully",
     });
   } catch (error) {
-    logPrismaError("LOGOUT ERROR DETAILS", error);
+    console.error("LOGOUT ERROR:", error);
 
     return res.status(500).json({
       success: false,

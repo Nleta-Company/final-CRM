@@ -36,11 +36,8 @@ export type PSGAIncentiveAllocationSumAggregateOutputType = {
 
 export type PSGAIncentiveAllocationMinAggregateOutputType = {
   id: string | null
-  clientId: string | null
   psgId: string | null
-  recipientType: $Enums.IncentiveRecipientType | null
   bdeId: string | null
-  adminId: string | null
   role: $Enums.IncentiveRole | null
   reason: string | null
   incentivePercent: runtime.Decimal | null
@@ -50,15 +47,15 @@ export type PSGAIncentiveAllocationMinAggregateOutputType = {
   paidAt: Date | null
   createdAt: Date | null
   updatedAt: Date | null
+  adminId: string | null
+  recipientType: $Enums.IncentiveRecipientType | null
+  clientId: string | null
 }
 
 export type PSGAIncentiveAllocationMaxAggregateOutputType = {
   id: string | null
-  clientId: string | null
   psgId: string | null
-  recipientType: $Enums.IncentiveRecipientType | null
   bdeId: string | null
-  adminId: string | null
   role: $Enums.IncentiveRole | null
   reason: string | null
   incentivePercent: runtime.Decimal | null
@@ -68,15 +65,15 @@ export type PSGAIncentiveAllocationMaxAggregateOutputType = {
   paidAt: Date | null
   createdAt: Date | null
   updatedAt: Date | null
+  adminId: string | null
+  recipientType: $Enums.IncentiveRecipientType | null
+  clientId: string | null
 }
 
 export type PSGAIncentiveAllocationCountAggregateOutputType = {
   id: number
-  clientId: number
   psgId: number
-  recipientType: number
   bdeId: number
-  adminId: number
   role: number
   reason: number
   incentivePercent: number
@@ -86,6 +83,9 @@ export type PSGAIncentiveAllocationCountAggregateOutputType = {
   paidAt: number
   createdAt: number
   updatedAt: number
+  adminId: number
+  recipientType: number
+  clientId: number
   _all: number
 }
 
@@ -100,11 +100,8 @@ export type PSGAIncentiveAllocationSumAggregateInputType = {
 
 export type PSGAIncentiveAllocationMinAggregateInputType = {
   id?: true
-  clientId?: true
   psgId?: true
-  recipientType?: true
   bdeId?: true
-  adminId?: true
   role?: true
   reason?: true
   incentivePercent?: true
@@ -114,15 +111,15 @@ export type PSGAIncentiveAllocationMinAggregateInputType = {
   paidAt?: true
   createdAt?: true
   updatedAt?: true
+  adminId?: true
+  recipientType?: true
+  clientId?: true
 }
 
 export type PSGAIncentiveAllocationMaxAggregateInputType = {
   id?: true
-  clientId?: true
   psgId?: true
-  recipientType?: true
   bdeId?: true
-  adminId?: true
   role?: true
   reason?: true
   incentivePercent?: true
@@ -132,15 +129,15 @@ export type PSGAIncentiveAllocationMaxAggregateInputType = {
   paidAt?: true
   createdAt?: true
   updatedAt?: true
+  adminId?: true
+  recipientType?: true
+  clientId?: true
 }
 
 export type PSGAIncentiveAllocationCountAggregateInputType = {
   id?: true
-  clientId?: true
   psgId?: true
-  recipientType?: true
   bdeId?: true
-  adminId?: true
   role?: true
   reason?: true
   incentivePercent?: true
@@ -150,6 +147,9 @@ export type PSGAIncentiveAllocationCountAggregateInputType = {
   paidAt?: true
   createdAt?: true
   updatedAt?: true
+  adminId?: true
+  recipientType?: true
+  clientId?: true
   _all?: true
 }
 
@@ -241,11 +241,8 @@ export type PSGAIncentiveAllocationGroupByArgs<ExtArgs extends runtime.Types.Ext
 
 export type PSGAIncentiveAllocationGroupByOutputType = {
   id: string
-  clientId: string
   psgId: string | null
-  recipientType: $Enums.IncentiveRecipientType
   bdeId: string | null
-  adminId: string | null
   role: $Enums.IncentiveRole
   reason: string | null
   incentivePercent: runtime.Decimal
@@ -255,6 +252,9 @@ export type PSGAIncentiveAllocationGroupByOutputType = {
   paidAt: Date | null
   createdAt: Date
   updatedAt: Date
+  adminId: string | null
+  recipientType: $Enums.IncentiveRecipientType
+  clientId: string
   _count: PSGAIncentiveAllocationCountAggregateOutputType | null
   _avg: PSGAIncentiveAllocationAvgAggregateOutputType | null
   _sum: PSGAIncentiveAllocationSumAggregateOutputType | null
@@ -282,11 +282,8 @@ export type PSGAIncentiveAllocationWhereInput = {
   OR?: Prisma.PSGAIncentiveAllocationWhereInput[]
   NOT?: Prisma.PSGAIncentiveAllocationWhereInput | Prisma.PSGAIncentiveAllocationWhereInput[]
   id?: Prisma.StringFilter<"PSGAIncentiveAllocation"> | string
-  clientId?: Prisma.StringFilter<"PSGAIncentiveAllocation"> | string
   psgId?: Prisma.StringNullableFilter<"PSGAIncentiveAllocation"> | string | null
-  recipientType?: Prisma.EnumIncentiveRecipientTypeFilter<"PSGAIncentiveAllocation"> | $Enums.IncentiveRecipientType
   bdeId?: Prisma.StringNullableFilter<"PSGAIncentiveAllocation"> | string | null
-  adminId?: Prisma.StringNullableFilter<"PSGAIncentiveAllocation"> | string | null
   role?: Prisma.EnumIncentiveRoleFilter<"PSGAIncentiveAllocation"> | $Enums.IncentiveRole
   reason?: Prisma.StringNullableFilter<"PSGAIncentiveAllocation"> | string | null
   incentivePercent?: Prisma.DecimalFilter<"PSGAIncentiveAllocation"> | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -296,20 +293,20 @@ export type PSGAIncentiveAllocationWhereInput = {
   paidAt?: Prisma.DateTimeNullableFilter<"PSGAIncentiveAllocation"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"PSGAIncentiveAllocation"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"PSGAIncentiveAllocation"> | Date | string
-  client?: Prisma.XOR<Prisma.ClientScalarRelationFilter, Prisma.ClientWhereInput>
-  psg?: Prisma.XOR<Prisma.PSGANullableScalarRelationFilter, Prisma.PSGAWhereInput> | null
-  bde?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
+  adminId?: Prisma.StringNullableFilter<"PSGAIncentiveAllocation"> | string | null
+  recipientType?: Prisma.EnumIncentiveRecipientTypeFilter<"PSGAIncentiveAllocation"> | $Enums.IncentiveRecipientType
+  clientId?: Prisma.StringFilter<"PSGAIncentiveAllocation"> | string
   admin?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   approvedBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
+  bde?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
+  client?: Prisma.XOR<Prisma.ClientScalarRelationFilter, Prisma.ClientWhereInput>
+  psg?: Prisma.XOR<Prisma.PSGANullableScalarRelationFilter, Prisma.PSGAWhereInput> | null
 }
 
 export type PSGAIncentiveAllocationOrderByWithRelationInput = {
   id?: Prisma.SortOrder
-  clientId?: Prisma.SortOrder
   psgId?: Prisma.SortOrderInput | Prisma.SortOrder
-  recipientType?: Prisma.SortOrder
   bdeId?: Prisma.SortOrderInput | Prisma.SortOrder
-  adminId?: Prisma.SortOrderInput | Prisma.SortOrder
   role?: Prisma.SortOrder
   reason?: Prisma.SortOrderInput | Prisma.SortOrder
   incentivePercent?: Prisma.SortOrder
@@ -319,11 +316,14 @@ export type PSGAIncentiveAllocationOrderByWithRelationInput = {
   paidAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
-  client?: Prisma.ClientOrderByWithRelationInput
-  psg?: Prisma.PSGAOrderByWithRelationInput
-  bde?: Prisma.UserOrderByWithRelationInput
+  adminId?: Prisma.SortOrderInput | Prisma.SortOrder
+  recipientType?: Prisma.SortOrder
+  clientId?: Prisma.SortOrder
   admin?: Prisma.UserOrderByWithRelationInput
   approvedBy?: Prisma.UserOrderByWithRelationInput
+  bde?: Prisma.UserOrderByWithRelationInput
+  client?: Prisma.ClientOrderByWithRelationInput
+  psg?: Prisma.PSGAOrderByWithRelationInput
 }
 
 export type PSGAIncentiveAllocationWhereUniqueInput = Prisma.AtLeast<{
@@ -331,11 +331,8 @@ export type PSGAIncentiveAllocationWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.PSGAIncentiveAllocationWhereInput | Prisma.PSGAIncentiveAllocationWhereInput[]
   OR?: Prisma.PSGAIncentiveAllocationWhereInput[]
   NOT?: Prisma.PSGAIncentiveAllocationWhereInput | Prisma.PSGAIncentiveAllocationWhereInput[]
-  clientId?: Prisma.StringFilter<"PSGAIncentiveAllocation"> | string
   psgId?: Prisma.StringNullableFilter<"PSGAIncentiveAllocation"> | string | null
-  recipientType?: Prisma.EnumIncentiveRecipientTypeFilter<"PSGAIncentiveAllocation"> | $Enums.IncentiveRecipientType
   bdeId?: Prisma.StringNullableFilter<"PSGAIncentiveAllocation"> | string | null
-  adminId?: Prisma.StringNullableFilter<"PSGAIncentiveAllocation"> | string | null
   role?: Prisma.EnumIncentiveRoleFilter<"PSGAIncentiveAllocation"> | $Enums.IncentiveRole
   reason?: Prisma.StringNullableFilter<"PSGAIncentiveAllocation"> | string | null
   incentivePercent?: Prisma.DecimalFilter<"PSGAIncentiveAllocation"> | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -345,20 +342,20 @@ export type PSGAIncentiveAllocationWhereUniqueInput = Prisma.AtLeast<{
   paidAt?: Prisma.DateTimeNullableFilter<"PSGAIncentiveAllocation"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"PSGAIncentiveAllocation"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"PSGAIncentiveAllocation"> | Date | string
-  client?: Prisma.XOR<Prisma.ClientScalarRelationFilter, Prisma.ClientWhereInput>
-  psg?: Prisma.XOR<Prisma.PSGANullableScalarRelationFilter, Prisma.PSGAWhereInput> | null
-  bde?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
+  adminId?: Prisma.StringNullableFilter<"PSGAIncentiveAllocation"> | string | null
+  recipientType?: Prisma.EnumIncentiveRecipientTypeFilter<"PSGAIncentiveAllocation"> | $Enums.IncentiveRecipientType
+  clientId?: Prisma.StringFilter<"PSGAIncentiveAllocation"> | string
   admin?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   approvedBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
+  bde?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
+  client?: Prisma.XOR<Prisma.ClientScalarRelationFilter, Prisma.ClientWhereInput>
+  psg?: Prisma.XOR<Prisma.PSGANullableScalarRelationFilter, Prisma.PSGAWhereInput> | null
 }, "id">
 
 export type PSGAIncentiveAllocationOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
-  clientId?: Prisma.SortOrder
   psgId?: Prisma.SortOrderInput | Prisma.SortOrder
-  recipientType?: Prisma.SortOrder
   bdeId?: Prisma.SortOrderInput | Prisma.SortOrder
-  adminId?: Prisma.SortOrderInput | Prisma.SortOrder
   role?: Prisma.SortOrder
   reason?: Prisma.SortOrderInput | Prisma.SortOrder
   incentivePercent?: Prisma.SortOrder
@@ -368,6 +365,9 @@ export type PSGAIncentiveAllocationOrderByWithAggregationInput = {
   paidAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  adminId?: Prisma.SortOrderInput | Prisma.SortOrder
+  recipientType?: Prisma.SortOrder
+  clientId?: Prisma.SortOrder
   _count?: Prisma.PSGAIncentiveAllocationCountOrderByAggregateInput
   _avg?: Prisma.PSGAIncentiveAllocationAvgOrderByAggregateInput
   _max?: Prisma.PSGAIncentiveAllocationMaxOrderByAggregateInput
@@ -380,11 +380,8 @@ export type PSGAIncentiveAllocationScalarWhereWithAggregatesInput = {
   OR?: Prisma.PSGAIncentiveAllocationScalarWhereWithAggregatesInput[]
   NOT?: Prisma.PSGAIncentiveAllocationScalarWhereWithAggregatesInput | Prisma.PSGAIncentiveAllocationScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"PSGAIncentiveAllocation"> | string
-  clientId?: Prisma.StringWithAggregatesFilter<"PSGAIncentiveAllocation"> | string
   psgId?: Prisma.StringNullableWithAggregatesFilter<"PSGAIncentiveAllocation"> | string | null
-  recipientType?: Prisma.EnumIncentiveRecipientTypeWithAggregatesFilter<"PSGAIncentiveAllocation"> | $Enums.IncentiveRecipientType
   bdeId?: Prisma.StringNullableWithAggregatesFilter<"PSGAIncentiveAllocation"> | string | null
-  adminId?: Prisma.StringNullableWithAggregatesFilter<"PSGAIncentiveAllocation"> | string | null
   role?: Prisma.EnumIncentiveRoleWithAggregatesFilter<"PSGAIncentiveAllocation"> | $Enums.IncentiveRole
   reason?: Prisma.StringNullableWithAggregatesFilter<"PSGAIncentiveAllocation"> | string | null
   incentivePercent?: Prisma.DecimalWithAggregatesFilter<"PSGAIncentiveAllocation"> | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -394,11 +391,13 @@ export type PSGAIncentiveAllocationScalarWhereWithAggregatesInput = {
   paidAt?: Prisma.DateTimeNullableWithAggregatesFilter<"PSGAIncentiveAllocation"> | Date | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"PSGAIncentiveAllocation"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"PSGAIncentiveAllocation"> | Date | string
+  adminId?: Prisma.StringNullableWithAggregatesFilter<"PSGAIncentiveAllocation"> | string | null
+  recipientType?: Prisma.EnumIncentiveRecipientTypeWithAggregatesFilter<"PSGAIncentiveAllocation"> | $Enums.IncentiveRecipientType
+  clientId?: Prisma.StringWithAggregatesFilter<"PSGAIncentiveAllocation"> | string
 }
 
 export type PSGAIncentiveAllocationCreateInput = {
   id?: string
-  recipientType?: $Enums.IncentiveRecipientType
   role: $Enums.IncentiveRole
   reason?: string | null
   incentivePercent: runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -407,20 +406,18 @@ export type PSGAIncentiveAllocationCreateInput = {
   paidAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  client: Prisma.ClientCreateNestedOneWithoutIncentiveAllocationsInput
-  psg?: Prisma.PSGACreateNestedOneWithoutIncentiveAllocationsInput
-  bde?: Prisma.UserCreateNestedOneWithoutIncentiveAllocationsInput
+  recipientType?: $Enums.IncentiveRecipientType
   admin?: Prisma.UserCreateNestedOneWithoutAdminIncentiveAllocationsInput
   approvedBy?: Prisma.UserCreateNestedOneWithoutApprovedIncentivesInput
+  bde?: Prisma.UserCreateNestedOneWithoutIncentiveAllocationsInput
+  client: Prisma.ClientCreateNestedOneWithoutIncentiveAllocationsInput
+  psg?: Prisma.PSGACreateNestedOneWithoutIncentiveAllocationsInput
 }
 
 export type PSGAIncentiveAllocationUncheckedCreateInput = {
   id?: string
-  clientId: string
   psgId?: string | null
-  recipientType?: $Enums.IncentiveRecipientType
   bdeId?: string | null
-  adminId?: string | null
   role: $Enums.IncentiveRole
   reason?: string | null
   incentivePercent: runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -430,11 +427,13 @@ export type PSGAIncentiveAllocationUncheckedCreateInput = {
   paidAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  adminId?: string | null
+  recipientType?: $Enums.IncentiveRecipientType
+  clientId: string
 }
 
 export type PSGAIncentiveAllocationUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  recipientType?: Prisma.EnumIncentiveRecipientTypeFieldUpdateOperationsInput | $Enums.IncentiveRecipientType
   role?: Prisma.EnumIncentiveRoleFieldUpdateOperationsInput | $Enums.IncentiveRole
   reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   incentivePercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -443,20 +442,18 @@ export type PSGAIncentiveAllocationUpdateInput = {
   paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  client?: Prisma.ClientUpdateOneRequiredWithoutIncentiveAllocationsNestedInput
-  psg?: Prisma.PSGAUpdateOneWithoutIncentiveAllocationsNestedInput
-  bde?: Prisma.UserUpdateOneWithoutIncentiveAllocationsNestedInput
+  recipientType?: Prisma.EnumIncentiveRecipientTypeFieldUpdateOperationsInput | $Enums.IncentiveRecipientType
   admin?: Prisma.UserUpdateOneWithoutAdminIncentiveAllocationsNestedInput
   approvedBy?: Prisma.UserUpdateOneWithoutApprovedIncentivesNestedInput
+  bde?: Prisma.UserUpdateOneWithoutIncentiveAllocationsNestedInput
+  client?: Prisma.ClientUpdateOneRequiredWithoutIncentiveAllocationsNestedInput
+  psg?: Prisma.PSGAUpdateOneWithoutIncentiveAllocationsNestedInput
 }
 
 export type PSGAIncentiveAllocationUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  clientId?: Prisma.StringFieldUpdateOperationsInput | string
   psgId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  recipientType?: Prisma.EnumIncentiveRecipientTypeFieldUpdateOperationsInput | $Enums.IncentiveRecipientType
   bdeId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  adminId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumIncentiveRoleFieldUpdateOperationsInput | $Enums.IncentiveRole
   reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   incentivePercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -466,15 +463,15 @@ export type PSGAIncentiveAllocationUncheckedUpdateInput = {
   paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  adminId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  recipientType?: Prisma.EnumIncentiveRecipientTypeFieldUpdateOperationsInput | $Enums.IncentiveRecipientType
+  clientId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type PSGAIncentiveAllocationCreateManyInput = {
   id?: string
-  clientId: string
   psgId?: string | null
-  recipientType?: $Enums.IncentiveRecipientType
   bdeId?: string | null
-  adminId?: string | null
   role: $Enums.IncentiveRole
   reason?: string | null
   incentivePercent: runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -484,11 +481,13 @@ export type PSGAIncentiveAllocationCreateManyInput = {
   paidAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  adminId?: string | null
+  recipientType?: $Enums.IncentiveRecipientType
+  clientId: string
 }
 
 export type PSGAIncentiveAllocationUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  recipientType?: Prisma.EnumIncentiveRecipientTypeFieldUpdateOperationsInput | $Enums.IncentiveRecipientType
   role?: Prisma.EnumIncentiveRoleFieldUpdateOperationsInput | $Enums.IncentiveRole
   reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   incentivePercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -497,15 +496,13 @@ export type PSGAIncentiveAllocationUpdateManyMutationInput = {
   paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  recipientType?: Prisma.EnumIncentiveRecipientTypeFieldUpdateOperationsInput | $Enums.IncentiveRecipientType
 }
 
 export type PSGAIncentiveAllocationUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  clientId?: Prisma.StringFieldUpdateOperationsInput | string
   psgId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  recipientType?: Prisma.EnumIncentiveRecipientTypeFieldUpdateOperationsInput | $Enums.IncentiveRecipientType
   bdeId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  adminId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumIncentiveRoleFieldUpdateOperationsInput | $Enums.IncentiveRole
   reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   incentivePercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -515,6 +512,9 @@ export type PSGAIncentiveAllocationUncheckedUpdateManyInput = {
   paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  adminId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  recipientType?: Prisma.EnumIncentiveRecipientTypeFieldUpdateOperationsInput | $Enums.IncentiveRecipientType
+  clientId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type PSGAIncentiveAllocationListRelationFilter = {
@@ -529,11 +529,8 @@ export type PSGAIncentiveAllocationOrderByRelationAggregateInput = {
 
 export type PSGAIncentiveAllocationCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  clientId?: Prisma.SortOrder
   psgId?: Prisma.SortOrder
-  recipientType?: Prisma.SortOrder
   bdeId?: Prisma.SortOrder
-  adminId?: Prisma.SortOrder
   role?: Prisma.SortOrder
   reason?: Prisma.SortOrder
   incentivePercent?: Prisma.SortOrder
@@ -543,6 +540,9 @@ export type PSGAIncentiveAllocationCountOrderByAggregateInput = {
   paidAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  adminId?: Prisma.SortOrder
+  recipientType?: Prisma.SortOrder
+  clientId?: Prisma.SortOrder
 }
 
 export type PSGAIncentiveAllocationAvgOrderByAggregateInput = {
@@ -551,11 +551,8 @@ export type PSGAIncentiveAllocationAvgOrderByAggregateInput = {
 
 export type PSGAIncentiveAllocationMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  clientId?: Prisma.SortOrder
   psgId?: Prisma.SortOrder
-  recipientType?: Prisma.SortOrder
   bdeId?: Prisma.SortOrder
-  adminId?: Prisma.SortOrder
   role?: Prisma.SortOrder
   reason?: Prisma.SortOrder
   incentivePercent?: Prisma.SortOrder
@@ -565,15 +562,15 @@ export type PSGAIncentiveAllocationMaxOrderByAggregateInput = {
   paidAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  adminId?: Prisma.SortOrder
+  recipientType?: Prisma.SortOrder
+  clientId?: Prisma.SortOrder
 }
 
 export type PSGAIncentiveAllocationMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  clientId?: Prisma.SortOrder
   psgId?: Prisma.SortOrder
-  recipientType?: Prisma.SortOrder
   bdeId?: Prisma.SortOrder
-  adminId?: Prisma.SortOrder
   role?: Prisma.SortOrder
   reason?: Prisma.SortOrder
   incentivePercent?: Prisma.SortOrder
@@ -583,17 +580,13 @@ export type PSGAIncentiveAllocationMinOrderByAggregateInput = {
   paidAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  adminId?: Prisma.SortOrder
+  recipientType?: Prisma.SortOrder
+  clientId?: Prisma.SortOrder
 }
 
 export type PSGAIncentiveAllocationSumOrderByAggregateInput = {
   incentivePercent?: Prisma.SortOrder
-}
-
-export type PSGAIncentiveAllocationCreateNestedManyWithoutBdeInput = {
-  create?: Prisma.XOR<Prisma.PSGAIncentiveAllocationCreateWithoutBdeInput, Prisma.PSGAIncentiveAllocationUncheckedCreateWithoutBdeInput> | Prisma.PSGAIncentiveAllocationCreateWithoutBdeInput[] | Prisma.PSGAIncentiveAllocationUncheckedCreateWithoutBdeInput[]
-  connectOrCreate?: Prisma.PSGAIncentiveAllocationCreateOrConnectWithoutBdeInput | Prisma.PSGAIncentiveAllocationCreateOrConnectWithoutBdeInput[]
-  createMany?: Prisma.PSGAIncentiveAllocationCreateManyBdeInputEnvelope
-  connect?: Prisma.PSGAIncentiveAllocationWhereUniqueInput | Prisma.PSGAIncentiveAllocationWhereUniqueInput[]
 }
 
 export type PSGAIncentiveAllocationCreateNestedManyWithoutAdminInput = {
@@ -610,7 +603,7 @@ export type PSGAIncentiveAllocationCreateNestedManyWithoutApprovedByInput = {
   connect?: Prisma.PSGAIncentiveAllocationWhereUniqueInput | Prisma.PSGAIncentiveAllocationWhereUniqueInput[]
 }
 
-export type PSGAIncentiveAllocationUncheckedCreateNestedManyWithoutBdeInput = {
+export type PSGAIncentiveAllocationCreateNestedManyWithoutBdeInput = {
   create?: Prisma.XOR<Prisma.PSGAIncentiveAllocationCreateWithoutBdeInput, Prisma.PSGAIncentiveAllocationUncheckedCreateWithoutBdeInput> | Prisma.PSGAIncentiveAllocationCreateWithoutBdeInput[] | Prisma.PSGAIncentiveAllocationUncheckedCreateWithoutBdeInput[]
   connectOrCreate?: Prisma.PSGAIncentiveAllocationCreateOrConnectWithoutBdeInput | Prisma.PSGAIncentiveAllocationCreateOrConnectWithoutBdeInput[]
   createMany?: Prisma.PSGAIncentiveAllocationCreateManyBdeInputEnvelope
@@ -631,18 +624,11 @@ export type PSGAIncentiveAllocationUncheckedCreateNestedManyWithoutApprovedByInp
   connect?: Prisma.PSGAIncentiveAllocationWhereUniqueInput | Prisma.PSGAIncentiveAllocationWhereUniqueInput[]
 }
 
-export type PSGAIncentiveAllocationUpdateManyWithoutBdeNestedInput = {
+export type PSGAIncentiveAllocationUncheckedCreateNestedManyWithoutBdeInput = {
   create?: Prisma.XOR<Prisma.PSGAIncentiveAllocationCreateWithoutBdeInput, Prisma.PSGAIncentiveAllocationUncheckedCreateWithoutBdeInput> | Prisma.PSGAIncentiveAllocationCreateWithoutBdeInput[] | Prisma.PSGAIncentiveAllocationUncheckedCreateWithoutBdeInput[]
   connectOrCreate?: Prisma.PSGAIncentiveAllocationCreateOrConnectWithoutBdeInput | Prisma.PSGAIncentiveAllocationCreateOrConnectWithoutBdeInput[]
-  upsert?: Prisma.PSGAIncentiveAllocationUpsertWithWhereUniqueWithoutBdeInput | Prisma.PSGAIncentiveAllocationUpsertWithWhereUniqueWithoutBdeInput[]
   createMany?: Prisma.PSGAIncentiveAllocationCreateManyBdeInputEnvelope
-  set?: Prisma.PSGAIncentiveAllocationWhereUniqueInput | Prisma.PSGAIncentiveAllocationWhereUniqueInput[]
-  disconnect?: Prisma.PSGAIncentiveAllocationWhereUniqueInput | Prisma.PSGAIncentiveAllocationWhereUniqueInput[]
-  delete?: Prisma.PSGAIncentiveAllocationWhereUniqueInput | Prisma.PSGAIncentiveAllocationWhereUniqueInput[]
   connect?: Prisma.PSGAIncentiveAllocationWhereUniqueInput | Prisma.PSGAIncentiveAllocationWhereUniqueInput[]
-  update?: Prisma.PSGAIncentiveAllocationUpdateWithWhereUniqueWithoutBdeInput | Prisma.PSGAIncentiveAllocationUpdateWithWhereUniqueWithoutBdeInput[]
-  updateMany?: Prisma.PSGAIncentiveAllocationUpdateManyWithWhereWithoutBdeInput | Prisma.PSGAIncentiveAllocationUpdateManyWithWhereWithoutBdeInput[]
-  deleteMany?: Prisma.PSGAIncentiveAllocationScalarWhereInput | Prisma.PSGAIncentiveAllocationScalarWhereInput[]
 }
 
 export type PSGAIncentiveAllocationUpdateManyWithoutAdminNestedInput = {
@@ -673,7 +659,7 @@ export type PSGAIncentiveAllocationUpdateManyWithoutApprovedByNestedInput = {
   deleteMany?: Prisma.PSGAIncentiveAllocationScalarWhereInput | Prisma.PSGAIncentiveAllocationScalarWhereInput[]
 }
 
-export type PSGAIncentiveAllocationUncheckedUpdateManyWithoutBdeNestedInput = {
+export type PSGAIncentiveAllocationUpdateManyWithoutBdeNestedInput = {
   create?: Prisma.XOR<Prisma.PSGAIncentiveAllocationCreateWithoutBdeInput, Prisma.PSGAIncentiveAllocationUncheckedCreateWithoutBdeInput> | Prisma.PSGAIncentiveAllocationCreateWithoutBdeInput[] | Prisma.PSGAIncentiveAllocationUncheckedCreateWithoutBdeInput[]
   connectOrCreate?: Prisma.PSGAIncentiveAllocationCreateOrConnectWithoutBdeInput | Prisma.PSGAIncentiveAllocationCreateOrConnectWithoutBdeInput[]
   upsert?: Prisma.PSGAIncentiveAllocationUpsertWithWhereUniqueWithoutBdeInput | Prisma.PSGAIncentiveAllocationUpsertWithWhereUniqueWithoutBdeInput[]
@@ -712,6 +698,20 @@ export type PSGAIncentiveAllocationUncheckedUpdateManyWithoutApprovedByNestedInp
   connect?: Prisma.PSGAIncentiveAllocationWhereUniqueInput | Prisma.PSGAIncentiveAllocationWhereUniqueInput[]
   update?: Prisma.PSGAIncentiveAllocationUpdateWithWhereUniqueWithoutApprovedByInput | Prisma.PSGAIncentiveAllocationUpdateWithWhereUniqueWithoutApprovedByInput[]
   updateMany?: Prisma.PSGAIncentiveAllocationUpdateManyWithWhereWithoutApprovedByInput | Prisma.PSGAIncentiveAllocationUpdateManyWithWhereWithoutApprovedByInput[]
+  deleteMany?: Prisma.PSGAIncentiveAllocationScalarWhereInput | Prisma.PSGAIncentiveAllocationScalarWhereInput[]
+}
+
+export type PSGAIncentiveAllocationUncheckedUpdateManyWithoutBdeNestedInput = {
+  create?: Prisma.XOR<Prisma.PSGAIncentiveAllocationCreateWithoutBdeInput, Prisma.PSGAIncentiveAllocationUncheckedCreateWithoutBdeInput> | Prisma.PSGAIncentiveAllocationCreateWithoutBdeInput[] | Prisma.PSGAIncentiveAllocationUncheckedCreateWithoutBdeInput[]
+  connectOrCreate?: Prisma.PSGAIncentiveAllocationCreateOrConnectWithoutBdeInput | Prisma.PSGAIncentiveAllocationCreateOrConnectWithoutBdeInput[]
+  upsert?: Prisma.PSGAIncentiveAllocationUpsertWithWhereUniqueWithoutBdeInput | Prisma.PSGAIncentiveAllocationUpsertWithWhereUniqueWithoutBdeInput[]
+  createMany?: Prisma.PSGAIncentiveAllocationCreateManyBdeInputEnvelope
+  set?: Prisma.PSGAIncentiveAllocationWhereUniqueInput | Prisma.PSGAIncentiveAllocationWhereUniqueInput[]
+  disconnect?: Prisma.PSGAIncentiveAllocationWhereUniqueInput | Prisma.PSGAIncentiveAllocationWhereUniqueInput[]
+  delete?: Prisma.PSGAIncentiveAllocationWhereUniqueInput | Prisma.PSGAIncentiveAllocationWhereUniqueInput[]
+  connect?: Prisma.PSGAIncentiveAllocationWhereUniqueInput | Prisma.PSGAIncentiveAllocationWhereUniqueInput[]
+  update?: Prisma.PSGAIncentiveAllocationUpdateWithWhereUniqueWithoutBdeInput | Prisma.PSGAIncentiveAllocationUpdateWithWhereUniqueWithoutBdeInput[]
+  updateMany?: Prisma.PSGAIncentiveAllocationUpdateManyWithWhereWithoutBdeInput | Prisma.PSGAIncentiveAllocationUpdateManyWithWhereWithoutBdeInput[]
   deleteMany?: Prisma.PSGAIncentiveAllocationScalarWhereInput | Prisma.PSGAIncentiveAllocationScalarWhereInput[]
 }
 
@@ -799,61 +799,16 @@ export type PSGAIncentiveAllocationUncheckedUpdateManyWithoutPsgNestedInput = {
   deleteMany?: Prisma.PSGAIncentiveAllocationScalarWhereInput | Prisma.PSGAIncentiveAllocationScalarWhereInput[]
 }
 
-export type EnumIncentiveRecipientTypeFieldUpdateOperationsInput = {
-  set?: $Enums.IncentiveRecipientType
-}
-
 export type EnumIncentiveRoleFieldUpdateOperationsInput = {
   set?: $Enums.IncentiveRole
 }
 
-export type PSGAIncentiveAllocationCreateWithoutBdeInput = {
-  id?: string
-  recipientType?: $Enums.IncentiveRecipientType
-  role: $Enums.IncentiveRole
-  reason?: string | null
-  incentivePercent: runtime.Decimal | runtime.DecimalJsLike | number | string
-  status?: $Enums.IncentiveStatus
-  approvedAt?: Date | string | null
-  paidAt?: Date | string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  client: Prisma.ClientCreateNestedOneWithoutIncentiveAllocationsInput
-  psg?: Prisma.PSGACreateNestedOneWithoutIncentiveAllocationsInput
-  admin?: Prisma.UserCreateNestedOneWithoutAdminIncentiveAllocationsInput
-  approvedBy?: Prisma.UserCreateNestedOneWithoutApprovedIncentivesInput
-}
-
-export type PSGAIncentiveAllocationUncheckedCreateWithoutBdeInput = {
-  id?: string
-  clientId: string
-  psgId?: string | null
-  recipientType?: $Enums.IncentiveRecipientType
-  adminId?: string | null
-  role: $Enums.IncentiveRole
-  reason?: string | null
-  incentivePercent: runtime.Decimal | runtime.DecimalJsLike | number | string
-  status?: $Enums.IncentiveStatus
-  approvedById?: string | null
-  approvedAt?: Date | string | null
-  paidAt?: Date | string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-}
-
-export type PSGAIncentiveAllocationCreateOrConnectWithoutBdeInput = {
-  where: Prisma.PSGAIncentiveAllocationWhereUniqueInput
-  create: Prisma.XOR<Prisma.PSGAIncentiveAllocationCreateWithoutBdeInput, Prisma.PSGAIncentiveAllocationUncheckedCreateWithoutBdeInput>
-}
-
-export type PSGAIncentiveAllocationCreateManyBdeInputEnvelope = {
-  data: Prisma.PSGAIncentiveAllocationCreateManyBdeInput | Prisma.PSGAIncentiveAllocationCreateManyBdeInput[]
-  skipDuplicates?: boolean
+export type EnumIncentiveRecipientTypeFieldUpdateOperationsInput = {
+  set?: $Enums.IncentiveRecipientType
 }
 
 export type PSGAIncentiveAllocationCreateWithoutAdminInput = {
   id?: string
-  recipientType?: $Enums.IncentiveRecipientType
   role: $Enums.IncentiveRole
   reason?: string | null
   incentivePercent: runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -862,17 +817,16 @@ export type PSGAIncentiveAllocationCreateWithoutAdminInput = {
   paidAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  recipientType?: $Enums.IncentiveRecipientType
+  approvedBy?: Prisma.UserCreateNestedOneWithoutApprovedIncentivesInput
+  bde?: Prisma.UserCreateNestedOneWithoutIncentiveAllocationsInput
   client: Prisma.ClientCreateNestedOneWithoutIncentiveAllocationsInput
   psg?: Prisma.PSGACreateNestedOneWithoutIncentiveAllocationsInput
-  bde?: Prisma.UserCreateNestedOneWithoutIncentiveAllocationsInput
-  approvedBy?: Prisma.UserCreateNestedOneWithoutApprovedIncentivesInput
 }
 
 export type PSGAIncentiveAllocationUncheckedCreateWithoutAdminInput = {
   id?: string
-  clientId: string
   psgId?: string | null
-  recipientType?: $Enums.IncentiveRecipientType
   bdeId?: string | null
   role: $Enums.IncentiveRole
   reason?: string | null
@@ -883,6 +837,8 @@ export type PSGAIncentiveAllocationUncheckedCreateWithoutAdminInput = {
   paidAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  recipientType?: $Enums.IncentiveRecipientType
+  clientId: string
 }
 
 export type PSGAIncentiveAllocationCreateOrConnectWithoutAdminInput = {
@@ -897,7 +853,6 @@ export type PSGAIncentiveAllocationCreateManyAdminInputEnvelope = {
 
 export type PSGAIncentiveAllocationCreateWithoutApprovedByInput = {
   id?: string
-  recipientType?: $Enums.IncentiveRecipientType
   role: $Enums.IncentiveRole
   reason?: string | null
   incentivePercent: runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -906,19 +861,17 @@ export type PSGAIncentiveAllocationCreateWithoutApprovedByInput = {
   paidAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  recipientType?: $Enums.IncentiveRecipientType
+  admin?: Prisma.UserCreateNestedOneWithoutAdminIncentiveAllocationsInput
+  bde?: Prisma.UserCreateNestedOneWithoutIncentiveAllocationsInput
   client: Prisma.ClientCreateNestedOneWithoutIncentiveAllocationsInput
   psg?: Prisma.PSGACreateNestedOneWithoutIncentiveAllocationsInput
-  bde?: Prisma.UserCreateNestedOneWithoutIncentiveAllocationsInput
-  admin?: Prisma.UserCreateNestedOneWithoutAdminIncentiveAllocationsInput
 }
 
 export type PSGAIncentiveAllocationUncheckedCreateWithoutApprovedByInput = {
   id?: string
-  clientId: string
   psgId?: string | null
-  recipientType?: $Enums.IncentiveRecipientType
   bdeId?: string | null
-  adminId?: string | null
   role: $Enums.IncentiveRole
   reason?: string | null
   incentivePercent: runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -927,6 +880,9 @@ export type PSGAIncentiveAllocationUncheckedCreateWithoutApprovedByInput = {
   paidAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  adminId?: string | null
+  recipientType?: $Enums.IncentiveRecipientType
+  clientId: string
 }
 
 export type PSGAIncentiveAllocationCreateOrConnectWithoutApprovedByInput = {
@@ -939,41 +895,48 @@ export type PSGAIncentiveAllocationCreateManyApprovedByInputEnvelope = {
   skipDuplicates?: boolean
 }
 
-export type PSGAIncentiveAllocationUpsertWithWhereUniqueWithoutBdeInput = {
+export type PSGAIncentiveAllocationCreateWithoutBdeInput = {
+  id?: string
+  role: $Enums.IncentiveRole
+  reason?: string | null
+  incentivePercent: runtime.Decimal | runtime.DecimalJsLike | number | string
+  status?: $Enums.IncentiveStatus
+  approvedAt?: Date | string | null
+  paidAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  recipientType?: $Enums.IncentiveRecipientType
+  admin?: Prisma.UserCreateNestedOneWithoutAdminIncentiveAllocationsInput
+  approvedBy?: Prisma.UserCreateNestedOneWithoutApprovedIncentivesInput
+  client: Prisma.ClientCreateNestedOneWithoutIncentiveAllocationsInput
+  psg?: Prisma.PSGACreateNestedOneWithoutIncentiveAllocationsInput
+}
+
+export type PSGAIncentiveAllocationUncheckedCreateWithoutBdeInput = {
+  id?: string
+  psgId?: string | null
+  role: $Enums.IncentiveRole
+  reason?: string | null
+  incentivePercent: runtime.Decimal | runtime.DecimalJsLike | number | string
+  status?: $Enums.IncentiveStatus
+  approvedById?: string | null
+  approvedAt?: Date | string | null
+  paidAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  adminId?: string | null
+  recipientType?: $Enums.IncentiveRecipientType
+  clientId: string
+}
+
+export type PSGAIncentiveAllocationCreateOrConnectWithoutBdeInput = {
   where: Prisma.PSGAIncentiveAllocationWhereUniqueInput
-  update: Prisma.XOR<Prisma.PSGAIncentiveAllocationUpdateWithoutBdeInput, Prisma.PSGAIncentiveAllocationUncheckedUpdateWithoutBdeInput>
   create: Prisma.XOR<Prisma.PSGAIncentiveAllocationCreateWithoutBdeInput, Prisma.PSGAIncentiveAllocationUncheckedCreateWithoutBdeInput>
 }
 
-export type PSGAIncentiveAllocationUpdateWithWhereUniqueWithoutBdeInput = {
-  where: Prisma.PSGAIncentiveAllocationWhereUniqueInput
-  data: Prisma.XOR<Prisma.PSGAIncentiveAllocationUpdateWithoutBdeInput, Prisma.PSGAIncentiveAllocationUncheckedUpdateWithoutBdeInput>
-}
-
-export type PSGAIncentiveAllocationUpdateManyWithWhereWithoutBdeInput = {
-  where: Prisma.PSGAIncentiveAllocationScalarWhereInput
-  data: Prisma.XOR<Prisma.PSGAIncentiveAllocationUpdateManyMutationInput, Prisma.PSGAIncentiveAllocationUncheckedUpdateManyWithoutBdeInput>
-}
-
-export type PSGAIncentiveAllocationScalarWhereInput = {
-  AND?: Prisma.PSGAIncentiveAllocationScalarWhereInput | Prisma.PSGAIncentiveAllocationScalarWhereInput[]
-  OR?: Prisma.PSGAIncentiveAllocationScalarWhereInput[]
-  NOT?: Prisma.PSGAIncentiveAllocationScalarWhereInput | Prisma.PSGAIncentiveAllocationScalarWhereInput[]
-  id?: Prisma.StringFilter<"PSGAIncentiveAllocation"> | string
-  clientId?: Prisma.StringFilter<"PSGAIncentiveAllocation"> | string
-  psgId?: Prisma.StringNullableFilter<"PSGAIncentiveAllocation"> | string | null
-  recipientType?: Prisma.EnumIncentiveRecipientTypeFilter<"PSGAIncentiveAllocation"> | $Enums.IncentiveRecipientType
-  bdeId?: Prisma.StringNullableFilter<"PSGAIncentiveAllocation"> | string | null
-  adminId?: Prisma.StringNullableFilter<"PSGAIncentiveAllocation"> | string | null
-  role?: Prisma.EnumIncentiveRoleFilter<"PSGAIncentiveAllocation"> | $Enums.IncentiveRole
-  reason?: Prisma.StringNullableFilter<"PSGAIncentiveAllocation"> | string | null
-  incentivePercent?: Prisma.DecimalFilter<"PSGAIncentiveAllocation"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  status?: Prisma.EnumIncentiveStatusFilter<"PSGAIncentiveAllocation"> | $Enums.IncentiveStatus
-  approvedById?: Prisma.StringNullableFilter<"PSGAIncentiveAllocation"> | string | null
-  approvedAt?: Prisma.DateTimeNullableFilter<"PSGAIncentiveAllocation"> | Date | string | null
-  paidAt?: Prisma.DateTimeNullableFilter<"PSGAIncentiveAllocation"> | Date | string | null
-  createdAt?: Prisma.DateTimeFilter<"PSGAIncentiveAllocation"> | Date | string
-  updatedAt?: Prisma.DateTimeFilter<"PSGAIncentiveAllocation"> | Date | string
+export type PSGAIncentiveAllocationCreateManyBdeInputEnvelope = {
+  data: Prisma.PSGAIncentiveAllocationCreateManyBdeInput | Prisma.PSGAIncentiveAllocationCreateManyBdeInput[]
+  skipDuplicates?: boolean
 }
 
 export type PSGAIncentiveAllocationUpsertWithWhereUniqueWithoutAdminInput = {
@@ -992,6 +955,27 @@ export type PSGAIncentiveAllocationUpdateManyWithWhereWithoutAdminInput = {
   data: Prisma.XOR<Prisma.PSGAIncentiveAllocationUpdateManyMutationInput, Prisma.PSGAIncentiveAllocationUncheckedUpdateManyWithoutAdminInput>
 }
 
+export type PSGAIncentiveAllocationScalarWhereInput = {
+  AND?: Prisma.PSGAIncentiveAllocationScalarWhereInput | Prisma.PSGAIncentiveAllocationScalarWhereInput[]
+  OR?: Prisma.PSGAIncentiveAllocationScalarWhereInput[]
+  NOT?: Prisma.PSGAIncentiveAllocationScalarWhereInput | Prisma.PSGAIncentiveAllocationScalarWhereInput[]
+  id?: Prisma.StringFilter<"PSGAIncentiveAllocation"> | string
+  psgId?: Prisma.StringNullableFilter<"PSGAIncentiveAllocation"> | string | null
+  bdeId?: Prisma.StringNullableFilter<"PSGAIncentiveAllocation"> | string | null
+  role?: Prisma.EnumIncentiveRoleFilter<"PSGAIncentiveAllocation"> | $Enums.IncentiveRole
+  reason?: Prisma.StringNullableFilter<"PSGAIncentiveAllocation"> | string | null
+  incentivePercent?: Prisma.DecimalFilter<"PSGAIncentiveAllocation"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  status?: Prisma.EnumIncentiveStatusFilter<"PSGAIncentiveAllocation"> | $Enums.IncentiveStatus
+  approvedById?: Prisma.StringNullableFilter<"PSGAIncentiveAllocation"> | string | null
+  approvedAt?: Prisma.DateTimeNullableFilter<"PSGAIncentiveAllocation"> | Date | string | null
+  paidAt?: Prisma.DateTimeNullableFilter<"PSGAIncentiveAllocation"> | Date | string | null
+  createdAt?: Prisma.DateTimeFilter<"PSGAIncentiveAllocation"> | Date | string
+  updatedAt?: Prisma.DateTimeFilter<"PSGAIncentiveAllocation"> | Date | string
+  adminId?: Prisma.StringNullableFilter<"PSGAIncentiveAllocation"> | string | null
+  recipientType?: Prisma.EnumIncentiveRecipientTypeFilter<"PSGAIncentiveAllocation"> | $Enums.IncentiveRecipientType
+  clientId?: Prisma.StringFilter<"PSGAIncentiveAllocation"> | string
+}
+
 export type PSGAIncentiveAllocationUpsertWithWhereUniqueWithoutApprovedByInput = {
   where: Prisma.PSGAIncentiveAllocationWhereUniqueInput
   update: Prisma.XOR<Prisma.PSGAIncentiveAllocationUpdateWithoutApprovedByInput, Prisma.PSGAIncentiveAllocationUncheckedUpdateWithoutApprovedByInput>
@@ -1008,9 +992,24 @@ export type PSGAIncentiveAllocationUpdateManyWithWhereWithoutApprovedByInput = {
   data: Prisma.XOR<Prisma.PSGAIncentiveAllocationUpdateManyMutationInput, Prisma.PSGAIncentiveAllocationUncheckedUpdateManyWithoutApprovedByInput>
 }
 
+export type PSGAIncentiveAllocationUpsertWithWhereUniqueWithoutBdeInput = {
+  where: Prisma.PSGAIncentiveAllocationWhereUniqueInput
+  update: Prisma.XOR<Prisma.PSGAIncentiveAllocationUpdateWithoutBdeInput, Prisma.PSGAIncentiveAllocationUncheckedUpdateWithoutBdeInput>
+  create: Prisma.XOR<Prisma.PSGAIncentiveAllocationCreateWithoutBdeInput, Prisma.PSGAIncentiveAllocationUncheckedCreateWithoutBdeInput>
+}
+
+export type PSGAIncentiveAllocationUpdateWithWhereUniqueWithoutBdeInput = {
+  where: Prisma.PSGAIncentiveAllocationWhereUniqueInput
+  data: Prisma.XOR<Prisma.PSGAIncentiveAllocationUpdateWithoutBdeInput, Prisma.PSGAIncentiveAllocationUncheckedUpdateWithoutBdeInput>
+}
+
+export type PSGAIncentiveAllocationUpdateManyWithWhereWithoutBdeInput = {
+  where: Prisma.PSGAIncentiveAllocationScalarWhereInput
+  data: Prisma.XOR<Prisma.PSGAIncentiveAllocationUpdateManyMutationInput, Prisma.PSGAIncentiveAllocationUncheckedUpdateManyWithoutBdeInput>
+}
+
 export type PSGAIncentiveAllocationCreateWithoutClientInput = {
   id?: string
-  recipientType?: $Enums.IncentiveRecipientType
   role: $Enums.IncentiveRole
   reason?: string | null
   incentivePercent: runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -1019,18 +1018,17 @@ export type PSGAIncentiveAllocationCreateWithoutClientInput = {
   paidAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  psg?: Prisma.PSGACreateNestedOneWithoutIncentiveAllocationsInput
-  bde?: Prisma.UserCreateNestedOneWithoutIncentiveAllocationsInput
+  recipientType?: $Enums.IncentiveRecipientType
   admin?: Prisma.UserCreateNestedOneWithoutAdminIncentiveAllocationsInput
   approvedBy?: Prisma.UserCreateNestedOneWithoutApprovedIncentivesInput
+  bde?: Prisma.UserCreateNestedOneWithoutIncentiveAllocationsInput
+  psg?: Prisma.PSGACreateNestedOneWithoutIncentiveAllocationsInput
 }
 
 export type PSGAIncentiveAllocationUncheckedCreateWithoutClientInput = {
   id?: string
   psgId?: string | null
-  recipientType?: $Enums.IncentiveRecipientType
   bdeId?: string | null
-  adminId?: string | null
   role: $Enums.IncentiveRole
   reason?: string | null
   incentivePercent: runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -1040,6 +1038,8 @@ export type PSGAIncentiveAllocationUncheckedCreateWithoutClientInput = {
   paidAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  adminId?: string | null
+  recipientType?: $Enums.IncentiveRecipientType
 }
 
 export type PSGAIncentiveAllocationCreateOrConnectWithoutClientInput = {
@@ -1070,7 +1070,6 @@ export type PSGAIncentiveAllocationUpdateManyWithWhereWithoutClientInput = {
 
 export type PSGAIncentiveAllocationCreateWithoutPsgInput = {
   id?: string
-  recipientType?: $Enums.IncentiveRecipientType
   role: $Enums.IncentiveRole
   reason?: string | null
   incentivePercent: runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -1079,18 +1078,16 @@ export type PSGAIncentiveAllocationCreateWithoutPsgInput = {
   paidAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  client: Prisma.ClientCreateNestedOneWithoutIncentiveAllocationsInput
-  bde?: Prisma.UserCreateNestedOneWithoutIncentiveAllocationsInput
+  recipientType?: $Enums.IncentiveRecipientType
   admin?: Prisma.UserCreateNestedOneWithoutAdminIncentiveAllocationsInput
   approvedBy?: Prisma.UserCreateNestedOneWithoutApprovedIncentivesInput
+  bde?: Prisma.UserCreateNestedOneWithoutIncentiveAllocationsInput
+  client: Prisma.ClientCreateNestedOneWithoutIncentiveAllocationsInput
 }
 
 export type PSGAIncentiveAllocationUncheckedCreateWithoutPsgInput = {
   id?: string
-  clientId: string
-  recipientType?: $Enums.IncentiveRecipientType
   bdeId?: string | null
-  adminId?: string | null
   role: $Enums.IncentiveRole
   reason?: string | null
   incentivePercent: runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -1100,6 +1097,9 @@ export type PSGAIncentiveAllocationUncheckedCreateWithoutPsgInput = {
   paidAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  adminId?: string | null
+  recipientType?: $Enums.IncentiveRecipientType
+  clientId: string
 }
 
 export type PSGAIncentiveAllocationCreateOrConnectWithoutPsgInput = {
@@ -1128,28 +1128,9 @@ export type PSGAIncentiveAllocationUpdateManyWithWhereWithoutPsgInput = {
   data: Prisma.XOR<Prisma.PSGAIncentiveAllocationUpdateManyMutationInput, Prisma.PSGAIncentiveAllocationUncheckedUpdateManyWithoutPsgInput>
 }
 
-export type PSGAIncentiveAllocationCreateManyBdeInput = {
-  id?: string
-  clientId: string
-  psgId?: string | null
-  recipientType?: $Enums.IncentiveRecipientType
-  adminId?: string | null
-  role: $Enums.IncentiveRole
-  reason?: string | null
-  incentivePercent: runtime.Decimal | runtime.DecimalJsLike | number | string
-  status?: $Enums.IncentiveStatus
-  approvedById?: string | null
-  approvedAt?: Date | string | null
-  paidAt?: Date | string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-}
-
 export type PSGAIncentiveAllocationCreateManyAdminInput = {
   id?: string
-  clientId: string
   psgId?: string | null
-  recipientType?: $Enums.IncentiveRecipientType
   bdeId?: string | null
   role: $Enums.IncentiveRole
   reason?: string | null
@@ -1160,15 +1141,14 @@ export type PSGAIncentiveAllocationCreateManyAdminInput = {
   paidAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  recipientType?: $Enums.IncentiveRecipientType
+  clientId: string
 }
 
 export type PSGAIncentiveAllocationCreateManyApprovedByInput = {
   id?: string
-  clientId: string
   psgId?: string | null
-  recipientType?: $Enums.IncentiveRecipientType
   bdeId?: string | null
-  adminId?: string | null
   role: $Enums.IncentiveRole
   reason?: string | null
   incentivePercent: runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -1177,62 +1157,30 @@ export type PSGAIncentiveAllocationCreateManyApprovedByInput = {
   paidAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  adminId?: string | null
+  recipientType?: $Enums.IncentiveRecipientType
+  clientId: string
 }
 
-export type PSGAIncentiveAllocationUpdateWithoutBdeInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  recipientType?: Prisma.EnumIncentiveRecipientTypeFieldUpdateOperationsInput | $Enums.IncentiveRecipientType
-  role?: Prisma.EnumIncentiveRoleFieldUpdateOperationsInput | $Enums.IncentiveRole
-  reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  incentivePercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  status?: Prisma.EnumIncentiveStatusFieldUpdateOperationsInput | $Enums.IncentiveStatus
-  approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  client?: Prisma.ClientUpdateOneRequiredWithoutIncentiveAllocationsNestedInput
-  psg?: Prisma.PSGAUpdateOneWithoutIncentiveAllocationsNestedInput
-  admin?: Prisma.UserUpdateOneWithoutAdminIncentiveAllocationsNestedInput
-  approvedBy?: Prisma.UserUpdateOneWithoutApprovedIncentivesNestedInput
-}
-
-export type PSGAIncentiveAllocationUncheckedUpdateWithoutBdeInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  clientId?: Prisma.StringFieldUpdateOperationsInput | string
-  psgId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  recipientType?: Prisma.EnumIncentiveRecipientTypeFieldUpdateOperationsInput | $Enums.IncentiveRecipientType
-  adminId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  role?: Prisma.EnumIncentiveRoleFieldUpdateOperationsInput | $Enums.IncentiveRole
-  reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  incentivePercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  status?: Prisma.EnumIncentiveStatusFieldUpdateOperationsInput | $Enums.IncentiveStatus
-  approvedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-}
-
-export type PSGAIncentiveAllocationUncheckedUpdateManyWithoutBdeInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  clientId?: Prisma.StringFieldUpdateOperationsInput | string
-  psgId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  recipientType?: Prisma.EnumIncentiveRecipientTypeFieldUpdateOperationsInput | $Enums.IncentiveRecipientType
-  adminId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  role?: Prisma.EnumIncentiveRoleFieldUpdateOperationsInput | $Enums.IncentiveRole
-  reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  incentivePercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  status?: Prisma.EnumIncentiveStatusFieldUpdateOperationsInput | $Enums.IncentiveStatus
-  approvedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+export type PSGAIncentiveAllocationCreateManyBdeInput = {
+  id?: string
+  psgId?: string | null
+  role: $Enums.IncentiveRole
+  reason?: string | null
+  incentivePercent: runtime.Decimal | runtime.DecimalJsLike | number | string
+  status?: $Enums.IncentiveStatus
+  approvedById?: string | null
+  approvedAt?: Date | string | null
+  paidAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  adminId?: string | null
+  recipientType?: $Enums.IncentiveRecipientType
+  clientId: string
 }
 
 export type PSGAIncentiveAllocationUpdateWithoutAdminInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  recipientType?: Prisma.EnumIncentiveRecipientTypeFieldUpdateOperationsInput | $Enums.IncentiveRecipientType
   role?: Prisma.EnumIncentiveRoleFieldUpdateOperationsInput | $Enums.IncentiveRole
   reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   incentivePercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -1241,17 +1189,16 @@ export type PSGAIncentiveAllocationUpdateWithoutAdminInput = {
   paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  recipientType?: Prisma.EnumIncentiveRecipientTypeFieldUpdateOperationsInput | $Enums.IncentiveRecipientType
+  approvedBy?: Prisma.UserUpdateOneWithoutApprovedIncentivesNestedInput
+  bde?: Prisma.UserUpdateOneWithoutIncentiveAllocationsNestedInput
   client?: Prisma.ClientUpdateOneRequiredWithoutIncentiveAllocationsNestedInput
   psg?: Prisma.PSGAUpdateOneWithoutIncentiveAllocationsNestedInput
-  bde?: Prisma.UserUpdateOneWithoutIncentiveAllocationsNestedInput
-  approvedBy?: Prisma.UserUpdateOneWithoutApprovedIncentivesNestedInput
 }
 
 export type PSGAIncentiveAllocationUncheckedUpdateWithoutAdminInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  clientId?: Prisma.StringFieldUpdateOperationsInput | string
   psgId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  recipientType?: Prisma.EnumIncentiveRecipientTypeFieldUpdateOperationsInput | $Enums.IncentiveRecipientType
   bdeId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumIncentiveRoleFieldUpdateOperationsInput | $Enums.IncentiveRole
   reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1262,13 +1209,13 @@ export type PSGAIncentiveAllocationUncheckedUpdateWithoutAdminInput = {
   paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  recipientType?: Prisma.EnumIncentiveRecipientTypeFieldUpdateOperationsInput | $Enums.IncentiveRecipientType
+  clientId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type PSGAIncentiveAllocationUncheckedUpdateManyWithoutAdminInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  clientId?: Prisma.StringFieldUpdateOperationsInput | string
   psgId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  recipientType?: Prisma.EnumIncentiveRecipientTypeFieldUpdateOperationsInput | $Enums.IncentiveRecipientType
   bdeId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumIncentiveRoleFieldUpdateOperationsInput | $Enums.IncentiveRole
   reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1279,11 +1226,12 @@ export type PSGAIncentiveAllocationUncheckedUpdateManyWithoutAdminInput = {
   paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  recipientType?: Prisma.EnumIncentiveRecipientTypeFieldUpdateOperationsInput | $Enums.IncentiveRecipientType
+  clientId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type PSGAIncentiveAllocationUpdateWithoutApprovedByInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  recipientType?: Prisma.EnumIncentiveRecipientTypeFieldUpdateOperationsInput | $Enums.IncentiveRecipientType
   role?: Prisma.EnumIncentiveRoleFieldUpdateOperationsInput | $Enums.IncentiveRole
   reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   incentivePercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -1292,19 +1240,17 @@ export type PSGAIncentiveAllocationUpdateWithoutApprovedByInput = {
   paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  recipientType?: Prisma.EnumIncentiveRecipientTypeFieldUpdateOperationsInput | $Enums.IncentiveRecipientType
+  admin?: Prisma.UserUpdateOneWithoutAdminIncentiveAllocationsNestedInput
+  bde?: Prisma.UserUpdateOneWithoutIncentiveAllocationsNestedInput
   client?: Prisma.ClientUpdateOneRequiredWithoutIncentiveAllocationsNestedInput
   psg?: Prisma.PSGAUpdateOneWithoutIncentiveAllocationsNestedInput
-  bde?: Prisma.UserUpdateOneWithoutIncentiveAllocationsNestedInput
-  admin?: Prisma.UserUpdateOneWithoutAdminIncentiveAllocationsNestedInput
 }
 
 export type PSGAIncentiveAllocationUncheckedUpdateWithoutApprovedByInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  clientId?: Prisma.StringFieldUpdateOperationsInput | string
   psgId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  recipientType?: Prisma.EnumIncentiveRecipientTypeFieldUpdateOperationsInput | $Enums.IncentiveRecipientType
   bdeId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  adminId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumIncentiveRoleFieldUpdateOperationsInput | $Enums.IncentiveRole
   reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   incentivePercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -1313,15 +1259,15 @@ export type PSGAIncentiveAllocationUncheckedUpdateWithoutApprovedByInput = {
   paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  adminId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  recipientType?: Prisma.EnumIncentiveRecipientTypeFieldUpdateOperationsInput | $Enums.IncentiveRecipientType
+  clientId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type PSGAIncentiveAllocationUncheckedUpdateManyWithoutApprovedByInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  clientId?: Prisma.StringFieldUpdateOperationsInput | string
   psgId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  recipientType?: Prisma.EnumIncentiveRecipientTypeFieldUpdateOperationsInput | $Enums.IncentiveRecipientType
   bdeId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  adminId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumIncentiveRoleFieldUpdateOperationsInput | $Enums.IncentiveRole
   reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   incentivePercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -1330,14 +1276,66 @@ export type PSGAIncentiveAllocationUncheckedUpdateManyWithoutApprovedByInput = {
   paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  adminId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  recipientType?: Prisma.EnumIncentiveRecipientTypeFieldUpdateOperationsInput | $Enums.IncentiveRecipientType
+  clientId?: Prisma.StringFieldUpdateOperationsInput | string
+}
+
+export type PSGAIncentiveAllocationUpdateWithoutBdeInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumIncentiveRoleFieldUpdateOperationsInput | $Enums.IncentiveRole
+  reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  incentivePercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  status?: Prisma.EnumIncentiveStatusFieldUpdateOperationsInput | $Enums.IncentiveStatus
+  approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  recipientType?: Prisma.EnumIncentiveRecipientTypeFieldUpdateOperationsInput | $Enums.IncentiveRecipientType
+  admin?: Prisma.UserUpdateOneWithoutAdminIncentiveAllocationsNestedInput
+  approvedBy?: Prisma.UserUpdateOneWithoutApprovedIncentivesNestedInput
+  client?: Prisma.ClientUpdateOneRequiredWithoutIncentiveAllocationsNestedInput
+  psg?: Prisma.PSGAUpdateOneWithoutIncentiveAllocationsNestedInput
+}
+
+export type PSGAIncentiveAllocationUncheckedUpdateWithoutBdeInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  psgId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumIncentiveRoleFieldUpdateOperationsInput | $Enums.IncentiveRole
+  reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  incentivePercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  status?: Prisma.EnumIncentiveStatusFieldUpdateOperationsInput | $Enums.IncentiveStatus
+  approvedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  adminId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  recipientType?: Prisma.EnumIncentiveRecipientTypeFieldUpdateOperationsInput | $Enums.IncentiveRecipientType
+  clientId?: Prisma.StringFieldUpdateOperationsInput | string
+}
+
+export type PSGAIncentiveAllocationUncheckedUpdateManyWithoutBdeInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  psgId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumIncentiveRoleFieldUpdateOperationsInput | $Enums.IncentiveRole
+  reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  incentivePercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  status?: Prisma.EnumIncentiveStatusFieldUpdateOperationsInput | $Enums.IncentiveStatus
+  approvedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  adminId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  recipientType?: Prisma.EnumIncentiveRecipientTypeFieldUpdateOperationsInput | $Enums.IncentiveRecipientType
+  clientId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type PSGAIncentiveAllocationCreateManyClientInput = {
   id?: string
   psgId?: string | null
-  recipientType?: $Enums.IncentiveRecipientType
   bdeId?: string | null
-  adminId?: string | null
   role: $Enums.IncentiveRole
   reason?: string | null
   incentivePercent: runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -1347,11 +1345,12 @@ export type PSGAIncentiveAllocationCreateManyClientInput = {
   paidAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  adminId?: string | null
+  recipientType?: $Enums.IncentiveRecipientType
 }
 
 export type PSGAIncentiveAllocationUpdateWithoutClientInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  recipientType?: Prisma.EnumIncentiveRecipientTypeFieldUpdateOperationsInput | $Enums.IncentiveRecipientType
   role?: Prisma.EnumIncentiveRoleFieldUpdateOperationsInput | $Enums.IncentiveRole
   reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   incentivePercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -1360,18 +1359,17 @@ export type PSGAIncentiveAllocationUpdateWithoutClientInput = {
   paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  psg?: Prisma.PSGAUpdateOneWithoutIncentiveAllocationsNestedInput
-  bde?: Prisma.UserUpdateOneWithoutIncentiveAllocationsNestedInput
+  recipientType?: Prisma.EnumIncentiveRecipientTypeFieldUpdateOperationsInput | $Enums.IncentiveRecipientType
   admin?: Prisma.UserUpdateOneWithoutAdminIncentiveAllocationsNestedInput
   approvedBy?: Prisma.UserUpdateOneWithoutApprovedIncentivesNestedInput
+  bde?: Prisma.UserUpdateOneWithoutIncentiveAllocationsNestedInput
+  psg?: Prisma.PSGAUpdateOneWithoutIncentiveAllocationsNestedInput
 }
 
 export type PSGAIncentiveAllocationUncheckedUpdateWithoutClientInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   psgId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  recipientType?: Prisma.EnumIncentiveRecipientTypeFieldUpdateOperationsInput | $Enums.IncentiveRecipientType
   bdeId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  adminId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumIncentiveRoleFieldUpdateOperationsInput | $Enums.IncentiveRole
   reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   incentivePercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -1381,14 +1379,14 @@ export type PSGAIncentiveAllocationUncheckedUpdateWithoutClientInput = {
   paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  adminId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  recipientType?: Prisma.EnumIncentiveRecipientTypeFieldUpdateOperationsInput | $Enums.IncentiveRecipientType
 }
 
 export type PSGAIncentiveAllocationUncheckedUpdateManyWithoutClientInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   psgId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  recipientType?: Prisma.EnumIncentiveRecipientTypeFieldUpdateOperationsInput | $Enums.IncentiveRecipientType
   bdeId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  adminId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumIncentiveRoleFieldUpdateOperationsInput | $Enums.IncentiveRole
   reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   incentivePercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -1398,14 +1396,13 @@ export type PSGAIncentiveAllocationUncheckedUpdateManyWithoutClientInput = {
   paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  adminId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  recipientType?: Prisma.EnumIncentiveRecipientTypeFieldUpdateOperationsInput | $Enums.IncentiveRecipientType
 }
 
 export type PSGAIncentiveAllocationCreateManyPsgInput = {
   id?: string
-  clientId: string
-  recipientType?: $Enums.IncentiveRecipientType
   bdeId?: string | null
-  adminId?: string | null
   role: $Enums.IncentiveRole
   reason?: string | null
   incentivePercent: runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -1415,11 +1412,13 @@ export type PSGAIncentiveAllocationCreateManyPsgInput = {
   paidAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  adminId?: string | null
+  recipientType?: $Enums.IncentiveRecipientType
+  clientId: string
 }
 
 export type PSGAIncentiveAllocationUpdateWithoutPsgInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  recipientType?: Prisma.EnumIncentiveRecipientTypeFieldUpdateOperationsInput | $Enums.IncentiveRecipientType
   role?: Prisma.EnumIncentiveRoleFieldUpdateOperationsInput | $Enums.IncentiveRole
   reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   incentivePercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -1428,18 +1427,16 @@ export type PSGAIncentiveAllocationUpdateWithoutPsgInput = {
   paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  client?: Prisma.ClientUpdateOneRequiredWithoutIncentiveAllocationsNestedInput
-  bde?: Prisma.UserUpdateOneWithoutIncentiveAllocationsNestedInput
+  recipientType?: Prisma.EnumIncentiveRecipientTypeFieldUpdateOperationsInput | $Enums.IncentiveRecipientType
   admin?: Prisma.UserUpdateOneWithoutAdminIncentiveAllocationsNestedInput
   approvedBy?: Prisma.UserUpdateOneWithoutApprovedIncentivesNestedInput
+  bde?: Prisma.UserUpdateOneWithoutIncentiveAllocationsNestedInput
+  client?: Prisma.ClientUpdateOneRequiredWithoutIncentiveAllocationsNestedInput
 }
 
 export type PSGAIncentiveAllocationUncheckedUpdateWithoutPsgInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  clientId?: Prisma.StringFieldUpdateOperationsInput | string
-  recipientType?: Prisma.EnumIncentiveRecipientTypeFieldUpdateOperationsInput | $Enums.IncentiveRecipientType
   bdeId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  adminId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumIncentiveRoleFieldUpdateOperationsInput | $Enums.IncentiveRole
   reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   incentivePercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -1449,14 +1446,14 @@ export type PSGAIncentiveAllocationUncheckedUpdateWithoutPsgInput = {
   paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  adminId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  recipientType?: Prisma.EnumIncentiveRecipientTypeFieldUpdateOperationsInput | $Enums.IncentiveRecipientType
+  clientId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type PSGAIncentiveAllocationUncheckedUpdateManyWithoutPsgInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  clientId?: Prisma.StringFieldUpdateOperationsInput | string
-  recipientType?: Prisma.EnumIncentiveRecipientTypeFieldUpdateOperationsInput | $Enums.IncentiveRecipientType
   bdeId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  adminId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumIncentiveRoleFieldUpdateOperationsInput | $Enums.IncentiveRole
   reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   incentivePercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -1466,17 +1463,17 @@ export type PSGAIncentiveAllocationUncheckedUpdateManyWithoutPsgInput = {
   paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  adminId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  recipientType?: Prisma.EnumIncentiveRecipientTypeFieldUpdateOperationsInput | $Enums.IncentiveRecipientType
+  clientId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 
 
 export type PSGAIncentiveAllocationSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  clientId?: boolean
   psgId?: boolean
-  recipientType?: boolean
   bdeId?: boolean
-  adminId?: boolean
   role?: boolean
   reason?: boolean
   incentivePercent?: boolean
@@ -1486,20 +1483,20 @@ export type PSGAIncentiveAllocationSelect<ExtArgs extends runtime.Types.Extensio
   paidAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  client?: boolean | Prisma.ClientDefaultArgs<ExtArgs>
-  psg?: boolean | Prisma.PSGAIncentiveAllocation$psgArgs<ExtArgs>
-  bde?: boolean | Prisma.PSGAIncentiveAllocation$bdeArgs<ExtArgs>
+  adminId?: boolean
+  recipientType?: boolean
+  clientId?: boolean
   admin?: boolean | Prisma.PSGAIncentiveAllocation$adminArgs<ExtArgs>
   approvedBy?: boolean | Prisma.PSGAIncentiveAllocation$approvedByArgs<ExtArgs>
+  bde?: boolean | Prisma.PSGAIncentiveAllocation$bdeArgs<ExtArgs>
+  client?: boolean | Prisma.ClientDefaultArgs<ExtArgs>
+  psg?: boolean | Prisma.PSGAIncentiveAllocation$psgArgs<ExtArgs>
 }, ExtArgs["result"]["pSGAIncentiveAllocation"]>
 
 export type PSGAIncentiveAllocationSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  clientId?: boolean
   psgId?: boolean
-  recipientType?: boolean
   bdeId?: boolean
-  adminId?: boolean
   role?: boolean
   reason?: boolean
   incentivePercent?: boolean
@@ -1509,20 +1506,20 @@ export type PSGAIncentiveAllocationSelectCreateManyAndReturn<ExtArgs extends run
   paidAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  client?: boolean | Prisma.ClientDefaultArgs<ExtArgs>
-  psg?: boolean | Prisma.PSGAIncentiveAllocation$psgArgs<ExtArgs>
-  bde?: boolean | Prisma.PSGAIncentiveAllocation$bdeArgs<ExtArgs>
+  adminId?: boolean
+  recipientType?: boolean
+  clientId?: boolean
   admin?: boolean | Prisma.PSGAIncentiveAllocation$adminArgs<ExtArgs>
   approvedBy?: boolean | Prisma.PSGAIncentiveAllocation$approvedByArgs<ExtArgs>
+  bde?: boolean | Prisma.PSGAIncentiveAllocation$bdeArgs<ExtArgs>
+  client?: boolean | Prisma.ClientDefaultArgs<ExtArgs>
+  psg?: boolean | Prisma.PSGAIncentiveAllocation$psgArgs<ExtArgs>
 }, ExtArgs["result"]["pSGAIncentiveAllocation"]>
 
 export type PSGAIncentiveAllocationSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  clientId?: boolean
   psgId?: boolean
-  recipientType?: boolean
   bdeId?: boolean
-  adminId?: boolean
   role?: boolean
   reason?: boolean
   incentivePercent?: boolean
@@ -1532,20 +1529,20 @@ export type PSGAIncentiveAllocationSelectUpdateManyAndReturn<ExtArgs extends run
   paidAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  client?: boolean | Prisma.ClientDefaultArgs<ExtArgs>
-  psg?: boolean | Prisma.PSGAIncentiveAllocation$psgArgs<ExtArgs>
-  bde?: boolean | Prisma.PSGAIncentiveAllocation$bdeArgs<ExtArgs>
+  adminId?: boolean
+  recipientType?: boolean
+  clientId?: boolean
   admin?: boolean | Prisma.PSGAIncentiveAllocation$adminArgs<ExtArgs>
   approvedBy?: boolean | Prisma.PSGAIncentiveAllocation$approvedByArgs<ExtArgs>
+  bde?: boolean | Prisma.PSGAIncentiveAllocation$bdeArgs<ExtArgs>
+  client?: boolean | Prisma.ClientDefaultArgs<ExtArgs>
+  psg?: boolean | Prisma.PSGAIncentiveAllocation$psgArgs<ExtArgs>
 }, ExtArgs["result"]["pSGAIncentiveAllocation"]>
 
 export type PSGAIncentiveAllocationSelectScalar = {
   id?: boolean
-  clientId?: boolean
   psgId?: boolean
-  recipientType?: boolean
   bdeId?: boolean
-  adminId?: boolean
   role?: boolean
   reason?: boolean
   incentivePercent?: boolean
@@ -1555,47 +1552,47 @@ export type PSGAIncentiveAllocationSelectScalar = {
   paidAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  adminId?: boolean
+  recipientType?: boolean
+  clientId?: boolean
 }
 
-export type PSGAIncentiveAllocationOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "clientId" | "psgId" | "recipientType" | "bdeId" | "adminId" | "role" | "reason" | "incentivePercent" | "status" | "approvedById" | "approvedAt" | "paidAt" | "createdAt" | "updatedAt", ExtArgs["result"]["pSGAIncentiveAllocation"]>
+export type PSGAIncentiveAllocationOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "psgId" | "bdeId" | "role" | "reason" | "incentivePercent" | "status" | "approvedById" | "approvedAt" | "paidAt" | "createdAt" | "updatedAt" | "adminId" | "recipientType" | "clientId", ExtArgs["result"]["pSGAIncentiveAllocation"]>
 export type PSGAIncentiveAllocationInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  client?: boolean | Prisma.ClientDefaultArgs<ExtArgs>
-  psg?: boolean | Prisma.PSGAIncentiveAllocation$psgArgs<ExtArgs>
-  bde?: boolean | Prisma.PSGAIncentiveAllocation$bdeArgs<ExtArgs>
   admin?: boolean | Prisma.PSGAIncentiveAllocation$adminArgs<ExtArgs>
   approvedBy?: boolean | Prisma.PSGAIncentiveAllocation$approvedByArgs<ExtArgs>
+  bde?: boolean | Prisma.PSGAIncentiveAllocation$bdeArgs<ExtArgs>
+  client?: boolean | Prisma.ClientDefaultArgs<ExtArgs>
+  psg?: boolean | Prisma.PSGAIncentiveAllocation$psgArgs<ExtArgs>
 }
 export type PSGAIncentiveAllocationIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  client?: boolean | Prisma.ClientDefaultArgs<ExtArgs>
-  psg?: boolean | Prisma.PSGAIncentiveAllocation$psgArgs<ExtArgs>
-  bde?: boolean | Prisma.PSGAIncentiveAllocation$bdeArgs<ExtArgs>
   admin?: boolean | Prisma.PSGAIncentiveAllocation$adminArgs<ExtArgs>
   approvedBy?: boolean | Prisma.PSGAIncentiveAllocation$approvedByArgs<ExtArgs>
+  bde?: boolean | Prisma.PSGAIncentiveAllocation$bdeArgs<ExtArgs>
+  client?: boolean | Prisma.ClientDefaultArgs<ExtArgs>
+  psg?: boolean | Prisma.PSGAIncentiveAllocation$psgArgs<ExtArgs>
 }
 export type PSGAIncentiveAllocationIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  client?: boolean | Prisma.ClientDefaultArgs<ExtArgs>
-  psg?: boolean | Prisma.PSGAIncentiveAllocation$psgArgs<ExtArgs>
-  bde?: boolean | Prisma.PSGAIncentiveAllocation$bdeArgs<ExtArgs>
   admin?: boolean | Prisma.PSGAIncentiveAllocation$adminArgs<ExtArgs>
   approvedBy?: boolean | Prisma.PSGAIncentiveAllocation$approvedByArgs<ExtArgs>
+  bde?: boolean | Prisma.PSGAIncentiveAllocation$bdeArgs<ExtArgs>
+  client?: boolean | Prisma.ClientDefaultArgs<ExtArgs>
+  psg?: boolean | Prisma.PSGAIncentiveAllocation$psgArgs<ExtArgs>
 }
 
 export type $PSGAIncentiveAllocationPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "PSGAIncentiveAllocation"
   objects: {
-    client: Prisma.$ClientPayload<ExtArgs>
-    psg: Prisma.$PSGAPayload<ExtArgs> | null
-    bde: Prisma.$UserPayload<ExtArgs> | null
     admin: Prisma.$UserPayload<ExtArgs> | null
     approvedBy: Prisma.$UserPayload<ExtArgs> | null
+    bde: Prisma.$UserPayload<ExtArgs> | null
+    client: Prisma.$ClientPayload<ExtArgs>
+    psg: Prisma.$PSGAPayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
-    clientId: string
     psgId: string | null
-    recipientType: $Enums.IncentiveRecipientType
     bdeId: string | null
-    adminId: string | null
     role: $Enums.IncentiveRole
     reason: string | null
     incentivePercent: runtime.Decimal
@@ -1605,6 +1602,9 @@ export type $PSGAIncentiveAllocationPayload<ExtArgs extends runtime.Types.Extens
     paidAt: Date | null
     createdAt: Date
     updatedAt: Date
+    adminId: string | null
+    recipientType: $Enums.IncentiveRecipientType
+    clientId: string
   }, ExtArgs["result"]["pSGAIncentiveAllocation"]>
   composites: {}
 }
@@ -1999,11 +1999,11 @@ readonly fields: PSGAIncentiveAllocationFieldRefs;
  */
 export interface Prisma__PSGAIncentiveAllocationClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  client<T extends Prisma.ClientDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ClientDefaultArgs<ExtArgs>>): Prisma.Prisma__ClientClient<runtime.Types.Result.GetResult<Prisma.$ClientPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-  psg<T extends Prisma.PSGAIncentiveAllocation$psgArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.PSGAIncentiveAllocation$psgArgs<ExtArgs>>): Prisma.Prisma__PSGAClient<runtime.Types.Result.GetResult<Prisma.$PSGAPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-  bde<T extends Prisma.PSGAIncentiveAllocation$bdeArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.PSGAIncentiveAllocation$bdeArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   admin<T extends Prisma.PSGAIncentiveAllocation$adminArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.PSGAIncentiveAllocation$adminArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   approvedBy<T extends Prisma.PSGAIncentiveAllocation$approvedByArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.PSGAIncentiveAllocation$approvedByArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  bde<T extends Prisma.PSGAIncentiveAllocation$bdeArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.PSGAIncentiveAllocation$bdeArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  client<T extends Prisma.ClientDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ClientDefaultArgs<ExtArgs>>): Prisma.Prisma__ClientClient<runtime.Types.Result.GetResult<Prisma.$ClientPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  psg<T extends Prisma.PSGAIncentiveAllocation$psgArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.PSGAIncentiveAllocation$psgArgs<ExtArgs>>): Prisma.Prisma__PSGAClient<runtime.Types.Result.GetResult<Prisma.$PSGAPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2034,11 +2034,8 @@ export interface Prisma__PSGAIncentiveAllocationClient<T, Null = never, ExtArgs 
  */
 export interface PSGAIncentiveAllocationFieldRefs {
   readonly id: Prisma.FieldRef<"PSGAIncentiveAllocation", 'String'>
-  readonly clientId: Prisma.FieldRef<"PSGAIncentiveAllocation", 'String'>
   readonly psgId: Prisma.FieldRef<"PSGAIncentiveAllocation", 'String'>
-  readonly recipientType: Prisma.FieldRef<"PSGAIncentiveAllocation", 'IncentiveRecipientType'>
   readonly bdeId: Prisma.FieldRef<"PSGAIncentiveAllocation", 'String'>
-  readonly adminId: Prisma.FieldRef<"PSGAIncentiveAllocation", 'String'>
   readonly role: Prisma.FieldRef<"PSGAIncentiveAllocation", 'IncentiveRole'>
   readonly reason: Prisma.FieldRef<"PSGAIncentiveAllocation", 'String'>
   readonly incentivePercent: Prisma.FieldRef<"PSGAIncentiveAllocation", 'Decimal'>
@@ -2048,6 +2045,9 @@ export interface PSGAIncentiveAllocationFieldRefs {
   readonly paidAt: Prisma.FieldRef<"PSGAIncentiveAllocation", 'DateTime'>
   readonly createdAt: Prisma.FieldRef<"PSGAIncentiveAllocation", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"PSGAIncentiveAllocation", 'DateTime'>
+  readonly adminId: Prisma.FieldRef<"PSGAIncentiveAllocation", 'String'>
+  readonly recipientType: Prisma.FieldRef<"PSGAIncentiveAllocation", 'IncentiveRecipientType'>
+  readonly clientId: Prisma.FieldRef<"PSGAIncentiveAllocation", 'String'>
 }
     
 
@@ -2449,44 +2449,6 @@ export type PSGAIncentiveAllocationDeleteManyArgs<ExtArgs extends runtime.Types.
 }
 
 /**
- * PSGAIncentiveAllocation.psg
- */
-export type PSGAIncentiveAllocation$psgArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the PSGA
-   */
-  select?: Prisma.PSGASelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the PSGA
-   */
-  omit?: Prisma.PSGAOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.PSGAInclude<ExtArgs> | null
-  where?: Prisma.PSGAWhereInput
-}
-
-/**
- * PSGAIncentiveAllocation.bde
- */
-export type PSGAIncentiveAllocation$bdeArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the User
-   */
-  select?: Prisma.UserSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the User
-   */
-  omit?: Prisma.UserOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.UserInclude<ExtArgs> | null
-  where?: Prisma.UserWhereInput
-}
-
-/**
  * PSGAIncentiveAllocation.admin
  */
 export type PSGAIncentiveAllocation$adminArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -2522,6 +2484,44 @@ export type PSGAIncentiveAllocation$approvedByArgs<ExtArgs extends runtime.Types
    */
   include?: Prisma.UserInclude<ExtArgs> | null
   where?: Prisma.UserWhereInput
+}
+
+/**
+ * PSGAIncentiveAllocation.bde
+ */
+export type PSGAIncentiveAllocation$bdeArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the User
+   */
+  select?: Prisma.UserSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the User
+   */
+  omit?: Prisma.UserOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserInclude<ExtArgs> | null
+  where?: Prisma.UserWhereInput
+}
+
+/**
+ * PSGAIncentiveAllocation.psg
+ */
+export type PSGAIncentiveAllocation$psgArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the PSGA
+   */
+  select?: Prisma.PSGASelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the PSGA
+   */
+  omit?: Prisma.PSGAOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.PSGAInclude<ExtArgs> | null
+  where?: Prisma.PSGAWhereInput
 }
 
 /**
